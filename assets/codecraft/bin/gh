@@ -1,0 +1,72 @@
+#!/bin/sh
+# `gh` 包装器：从 Git 凭据（~/.codecraft/git-credentials，App「Git 凭据」页保存）注入 GH_TOKEN，
+# 使终端里直接运行 `gh`（如 `gh codespace list`）也能复用同一份 GitHub 令牌，无需再 `gh auth login`。
+# 真实 gh 仍按 PATH 查找（跳过本包装器所在目录）；未安装 gh 时原样报错。
+
+SELF_DIR=$(dirname "$0")
+[ "${SELF_DIR#/}" = "$SELF_DIR" ] && SELF_DIR="$(pwd)/$SELF_DIR"
+
+find_real_gh() {
+  # 在 PATH 中查找 gh，跳过本包装器所在目录，避免递归。
+  old_ifs=$IFS
+  IFS=:
+  for d in $PATH; do
+    [ -z "$d" ] && continue
+    case "$d" in
+      "$SELF_DIR"|"$SELF_DIR"/*) continue ;;
+    esac
+    if [ -x "$d/gh" ] && [ ! -d "$d/gh" ]; then
+      IFS=$old_ifs
+      printf '%s' "$d/gh"
+      return 0
+    fi
+  done
+  IFS=$old_ifs
+  return 1
+}
+
+REAL_GH=$(find_real_gh 2>/dev/null) || {
+  echo "容器里没有 gh（GitHub CLI）：请在终端执行命令 codecraft 安装「GitHub Codespaces」依赖" >&2
+  exit 4
+}
+
+CODECRAFT="${CODECRAFT_DIR:-$HOME/.codecraft}"
+CRED_FILE="$CODECRAFT/git-credentials"
+
+# 若没有凭据文件，直接运行真实 gh（兼容用户自行 gh auth login 的场景）。
+if [ ! -f "$CRED_FILE" ]; then
+  exec "$REAL_GH" "$@"
+fi
+
+raw="$(cat "$CRED_FILE" 2>/dev/null)"
+if [ -z "$raw" ]; then
+  exec "$REAL_GH" "$@"
+fi
+
+# 与 git-credential-codecraft / gh-codespaces.sh 一致：整行反转 + base64 解码，往返校验。
+rev="$(printf '%s' "$raw" | awk '{ for (i = length($0); i > 0; i--) printf "%s", substr($0, i, 1) }')"
+reencoded="$(printf '%s' "$rev" | base64 -d 2>/dev/null | base64 2>/dev/null | tr -d '\n')"
+if [ -n "$reencoded" ] && [ "$reencoded" = "$rev" ]; then
+  plain="$(printf '%s' "$rev" | base64 -d 2>/dev/null)"
+else
+  plain="$raw"
+fi
+
+# 取 github.com 或「所有主机(*)」令牌（git store 格式：https://user:token@host）。
+token="$(printf '%s\n' "$plain" | awk -F'@' '
+  $0 ~ /^[[:space:]]*$/ { next }
+  { host = $NF; sub(/^[[:space:]]+/, "", host); sub(/[[:space:]]+$/, "", host);
+    rest = $0; sub(/@[^@]*$/, "", rest); sub(/^[a-zA-Z]+:\/\//, "", rest);
+    if (host == "github.com") { exact = rest; next }
+    if (host == "*" && any == "") { any = rest } }
+  END { print (exact != "" ? exact : any) }
+' | sed 's/^[^:]*://')"
+
+# 仅当凭据里确实拿到 token 且当前未显式设置 GH_TOKEN 时注入；
+# gh-codespaces.sh 等调用方已设置 GH_TOKEN 时保持其值不变。
+if [ -z "${GH_TOKEN:-}" ] && [ -n "$token" ]; then
+  GH_TOKEN="$token"
+  export GH_TOKEN
+fi
+
+exec "$REAL_GH" "$@"

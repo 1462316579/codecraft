@@ -1,0 +1,8 @@
+bee5763a5e2bccdcdbd9bfe982ffc82b  data/data/com.termux/files/usr/share/doc/less/LICENSE
+1ebbd3e34237af26da5dc08a4e440464  data/data/com.termux/files/usr/share/doc/less/COPYING
+ceedd4dd4cd69edd65aa1f4411acc216  data/data/com.termux/files/usr/share/man/man1/less.1.gz
+efe2034e15acb1354399b35463a1ad26  data/data/com.termux/files/usr/share/man/man1/lessecho.1.gz
+e4baff224067882c8126187cacb3940b  data/data/com.termux/files/usr/share/man/man5/lesskey.5.gz
+5cdad6e8fbebbffeac7745fd60e0f334  data/data/com.termux/files/usr/bin/less
+74fad09814a18ee198f7e7fa10e80b59  data/data/com.termux/files/usr/libexec/lessecho
+55a989ecda8f1e5d75ba98d7962c517d  data/data/com.termux/files/usr/libexec/less-osc8-open

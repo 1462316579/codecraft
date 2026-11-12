@@ -1,0 +1,2194 @@
+{
+  "@@locale": "en",
+  "appName": "CodeCraft",
+  "tabSessions": "Chats",
+  "tabSettings": "Settings",
+  "newSession": "New chat",
+  "send": "Send",
+  "stop": "Stop",
+  "reverseTabClasses": "Classes",
+  "reverseTabStrings": "Strings",
+  "reverseTabResources": "Resources",
+  "reverseTabHex": "Hex",
+  "reverseSearchClassHint": "Search classes",
+  "reverseSearchStringHint": "Search strings",
+  "reverseSearchResourceHint": "Search name, type or 0x id",
+  "reverseNoMatch": "No match",
+  "reverseEmptyFile": "Empty file",
+  "reverseLoadFailed": "Failed to open",
+  "reverseParseFailed": "Failed to parse; the file may be packed or corrupted",
+  "reverseEditString": "Edit string",
+  "reverseEqualLengthHint": "Equal-length replacement only: the encoded byte length must match the original, otherwise every offset in the file shifts",
+  "reverseEditByte": "Edit byte",
+  "reverseEditByteHint": "Two hex digits, e.g. 0a or ff",
+  "reverseInvalidByte": "Enter a hex byte between 00 and ff",
+  "reverseJumpToOffset": "Jump to offset",
+  "reverseOffsetInvalid": "Invalid offset, enter hex",
+  "reverseSuperclass": "Superclass",
+  "reverseInterfaces": "Interfaces",
+  "reverseAccessFlags": "Modifiers",
+  "reverseFields": "Fields",
+  "reverseMethods": "Methods",
+  "reverseAbstractMethod": "No body",
+  "reverseSmaliHint": "Smali disassembly; offset is the byte offset inside the method body",
+  "reverseOpenAsHex": "Open as hex",
+  "reverseMethodCount": "{count} methods",
+  "@reverseMethodCount": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "reverseFieldCount": "{count} fields",
+  "@reverseFieldCount": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "reverseHexByteCount": "{count} bytes",
+  "@reverseHexByteCount": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "cancel": "Cancel",
+  "confirm": "OK",
+  "save": "Save",
+  "delete": "Delete",
+  "rename": "Rename",
+  "copy": "Copy",
+  "copied": "Copied",
+  "retry": "Retry",
+  "pin": "Pin",
+  "unpin": "Unpin",
+  "search": "Search",
+  "searchSessions": "Search chats",
+  "noSessions": "No chats yet",
+  "noMessages": "Start a new conversation",
+  "chatInputPlaceholder": "Type a message to chat with AI…",
+  "reasoningTitle": "Thoughts",
+  "untitled": "Untitled",
+  "pinned": "Pinned",
+  "settings": "Settings",
+  "providers": "AI Providers",
+  "providersSubtitle": "Models, API and keys",
+  "appearance": "Appearance",
+  "themeMode": "Theme mode",
+  "themeModeSystem": "System",
+  "themeModeLight": "Light",
+  "themeModeDark": "Dark",
+  "language": "Language",
+  "languageSystem": "System",
+  "about": "About",
+  "version": "Version",
+  "license": "License",
+  "licenseBody": "This project is a Flutter port of jieapi/Codecraft, licensed under GPL-3.0.",
+  "addProvider": "Add provider",
+  "providerName": "Name",
+  "providerType": "Protocol",
+  "baseUrl": "Base URL",
+  "apiKey": "API Key",
+  "defaultModel": "Default model",
+  "modelList": "Models",
+  "model": "Model",
+  "mode": "Mode",
+  "reasoningEffort": "Reasoning effort",
+  "reasoningEffortNone": "None",
+  "reasoningEffortMinimal": "Minimal",
+  "reasoningEffortLow": "Low",
+  "reasoningEffortMedium": "Medium",
+  "reasoningEffortHigh": "High",
+  "reasoningEffortXHigh": "Extra high",
+  "reasoningEffortMax": "Max",
+  "deleteProviderConfirm": "Delete this provider?",
+  "deleteSessionConfirm": "Delete this chat?",
+  "emptyProviders": "No providers yet, tap + to add",
+  "emptyModels": "No models yet",
+  "modelInputHint": "Type a model ID and press Enter",
+  "errorGeneric": "Something went wrong",
+  "retrying": "Retrying",
+  "emptyMessage": "Message is empty",
+  "enabled": "Enabled",
+  "disabled": "Disabled",
+  "providerModelsCountTag": "{count} models",
+  "@providerModelsCountTag": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "inputTokens": "Input",
+  "outputTokens": "Output",
+  "emptyChatHint": "Pick a conversation to start",
+  "errorNoProvider": "No usable provider configured. Add one in Settings first.",
+  "errorNoModel": "Pick a model for this provider",
+  "errorEmptyResponse": "The model returned empty content",
+  "thinking": "Thinking…",
+  "modelListTitle": "Pick a model",
+  "providerListTitle": "Pick a provider",
+  "customProvider": "Custom",
+  "addFromPreset": "Add from preset",
+  "useFullUrlHint": "baseUrl is a full endpoint URL",
+  "aboutBody": "Codecraft Flutter is a Flutter port of jieapi/Codecraft (Phase 1: core chat loop).",
+  "chatPlaceholder": "How can I help you?",
+  "chatInputHint": "Describe what you need and I'll write, modify or explain code",
+  "openSidebar": "Open sidebar",
+  "noModelSelected": "No model selected",
+  "sessionGroupPinned": "Pinned",
+  "sessionGroupToday": "Today",
+  "sessionGroupYesterday": "Yesterday",
+  "sessionGroupLast7Days": "Last 7 days",
+  "sessionGroupLast30Days": "Last 30 days",
+  "sessionGroupMonthFormat": "MMM yyyy",
+  "chatThinkingRunningTime": "Thinking ({seconds}s)",
+  "@chatThinkingRunningTime": {
+    "placeholders": {
+      "seconds": {
+        "type": "String"
+      }
+    }
+  },
+  "chatThinkingDoneTime": "Thought for {seconds}s",
+  "@chatThinkingDoneTime": {
+    "placeholders": {
+      "seconds": {
+        "type": "String"
+      }
+    }
+  },
+  "chatThinkingDone": "Thought",
+  "chatQueueHint": "AI is working — tap the square to stop",
+  "chatStatusGenerating": "Generating",
+  "chatStatusThinking": "Thinking",
+  "chatStatusCallingTool": "Calling tool",
+  "chatStatusRunningCommand": "Running command",
+  "chatStatusEditingFile": "Editing file",
+  "chatStatusReadingFile": "Reading file",
+  "chatStatusViewingImage": "Viewing image",
+  "chatStatusSearchingWeb": "Searching the web",
+  "chatStatusBrowsingWeb": "Controlling browser",
+  "chatStatusAskingUser": "Asking user",
+  "chatStatusGeneratingImage": "Generating image",
+  "chatStatusUpdatingTodo": "Updating to-dos",
+  "chatStatusStartingSubagent": "Starting sub-agent",
+  "chatCompressingContext": "Compacting context…",
+  "chatContextCompressed": "Context compacted",
+  "chatCompactionSummary": "Handoff summary",
+  "chatStatusReadingMemory": "Reading memory",
+  "chatToolRunning": "Tool running",
+  "chatToolSucceeded": "Tool succeeded",
+  "chatToolFailed": "Tool failed",
+  "chatEffortNone": "Off",
+  "chatEffortMinimal": "Minimal",
+  "chatEffortLow": "Low",
+  "chatEffortMedium": "Medium",
+  "chatEffortHigh": "High",
+  "chatEffortXHigh": "Very high",
+  "chatEffortMax": "Max",
+  "searchModels": "Search models",
+  "chatAddAttachment": "Add attachment",
+  "chatUploadFile": "Upload file",
+  "chatUploadImage": "Upload image",
+  "chatTakePhoto": "Take photo",
+  "attachmentPrefix": "Attachments:",
+  "attachmentMax": "Up to {count} attachments at a time",
+  "@attachmentMax": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "attachmentUploaded": "Uploaded {count} attachment(s)",
+  "@attachmentUploaded": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "attachmentUploadedPartial": "Uploaded {count} attachment(s); some were skipped",
+  "@attachmentUploadedPartial": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "attachmentUploading": "Uploading {count} file(s)…",
+  "@attachmentUploading": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "attachmentImageTooLarge": "Image exceeds {size}, please compress it and retry",
+  "@attachmentImageTooLarge": {
+    "placeholders": {
+      "size": {
+        "type": "String"
+      }
+    }
+  },
+  "attachmentUnsupportedImageType": "Unrecognized image type; only jpg/png/gif/webp are supported",
+  "attachmentReadFileFailed": "Cannot read the selected file",
+  "attachmentUploadFailed": "Upload failed",
+  "removeAttachment": "Remove attachment",
+  "imagePreview": "Image preview",
+  "imageLoadFailed": "Failed to load the image; the file may have been moved or deleted",
+  "close": "Close",
+  "fileFallback": "File",
+  "skillsTitle": "Skills",
+  "skillsSubtitle": "Browse, import and manage skills",
+  "skillsNew": "New skill",
+  "skillsImport": "Import Markdown",
+  "skillsScopeTitle": "Choose scope",
+  "skillsScopeGlobal": "Global skills",
+  "skillsScopeProject": "Project skills",
+  "skillsScopeGlobalHint": "~/.codecraft/skills, shared across projects",
+  "skillsScopeProjectHint": "~/workspace/.codecraft/skills, tied to the current workspace",
+  "skillsProjectGroup": "Current project ({name})",
+  "@skillsProjectGroup": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "skillsNoProjectSkills": "No skills in this project yet",
+  "skillsNoGlobalSkills": "No global skills yet",
+  "skillsEmpty": "No skills yet",
+  "skillsEmptyHint": "Skills are focused instructions for the AI; import a SKILL.md or create one.",
+  "skillsName": "Name",
+  "skillsDescription": "Description",
+  "skillsDescriptionHint": "When to use this skill (goes into the system prompt)",
+  "skillsInstructions": "Instructions",
+  "skillsInstructionsHint": "Steps the skill should follow, written in Markdown",
+  "skillsImported": "Imported skill \"{name}\"",
+  "@skillsImported": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "skillsDeleteTitle": "Delete skill",
+  "skillsDeleteConfirm": "Delete skill \"{name}\" including its directory and scripts?",
+  "@skillsDeleteConfirm": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "skillsErrorInvalidName": "Invalid skill name: cannot be empty, too long, or contain / \\ : * ? \" < > |",
+  "skillsErrorEmptyInstructions": "Instructions cannot be empty",
+  "skillsErrorNameConflict": "A skill named \"{name}\" already exists in this scope",
+  "@skillsErrorNameConflict": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "skillsErrorNoSkill": "No recognizable skill found in the file",
+  "skillsErrorIoFailed": "Failed to read or write the skill file",
+  "providerAdd": "Add provider",
+  "providerEdit": "Edit provider",
+  "providerEditModel": "Edit Model",
+  "providerConfig": "Config",
+  "providerSectionBasic": "Basics",
+  "providerSectionType": "Upstream format",
+  "providerSectionOptions": "Options",
+  "providerFullUrl": "Full URL",
+  "providerFullUrlDesc": "Base URL is the full request address; no default path is appended",
+  "providerHeadersTitle": "Custom headers",
+  "providerHeadersDesc": "Fully override default headers of the same name for this provider",
+  "providerHeadersAdd": "Add header",
+  "providerHeadersManage": "Manage",
+  "providerHeadersCount": "{count} header(s) configured",
+  "@providerHeadersCount": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "providerShowApiKey": "Show key",
+  "providerHideApiKey": "Hide key",
+  "providerAddModel": "Add model",
+  "providerNoModels": "No models",
+  "providerNoModelsHint": "Tap the button in the top-right to add a model",
+  "providerModelCurrent": "Current",
+  "providerModelsCount": "Models ({count})",
+  "@providerModelsCount": {
+    "placeholders": {
+      "count": {
+        "type": "String"
+      }
+    }
+  },
+  "providerModelsSelect": "Select",
+  "providerModelsSelectedCount": "{count} selected",
+  "@providerModelsSelectedCount": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "providerModelsSelectAll": "Select all",
+  "providerModelsDeselectAll": "Deselect all",
+  "providerModelsBatchTest": "Test",
+  "providerModelsBatchDelete": "Delete",
+  "providerModelsBatchDeleteTitle": "Delete models",
+  "providerModelsBatchDeleteConfirm": "Delete {count} selected models?",
+  "@providerModelsBatchDeleteConfirm": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "providerFetchModels": "Fetch models",
+  "providerAddAllModels": "Add all",
+  "providerAddAllModelsTitle": "Add all models",
+  "providerAddAllModelsConfirm": "Add all {count} fetched models to this provider?",
+  "@providerAddAllModelsConfirm": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "providerFilterModelsHint": "Filter models by name",
+  "providerNoMatchingModels": "No matching models",
+  "providerModelAdded": "Added model \"{name}\"",
+  "providerModelName": "Model Name",
+  "providerModelAlreadyAdded": "This model has already been added",
+  "@providerModelAdded": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "providerFetchHttpError": "HTTP {code} · {latency}ms",
+  "@providerFetchHttpError": {
+    "placeholders": {
+      "code": {
+        "type": "int"
+      },
+      "latency": {
+        "type": "int"
+      }
+    }
+  },
+  "providerFetchMissingFields": "Response has no model list field",
+  "providerFetchFailed": "Failed to fetch models",
+  "providerApiKeyRequired": "Fill in the API key first",
+  "providerTestModel": "Test",
+  "providerModelContext": "Context window (tokens)",
+  "providerModelContextInput": "Input limit (tokens)",
+  "providerModelContextOutput": "Output limit (tokens)",
+  "providerModelWindowInvalid": "Enter a valid positive integer, or leave blank to use the automatically detected value",
+  "providerModelSectionPrice": "Price",
+  "providerModelPriceInput": "Input price (USD/1M tokens)",
+  "providerModelPriceOutput": "Output price (USD/1M tokens)",
+  "providerModelPriceCacheRead": "Cache read price (USD/1M tokens)",
+  "providerModelPriceCacheWrite": "Cache write price (USD/1M tokens)",
+  "providerModelCapabilities": "Capabilities",
+  "providerModelCapVision": "Image input",
+  "providerModelCapImageOutput": "Image output",
+  "providerModelCapTools": "Tool calls",
+  "providerModelCapReasoning": "Reasoning",
+  "providerModelSectionReasoning": "Reasoning levels",
+  "providerModelReasoningHint": "Tick only the levels this model really accepts; leave all unticked to use the built-in capability table",
+  "providerModelReasoningCanDisable": "Thinking can be turned off",
+  "providerTestRequestUrl": "Request URL",
+  "providerTestRequestHeaders": "Request headers",
+  "providerTestRequestBody": "Request body",
+  "providerTestResponse": "Response",
+  "providerTestError": "Error detail",
+  "providerMultiKeyTitle": "Multi-key mode",
+  "providerMultiKeySubtitle": "Keep several keys for one provider; switch and resend automatically when a key fails",
+  "providerMultiKeyManage": "Multi-key management",
+  "providerMultiKeySummary": "{count} · {strategy}",
+  "@providerMultiKeySummary": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      },
+      "strategy": {
+        "type": "String"
+      }
+    }
+  },
+  "providerMultiKeyList": "Key list",
+  "providerMultiKeyItem": "Key #{index}",
+  "@providerMultiKeyItem": {
+    "placeholders": {
+      "index": {
+        "type": "int"
+      }
+    }
+  },
+  "providerMultiKeyEmpty": "Tap to add the first key",
+  "providerMultiKeyAdd": "Add key",
+  "providerMultiKeyWeight": "Scheduling weight",
+  "providerMultiKeyWeightHint": "Default 1 · ≤ 0 skips it · max 1,000,000",
+  "providerMultiKeyStrategy": "Pick strategy",
+  "providerMultiKeyStrategySequential": "Sequential",
+  "providerMultiKeyStrategySequentialDesc": "Always use the leading key; move on only after repeated failures",
+  "providerMultiKeyStrategyRoundRobin": "Round robin",
+  "providerMultiKeyStrategyRoundRobinDesc": "New sessions start on the next key to spread quota; keep the same key within a session to stay cache-friendly",
+  "providerMultiKeyStatusCodes": "Auto-switch status codes",
+  "providerMultiKeyStatusCodesHint": "Comma separated; leave empty for default 401,402,403,429",
+  "providerMultiKeyCooldown": "Cooldown",
+  "providerMultiKeyCooldownDesc": "How long a switched-away key stays out of the pool",
+  "workspaceOpen": "Workspace",
+  "workspaceLocal": "Local workspace",
+  "workspaceLocalSubtitle": "App data directory",
+  "allow": "Allow",
+  "deny": "Deny",
+  "tabFiles": "Files",
+  "newFile": "New file",
+  "newFolder": "New folder",
+  "create": "Create",
+  "deleteFileConfirm": "Delete this file?",
+  "deleteFolderConfirm": "Delete this folder and its contents?",
+  "refresh": "Refresh",
+  "workspaceNew": "New",
+  "workspaceEmptyHint": "No workspaces yet, tap New in the top-right",
+  "workspaceNameExists": "A workspace with this name already exists",
+  "workspaceDelete": "Delete workspace",
+  "workspaceDeleteConfirm": "Delete workspace \"{name}\" and all its files?",
+  "@workspaceDeleteConfirm": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "todoDashboardTitle": "Tasks",
+  "todoDashboardProgress": "{completed}/{total} done",
+  "@todoDashboardProgress": {
+    "placeholders": {
+      "completed": {
+        "type": "int"
+      },
+      "total": {
+        "type": "int"
+      }
+    }
+  },
+  "todoDashboardAllDone": "All done",
+  "todoInProgress": "In progress",
+  "todoCompleted": "Completed",
+  "gitTitle": "Git",
+  "gitRefresh": "Refresh",
+  "gitTabStatus": "Status",
+  "browserTitle": "Browser",
+  "browserAddressHint": "Enter URL or search",
+  "browserBack": "Back",
+  "browserForward": "Forward",
+  "browserReload": "Reload",
+  "browserNotReady": "Browser not ready. Enter a URL in the address bar to start browsing.",
+  "browserNewTab": "New tab",
+  "browserCloseTab": "Close tab",
+  "browserTabDefaultTitle": "New Tab",
+  "browserTabsCount": "Tabs ({count})",
+  "@browserTabsCount": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "browserEmptyHint": "Enter a URL in the address bar above to start browsing",
+  "browserTabsManage": "Manage Tabs",
+  "browserEmptyClickHint": "Tap above to enter a URL and start browsing",
+  "browserNightModeOn": "Turn off night mode",
+  "browserNightModeOff": "Turn on night mode",
+  "browserDevtools": "Developer tools",
+  "browserDialogAlertTitle": "Page Alert",
+  "browserDialogConfirmTitle": "Page Confirmation",
+  "browserDialogPromptTitle": "Page Input",
+  "browserMenu": "More options",
+  "browserMenuTitle": "Browser Options",
+  "browserMenuGeneralSection": "Display &amp; Tools",
+  "browserNightModeTitle": "Night mode",
+  "browserNightModeDesc": "Dim page brightness and enable dark mode preference",
+  "browserDevtoolsTitle": "Developer tools",
+  "browserDevtoolsDesc": "Enable mobile Eruda debug console",
+  "browserUaSection": "User-Agent",
+  "browserUaDesc": "Emulate different device environments",
+  "browserUaDefault": "System default",
+  "browserUaDefaultDesc": "Native WebView User-Agent",
+  "browserUaAndroidPhone": "Android Phone",
+  "browserUaAndroidPhoneDesc": "Chrome Mobile (Android)",
+  "browserUaAndroidTablet": "Android Tablet",
+  "browserUaAndroidTabletDesc": "Chrome Tablet (Android)",
+  "browserUaDesktopPc": "Desktop PC",
+  "browserUaDesktopPcDesc": "Chrome Desktop (Windows PC)",
+  "browserUaIphone": "iPhone",
+  "browserUaIphoneDesc": "Mobile Safari (iOS)",
+  "browserUaIpad": "iPad",
+  "browserUaIpadDesc": "Tablet Safari (iPadOS)",
+  "browserUaCustom": "Custom",
+  "browserUaCustomDesc": "Specify custom User-Agent string",
+  "browserUaCustomDialogTitle": "Custom User-Agent",
+  "browserUaCustomInputHint": "Enter full User-Agent string",
+  "browserUaAppliedToast": "User-Agent updated, page reloaded",
+  "gitTabBranches": "Branches",
+  "gitTabCommits": "Commits",
+  "gitStatusClean": "Working tree clean, no changes",
+  "gitConflictedCount": "Conflicts ({count})",
+  "@gitConflictedCount": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "gitStagedCount": "Staged ({count})",
+  "@gitStagedCount": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "gitModifiedCount": "Modified ({count})",
+  "@gitModifiedCount": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "gitUntrackedCount": "Untracked ({count})",
+  "@gitUntrackedCount": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "gitConflictedLabel": "Conflicts",
+  "gitStagedLabel": "Staged",
+  "gitModifiedLabel": "Modified",
+  "gitUntrackedLabel": "Untracked",
+  "gitStage": "Stage",
+  "gitUnstage": "Unstage",
+  "gitStageAll": "Stage All",
+  "gitUnstageAll": "Unstage all",
+  "gitUnstageAllConfirm": "All files will be unstaged, but their contents will not be deleted. Continue?",
+  "gitActionRevertAll": "Revert all",
+  "gitRevertAllConfirm": "Discard all unstaged changes ({count} files) and restore them to the last staged or committed content? Staged content is unaffected, but discarded changes cannot be recovered.",
+  "@gitRevertAllConfirm": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "gitActionRestoreFile": "Restore file",
+  "gitRevertConfirmWorktree": "Restore {name} to its last staged or committed content? Unstaged changes will be lost and cannot be recovered.",
+  "@gitRevertConfirmWorktree": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "gitRevertConfirmHead": "Restore {name} to its last committed content? Both staged and unstaged changes to this file will be lost and cannot be recovered.",
+  "@gitRevertConfirmHead": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "gitRestoreFileConfirm": "Restore the deleted {name}? The file will be brought back from the last commit.",
+  "@gitRestoreFileConfirm": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "gitActionDeleteFile": "Delete file",
+  "gitActionDeleteDir": "Delete folder",
+  "gitMergePendingTitle": "Merge Awaiting Commit",
+  "gitMergePendingHint": "There are no unresolved conflicts. Review and stage the changes you want to keep, then commit to complete the merge.",
+  "gitActionAbortMerge": "Abort Merge",
+  "gitAbortMergeConfirm": "Abort the current merge? Unresolved changes will be discarded and the working tree will be restored.",
+  "gitCommitChanges": "Commit Changes",
+  "gitCommitNeedsIdentity": "No commit identity configured. Set your name and email in “Credentials & Identity”.",
+  "gitCommitDialogTitle": "Commit Changes",
+  "gitCommitMessage": "Commit message",
+  "gitCommitAmend": "Amend last commit (--amend)",
+  "gitCommitAiGenerate": "AI Generate",
+  "gitCommitGenerating": "Generating…",
+  "gitActionCommit": "Commit",
+  "gitTabStash": "Stash",
+  "gitStashTitle": "Stashes",
+  "gitActionStash": "Stash Changes",
+  "gitStashMessageHint": "Stash message (optional)",
+  "gitStashIncludeUntracked": "Include untracked files (-u)",
+  "gitStashEmpty": "No stashes found",
+  "gitStashPop": "Pop",
+  "gitStashApply": "Apply",
+  "gitStashDrop": "Drop",
+  "gitStashDropConfirm": "Drop stash {index}? This action cannot be undone.",
+  "@gitStashDropConfirm": {
+    "placeholders": {
+      "index": {
+        "type": "String"
+      }
+    }
+  },
+  "gitStashClear": "Clear All",
+  "gitStashClearConfirm": "Clear all stashes? This action cannot be undone.",
+  "gitStashCount": "Stashes ({count})",
+  "@gitStashCount": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "gitPull": "Pull",
+  "gitPush": "Push",
+  "gitPullDirtyConfirm": "The working tree has uncommitted changes. Pulling may cause conflicts. Commit or stage them first if possible. Continue pulling?",
+  "gitPullContinue": "Continue Pull",
+  "gitNoUpstream": "No upstream set",
+  "gitTrackingBranch": "Tracking {name}",
+  "@gitTrackingBranch": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "gitAheadCount": "{count} to push",
+  "@gitAheadCount": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "gitBehindCount": "{count} to pull",
+  "@gitBehindCount": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "gitBranchSynced": "Up to date",
+  "gitDetachedHeadLabel": "detached HEAD: not on any branch",
+  "gitNoBranch": "(no branch)",
+  "gitLoadingBranches": "Loading branch list…",
+  "gitNoCheckedOutBranch": "No branch checked out",
+  "gitClean": "Working tree clean",
+  "gitHasChanges": "Working tree has changes",
+  "gitNotARepo": "This workspace is not a Git repository yet",
+  "gitCloningHint": "Cloning repository, please wait…",
+  "gitInitDescPrimary": "Initialize a new repository to start versioning",
+  "gitInitDescSecondary": "Or pick an existing repository from a subdirectory",
+  "gitInitRepo": "Initialize repository",
+  "gitCloneRepo": "Clone remote repository",
+  "gitCloneDialogTitle": "Clone Git repository",
+  "gitCloneDesc": "Clone into the workspace root (must be empty). For private repositories, tap the key icon to sign in with GitHub or paste an access token first.",
+  "gitCloneUrlLabel": "Repository URL",
+  "gitCloning": "Cloning repository, please wait…",
+  "gitSwitchRepo": "Switch repository",
+  "gitPickExistingRepo": "Pick existing repository",
+  "gitRepoSelectorTitle": "Select repository",
+  "gitRepoNotRepo": "Not a repository",
+  "gitPickRepoEmpty": "No directories available in this workspace",
+  "gitNoBranches": "No branches yet",
+  "gitNewBranch": "New branch",
+  "gitBranchName": "Branch name",
+  "gitBaseBranch": "Base branch",
+  "gitCreateAndSwitch": "Create and switch",
+  "gitDeleteBranch": "Delete branch",
+  "gitDeleteLocalBranchConfirm": "Delete local branch {name}?",
+  "@gitDeleteLocalBranchConfirm": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "gitDeleteRemoteBranch": "Delete remote branch",
+  "gitDeleteRemoteBranchConfirm": "Delete remote branch {name}? This cannot be undone.",
+  "@gitDeleteRemoteBranchConfirm": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "gitRenameBranch": "Rename branch",
+  "gitRenameTo": "Rename {name} to:",
+  "@gitRenameTo": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "gitNewBranchName": "New branch name",
+  "gitTags": "Tags",
+  "gitTagName": "Tag name",
+  "gitDeleteTag": "Delete tag",
+  "gitDeleteTagConfirm": "Delete local tag {name}?",
+  "@gitDeleteTagConfirm": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "gitCreateTagDesc": "Create a lightweight tag at HEAD ({hash})",
+  "@gitCreateTagDesc": {
+    "placeholders": {
+      "hash": {
+        "type": "String"
+      }
+    }
+  },
+  "gitCheckedOut": "Checked out",
+  "gitCurrentBranch": "Current branch",
+  "gitRemote": "Remote",
+  "commonLocal": "Local",
+  "gitNew": "New",
+  "gitNoCommits": "No commits yet",
+  "gitCommitCount": "Commits ({count})",
+  "gitSearchCommitsHint": "Search commit message or author…",
+  "@gitCommitCount": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "gitLoadMoreCommits": "Pull up to load earlier commits",
+  "gitNoMoreCommits": "No more commits",
+  "gitLatestCommit": "Latest commit",
+  "gitFilesChanged": "{count} file(s) changed",
+  "@gitFilesChanged": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "gitNoFilesChanged": "No file changes in this commit",
+  "gitMergeCommit": "Merge commit",
+  "gitLoadingFiles": "Loading changed files...",
+  "gitCopyShortHash": "Copy short hash",
+  "gitCopyFullHash": "Copy full hash",
+  "gitActionCreateBranch": "Create branch",
+  "gitActionCreateTag": "Create tag",
+  "gitCreateBranchFromCommit": "Create Branch from Commit",
+  "gitCreateTagAtCommit": "Create Tag at Commit",
+  "gitResetToCommit": "Reset to this Commit",
+  "gitResetSoft": "Soft (Keep working tree and staged)",
+  "gitResetMixed": "Mixed (Keep working tree, unstage)",
+  "gitResetConfirm": "Reset current branch to commit {hash}?",
+  "@gitResetConfirm": {
+    "placeholders": {
+      "hash": {
+        "type": "String"
+      }
+    }
+  },
+  "gitDiffBinary": "Binary file; diff not shown",
+  "gitDiffTooLarge": "File too large; diff not computed",
+  "gitDiffEmpty": "Nothing to show",
+  "gitCopyPath": "Copy path",
+  "gitViewDiff": "View diff",
+  "gitRevert": "Revert changes",
+  "gitDeleteUntrackedConfirm": "Delete {name}? It has never been committed, so Git cannot recover it after deletion.",
+  "gitAddToGitignore": "Add to .gitignore",
+  "gitIgnoreFile": "Ignore this file ({name})",
+  "@gitIgnoreFile": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "gitIgnoreDir": "Ignore directory ({name}/)",
+  "@gitIgnoreDir": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "gitIgnoreExtension": "Ignore same extension (*.{ext})",
+  "@gitIgnoreExtension": {
+    "placeholders": {
+      "ext": {
+        "type": "String"
+      }
+    }
+  },
+  "gitPathCopied": "Path copied",
+  "gitActionFailed": "{action} failed: {error}",
+  "@gitActionFailed": {
+    "placeholders": {
+      "action": {
+        "type": "String"
+      },
+      "error": {
+        "type": "String"
+      }
+    }
+  },
+  "gitActionDone": "{action} successful",
+  "@gitActionDone": {
+    "placeholders": {
+      "action": {
+        "type": "String"
+      }
+    }
+  },
+  "gitCheckoutSuccess": "Switched to {name}",
+  "@gitCheckoutSuccess": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "gitNoRemotePull": "No remote configured; cannot pull",
+  "gitNoRemotePush": "No remote configured; cannot push",
+  "gitPushMasterConfirmTitle": "Branch naming",
+  "gitPushMasterConfirmDesc": "The local branch is master; GitHub and GitLab recommend main. Rename it to main before pushing?",
+  "gitPushRenameToMain": "Rename to main and push",
+  "gitPushKeepMaster": "Push as master",
+  "gitTesting": "Test",
+  "credentialToken": "Access token (PAT)",
+  "gitUserName": "user.name",
+  "gitUserEmail": "user.email",
+  "gitRepoUrl": "Repository URL",
+  "gitSelectBranch": "Select base branch",
+  "credentialTokenLogin": "Token login",
+  "credentialTokenLoginDesc": "Just paste a personal access token; the remote host is matched automatically on push",
+  "credentialTokenSaved": "Token saved",
+  "commonShow": "Show",
+  "commonHide": "Hide",
+  "credentialAdd": "Add credential",
+  "settingsSubtitle": "Manage AI, appearance, sync and app data",
+  "accountAndData": "Account & data",
+  "themeTitle": "Theme",
+  "themeSubtitle": "Appearance, background and display",
+  "aboutSubtitle": "Version, updates and feedback",
+  "mcpTitle": "MCP servers",
+  "mcpSubtitle": "Model Context Protocol services for external tools",
+  "mcpAdd": "Add MCP",
+  "mcpEdit": "Edit MCP",
+  "mcpEmpty": "No MCP servers configured yet",
+  "mcpEmptyHint": "Tap + in the top right to add a remote HTTP or local stdio server",
+  "mcpSearchPlaceholder": "Search MCP servers…",
+  "mcpSearchEmpty": "No matching MCP server",
+  "mcpScopeLabel": "Scope",
+  "mcpScopeGlobal": "Global",
+  "mcpScopeProject": "Project",
+  "mcpTypeStdio": "stdio",
+  "mcpStatusDisabled": "Disabled",
+  "mcpStatusNotConnected": "Not connected",
+  "mcpStatusConnected": "Connected",
+  "mcpStatusConnecting": "Connecting…",
+  "mcpStatusFailed": "Connection failed",
+  "mcpStatusNeedsAuth": "Sign-in required",
+  "mcpToolsCount": "{count} tools",
+  "@mcpToolsCount": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "mcpDetails": "Details",
+  "mcpBasicSettings": "Basics",
+  "mcpEnabledLabel": "Enabled",
+  "mcpNameLabel": "Name",
+  "mcpNameHint": "e.g. fetch, github, gitlab",
+  "mcpNameInvalid": "Name may only contain letters, digits, underscores and hyphens",
+  "mcpTransportType": "Transport",
+  "mcpRemoteHttp": "Remote HTTP",
+  "mcpLocalStdio": "Local stdio",
+  "mcpServerUrl": "Server URL",
+  "mcpServerUrlHint": "e.g. https://api.example.com/mcp",
+  "mcpCustomHeaders": "Custom headers",
+  "mcpNoCustomHeaders": "No custom header configured",
+  "mcpHeaderName": "Header name",
+  "mcpHeaderNameHint": "e.g. Authorization",
+  "mcpHeaderValue": "Header value",
+  "mcpHeaderValueHint": "e.g. Bearer xxxxxx",
+  "mcpAddHeader": "Add header",
+  "mcpCommand": "Command",
+  "mcpCommandHint": "e.g. npx",
+  "mcpArgs": "Arguments",
+  "mcpNoArgs": "No extra arguments",
+  "mcpArgValue": "Argument value",
+  "mcpArgHint": "e.g. -y or @modelcontextprotocol/server-xxx",
+  "mcpAddArg": "Add argument",
+  "mcpToolsSummary": "{enabled} of {total} tools enabled",
+  "@mcpToolsSummary": {
+    "placeholders": {
+      "enabled": {
+        "type": "int"
+      },
+      "total": {
+        "type": "int"
+      }
+    }
+  },
+  "mcpToolsSearch": "Search tools by name or description…",
+  "mcpToolsSearchEmpty": "No matching tool",
+  "mcpToolsEnableAll": "Enable all",
+  "mcpToolsDisableAll": "Disable all",
+  "mcpSaveFirstHint": "Save and connect the server first to see its tools",
+  "mcpNoToolsHint": "No tools detected — tap refresh in the top right to retry",
+  "mcpNoDescription": "No description",
+  "mcpAddSheetTitle": "Add MCP server",
+  "mcpAddManual": "Fill in manually",
+  "mcpAddManualDesc": "Enter URL, headers or a start command",
+  "mcpAddFromJson": "Import from JSON",
+  "mcpAddFromJsonDesc": "Paste a standard mcpServers config to import in bulk",
+  "mcpJsonImportTitle": "Import from JSON",
+  "mcpJsonImportHint": "Paste a standard mcpServers config: the key is the server name, and the value holds a url (remote HTTP) or command (local stdio).",
+  "mcpJsonImportAction": "Import",
+  "mcpJsonImportEmpty": "No MCP server parsed",
+  "mcpSaved": "Saved",
+  "mcpRefreshTools": "Refresh tools",
+  "mcpRemoved": "MCP server removed",
+  "permissionsTitle": "Tool permissions",
+  "permissionsSubtitle": "Rules and memory",
+  "permCurrentProject": "Current project: {name}",
+  "@permCurrentProject": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "permCurrentProjectNone": "Current project (none selected)",
+  "permNoProjectRules": "No rules for this project",
+  "permGlobal": "Global",
+  "permNoGlobalRules": "No global rules",
+  "permEntireTool": "Entire tool",
+  "permDeny": "Deny",
+  "permPromoteToGlobal": "Promote to global",
+  "permRulesShort": "Choosing “Always run” in a chat creates a rule for the current project",
+  "chatPermDeny": "Deny",
+  "chatPermAlwaysAllow": "Always run",
+  "chatPermAlwaysToolDesc": "“Always run” will remember every call of this tool in this project",
+  "chatPermAlwaysPrefix": "“Always run” will remember in this project: ",
+  "chatPermSingleUseDesc": "This call cannot be remembered; single use only",
+  "commonName": "Name",
+  "commonTool": "Tools",
+  "commonAdd": "Add",
+  "commonLabelWithApi": "{label} ({api})",
+  "@commonLabelWithApi": {
+    "placeholders": {
+      "label": {
+        "type": "String"
+      },
+      "api": {
+        "type": "String"
+      }
+    }
+  },
+  "commonExpand": "Expand",
+  "commonCollapse": "Collapse",
+  "mcpViewLogs": "View logs for this MCP",
+  "mcpAuthEnable": "OAuth authentication",
+  "mcpAuthDesc": "For remote MCP services that require browser sign-in",
+  "mcpAuthClientId": "client_id (optional)",
+  "mcpAuthClientIdHint": "Pre-registered client ID; leave empty to try dynamic registration",
+  "mcpAuthServer": "Authorization server (optional)",
+  "mcpAuthServerHint": "Override the discovered authorization server",
+  "mcpAuthAdvanced": "Advanced authentication options",
+  "mcpAuthLogin": "Sign in / Re-authorize",
+  "mcpAuthReauthorize": "Re-authorize",
+  "mcpAuthLogout": "Sign out",
+  "mcpAuthCancel": "Cancel authorization",
+  "mcpAuthInProgress": "Waiting for browser authorization…",
+  "mcpAuthInProgressHint": "The sign-in page was opened in your browser; it will return and connect automatically",
+  "mcpAuthSaveFirst": "Save the server first, then you can authorize here",
+  "mcpAuthFailed": "Authorization failed: {message}",
+  "@mcpAuthFailed": {
+    "placeholders": {
+      "message": {
+        "type": "String"
+      }
+    }
+  },
+  "mcpAuthStatusLabel": "Authorization status",
+  "mcpAuthStatusAuthorized": "Signed in",
+  "mcpAuthStatusUnauthorized": "Not signed in",
+  "mcpAuthStatusAuthorizing": "Authorizing",
+  "mcpAuthSuccess": "Authorized and connected",
+  "settingsReconnect": "Reconnect",
+  "settingsAddMcpServer": "Add MCP server",
+  "settingsContainer": "Container & Images",
+  "settingsContainerSubtitle": "PRoot container, images and initialization",
+  "commonEdit": "Edit",
+  "commonSwitch": "Switch",
+  "chatOpenTerminal": "Open terminal",
+  "terminalTitle": "Terminal",
+  "terminalStartFailed": "Failed to start terminal:\n{message}",
+  "terminalRetry": "Retry",
+  "terminalNoOpenTabs": "No open terminal tabs",
+  "terminalNewTab": "New tab",
+  "terminalCloseTab": "Close tab",
+  "terminalSettingsTitle": "Terminal settings",
+  "terminalThemeTitle": "Color theme",
+  "terminalThemeFollowApp": "Follow app",
+  "terminalThemeTermiusDark": "Termius Dark",
+  "terminalThemeGithubLight": "GitHub Light",
+  "terminalThemeDracula": "Dracula",
+  "terminalThemeOneDark": "One Dark",
+  "terminalThemeMonokai": "Monokai",
+  "terminalThemeGithubDark": "GitHub Dark",
+  "terminalFontSizeTitle": "Font size",
+  "terminalCursorStyleTitle": "Cursor style",
+  "terminalCursorBlock": "Block",
+  "terminalCursorUnderline": "Underline",
+  "terminalCursorBar": "Bar",
+  "terminalFontTitle": "Terminal font",
+  "terminalFontDefault": "System monospace",
+  "terminalFontBuiltin": "JetBrains Mono",
+  "settingsGeneral": "Preferences",
+  "settingsGeneralModels": "Models",
+  "settingsAutoRemoveStaleModels": "Remove stale models after fetching",
+  "settingsAutoRemoveStaleModelsDesc": "On a successful fetch, drop local models the vendor no longer offers",
+  "settingsGeneralSession": "Session",
+  "settingsStartupSession": "Session on launch",
+  "settingsStartupSessionNew": "New session",
+  "settingsStartupSessionNewDesc": "Reuse an empty session, otherwise start a new one",
+  "settingsStartupSessionRecent": "Recent session",
+  "settingsStartupSessionRecentDesc": "Open the most recently updated session",
+  "settingsDeleteExternalWorkspaceSessions": "Delete external workspace chats",
+  "settingsDeleteExternalWorkspaceSessionsDesc": "Also delete a workspace's chats when an external local workspace is removed",
+  "settingsGeneralInput": "Input",
+  "settingsEnterToSend": "Enter key sends message",
+  "settingsEnterToSendDesc": "When off, Enter inserts a newline and you send with the button",
+  "settingsCompactionThreshold": "Auto-compaction threshold",
+  "settingsCompactionThresholdDesc": "Compact context once it reaches this share of the window",
+  "settingsCompactionThresholdInputHint": "Integer percentage between 1 and 100",
+  "settingsPercentValue": "{percent}%",
+  "settingsGeneralNetwork": "Network",
+  "settingsFirstByteTimeout": "First byte timeout",
+  "settingsFirstByteTimeoutDesc": "Max wait for the first response chunk",
+  "settingsStreamIdleTimeout": "Chunk idle timeout",
+  "settingsStreamIdleTimeoutDesc": "Max wait between response chunks",
+  "settingsTimeoutUnlimited": "Unlimited",
+  "settingsTimeoutSeconds": "{seconds} s",
+  "settingsTimeoutInputHint": "Seconds; 0 means unlimited",
+  "settingsMaxNetworkRetries": "Retry attempts",
+  "settingsMaxNetworkRetriesDesc": "Exponential-backoff retries after a network failure",
+  "settingsRetriesCount": "{count}",
+  "settingsRetriesInputHint": "0 disables retries",
+  "settingsGeneralTools": "Tools",
+  "settingsSendfileMaxSize": "sendFile max file size",
+  "settingsGeneralGoal": "Goal",
+  "settingsGoalMaxTurns": "Max continuation turns",
+  "settingsGoalMaxTurnsDesc": "Stop the autonomous loop after this many turns",
+  "settingsGoalMaxTokens": "Token budget",
+  "settingsGoalMaxTokensDesc": "Cap on input+output tokens consumed by the autonomous loop",
+  "settingsTurnsValue": "{count} turns",
+  "@settingsTurnsValue": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "settingsTokensValue": "{count}",
+  "@settingsTokensValue": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "settingsGoalMaxTurnsInputHint": "Integer number of turns greater than 0",
+  "settingsGoalMaxTokensInputHint": "Integer not less than 1000",
+  "settingsSendfileMaxSizeDesc": "Per-file size cap; exceeding it fails the whole batch",
+  "settingsSendfileMaxSizeInputHint": "MB, an integer greater than 0",
+  "settingsMbValue": "{mb} MB",
+  "providerModelsAlignedRemoved": "Removed {count} model(s) no longer offered by the vendor",
+  "tokenStatsTitle": "Token Stats",
+  "tokenStatsPeriodToday": "Today",
+  "tokenStatsPeriod7d": "7 days",
+  "tokenStatsPeriod30d": "30 days",
+  "tokenStatsPeriodAll": "All",
+  "tokenStatsTotal": "Total",
+  "tokenStatsRequests": "Requests",
+  "tokenStatsCost": "Cost",
+  "tokenStatsCacheHitRate": "Cache hit rate",
+  "tokenStatsCacheReadWrite": "Read {read} / Write {write}",
+  "@tokenStatsCacheReadWrite": {
+    "placeholders": {
+      "read": {
+        "type": "String"
+      },
+      "write": {
+        "type": "String"
+      }
+    }
+  },
+  "tokenStatsTrend": "Usage trend",
+  "tokenStatsLegendInput": "Input",
+  "tokenStatsLegendOutput": "Output",
+  "tokenStatsLegendCached": "Cached",
+  "tokenStatsProvider": "By vendor",
+  "tokenStatsModel": "By model",
+  "tokenStatsSuccessRate": "Success rate {rate}",
+  "@tokenStatsSuccessRate": {
+    "placeholders": {
+      "rate": {
+        "type": "String"
+      }
+    }
+  },
+  "tokenStatsRecentCalls": "Call records",
+  "tokenStatsUnknown": "Unknown",
+  "tokenStatsNoData": "No data",
+  "tokenStatsCallsSuffix": "calls",
+  "tokenStatsCallsSuffix2": "{count} calls",
+  "@tokenStatsCallsSuffix2": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "tokenStatsColModel": "Model",
+  "tokenStatsColReasoningEffort": "Effort",
+  "tokenStatsColProvider": "Vendor",
+  "tokenStatsColInput": "Input",
+  "tokenStatsColOutput": "Output",
+  "tokenStatsColCachedRead": "Cache read",
+  "tokenStatsColCachedWrite": "Cache write",
+  "tokenStatsColCacheHitRate": "Hit rate",
+  "tokenStatsColTtfb": "TTFB",
+  "tokenStatsColDuration": "Duration",
+  "tokenStatsColTime": "Time",
+  "tokenStatsColStatus": "Status",
+  "tokenStatsColCost": "Cost",
+  "tokenStatsPage": "Page {page} of {total}",
+  "@tokenStatsPage": {
+    "placeholders": {
+      "page": {
+        "type": "int"
+      },
+      "total": {
+        "type": "int"
+      }
+    }
+  },
+  "tokenStatsRetries": "{count} retries",
+  "@tokenStatsRetries": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "tokenStatsReset": "Reset",
+  "tokenStatsResetTitle": "Reset token stats",
+  "tokenStatsResetConfirm": "All call records will be permanently deleted. Reset?",
+  "tokenStatsFilterAllProviders": "All Vendors",
+  "tokenStatsFilterAllModels": "All Models",
+  "tokenStatsFilterClear": "Clear filters",
+  "tokenStatsFilterProvider": "Vendor: {name}",
+  "@tokenStatsFilterProvider": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "tokenStatsFilterModel": "Model: {name}",
+  "@tokenStatsFilterModel": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "tokenStatsProviderKeys": "{count} keys",
+  "@tokenStatsProviderKeys": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "tokenStatsRequestsUnit": "requests",
+  "tokenStatsHourSuffix": "h",
+  "tokenStatsPrevPage": "Previous",
+  "tokenStatsNextPage": "Next",
+  "settingsCategoryData": "Data & Diagnostics",
+  "gitActionClone": "Clone",
+  "gitActionInit": "Initialize",
+  "gitActionMerge": "Merge Branch",
+  "gitActionStageAll": "Stage all",
+  "gitCloneUrlHint": "https://github.com/user/repo.git",
+  "gitComputingDiff": "Computing diff...",
+  "gitCreateTagTitle": "New Tag",
+  "gitCreateTrackingBranch": "Create a local tracking branch from remote branch {branch} and switch?",
+  "@gitCreateTrackingBranch": {
+    "placeholders": {
+      "branch": {
+        "type": "String"
+      }
+    }
+  },
+  "gitCredentialsAndIdentity": "Credentials & Identity",
+  "gitDetachedHeadWarning": "Switching to tag {ref} will enter detached HEAD state — not on any branch, new commits will not belong to any branch. Continue?",
+  "@gitDetachedHeadWarning": {
+    "placeholders": {
+      "ref": {
+        "type": "String"
+      }
+    }
+  },
+  "gitMergeConfirm": "Merge branch {branch} into current branch ({current})?",
+  "@gitMergeConfirm": {
+    "placeholders": {
+      "branch": {
+        "type": "String"
+      },
+      "current": {
+        "type": "String"
+      }
+    }
+  },
+  "gitMergeNoFf": "Create a merge commit (--no-ff)",
+  "gitOpenInEditor": "Open in Editor",
+  "gitSwitchBranch": "Switch Branch",
+  "gitSwitchConfirm": "Switch to {ref}?",
+  "@gitSwitchConfirm": {
+    "placeholders": {
+      "ref": {
+        "type": "String"
+      }
+    }
+  },
+  "gitToastLoadBranchesFailed": "Failed to load branches: {error}",
+  "@gitToastLoadBranchesFailed": {
+    "placeholders": {
+      "error": {
+        "type": "String"
+      }
+    }
+  },
+  "gitToastRefreshFailed": "Refresh failed: {error}",
+  "@gitToastRefreshFailed": {
+    "placeholders": {
+      "error": {
+        "type": "String"
+      }
+    }
+  },
+  "gitToastActionRefreshFailed": "{message} (refresh failed)",
+  "@gitToastActionRefreshFailed": {
+    "placeholders": {
+      "message": {
+        "type": "String"
+      }
+    }
+  },
+  "gitToastLoadMoreFailed": "Failed to load more: {error}",
+  "@gitToastLoadMoreFailed": {
+    "placeholders": {
+      "error": {
+        "type": "String"
+      }
+    }
+  },
+  "gitToastCheckoutFailed": "Switch failed: {error}",
+  "@gitToastCheckoutFailed": {
+    "placeholders": {
+      "error": {
+        "type": "String"
+      }
+    }
+  },
+  "gitToastNotRepo": "This directory is not a Git repository",
+  "gitToastSwitchRepoFailed": "Switch repository failed: {error}",
+  "@gitToastSwitchRepoFailed": {
+    "placeholders": {
+      "error": {
+        "type": "String"
+      }
+    }
+  },
+  "gitToastDiffFailed": "Failed to load diff",
+  "gitToastNoDiffForCommit": "No changes found to generate commit message",
+  "gitToastGenerateCommitFailed": "Failed to generate commit message, please check model or network",
+  "diffBinaryFile": "Binary file, text diff not supported",
+  "diffFileTooLarge": "File too large, diff calculation skipped",
+  "diffFileTooLargeDesc": "Files over 2000 lines or with extremely long lines are not diffed line-by-line, to avoid rendering and memory pressure.",
+  "diffNoChanges": "No differences",
+  "back": "Back",
+  "chatOpenGit": "Open Git",
+  "switchLabel": "Switch",
+  "credentialEdit": "Edit Credential",
+  "credentialToastSaved": "Credential saved",
+  "credentialToastSaveFailed": "Save failed: %1$s",
+  "@credentialToastSaveFailed": {
+    "placeholders": {
+      "param1": {
+        "type": "String"
+      }
+    }
+  },
+  "credentialToastDeleted": "Credential deleted",
+  "credentialToastIdentitySaved": "Identity and repository URL saved",
+  "credentialEmptyHint": "No credentials yet, tap + to add",
+  "credentialEmptyTitle": "No Git Credentials",
+  "credentialEmptyDesc": "Configure credentials so Codecraft can authenticate when pushing or pulling repositories",
+  "credentialAddManual": "Add manually",
+  "gitTabIdentity": "Identity",
+  "gitTabCredentials": "Credentials",
+  "gitIdentityTitle": "Commit Identity",
+  "gitIdentityCodespace": "Connected to GitHub Codespace {name}",
+  "@gitIdentityCodespace": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "gitRepoUrlTitle": "Repository URL",
+  "gitRemoteUrl": "remote.origin.url",
+  "gitCredentialsCount": "Credentials ({param1})",
+  "@gitCredentialsCount": {
+    "placeholders": {
+      "param1": {
+        "type": "int"
+      }
+    }
+  },
+  "codespacesTitle": "GitHub Codespaces",
+  "codespacesNetworkError": "Network error: {error}",
+  "@codespacesNetworkError": {
+    "placeholders": {
+      "error": {
+        "type": "String"
+      }
+    }
+  },
+  "codespacesAccount": "Account",
+  "codespacesCount": "Codespaces ({count})",
+  "@codespacesCount": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "codespacesEmptyTitle": "No Codespaces yet",
+  "codespacesEmptyDesc": "Create a Codespace on GitHub and it will show up here",
+  "codespacesCreateOnWeb": "Create on github.com",
+  "codespacesRefresh": "Refresh",
+  "codespacesOpenInBrowser": "Open in browser",
+  "codespacesStart": "Start",
+  "codespacesStop": "Stop",
+  "codespacesDelete": "Delete",
+  "codespacesDeleteConfirm": "Delete {name}? This cannot be undone",
+  "@codespacesDeleteConfirm": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "codespacesStateAvailable": "Running",
+  "codespacesStateStarting": "Starting",
+  "codespacesStateStopped": "Stopped",
+  "codespacesStateUnknown": "Unknown state",
+  "codespacesLastUsed": "Last used {time}",
+  "@codespacesLastUsed": {
+    "placeholders": {
+      "time": {
+        "type": "String"
+      }
+    }
+  },
+  "codespacesNoRepo": "Unknown repository",
+  "codespacesUncommitted": "Uncommitted changes",
+  "codespacesMoreActions": "More actions",
+  "editorLoadFailed": "Could not read this file",
+  "editorSaveFailed": "Save failed",
+  "editorSaved": "Saved",
+  "editorCharacters": "Characters",
+  "characterTitle": "Characters",
+  "characterNew": "New Character",
+  "characterEdit": "Edit Character",
+  "characterEmpty": "No characters yet",
+  "characterSearchHint": "Search by name, alias or tags",
+  "characterSearchEmpty": "No matching characters",
+  "characterFieldBasic": "Basic Info",
+  "characterFieldName": "Name",
+  "characterFieldNameHint": "Character's real name",
+  "characterFieldAlias": "Alias/Nickname",
+  "characterFieldAliasHint": "Common nickname in the story",
+  "characterFieldGender": "Gender",
+  "characterFieldGenderHint": "Male/Female/Other",
+  "characterFieldAge": "Age",
+  "characterFieldAgeHint": "Number, e.g. 25",
+  "characterFieldBirthday": "Birthday",
+  "characterFieldBirthdayHint": "Format: MM-DD, e.g. 01-15",
+  "characterFieldAppearance": "Appearance",
+  "characterFieldAppearanceHint": "Height, build, hair/eye color, features",
+  "characterFieldPersonality": "Personality",
+  "characterFieldPersonalityHint": "Traits, behavior patterns, speech style",
+  "characterFieldBackground": "Background",
+  "characterFieldBackgroundHint": "Upbringing, key events, family history",
+  "characterFieldGoals": "Goals",
+  "characterFieldGoalsHint": "What the character wants to achieve",
+  "characterFieldFears": "Fears",
+  "characterFieldFearsHint": "Phobias, trauma, fatal weaknesses",
+  "characterFieldTags": "Tags",
+  "characterFieldTagsHint": "Comma-separated, e.g. protagonist, mage",
+  "characterScope": "Scope",
+  "characterScopeProject": "This project",
+  "characterScopeGlobal": "Global",
+  "characterSelectedCount": "{count} selected",
+  "@characterSelectedCount": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "editorUndo": "Undo",
+  "editorRedo": "Redo",
+  "editorSearch": "Search",
+  "editorSearchHint": "Find",
+  "editorSearchPrev": "Previous",
+  "editorSearchNext": "Next",
+  "editorTypeset": "Auto format",
+  "editorTypesetDone": "Formatted, undoable",
+  "editorCopy": "Copy",
+  "editorCopied": "Copied to clipboard",
+  "editorUnsavedState": "Unsaved",
+  "editorWordCount": "{count} chars",
+  "@editorWordCount": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "editorNoFile": "No file open yet. Use \"Open in editor\" from a diff",
+  "editorUnsavedTitle": "Unsaved changes",
+  "editorUnsavedMessage": "This file has unsaved changes. Save them?",
+  "editorSaveAndExit": "Save and exit",
+  "editorSaveAndSwitch": "Save and switch",
+  "editorDontSave": "Don't save",
+  "editorMdPreview": "Preview Markdown",
+  "editorMdShowSource": "Show source",
+  "editorIndent": "Indent",
+  "editorCursorLeft": "Move cursor left",
+  "editorCursorRight": "Move cursor right",
+  "editorSettings": "Editor settings",
+  "editorFontSize": "Font size",
+  "editorFontSizeValue": "{size} sp",
+  "@editorFontSizeValue": {
+    "placeholders": {
+      "size": {
+        "type": "int"
+      }
+    }
+  },
+  "editorWordWrap": "Word wrap",
+  "editorShowIndentGuide": "Show indent guides",
+  "editorShowWhitespace": "Show whitespace",
+  "editorFileTooLarge": "File too large ({mb} MB) to open",
+  "@editorFileTooLarge": {
+    "placeholders": {
+      "mb": {
+        "type": "int"
+      }
+    }
+  },
+  "editorBinaryUnsupported": "Binary file, cannot open",
+  "editorSaveConflictTitle": "File was modified",
+  "editorSaveConflictMessage": "This file was changed by AI or another program after you opened it. Saving will overwrite those changes.",
+  "editorSaveConflictDiff": "- content on disk\n+ your edits\n\n{diff}",
+  "@editorSaveConflictDiff": {
+    "placeholders": {
+      "diff": {
+        "type": "String"
+      }
+    }
+  },
+  "editorSaveConflictOverwrite": "Overwrite disk",
+  "editorSaveConflictDiscard": "Discard my edits",
+  "editorSaveConflictCancel": "Cancel",
+  "editorSaveConflictDiscarded": "Edits discarded, reloaded from disk",
+  "editorLineColumn": "{line}:{column}",
+  "@editorLineColumn": {
+    "placeholders": {
+      "line": {
+        "type": "int"
+      },
+      "column": {
+        "type": "int"
+      }
+    }
+  },
+  "codespacesConnect": "Connect",
+  "codespacesDisconnect": "Disconnect",
+  "codespacesGhMissing": "gh (GitHub CLI) is missing in the container. Run `codecraft` in the terminal and install the \"GitHub Codespaces\" scenario.",
+  "codespacesExecutionEnv": "Execution environment",
+  "codespacesEnvLocal": "Local container",
+  "codespacesEnvCodespace": "Remote Codespace",
+  "terminalRemoteEnv": "Remote: {name}",
+  "@terminalRemoteEnv": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "codespacesNew": "New Codespace",
+  "codespacesRepoTab": "Repository",
+  "codespacesRepoSearchHint": "Search repositories",
+  "codespacesBranch": "Branch (leave empty for default)",
+  "codespacesMachine": "Machine type",
+  "codespacesMachineDefault": "Default",
+  "codespacesCreate": "Create",
+  "codespacesRename": "Rename",
+  "codespacesRenameTitle": "Codespace display name",
+  "codespacesChangeMachine": "Change machine type",
+  "codespacesNoMachines": "No machine types available for this repository",
+  "codespacesLoadFailed": "Load failed",
+  "codespacesPorts": "Ports",
+  "codespacesPortsEmpty": "No forwarded ports yet",
+  "codespacesPortVisibility": "Visibility",
+  "codespacesPortPrivate": "Private",
+  "codespacesPortOrg": "Organization",
+  "codespacesPortPublic": "Public",
+  "codespacesPortOpen": "Open",
+  "codespacesRebuild": "Rebuild container",
+  "codespacesRebuildDesc": "Rebuild recreates the container from your current devcontainer. Your code and uncommitted changes are preserved, but installed tools and running processes inside the container are lost.",
+  "codespacesRebuildFull": "Full rebuild (also clears cached Docker images; slower)",
+  "settingsLog": "Logs",
+  "settingsLogSubtitle": "App logs and AI request logs",
+  "logFiles": "Log files",
+  "logNoFiles": "No log files yet",
+  "logReadFailed": "Could not read the log: {error}",
+  "@logReadFailed": {
+    "placeholders": {
+      "error": {
+        "type": "String"
+      }
+    }
+  },
+  "logSearchHint": "Search logs",
+  "logNoMatch": "No logs match the current filter",
+  "logLevel": "Log level",
+  "logLevelDesc": "Logs below this level are dropped. VERBOSE records everything during development; NONE disables logging.",
+  "logCopied": "Copied",
+  "logMcpPrefix": "MCP logs: {server}",
+  "@logMcpPrefix": {
+    "placeholders": {
+      "server": {
+        "type": "String"
+      }
+    }
+  },
+  "logSearchResults": "{count} matching lines",
+  "@logSearchResults": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "logShowLastLines": "Showing last {shown}/{total} lines",
+  "@logShowLastLines": {
+    "placeholders": {
+      "shown": {
+        "type": "int"
+      },
+      "total": {
+        "type": "int"
+      }
+    }
+  },
+  "logShowLines": "Showing {count} lines",
+  "@logShowLines": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "logCopy": "Copy",
+  "logClearFilter": "Clear filter",
+  "logCopyMenuTitle": "Copy log",
+  "logCopyLine": "Copy this line",
+  "logCopyWithStack": "Copy with stack trace",
+  "logCopyMessage": "Copy message only",
+  "logFollowLatest": "Follow latest",
+  "logFileLocation": "Log files are located in Android/data/<package>/files/logs/.",
+  "logLevelVerbose": "VERBOSE",
+  "logLevelDebug": "DEBUG",
+  "logLevelInfo": "INFO",
+  "logLevelWarn": "WARN",
+  "logLevelError": "ERROR",
+  "logLevelNone": "NONE",
+  "credentialTokenHint": "Use a GitHub token with the codespace scope; one token covers both git push and Codespaces sign-in",
+  "credentialHostOptional": "Host (optional)",
+  "credentialHostAny": "Leave empty for all hosts",
+  "credentialHostHint": "Fill only to give one host its own token, e.g. gitlab.com",
+  "codespacesNeedCredentialTitle": "No GitHub credential yet",
+  "codespacesNeedCredentialDesc": "Codespaces uses the token from your Git credentials (must include the codespace scope); nothing to fill in here.",
+  "codespacesGoToCredentials": "Open Git credentials",
+  "credentialAllHosts": "All hosts",
+  "credentialUsernameAuto": "Username derived automatically",
+  "chatMentionSkill": "Mention a skill",
+  "chatMentionSkillEmpty": "No skills yet — import or create one in settings first.",
+  "chatMentionSkillManage": "Manage skills",
+  "chatPickFile": "# File",
+  "chatPickFileParent": "Parent folder",
+  "chatPickFileEmpty": "This folder is empty",
+  "mentionHintSkill": "Keep typing to filter skills",
+  "mentionHintFile": "Keep typing to filter files",
+  "fileBrowserError": "Failed to read directory",
+  "fileBrowserRefresh": "Refresh",
+  "fileBrowserExpand": "Expand",
+  "fileBrowserCollapse": "Collapse",
+  "fileBrowserNewFile": "New file",
+  "fileBrowserNewFolder": "New folder",
+  "fileBrowserNameLabel": "Name",
+  "fileBrowserDeleteFileConfirm": "Delete file \"{name}\"?",
+  "@fileBrowserDeleteFileConfirm": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "fileBrowserDeleteFolderConfirm": "Delete folder \"{name}\" and everything inside?",
+  "@fileBrowserDeleteFolderConfirm": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "fileBrowserCreateFailed": "Could not create — a name clash or no write permission",
+  "fileBrowserRenameFailed": "Could not rename — a name clash may exist",
+  "fileBrowserDeleteFailed": "Could not delete",
+  "fileBrowserPasteHere": "Paste here",
+  "fileBrowserExtract": "Extract",
+  "fileBrowserExtractFailed": "Extraction failed",
+  "fileBrowserExtractConflictTitle": "Target folder already exists",
+  "fileBrowserExtractConflict": "A folder named \"{name}\" already exists here. Extracting will overwrite its contents.",
+  "@fileBrowserExtractConflict": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "fileBrowserExtractOverwrite": "Overwrite and extract",
+  "fileBrowserPasteConflictTitle": "An item with that name exists",
+  "fileBrowserPasteConflictMessage": "\"{name}\" already exists here. Overwrite it?",
+  "@fileBrowserPasteConflictMessage": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "fileBrowserClipboardCut": "Cut",
+  "fileBrowserClipboardCopy": "Copied",
+  "commonCopy": "Copy",
+  "commonCut": "Cut",
+  "commonPaste": "Paste",
+  "workspacePickWritingFolder": "Writing folder",
+  "writingFolderNeedAccessTitle": "Storage access needed",
+  "writingFolderNeedAccessDesc": "Reading the AI-writing folder on your device needs all-files access. You can skip and pick a folder directly instead.",
+  "writingFolderGrant": "Grant",
+  "writingFolderSet": "Writing folder set to {path}",
+  "@writingFolderSet": {
+    "placeholders": {
+      "path": {
+        "type": "String"
+      }
+    }
+  },
+  "modelAuto": "Auto Model",
+  "modelAutoDesc": "Picks the best model for each task",
+  "sessionExport": "Export chat",
+  "sessionExportDone": "Exported to {path}",
+  "@sessionExportDone": {
+    "placeholders": {
+      "path": {
+        "type": "String"
+      }
+    }
+  },
+  "sessionExportFailed": "Export failed",
+  "sessionBatchSelect": "Batch select",
+  "sessionSelectedCount": "{count} selected",
+  "@sessionSelectedCount": {
+    "placeholders": {
+      "count": {
+        "type": "String"
+      }
+    }
+  },
+  "sessionSelectAll": "Select all",
+  "sessionCancelSelect": "Cancel",
+  "sessionDeleteSelected": "Delete selected",
+  "sessionDeleteConfirm": "Delete this chat and all its messages?",
+  "fileBrowserNeedPermission": "Cannot read this folder — storage access may be required",
+  "checkpointRewindTitle": "Rewind to here",
+  "checkpointTargetPrompt": "Target: {snippet}",
+  "checkpointRestoreCodeAndConversation": "Restore code and conversation",
+  "checkpointRestoreCodeAndConversationDesc": "Roll back workspace files and delete all later messages; the prompt returns to the input box",
+  "checkpointRestoreConversation": "Restore conversation only",
+  "checkpointRestoreConversationDesc": "Delete all later messages; workspace files stay unchanged",
+  "checkpointRestoreCode": "Restore code only",
+  "checkpointRestoreCodeDesc": "Roll back workspace files; the conversation stays unchanged",
+  "checkpointRewindSkipped": "{count} file(s) skipped because of other changes",
+  "chatMoreOptions": "More options",
+  "chatActionEdit": "Edit",
+  "chatActionDelete": "Delete",
+  "chatEditMessageTitle": "Edit message",
+  "commonConfirm": "OK",
+  "commonCancel": "Cancel",
+  "commonSave": "Save",
+  "commonClose": "Close",
+  "commonBatchDelete": "Batch delete",
+  "tabProjects": "Projects",
+  "projectListEmpty": "No projects yet",
+  "workspaceCurrent": "Current",
+  "workspaceNameHint": "Project name",
+  "projectNew": "New project",
+  "projectUntitled": "Untitled project",
+  "projectKindCoding": "Coding",
+  "projectKindCodingDesc": "Write code, run commands and edit files in a sandbox workspace",
+  "projectKindWriting": "Writing",
+  "projectKindWritingDesc": "Draft and revise documents in the AI Writing folder",
+  "projectKindReverse": "App reverse engineering",
+  "projectKindReverseDesc": "APK analysis, traffic capture, static reversing & debugging aids",
+  "projectDeleteConfirm": "Delete project \"{name}\"? All its sessions will be removed too.",
+  "@projectDeleteConfirm": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "installedAppsTitle": "Choose an app",
+  "installedAppsSearch": "Search by name or package",
+  "installedAppsEmpty": "No matching apps",
+  "storagePermissionGrant": "Grant",
+  "softwarePermissionsTitle": "App permissions",
+  "softwarePermissionsSubtitle": "Tap an item to let the system ask for permission, or open the matching system settings page.",
+  "systemPermissionsGroup": "System permissions",
+  "permissionStorageTitle": "Storage access",
+  "permissionBatteryTitle": "Ignore battery optimization",
+  "permissionBatteryDesc": "Keep running in the background instead of being killed",
+  "permissionAutoStartTitle": "Auto-start",
+  "permissionAutoStartDesc": "Let the system launch the app in the background",
+  "permissionShizukuTitle": "Shizuku",
+  "permissionShizukuDesc": "Tap to download and install Shizuku",
+  "permissionAllowed": "Allowed",
+  "permissionNotAllowed": "Not allowed",
+  "permissionInstalled": "Installed",
+  "permissionNotInstalled": "Not installed",
+  "permissionAppsTitle": "App list",
+  "permissionAppsDesc": "Read installed apps' name, package and version",
+  "apkPathUnavailable": "Can't locate this app's APK. Try another app.",
+  "apkExtractHint": "This project shows the files inside the selected APK. Extract it once to browse.",
+  "apkExtractAction": "Extract APK",
+  "apkExtracting": "Extracting…",
+  "apkExtractFailed": "Extraction failed — the APK may not be readable.",
+  "terminalAgentTab": "AI commands",
+  "commonScrollToBottom": "Scroll to bottom",
+  "runModeAuto": "Auto mode",
+  "runModeBuild": "Build mode",
+  "runModePlan": "Plan mode",
+  "runModePlanIntercept": "Write operations are blocked in plan mode",
+  "runModeBuildAuthorize": "AI wants to perform a write operation. Allow?",
+  "runModeBuildAllow": "Allow",
+  "runModeBuildDeny": "Deny",
+  "runModeSwitchChanged": "Switched run mode to {mode}",
+  "subagentTitle": "Sub-agents",
+  "subagentSubtitle": "Model tiers & custom definitions",
+  "subagentTierSubtitle": "Bind a provider and model to each tier. Unconfigured tiers use the definition's pinned model, or inherit the current session's model",
+  "subagentTierSection": "Model tiers",
+  "subagentTierLight": "Light",
+  "subagentTierStandard": "Standard",
+  "subagentTierStrong": "Strong",
+  "subagentTierLightDesc": "Read-only exploration, batch locating, mechanical renames",
+  "subagentTierStandardDesc": "Single-file edits and routine fixes",
+  "subagentTierStrongDesc": "Cross-module refactors, tricky debugging, and solution design",
+  "subagentTierUnset": "Not set (inherit session model)",
+  "subagentTierPick": "Pick model",
+  "subagentTierClear": "Clear",
+  "subagentTierCleared": "Cleared",
+  "subagentTierSaved": "Saved",
+  "subagentTierSheetTitle": "{tier} tier model",
+  "@subagentTierSheetTitle": {
+    "placeholders": {
+      "tier": {
+        "type": "String"
+      }
+    }
+  },
+  "subagentTierSheetHint": "Pick the provider and model for this tier",
+  "subagentTierSheetInherit": "Inherit session model",
+  "subagentNoticeTitle": "Sub-agent",
+  "subagentStateRunning": "Running",
+  "subagentStateCompleted": "Completed",
+  "subagentStateFailed": "Failed",
+  "subagentStateMessage": "New message",
+  "subagentViewOutput": "View output",
+  "subagentOpen": "Open",
+  "subagentOutputEmpty": "No output yet",
+  "subagentOutputTitle": "Sub-agent output",
+  "promptsTitle": "Prompts",
+  "promptsScenarioSection": "Scenario prompts",
+  "promptsSortLongPress": "Long-press to reorder",
+  "promptsEmpty": "No fragments available",
+  "promptsSourceProject": "Project",
+  "promptsSourceGlobal": "Global",
+  "promptsSourceLocal": "Local",
+  "promptsSourceBuiltin": "Built-in",
+  "promptsFieldBasic": "Basic",
+  "promptsFieldNumber": "Number",
+  "promptsFieldNumberPlaceholder": "Two digits, e.g. 35",
+  "promptsFieldTitle": "Name",
+  "promptsFieldTitlePlaceholder": "e.g. My safety rules",
+  "promptsFieldSummary": "Summary (optional)",
+  "promptsFieldSummaryPlaceholder": "Brief description; not included in the prompt",
+  "promptsFieldContent": "Fragment content",
+  "promptsFieldContentPlaceholder": "What the model should follow",
+  "promptsEditorNew": "New prompt",
+  "promptsEditorEdit": "Edit prompt",
+  "promptsAddPrompt": "Add fragment",
+  "promptsResetCustom": "Reset custom prompts",
+  "promptsResetConfirm": "Deletes every custom prompt fragment in this project and the global layer; each number falls back to the built-in prompt. This cannot be undone.",
+  "promptsResetAction": "Reset",
+  "promptsHelp": "Help",
+  "promptsDisableBuiltin": "Disable all built-in prompts",
+  "promptsDisableBuiltinHint": "Keep only your fragments; you must supply every rule yourself",
+  "promptsBatchDeleteTitle": "Delete Prompts",
+  "promptsBatchDeleteConfirm": "Delete the selected {count} custom prompt fragments? Their numbers will fall back to the next source.",
+  "@promptsBatchDeleteConfirm": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "promptsScope": "Scope",
+  "promptsScopeProject": "This project",
+  "promptsScopeGlobal": "Global",
+  "promptsSelectMode": "Select",
+  "promptsSelectedCount": "{count} selected",
+  "@promptsSelectedCount": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "promptsSelectAll": "Select All",
+  "promptsDeselectAll": "Deselect All",
+  "promptsSummary": "Summary",
+  "promptsGotIt": "Got it",
+  "promptsSubtitle": "Custom prompt fragments",
+  "novelNew": "New Novel",
+  "novelFieldName": "Title",
+  "novelFieldNameHint": "e.g. I Run a Shop in the Cultivation World",
+  "novelFieldGender": "Genre",
+  "novelGenderMale": "Male-oriented",
+  "novelGenderFemale": "Female-oriented",
+  "novelFieldTags": "Tags",
+  "novelFieldTagsHint": "Pick presets or enter your own",
+  "novelCustomTagHint": "Custom tag",
+  "novelFieldWordsPerChapter": "Words per chapter",
+  "novelFieldWordsHint": "Pick a preset or enter a custom count",
+  "novelCreate": "Create",
+  "novelBriefTitle": "New novel “{title}”",
+  "@novelBriefTitle": {
+    "placeholders": {
+      "title": {
+        "type": "String"
+      }
+    }
+  },
+  "novelBriefTags": "Tags: {tags}",
+  "@novelBriefTags": {
+    "placeholders": {
+      "tags": {
+        "type": "String"
+      }
+    }
+  },
+  "novelBriefWords": "Words per chapter: {words}",
+  "@novelBriefWords": {
+    "placeholders": {
+      "words": {
+        "type": "String"
+      }
+    }
+  },
+  "novelScaffoldFailedTitle": "Failed to create novel directory",
+  "novelScaffoldFailed": "Could not create the novel directory under {path}. Check storage permission and try again.",
+  "@novelScaffoldFailed": {
+    "placeholders": {
+      "path": {
+        "type": "String"
+      }
+    }
+  },
+  "agentTitle": "Sub-agents",
+  "agentSubtitle": "Custom agent definitions",
+  "agentListEmpty": "No custom sub-agents yet",
+  "agentListEmptyHint": "Tap + to create a custom sub-agent definition",
+  "agentScopeProject": "Current project",
+  "agentScopeGlobal": "Global",
+  "agentScopeProjectHint": "Only effective in this workspace",
+  "agentScopeGlobalHint": "Shared across all projects",
+  "agentNew": "New sub-agent",
+  "agentEdit": "Edit sub-agent",
+  "agentSave": "Save",
+  "agentCancel": "Cancel",
+  "agentDelete": "Delete",
+  "agentDeleteTitle": "Delete sub-agent",
+  "agentDeleteConfirm": "Delete {name}? This cannot be undone.",
+  "agentImport": "Import",
+  "agentName": "Name",
+  "agentDescription": "Description",
+  "agentDescriptionHint": "When to use this sub-agent",
+  "agentPrompt": "Prompt body",
+  "agentPromptHint": "Instructions appended to the base system prompt",
+  "agentProvider": "Provider",
+  "agentModel": "Model",
+  "agentReasoningEffort": "Reasoning effort",
+  "agentMode": "Default mode",
+  "agentTools": "Tool allow-list",
+  "agentToolsHint": "Empty means inherit all tools",
+  "agentDisallowedTools": "Tool deny-list",
+  "agentInject": "Injected rules",
+  "agentInjectHint": "base/mainRules/skills/memory/projectRules or none",
+  "agentEnable": "Enable",
+  "agentDisable": "Disable",
+  "agentEnabled": "Enabled",
+  "agentDisabled": "Disabled",
+  "agentErrorInvalidName": "Invalid name",
+  "agentErrorEmptyPrompt": "Prompt body is required",
+  "agentErrorNameConflict": "A sub-agent with this name already exists in this scope",
+  "agentErrorIoFailed": "Failed to write file",
+  "agentCapabilityRead": "File read",
+  "agentCapabilityWrite": "File modify",
+  "agentCapabilityCommand": "Run commands",
+  "agentBuiltin": "Built-in",
+  "agentBuiltinHint": "Released on first launch, preserved across upgrades",
+  "agentSelectMode": "Select",
+  "agentBatchEnable": "Enable",
+  "agentBatchDisable": "Disable",
+  "agentBatchDelete": "Delete",
+  "agentBatchAll": "Select all",
+  "agentBatchCancel": "Cancel",
+  "agentSelectedCount": "{count} selected",
+  "agentBatchDeleteConfirm": "Delete {count} sub-agent(s)? This cannot be undone.",
+  "agentBatchDeleting": "Deleting...",
+  "agentInherit": "Inherit session",
+  "agentReasoningNone": "None",
+  "agentReasoningMinimal": "Minimal",
+  "agentReasoningLow": "Low",
+  "agentReasoningMedium": "Medium",
+  "agentReasoningHigh": "High",
+  "agentReasoningXhigh": "X-High",
+  "agentReasoningMax": "Max",
+  "agentModeBuild": "Build",
+  "agentModePlan": "Plan",
+  "agentModeAuto": "Auto",
+  "agentDetail": "Sub-agent detail",
+  "agentDetailHint": "Edit the definition; rename renames the file",
+  "promptsFieldType": "Type",
+  "promptsSaveFailed": "Save failed",
+  "promptsNoOverrideToDelete": "No custom override to delete for this prompt",
+  "codespacesSearchHint": "Search by name, repository, or branch",
+  "codespacesFilterAll": "All",
+  "codespacesFilterRunning": "Running",
+  "codespacesFilterStopped": "Stopped",
+  "codespacesNoMatch": "No codespaces match the current filter",
+  "codespacesStartAndConnect": "Start & Connect",
+  "codespacesConnecting": "Connecting…",
+  "codespacesWaitingForStart": "Waiting for Codespace to become available…",
+  "codespacesConnectError": "Connection failed: {error}",
+  "@codespacesConnectError": {
+    "placeholders": {
+      "error": {
+        "type": "String"
+      }
+    }
+  },
+  "codespacesDetails": "Details",
+  "codespacesOverview": "Overview",
+  "codespacesBranchLabel": "Branch",
+  "codespacesMachineLabel": "Machine",
+  "codespacesLocation": "Region",
+  "codespacesIdleTimeout": "Idle timeout (min)",
+  "codespacesRetentionPeriod": "Retention (days)",
+  "codespacesDevcontainerPath": "Dev container path",
+  "codespacesCreatedAt": "Created",
+  "codespacesOwner": "Owner",
+  "codespacesBillableOwner": "Billable owner",
+  "codespacesCopySsh": "Copy SSH command",
+  "codespacesSshCopied": "SSH command copied",
+  "codespacesOpenWeb": "Open in VS Code for the Web",
+  "codespacesUnpushed": "Unpushed changes",
+  "codespacesGitStatus": "Git status",
+  "codespacesActions": "Actions",
+  "codespacesPendingOperation": "Operation in progress",
+  "codespacesStateQueued": "Queued",
+  "codespacesStateProvisioning": "Provisioning",
+  "codespacesStateShuttingDown": "Shutting down",
+  "codespacesStateFailed": "Failed",
+  "codespacesStateDeleting": "Deleting",
+  "codespacesCurrentEnv": "Current environment",
+  "codespacesSwitchToLocal": "Switch to local container",
+  "codespacesManage": "Manage Codespaces",
+  "codespacesQuickActions": "Codespaces",
+  "codespacesPortCopyUrl": "Copy URL",
+  "codespacesPortUrlCopied": "URL copied",
+  "codespacesErrorInline": "{error}",
+  "@codespacesErrorInline": {
+    "placeholders": {
+      "error": {
+        "type": "String"
+      }
+    }
+  },
+  "codespacesRetry": "Retry",
+  "codespacesRegionDefault": "Default region",
+  "codespacesAdvanced": "Advanced options",
+  "codespacesDevcontainerPathHint": "Path to devcontainer.json (optional)",
+  "codespacesIdleTimeoutHint": "Minutes before idle stop (optional)",
+  "codespacesRetentionHint": "Days to retain stopped codespace (optional)",
+  "codespacesReadinessTitle": "Connection readiness",
+  "codespacesReadinessCredOk": "GitHub credentials: configured",
+  "codespacesReadinessCredMissing": "GitHub credentials: missing (token needs codespace scope)",
+  "codespacesReadinessGhOk": "gh CLI: ready",
+  "codespacesReadinessGhMissing": "gh CLI: not ready (run `codecraft` in terminal and install the Codespaces scenario)",
+  "codespacesOpenTerminal": "Open terminal",
+  "codespacesOpenGit": "Open Git (deploy/sync)",
+  "codespacesManageCredentials": "Manage credentials",
+  "codespacesDeploySyncHint": "Git push/pull and other operations run in the current execution environment. After connecting a Codespace, deploy/sync runs on the remote repo.",
+  "gitExecutionTargetCodespace": "Operations target Codespace: {name}",
+  "@gitExecutionTargetCodespace": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "gitExecutionTargetLocal": "Operations target local container",
+  "gitDeploySyncSection": "Deploy / Sync",
+  "gitDeploySyncHintCodespace": "Push, pull, and remote operations run inside the connected Codespace.",
+  "gitDeploySyncHintLocal": "Push, pull, and remote operations run in the local container; connect a Codespace to deploy/sync remotely.",
+  "gitOpenCodespaces": "Codespaces",
+  "gitOpenTerminal": "Terminal",
+  "terminalCodespaceManage": "Codespaces",
+  "terminalCodespaceCredentials": "Git credentials",
+  "captureTitle": "Capture",
+  "captureStart": "Start proxy",
+  "captureStop": "Stop",
+  "captureRunning": "Running",
+  "captureStopped": "Stopped",
+  "capturePort": "Proxy port",
+  "captureClear": "Clear",
+  "captureSearchHint": "Search URL / method / status",
+  "captureEmpty": "No captured flows. Start proxy and route target traffic to 127.0.0.1:<port>.",
+  "captureLimitHint": "Only proxied traffic is captured. HTTPS requires installing/trusting the CA. Android 7+ apps and pinned apps may not be MITM-decryptable.",
+  "captureCaTitle": "CA certificate",
+  "captureCaPath": "Certificate path",
+  "captureCaGuide": "Install and trust this CA for network/HTTPS capture. Android path varies by device (Security/Encryption & credentials/Install a certificate). Then set HTTP proxy to 127.0.0.1:<port>.",
+  "captureCopyPath": "Copy path",
+  "captureDetail": "Flow detail",
+  "captureRequest": "Request",
+  "captureResponse": "Response",
+  "captureNotFound": "Flow not found",
+  "captureCopyUrl": "Copy URL",
+  "captureInstallCa": "Install cert",
+  "captureOpenSecurity": "Security settings",
+  "captureDownloadCa": "Save certificate",
+  "captureCaInstallFail": "Direct install unavailable (path copied). Install the certificate from system security settings.",
+  "captureVpnPermissionDenied": "VPN permission denied. Please grant VPN permission to enable capture.",
+  "captureSequence": "All requests",
+  "captureDomains": "Domains",
+  "captureDomainSubtitle": "Last request: {time} · {count} requests",
+  "@captureDomainSubtitle": {
+    "placeholders": {
+      "time": {
+        "type": "String"
+      },
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "captureClearConfirm": "Clear all captured flows?",
+  "capturePip": "Window mode",
+  "capturePipUnsupported": "Picture-in-picture is not supported on this device",
+  "capturePipNoTraffic": "No traffic yet",
+  "captureNoDomains": "No domains yet",
+  "captureCopyHost": "Copy host",
+  "captureDeleteConfirm": "Delete all records of this domain?",
+  "captureSort": "Sort",
+  "captureOverview": "Overview",
+  "captureCookies": "Cookies",
+  "captureProtocol": "Protocol",
+  "captureDuration": "Duration",
+  "captureSize": "Size",
+  "captureRemoteAddress": "Remote address",
+  "captureRequestTime": "Request time",
+  "capturePath": "Path",
+  "captureStatusCode": "Status code",
+  "captureRequestHeaders": "Request headers",
+  "captureResponseHeaders": "Response headers",
+  "captureRequestBody": "Request body",
+  "captureResponseBody": "Response body",
+  "captureBodyTruncated": "(body truncated)",
+  "captureFormatted": "Formatted",
+  "captureRaw": "Raw",
+  "captureNoCookies": "No cookies",
+  "captureRequestCookies": "Request cookies",
+  "captureResponseCookies": "Response Set-Cookie"
+}

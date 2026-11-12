@@ -1,0 +1,6 @@
+66e4e749bb11d80fc7ba510a9ce99534  data/data/com.termux/files/usr/share/doc/zlib/copyright
+077c18c952bcd225bde65482a045304e  data/data/com.termux/files/usr/share/man/man3/zlib.3.gz
+9f58c08b97ee807e59e3538a2e1ad925  data/data/com.termux/files/usr/lib/libz.so.1.4
+6d057bf16d5f3484eee337628027ffb5  data/data/com.termux/files/usr/lib/pkgconfig/zlib.pc
+a730225d9b667f6bdaf77d6e52f96d97  data/data/com.termux/files/usr/include/zconf.h
+529a3a0f493b952be01edc8a23c22fee  data/data/com.termux/files/usr/include/zlib.h

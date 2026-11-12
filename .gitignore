@@ -1,0 +1,28 @@
+# Flutter/Dart
+.dart_tool/
+.build/
+build/
+*.iml
+.idea/
+.DS_Store
+
+# Android
+android/.gradle/
+android/app/build/
+android/local.properties
+android/key.properties
+
+# Flutter specific
+.dart_tool/
+.flutter-plugins
+.flutter-plugins-dependencies
+
+# Android NDK
+android/app/src/main/jniLibs/
+
+# macOS
+.DS_Store
+
+# Misc
+*.log
+*.tmp

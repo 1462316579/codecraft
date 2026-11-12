@@ -1,0 +1,86 @@
+plugins {
+    id "com.android.application"
+    id "kotlin-android"
+    // The Flutter Gradle Plugin must be applied after the Android and Kotlin Gradle plugins.
+    id "dev.flutter.flutter-gradle-plugin"
+}
+
+android {
+    namespace = "ids.codecraft.app"
+    compileSdk = 35
+    ndkVersion = "27.0.12077973"
+
+    compileOptions {
+        // sora-editor 的 language-textmate 在 API 33 以下需要核心库脱糖(minSdk 26),
+        // 且其字节码为 Java 17,源码/目标级别与上游保持一致。
+        coreLibraryDesugaringEnabled = true
+        sourceCompatibility = JavaVersion.VERSION_17
+        targetCompatibility = JavaVersion.VERSION_17
+    }
+
+    kotlinOptions {
+        jvmTarget = JavaVersion.VERSION_17
+    }
+
+    defaultConfig {
+        applicationId = "ids.codecraft.app"
+        // You can update the following values to match your application needs.
+        // For more information, see: https://flutter.dev/to/review-gradle-config.
+        // 只打包 arm64:与 flutter build apk --target-platform android-arm64 一致,
+        // 也避免 AGP 为未使用的 ABI 额外配置 native 构建。
+        ndk {
+            abiFilters 'arm64-v8a'
+        }
+        minSdk = 26
+        // 必须保持 28（对齐 ZeroTermux / Termux 官方）：
+        // Android 10 (API 29) 起，targetSdk >= 29 的应用被 SELinux 禁止执行
+        // 应用私有目录 (app_data_file) 中的文件（W^X 策略）。
+        // 而 Termux 用户空间的 bash/apt/coreutils 都是运行时解压到 filesDir/usr/bin
+        // 再 execve 的，targetSdk >= 29 会直接 Permission denied。
+        // targetSdk 28 使应用落在允许直接执行的 SELinux 域（untrusted_app_27）。
+        targetSdk = 28
+        versionCode = flutter.versionCode
+        versionName = flutter.versionName
+    }
+
+    buildTypes {
+        release {
+            // TODO: Add your own signing config for the release build.
+            // Signing with the debug keys for now, so `flutter run --release` works.
+            signingConfig = signingConfigs.debug
+        }
+    }
+
+    // 调试包里 flutter_embedding_debug 会带一份 Vulkan 校验层(15MB),
+    // 只有显式设置 VK_INSTANCE_LAYERS 才会加载,默认不参与运行;
+    // 去掉它让调试包体积落在 APK 传输上限之内。
+    packaging {
+        jniLibs {
+            excludes += ['**/libVkLayer_khronos_validation.so']
+            // 容器运行时:proot 全套必须解压到 nativeLibraryDir 才能被 execve
+            // (App 目录里唯一允许执行的位置,filesDir 在 targetSdk 29+ 会被 W^X 拒绝)。
+            // 代价是安装后多占一份解压副本(proot 全套约 300KB)。
+            useLegacyPackaging = true
+            // proot 是外部预编译产物,不得被构建流程后处理:显式声明避开 AGP/NDK 的 strip 改动字节。
+            keepDebugSymbols += [
+                '**/libproot.so',
+                '**/libproot-loader.so',
+                '**/libproot-loader32.so',
+                '**/libtalloc.so',
+                '**/libandroid-shmem.so',
+            ]
+        }
+    }
+}
+
+flutter {
+    source = "../.."
+}
+
+dependencies {
+    // 停在 0.23.7:上游用的 0.24.6 是用 Kotlin 2.3 编译的,且要求 compileSdk 36,
+    // 升上去要连带换 Kotlin 与 AGP 整条工具链,代价与收益不成比例。
+    implementation("io.github.rosemoe:editor:0.23.7")
+    implementation("io.github.rosemoe:language-textmate:0.23.7")
+    coreLibraryDesugaring("com.android.tools:desugar_jdk_libs:2.1.5")
+}
