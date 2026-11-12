@@ -7,7 +7,7 @@ plugins {
 
 android {
     namespace = "ids.codecraft.app"
-    compileSdk = 35
+    compileSdk = 36
     ndkVersion = "27.0.12077973"
 
     compileOptions {
@@ -38,7 +38,7 @@ android {
         // 而 Termux 用户空间的 bash/apt/coreutils 都是运行时解压到 filesDir/usr/bin
         // 再 execve 的，targetSdk >= 29 会直接 Permission denied。
         // targetSdk 28 使应用落在允许直接执行的 SELinux 域（untrusted_app_27）。
-        targetSdk = 28
+        targetSdk = 36
         versionCode = flutter.versionCode
         versionName = flutter.versionName
     }
