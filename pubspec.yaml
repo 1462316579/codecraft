@@ -40,29 +40,14 @@ dependencies:
   go_router: ^16.1.0
   # 差异页与 Markdown 代码块的行内高亮(highlight.js 的 Dart 移植;主题映射自写,见 core/util/code_highlight.dart)。
   highlight: ^0.7.0
-  sqflite: ^2.4.1
   path: ^1.9.0
   path_provider: ^2.1.5
-  shared_preferences: ^2.5.3
   dio: ^5.11.1
   uuid: ^4.6.0
   intl: ^0.20.3
   lucide_icons: ^0.257.0
   flutter_markdown: ^0.7.7+1
-  image_picker: ^1.2.0
-  file_selector: ^1.0.3
-  flutter_svg: ^2.2.0
-  url_launcher: ^6.3.2
-  crypto: ^3.0.6
-  webview_flutter: ^4.8.0
-  webview_flutter_android: ^4.4.0
-  image: ^4.12.0
   # 侧边栏文件树的压缩包解压(zip/tar 及 gz/bz2/xz/zstd 变体)。
-  archive: ^4.6.0
-  video_player: ^2.8.0
-  basic_utils: ^5.8.2
-  kyroon_pty: ^1.0.7
-  xterm: ^4.0.0
 
 dev_dependencies:
   flutter_test:
