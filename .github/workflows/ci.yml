@@ -22,9 +22,9 @@ jobs:
           distribution: 'temurin'
           java-version: '27'
 
-      - name: Set up Flutter 3.44
+      - name: Set up Flutter (latest stable)
         run: |
-          git clone https://github.com/flutter/flutter.git -b 3.44 --depth 1 /opt/flutter
+          git clone https://github.com/flutter/flutter.git -b stable --depth 1 /opt/flutter
           /opt/flutter/bin/flutter --version
 
       - name: Set up Android SDK
