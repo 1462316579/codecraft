@@ -14,7 +14,7 @@ jobs:
 
     steps:
       - name: Checkout code
-        uses: actions/checkout@v5
+        uses: actions/checkout@v4
 
       - name: Set up JDK 27
         uses: actions/setup-java@v5
@@ -30,15 +30,7 @@ jobs:
       - name: Set up Android SDK
         uses: android-actions/setup-android@v4
         with:
-          packages: platform-tools
-
-      - name: Install Android SDK Platform
-        run: |
-          $ANDROID_HOME/cmdline-tools/latest/bin/sdkmanager "platforms;android-35" --sdk_root=$ANDROID_HOME
-
-      - name: Install Android Build Tools
-        run: |
-          $ANDROID_HOME/cmdline-tools/latest/bin/sdkmanager "build-tools;35.0.0" --sdk_root=$ANDROID_HOME
+          packages: platform-tools,platforms;android-34,build-tools;35.0.0
 
       - name: Install Android NDK
         run: |
@@ -53,7 +45,7 @@ jobs:
         run: |
           export PATH=/opt/flutter/bin:$PATH
           cd android
-          ./gradlew assembleDebug
+          ./gradlew assembleDebug --stacktrace
         env:
           ANDROID_HOME: ${{ env.ANDROID_HOME }}
           ANDROID_NDK_HOME: ${{ env.ANDROID_HOME }}/ndk/27.0.12077973
