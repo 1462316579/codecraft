@@ -256,8 +256,8 @@ class _TerminalViewBodyState extends ConsumerState<_TerminalViewBody> {
       onUserInput: (bytes) {
         final tab = widget.notifier.state.active;
         if (tab == null) return;
-        // 通过 kyroon_pty 的 Pty 对象发送用户输入到终端进程
-        tab.pty?.write(Uint8List.fromList(bytes));
+        // 通过 shell 通道发送用户输入到终端进程
+        tab.pty?.write(bytes);
       },
       onPtyOutput: (bytes) {
         widget.controller.feedOutput(bytes);

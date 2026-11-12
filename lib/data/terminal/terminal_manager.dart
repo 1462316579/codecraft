@@ -3,6 +3,7 @@ import 'dart:async';
 import 'dart:typed_data';
 
 import 'package:kyroon_pty/kyroon_pty.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../core/terminal/terminal.dart';
@@ -12,7 +13,7 @@ class TerminalTab {
   final String id;
   String title;
   final TerminalController controller;
-  final Pty? pty;
+  final Pty pty;
   bool running = false;
   final bool mirror;
 
@@ -20,7 +21,7 @@ class TerminalTab {
     required this.id,
     required this.title,
     required this.controller,
-    this.pty,
+    required this.pty,
     this.mirror = false,
   });
 
@@ -112,7 +113,7 @@ class TerminalTabsNotifier extends Notifier<TerminalTabsState> {
     }
   }
 
-  /// 打开新的终端标签（使用 kyroon_pty，不依赖原生库加载问题）
+  /// 打开新的终端标签（使用 kyroon_pty）
   Future<void> newTab() async {
     if (state.creating) return;
     state = state.copyWith(creating: true, error: () => null);
@@ -179,13 +180,13 @@ class TerminalTabsNotifier extends Notifier<TerminalTabsState> {
   void write(String data) {
     final tab = state.active;
     if (tab == null) return;
-    tab.pty?.write(Uint8List.fromList(utf8.encode(data)));
+    tab.pty.write(Uint8List.fromList(utf8.encode(data)));
   }
 
   void writeBytes(List<int> bytes) {
     final tab = state.active;
     if (tab == null) return;
-    tab.pty?.write(Uint8List.fromList(bytes));
+    tab.pty.write(Uint8List.fromList(bytes));
   }
 
   void toggleCtrl() => state = state.copyWith(ctrl: !state.ctrl);
@@ -210,7 +211,7 @@ class TerminalTabsNotifier extends Notifier<TerminalTabsState> {
       id: agentTabId,
       title: title,
       controller: controller,
-      pty: null,
+      pty: Pty.start('bash'),
       mirror: true,
     );
     state = state.copyWith(tabs: [...state.tabs, tab]);

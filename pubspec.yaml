@@ -63,8 +63,8 @@ dependencies:
   audioplayers: ^6.0.0
   video_player: ^2.8.0
   basic_utils: ^5.8.2
+  kyroon_pty: ^1.0.7
   xterm: ^4.0.0
-  flutter_pty: ^0.4.2
 
 dev_dependencies:
   flutter_test:
