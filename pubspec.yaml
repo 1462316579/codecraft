@@ -60,7 +60,6 @@ dependencies:
   image: ^4.12.0
   # 侧边栏文件树的压缩包解压(zip/tar 及 gz/bz2/xz/zstd 变体)。
   archive: ^4.6.0
-  audioplayers: ^6.0.0
   video_player: ^2.8.0
   basic_utils: ^5.8.2
   kyroon_pty: ^1.0.7
