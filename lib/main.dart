@@ -49,7 +49,13 @@ Future<void> main() async {
   );
 
   final preferences = await SharedPreferences.getInstance();
-  final database = await AppDatabase.open();
+  late final AppDatabase database;
+  try {
+    database = await AppDatabase.open();
+  } catch (e) {
+    print("DB open failed: $e, falling back to in-memory database");
+    database = await AppDatabase.open(inMemory: true);
+  }
   final workspace = await openWorkspace();
   final configDir = (await getApplicationDocumentsDirectory()).path;
 

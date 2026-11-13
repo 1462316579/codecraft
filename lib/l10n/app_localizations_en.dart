@@ -1,3 +1,5 @@
+// ignore: unused_import
+import 'package:intl/intl.dart' as intl;
 import 'app_localizations.dart';
 
 // ignore_for_file: type=lint
@@ -55,13 +57,15 @@ class AppLocalizationsEn extends AppLocalizations {
   String get reverseLoadFailed => 'Failed to open';
 
   @override
-  String get reverseParseFailed => 'Failed to parse; the file may be packed or corrupted';
+  String get reverseParseFailed =>
+      'Failed to parse; the file may be packed or corrupted';
 
   @override
   String get reverseEditString => 'Edit string';
 
   @override
-  String get reverseEqualLengthHint => 'Equal-length replacement only: the encoded byte length must match the original, otherwise every offset in the file shifts';
+  String get reverseEqualLengthHint =>
+      'Equal-length replacement only: the encoded byte length must match the original, otherwise every offset in the file shifts';
 
   @override
   String get reverseEditByte => 'Edit byte';
@@ -97,7 +101,8 @@ class AppLocalizationsEn extends AppLocalizations {
   String get reverseAbstractMethod => 'No body';
 
   @override
-  String get reverseSmaliHint => 'Smali disassembly; offset is the byte offset inside the method body';
+  String get reverseSmaliHint =>
+      'Smali disassembly; offset is the byte offset inside the method body';
 
   @override
   String get reverseOpenAsHex => 'Open as hex';
@@ -211,7 +216,8 @@ class AppLocalizationsEn extends AppLocalizations {
   String get license => 'License';
 
   @override
-  String get licenseBody => 'This project is a Flutter port of jieapi/Codecraft, licensed under GPL-3.0.';
+  String get licenseBody =>
+      'This project is a Flutter port of jieapi/Codecraft, licensed under GPL-3.0.';
 
   @override
   String get addProvider => 'Add provider';
@@ -309,7 +315,8 @@ class AppLocalizationsEn extends AppLocalizations {
   String get emptyChatHint => 'Pick a conversation to start';
 
   @override
-  String get errorNoProvider => 'No usable provider configured. Add one in Settings first.';
+  String get errorNoProvider =>
+      'No usable provider configured. Add one in Settings first.';
 
   @override
   String get errorNoModel => 'Pick a model for this provider';
@@ -336,13 +343,15 @@ class AppLocalizationsEn extends AppLocalizations {
   String get useFullUrlHint => 'baseUrl is a full endpoint URL';
 
   @override
-  String get aboutBody => 'Codecraft Flutter is a Flutter port of jieapi/Codecraft (Phase 1: core chat loop).';
+  String get aboutBody =>
+      'Codecraft Flutter is a Flutter port of jieapi/Codecraft (Phase 1: core chat loop).';
 
   @override
   String get chatPlaceholder => 'How can I help you?';
 
   @override
-  String get chatInputHint => 'Describe what you need and I\'ll write, modify or explain code';
+  String get chatInputHint =>
+      'Describe what you need and I\'ll write, modify or explain code';
 
   @override
   String get openSidebar => 'Open sidebar';
@@ -509,7 +518,8 @@ class AppLocalizationsEn extends AppLocalizations {
   }
 
   @override
-  String get attachmentUnsupportedImageType => 'Unrecognized image type; only jpg/png/gif/webp are supported';
+  String get attachmentUnsupportedImageType =>
+      'Unrecognized image type; only jpg/png/gif/webp are supported';
 
   @override
   String get attachmentReadFileFailed => 'Cannot read the selected file';
@@ -524,7 +534,8 @@ class AppLocalizationsEn extends AppLocalizations {
   String get imagePreview => 'Image preview';
 
   @override
-  String get imageLoadFailed => 'Failed to load the image; the file may have been moved or deleted';
+  String get imageLoadFailed =>
+      'Failed to load the image; the file may have been moved or deleted';
 
   @override
   String get close => 'Close';
@@ -554,10 +565,12 @@ class AppLocalizationsEn extends AppLocalizations {
   String get skillsScopeProject => 'Project skills';
 
   @override
-  String get skillsScopeGlobalHint => '~/.codecraft/skills, shared across projects';
+  String get skillsScopeGlobalHint =>
+      '~/.codecraft/skills, shared across projects';
 
   @override
-  String get skillsScopeProjectHint => '~/workspace/.codecraft/skills, tied to the current workspace';
+  String get skillsScopeProjectHint =>
+      '~/workspace/.codecraft/skills, tied to the current workspace';
 
   @override
   String skillsProjectGroup(String name) {
@@ -574,7 +587,8 @@ class AppLocalizationsEn extends AppLocalizations {
   String get skillsEmpty => 'No skills yet';
 
   @override
-  String get skillsEmptyHint => 'Skills are focused instructions for the AI; import a SKILL.md or create one.';
+  String get skillsEmptyHint =>
+      'Skills are focused instructions for the AI; import a SKILL.md or create one.';
 
   @override
   String get skillsName => 'Name';
@@ -583,13 +597,15 @@ class AppLocalizationsEn extends AppLocalizations {
   String get skillsDescription => 'Description';
 
   @override
-  String get skillsDescriptionHint => 'When to use this skill (goes into the system prompt)';
+  String get skillsDescriptionHint =>
+      'When to use this skill (goes into the system prompt)';
 
   @override
   String get skillsInstructions => 'Instructions';
 
   @override
-  String get skillsInstructionsHint => 'Steps the skill should follow, written in Markdown';
+  String get skillsInstructionsHint =>
+      'Steps the skill should follow, written in Markdown';
 
   @override
   String skillsImported(String name) {
@@ -605,7 +621,8 @@ class AppLocalizationsEn extends AppLocalizations {
   }
 
   @override
-  String get skillsErrorInvalidName => 'Invalid skill name: cannot be empty, too long, or contain / \\ : * ? \" < > |';
+  String get skillsErrorInvalidName =>
+      'Invalid skill name: cannot be empty, too long, or contain / \\ : * ? \" < > |';
 
   @override
   String get skillsErrorEmptyInstructions => 'Instructions cannot be empty';
@@ -646,13 +663,15 @@ class AppLocalizationsEn extends AppLocalizations {
   String get providerFullUrl => 'Full URL';
 
   @override
-  String get providerFullUrlDesc => 'Base URL is the full request address; no default path is appended';
+  String get providerFullUrlDesc =>
+      'Base URL is the full request address; no default path is appended';
 
   @override
   String get providerHeadersTitle => 'Custom headers';
 
   @override
-  String get providerHeadersDesc => 'Fully override default headers of the same name for this provider';
+  String get providerHeadersDesc =>
+      'Fully override default headers of the same name for this provider';
 
   @override
   String get providerHeadersAdd => 'Add header';
@@ -678,7 +697,8 @@ class AppLocalizationsEn extends AppLocalizations {
   String get providerNoModels => 'No models';
 
   @override
-  String get providerNoModelsHint => 'Tap the button in the top-right to add a model';
+  String get providerNoModelsHint =>
+      'Tap the button in the top-right to add a model';
 
   @override
   String get providerModelCurrent => 'Current';
@@ -774,7 +794,8 @@ class AppLocalizationsEn extends AppLocalizations {
   String get providerModelContextOutput => 'Output limit (tokens)';
 
   @override
-  String get providerModelWindowInvalid => 'Enter a valid positive integer, or leave blank to use the automatically detected value';
+  String get providerModelWindowInvalid =>
+      'Enter a valid positive integer, or leave blank to use the automatically detected value';
 
   @override
   String get providerModelSectionPrice => 'Price';
@@ -789,7 +810,8 @@ class AppLocalizationsEn extends AppLocalizations {
   String get providerModelPriceCacheRead => 'Cache read price (USD/1M tokens)';
 
   @override
-  String get providerModelPriceCacheWrite => 'Cache write price (USD/1M tokens)';
+  String get providerModelPriceCacheWrite =>
+      'Cache write price (USD/1M tokens)';
 
   @override
   String get providerModelCapabilities => 'Capabilities';
@@ -810,7 +832,8 @@ class AppLocalizationsEn extends AppLocalizations {
   String get providerModelSectionReasoning => 'Reasoning levels';
 
   @override
-  String get providerModelReasoningHint => 'Tick only the levels this model really accepts; leave all unticked to use the built-in capability table';
+  String get providerModelReasoningHint =>
+      'Tick only the levels this model really accepts; leave all unticked to use the built-in capability table';
 
   @override
   String get providerModelReasoningCanDisable => 'Thinking can be turned off';
@@ -834,7 +857,8 @@ class AppLocalizationsEn extends AppLocalizations {
   String get providerMultiKeyTitle => 'Multi-key mode';
 
   @override
-  String get providerMultiKeySubtitle => 'Keep several keys for one provider; switch and resend automatically when a key fails';
+  String get providerMultiKeySubtitle =>
+      'Keep several keys for one provider; switch and resend automatically when a key fails';
 
   @override
   String get providerMultiKeyManage => 'Multi-key management';
@@ -862,7 +886,8 @@ class AppLocalizationsEn extends AppLocalizations {
   String get providerMultiKeyWeight => 'Scheduling weight';
 
   @override
-  String get providerMultiKeyWeightHint => 'Default 1 · ≤ 0 skips it · max 1,000,000';
+  String get providerMultiKeyWeightHint =>
+      'Default 1 · ≤ 0 skips it · max 1,000,000';
 
   @override
   String get providerMultiKeyStrategy => 'Pick strategy';
@@ -871,25 +896,29 @@ class AppLocalizationsEn extends AppLocalizations {
   String get providerMultiKeyStrategySequential => 'Sequential';
 
   @override
-  String get providerMultiKeyStrategySequentialDesc => 'Always use the leading key; move on only after repeated failures';
+  String get providerMultiKeyStrategySequentialDesc =>
+      'Always use the leading key; move on only after repeated failures';
 
   @override
   String get providerMultiKeyStrategyRoundRobin => 'Round robin';
 
   @override
-  String get providerMultiKeyStrategyRoundRobinDesc => 'New sessions start on the next key to spread quota; keep the same key within a session to stay cache-friendly';
+  String get providerMultiKeyStrategyRoundRobinDesc =>
+      'New sessions start on the next key to spread quota; keep the same key within a session to stay cache-friendly';
 
   @override
   String get providerMultiKeyStatusCodes => 'Auto-switch status codes';
 
   @override
-  String get providerMultiKeyStatusCodesHint => 'Comma separated; leave empty for default 401,402,403,429';
+  String get providerMultiKeyStatusCodesHint =>
+      'Comma separated; leave empty for default 401,402,403,429';
 
   @override
   String get providerMultiKeyCooldown => 'Cooldown';
 
   @override
-  String get providerMultiKeyCooldownDesc => 'How long a switched-away key stays out of the pool';
+  String get providerMultiKeyCooldownDesc =>
+      'How long a switched-away key stays out of the pool';
 
   @override
   String get workspaceOpen => 'Workspace';
@@ -931,7 +960,8 @@ class AppLocalizationsEn extends AppLocalizations {
   String get workspaceNew => 'New';
 
   @override
-  String get workspaceEmptyHint => 'No workspaces yet, tap New in the top-right';
+  String get workspaceEmptyHint =>
+      'No workspaces yet, tap New in the top-right';
 
   @override
   String get workspaceNameExists => 'A workspace with this name already exists';
@@ -986,7 +1016,8 @@ class AppLocalizationsEn extends AppLocalizations {
   String get browserReload => 'Reload';
 
   @override
-  String get browserNotReady => 'Browser not ready. Enter a URL in the address bar to start browsing.';
+  String get browserNotReady =>
+      'Browser not ready. Enter a URL in the address bar to start browsing.';
 
   @override
   String get browserNewTab => 'New tab';
@@ -1003,13 +1034,15 @@ class AppLocalizationsEn extends AppLocalizations {
   }
 
   @override
-  String get browserEmptyHint => 'Enter a URL in the address bar above to start browsing';
+  String get browserEmptyHint =>
+      'Enter a URL in the address bar above to start browsing';
 
   @override
   String get browserTabsManage => 'Manage Tabs';
 
   @override
-  String get browserEmptyClickHint => 'Tap above to enter a URL and start browsing';
+  String get browserEmptyClickHint =>
+      'Tap above to enter a URL and start browsing';
 
   @override
   String get browserNightModeOn => 'Turn off night mode';
@@ -1042,7 +1075,8 @@ class AppLocalizationsEn extends AppLocalizations {
   String get browserNightModeTitle => 'Night mode';
 
   @override
-  String get browserNightModeDesc => 'Dim page brightness and enable dark mode preference';
+  String get browserNightModeDesc =>
+      'Dim page brightness and enable dark mode preference';
 
   @override
   String get browserDevtoolsTitle => 'Developer tools';
@@ -1161,7 +1195,8 @@ class AppLocalizationsEn extends AppLocalizations {
   String get gitUnstageAll => 'Unstage all';
 
   @override
-  String get gitUnstageAllConfirm => 'All files will be unstaged, but their contents will not be deleted. Continue?';
+  String get gitUnstageAllConfirm =>
+      'All files will be unstaged, but their contents will not be deleted. Continue?';
 
   @override
   String get gitActionRevertAll => 'Revert all';
@@ -1199,19 +1234,22 @@ class AppLocalizationsEn extends AppLocalizations {
   String get gitMergePendingTitle => 'Merge Awaiting Commit';
 
   @override
-  String get gitMergePendingHint => 'There are no unresolved conflicts. Review and stage the changes you want to keep, then commit to complete the merge.';
+  String get gitMergePendingHint =>
+      'There are no unresolved conflicts. Review and stage the changes you want to keep, then commit to complete the merge.';
 
   @override
   String get gitActionAbortMerge => 'Abort Merge';
 
   @override
-  String get gitAbortMergeConfirm => 'Abort the current merge? Unresolved changes will be discarded and the working tree will be restored.';
+  String get gitAbortMergeConfirm =>
+      'Abort the current merge? Unresolved changes will be discarded and the working tree will be restored.';
 
   @override
   String get gitCommitChanges => 'Commit Changes';
 
   @override
-  String get gitCommitNeedsIdentity => 'No commit identity configured. Set your name and email in “Credentials & Identity”.';
+  String get gitCommitNeedsIdentity =>
+      'No commit identity configured. Set your name and email in “Credentials & Identity”.';
 
   @override
   String get gitCommitDialogTitle => 'Commit Changes';
@@ -1267,7 +1305,8 @@ class AppLocalizationsEn extends AppLocalizations {
   String get gitStashClear => 'Clear All';
 
   @override
-  String get gitStashClearConfirm => 'Clear all stashes? This action cannot be undone.';
+  String get gitStashClearConfirm =>
+      'Clear all stashes? This action cannot be undone.';
 
   @override
   String gitStashCount(int count) {
@@ -1281,7 +1320,8 @@ class AppLocalizationsEn extends AppLocalizations {
   String get gitPush => 'Push';
 
   @override
-  String get gitPullDirtyConfirm => 'The working tree has uncommitted changes. Pulling may cause conflicts. Commit or stage them first if possible. Continue pulling?';
+  String get gitPullDirtyConfirm =>
+      'The working tree has uncommitted changes. Pulling may cause conflicts. Commit or stage them first if possible. Continue pulling?';
 
   @override
   String get gitPullContinue => 'Continue Pull';
@@ -1332,10 +1372,12 @@ class AppLocalizationsEn extends AppLocalizations {
   String get gitCloningHint => 'Cloning repository, please wait…';
 
   @override
-  String get gitInitDescPrimary => 'Initialize a new repository to start versioning';
+  String get gitInitDescPrimary =>
+      'Initialize a new repository to start versioning';
 
   @override
-  String get gitInitDescSecondary => 'Or pick an existing repository from a subdirectory';
+  String get gitInitDescSecondary =>
+      'Or pick an existing repository from a subdirectory';
 
   @override
   String get gitInitRepo => 'Initialize repository';
@@ -1347,7 +1389,8 @@ class AppLocalizationsEn extends AppLocalizations {
   String get gitCloneDialogTitle => 'Clone Git repository';
 
   @override
-  String get gitCloneDesc => 'Clone into the workspace root (must be empty). For private repositories, tap the key icon to sign in with GitHub or paste an access token first.';
+  String get gitCloneDesc =>
+      'Clone into the workspace root (must be empty). For private repositories, tap the key icon to sign in with GitHub or paste an access token first.';
 
   @override
   String get gitCloneUrlLabel => 'Repository URL';
@@ -1581,7 +1624,8 @@ class AppLocalizationsEn extends AppLocalizations {
   String get gitPushMasterConfirmTitle => 'Branch naming';
 
   @override
-  String get gitPushMasterConfirmDesc => 'The local branch is master; GitHub and GitLab recommend main. Rename it to main before pushing?';
+  String get gitPushMasterConfirmDesc =>
+      'The local branch is master; GitHub and GitLab recommend main. Rename it to main before pushing?';
 
   @override
   String get gitPushRenameToMain => 'Rename to main and push';
@@ -1611,7 +1655,8 @@ class AppLocalizationsEn extends AppLocalizations {
   String get credentialTokenLogin => 'Token login';
 
   @override
-  String get credentialTokenLoginDesc => 'Just paste a personal access token; the remote host is matched automatically on push';
+  String get credentialTokenLoginDesc =>
+      'Just paste a personal access token; the remote host is matched automatically on push';
 
   @override
   String get credentialTokenSaved => 'Token saved';
@@ -1644,7 +1689,8 @@ class AppLocalizationsEn extends AppLocalizations {
   String get mcpTitle => 'MCP servers';
 
   @override
-  String get mcpSubtitle => 'Model Context Protocol services for external tools';
+  String get mcpSubtitle =>
+      'Model Context Protocol services for external tools';
 
   @override
   String get mcpAdd => 'Add MCP';
@@ -1656,7 +1702,8 @@ class AppLocalizationsEn extends AppLocalizations {
   String get mcpEmpty => 'No MCP servers configured yet';
 
   @override
-  String get mcpEmptyHint => 'Tap + in the top right to add a remote HTTP or local stdio server';
+  String get mcpEmptyHint =>
+      'Tap + in the top right to add a remote HTTP or local stdio server';
 
   @override
   String get mcpSearchPlaceholder => 'Search MCP servers…';
@@ -1715,7 +1762,8 @@ class AppLocalizationsEn extends AppLocalizations {
   String get mcpNameHint => 'e.g. fetch, github, gitlab';
 
   @override
-  String get mcpNameInvalid => 'Name may only contain letters, digits, underscores and hyphens';
+  String get mcpNameInvalid =>
+      'Name may only contain letters, digits, underscores and hyphens';
 
   @override
   String get mcpTransportType => 'Transport';
@@ -1792,10 +1840,12 @@ class AppLocalizationsEn extends AppLocalizations {
   String get mcpToolsDisableAll => 'Disable all';
 
   @override
-  String get mcpSaveFirstHint => 'Save and connect the server first to see its tools';
+  String get mcpSaveFirstHint =>
+      'Save and connect the server first to see its tools';
 
   @override
-  String get mcpNoToolsHint => 'No tools detected — tap refresh in the top right to retry';
+  String get mcpNoToolsHint =>
+      'No tools detected — tap refresh in the top right to retry';
 
   @override
   String get mcpNoDescription => 'No description';
@@ -1813,13 +1863,15 @@ class AppLocalizationsEn extends AppLocalizations {
   String get mcpAddFromJson => 'Import from JSON';
 
   @override
-  String get mcpAddFromJsonDesc => 'Paste a standard mcpServers config to import in bulk';
+  String get mcpAddFromJsonDesc =>
+      'Paste a standard mcpServers config to import in bulk';
 
   @override
   String get mcpJsonImportTitle => 'Import from JSON';
 
   @override
-  String get mcpJsonImportHint => 'Paste a standard mcpServers config: the key is the server name, and the value holds a url (remote HTTP) or command (local stdio).';
+  String get mcpJsonImportHint =>
+      'Paste a standard mcpServers config: the key is the server name, and the value holds a url (remote HTTP) or command (local stdio).';
 
   @override
   String get mcpJsonImportAction => 'Import';
@@ -1869,7 +1921,8 @@ class AppLocalizationsEn extends AppLocalizations {
   String get permPromoteToGlobal => 'Promote to global';
 
   @override
-  String get permRulesShort => 'Choosing “Always run” in a chat creates a rule for the current project';
+  String get permRulesShort =>
+      'Choosing “Always run” in a chat creates a rule for the current project';
 
   @override
   String get chatPermDeny => 'Deny';
@@ -1878,13 +1931,16 @@ class AppLocalizationsEn extends AppLocalizations {
   String get chatPermAlwaysAllow => 'Always run';
 
   @override
-  String get chatPermAlwaysToolDesc => '“Always run” will remember every call of this tool in this project';
+  String get chatPermAlwaysToolDesc =>
+      '“Always run” will remember every call of this tool in this project';
 
   @override
-  String get chatPermAlwaysPrefix => '“Always run” will remember in this project: ';
+  String get chatPermAlwaysPrefix =>
+      '“Always run” will remember in this project: ';
 
   @override
-  String get chatPermSingleUseDesc => 'This call cannot be remembered; single use only';
+  String get chatPermSingleUseDesc =>
+      'This call cannot be remembered; single use only';
 
   @override
   String get commonName => 'Name';
@@ -1913,19 +1969,22 @@ class AppLocalizationsEn extends AppLocalizations {
   String get mcpAuthEnable => 'OAuth authentication';
 
   @override
-  String get mcpAuthDesc => 'For remote MCP services that require browser sign-in';
+  String get mcpAuthDesc =>
+      'For remote MCP services that require browser sign-in';
 
   @override
   String get mcpAuthClientId => 'client_id (optional)';
 
   @override
-  String get mcpAuthClientIdHint => 'Pre-registered client ID; leave empty to try dynamic registration';
+  String get mcpAuthClientIdHint =>
+      'Pre-registered client ID; leave empty to try dynamic registration';
 
   @override
   String get mcpAuthServer => 'Authorization server (optional)';
 
   @override
-  String get mcpAuthServerHint => 'Override the discovered authorization server';
+  String get mcpAuthServerHint =>
+      'Override the discovered authorization server';
 
   @override
   String get mcpAuthAdvanced => 'Advanced authentication options';
@@ -1946,10 +2005,12 @@ class AppLocalizationsEn extends AppLocalizations {
   String get mcpAuthInProgress => 'Waiting for browser authorization…';
 
   @override
-  String get mcpAuthInProgressHint => 'The sign-in page was opened in your browser; it will return and connect automatically';
+  String get mcpAuthInProgressHint =>
+      'The sign-in page was opened in your browser; it will return and connect automatically';
 
   @override
-  String get mcpAuthSaveFirst => 'Save the server first, then you can authorize here';
+  String get mcpAuthSaveFirst =>
+      'Save the server first, then you can authorize here';
 
   @override
   String mcpAuthFailed(String message) {
@@ -1981,7 +2042,8 @@ class AppLocalizationsEn extends AppLocalizations {
   String get settingsContainer => 'Container & Images';
 
   @override
-  String get settingsContainerSubtitle => 'PRoot container, images and initialization';
+  String get settingsContainerSubtitle =>
+      'PRoot container, images and initialization';
 
   @override
   String get commonEdit => 'Edit';
@@ -2070,10 +2132,12 @@ class AppLocalizationsEn extends AppLocalizations {
   String get settingsGeneralModels => 'Models';
 
   @override
-  String get settingsAutoRemoveStaleModels => 'Remove stale models after fetching';
+  String get settingsAutoRemoveStaleModels =>
+      'Remove stale models after fetching';
 
   @override
-  String get settingsAutoRemoveStaleModelsDesc => 'On a successful fetch, drop local models the vendor no longer offers';
+  String get settingsAutoRemoveStaleModelsDesc =>
+      'On a successful fetch, drop local models the vendor no longer offers';
 
   @override
   String get settingsGeneralSession => 'Session';
@@ -2085,19 +2149,23 @@ class AppLocalizationsEn extends AppLocalizations {
   String get settingsStartupSessionNew => 'New session';
 
   @override
-  String get settingsStartupSessionNewDesc => 'Reuse an empty session, otherwise start a new one';
+  String get settingsStartupSessionNewDesc =>
+      'Reuse an empty session, otherwise start a new one';
 
   @override
   String get settingsStartupSessionRecent => 'Recent session';
 
   @override
-  String get settingsStartupSessionRecentDesc => 'Open the most recently updated session';
+  String get settingsStartupSessionRecentDesc =>
+      'Open the most recently updated session';
 
   @override
-  String get settingsDeleteExternalWorkspaceSessions => 'Delete external workspace chats';
+  String get settingsDeleteExternalWorkspaceSessions =>
+      'Delete external workspace chats';
 
   @override
-  String get settingsDeleteExternalWorkspaceSessionsDesc => 'Also delete a workspace\'s chats when an external local workspace is removed';
+  String get settingsDeleteExternalWorkspaceSessionsDesc =>
+      'Also delete a workspace\'s chats when an external local workspace is removed';
 
   @override
   String get settingsGeneralInput => 'Input';
@@ -2106,16 +2174,19 @@ class AppLocalizationsEn extends AppLocalizations {
   String get settingsEnterToSend => 'Enter key sends message';
 
   @override
-  String get settingsEnterToSendDesc => 'When off, Enter inserts a newline and you send with the button';
+  String get settingsEnterToSendDesc =>
+      'When off, Enter inserts a newline and you send with the button';
 
   @override
   String get settingsCompactionThreshold => 'Auto-compaction threshold';
 
   @override
-  String get settingsCompactionThresholdDesc => 'Compact context once it reaches this share of the window';
+  String get settingsCompactionThresholdDesc =>
+      'Compact context once it reaches this share of the window';
 
   @override
-  String get settingsCompactionThresholdInputHint => 'Integer percentage between 1 and 100';
+  String get settingsCompactionThresholdInputHint =>
+      'Integer percentage between 1 and 100';
 
   @override
   String settingsPercentValue(int percent) {
@@ -2129,13 +2200,15 @@ class AppLocalizationsEn extends AppLocalizations {
   String get settingsFirstByteTimeout => 'First byte timeout';
 
   @override
-  String get settingsFirstByteTimeoutDesc => 'Max wait for the first response chunk';
+  String get settingsFirstByteTimeoutDesc =>
+      'Max wait for the first response chunk';
 
   @override
   String get settingsStreamIdleTimeout => 'Chunk idle timeout';
 
   @override
-  String get settingsStreamIdleTimeoutDesc => 'Max wait between response chunks';
+  String get settingsStreamIdleTimeoutDesc =>
+      'Max wait between response chunks';
 
   @override
   String get settingsTimeoutUnlimited => 'Unlimited';
@@ -2152,7 +2225,8 @@ class AppLocalizationsEn extends AppLocalizations {
   String get settingsMaxNetworkRetries => 'Retry attempts';
 
   @override
-  String get settingsMaxNetworkRetriesDesc => 'Exponential-backoff retries after a network failure';
+  String get settingsMaxNetworkRetriesDesc =>
+      'Exponential-backoff retries after a network failure';
 
   @override
   String settingsRetriesCount(int count) {
@@ -2175,13 +2249,15 @@ class AppLocalizationsEn extends AppLocalizations {
   String get settingsGoalMaxTurns => 'Max continuation turns';
 
   @override
-  String get settingsGoalMaxTurnsDesc => 'Stop the autonomous loop after this many turns';
+  String get settingsGoalMaxTurnsDesc =>
+      'Stop the autonomous loop after this many turns';
 
   @override
   String get settingsGoalMaxTokens => 'Token budget';
 
   @override
-  String get settingsGoalMaxTokensDesc => 'Cap on input+output tokens consumed by the autonomous loop';
+  String get settingsGoalMaxTokensDesc =>
+      'Cap on input+output tokens consumed by the autonomous loop';
 
   @override
   String settingsTurnsValue(int count) {
@@ -2194,16 +2270,19 @@ class AppLocalizationsEn extends AppLocalizations {
   }
 
   @override
-  String get settingsGoalMaxTurnsInputHint => 'Integer number of turns greater than 0';
+  String get settingsGoalMaxTurnsInputHint =>
+      'Integer number of turns greater than 0';
 
   @override
   String get settingsGoalMaxTokensInputHint => 'Integer not less than 1000';
 
   @override
-  String get settingsSendfileMaxSizeDesc => 'Per-file size cap; exceeding it fails the whole batch';
+  String get settingsSendfileMaxSizeDesc =>
+      'Per-file size cap; exceeding it fails the whole batch';
 
   @override
-  String get settingsSendfileMaxSizeInputHint => 'MB, an integer greater than 0';
+  String get settingsSendfileMaxSizeInputHint =>
+      'MB, an integer greater than 0';
 
   @override
   String settingsMbValue(int mb) {
@@ -2343,7 +2422,8 @@ class AppLocalizationsEn extends AppLocalizations {
   String get tokenStatsResetTitle => 'Reset token stats';
 
   @override
-  String get tokenStatsResetConfirm => 'All call records will be permanently deleted. Reset?';
+  String get tokenStatsResetConfirm =>
+      'All call records will be permanently deleted. Reset?';
 
   @override
   String get tokenStatsFilterAllProviders => 'All Vendors';
@@ -2474,10 +2554,12 @@ class AppLocalizationsEn extends AppLocalizations {
   String get gitToastDiffFailed => 'Failed to load diff';
 
   @override
-  String get gitToastNoDiffForCommit => 'No changes found to generate commit message';
+  String get gitToastNoDiffForCommit =>
+      'No changes found to generate commit message';
 
   @override
-  String get gitToastGenerateCommitFailed => 'Failed to generate commit message, please check model or network';
+  String get gitToastGenerateCommitFailed =>
+      'Failed to generate commit message, please check model or network';
 
   @override
   String get diffBinaryFile => 'Binary file, text diff not supported';
@@ -2486,7 +2568,8 @@ class AppLocalizationsEn extends AppLocalizations {
   String get diffFileTooLarge => 'File too large, diff calculation skipped';
 
   @override
-  String get diffFileTooLargeDesc => 'Files over 2000 lines or with extremely long lines are not diffed line-by-line, to avoid rendering and memory pressure.';
+  String get diffFileTooLargeDesc =>
+      'Files over 2000 lines or with extremely long lines are not diffed line-by-line, to avoid rendering and memory pressure.';
 
   @override
   String get diffNoChanges => 'No differences';
@@ -2515,7 +2598,8 @@ class AppLocalizationsEn extends AppLocalizations {
   String get credentialToastDeleted => 'Credential deleted';
 
   @override
-  String get credentialToastIdentitySaved => 'Identity and repository URL saved';
+  String get credentialToastIdentitySaved =>
+      'Identity and repository URL saved';
 
   @override
   String get credentialEmptyHint => 'No credentials yet, tap + to add';
@@ -2524,7 +2608,8 @@ class AppLocalizationsEn extends AppLocalizations {
   String get credentialEmptyTitle => 'No Git Credentials';
 
   @override
-  String get credentialEmptyDesc => 'Configure credentials so Codecraft can authenticate when pushing or pulling repositories';
+  String get credentialEmptyDesc =>
+      'Configure credentials so Codecraft can authenticate when pushing or pulling repositories';
 
   @override
   String get credentialAddManual => 'Add manually';
@@ -2574,7 +2659,8 @@ class AppLocalizationsEn extends AppLocalizations {
   String get codespacesEmptyTitle => 'No Codespaces yet';
 
   @override
-  String get codespacesEmptyDesc => 'Create a Codespace on GitHub and it will show up here';
+  String get codespacesEmptyDesc =>
+      'Create a Codespace on GitHub and it will show up here';
 
   @override
   String get codespacesCreateOnWeb => 'Create on github.com';
@@ -2692,19 +2778,22 @@ class AppLocalizationsEn extends AppLocalizations {
   String get characterFieldAppearance => 'Appearance';
 
   @override
-  String get characterFieldAppearanceHint => 'Height, build, hair/eye color, features';
+  String get characterFieldAppearanceHint =>
+      'Height, build, hair/eye color, features';
 
   @override
   String get characterFieldPersonality => 'Personality';
 
   @override
-  String get characterFieldPersonalityHint => 'Traits, behavior patterns, speech style';
+  String get characterFieldPersonalityHint =>
+      'Traits, behavior patterns, speech style';
 
   @override
   String get characterFieldBackground => 'Background';
 
   @override
-  String get characterFieldBackgroundHint => 'Upbringing, key events, family history';
+  String get characterFieldBackgroundHint =>
+      'Upbringing, key events, family history';
 
   @override
   String get characterFieldGoals => 'Goals';
@@ -2722,7 +2811,8 @@ class AppLocalizationsEn extends AppLocalizations {
   String get characterFieldTags => 'Tags';
 
   @override
-  String get characterFieldTagsHint => 'Comma-separated, e.g. protagonist, mage';
+  String get characterFieldTagsHint =>
+      'Comma-separated, e.g. protagonist, mage';
 
   @override
   String get characterScope => 'Scope';
@@ -2777,13 +2867,15 @@ class AppLocalizationsEn extends AppLocalizations {
   }
 
   @override
-  String get editorNoFile => 'No file open yet. Use \"Open in editor\" from a diff';
+  String get editorNoFile =>
+      'No file open yet. Use \"Open in editor\" from a diff';
 
   @override
   String get editorUnsavedTitle => 'Unsaved changes';
 
   @override
-  String get editorUnsavedMessage => 'This file has unsaved changes. Save them?';
+  String get editorUnsavedMessage =>
+      'This file has unsaved changes. Save them?';
 
   @override
   String get editorSaveAndExit => 'Save and exit';
@@ -2841,7 +2933,8 @@ class AppLocalizationsEn extends AppLocalizations {
   String get editorSaveConflictTitle => 'File was modified';
 
   @override
-  String get editorSaveConflictMessage => 'This file was changed by AI or another program after you opened it. Saving will overwrite those changes.';
+  String get editorSaveConflictMessage =>
+      'This file was changed by AI or another program after you opened it. Saving will overwrite those changes.';
 
   @override
   String editorSaveConflictDiff(String diff) {
@@ -2858,7 +2951,8 @@ class AppLocalizationsEn extends AppLocalizations {
   String get editorSaveConflictCancel => 'Cancel';
 
   @override
-  String get editorSaveConflictDiscarded => 'Edits discarded, reloaded from disk';
+  String get editorSaveConflictDiscarded =>
+      'Edits discarded, reloaded from disk';
 
   @override
   String editorLineColumn(int line, int column) {
@@ -2872,7 +2966,8 @@ class AppLocalizationsEn extends AppLocalizations {
   String get codespacesDisconnect => 'Disconnect';
 
   @override
-  String get codespacesGhMissing => 'gh (GitHub CLI) is missing in the container. Run `codecraft` in the terminal and install the \"GitHub Codespaces\" scenario.';
+  String get codespacesGhMissing =>
+      'gh (GitHub CLI) is missing in the container. Run `codecraft` in the terminal and install the \"GitHub Codespaces\" scenario.';
 
   @override
   String get codespacesExecutionEnv => 'Execution environment';
@@ -2919,7 +3014,8 @@ class AppLocalizationsEn extends AppLocalizations {
   String get codespacesChangeMachine => 'Change machine type';
 
   @override
-  String get codespacesNoMachines => 'No machine types available for this repository';
+  String get codespacesNoMachines =>
+      'No machine types available for this repository';
 
   @override
   String get codespacesLoadFailed => 'Load failed';
@@ -2949,10 +3045,12 @@ class AppLocalizationsEn extends AppLocalizations {
   String get codespacesRebuild => 'Rebuild container';
 
   @override
-  String get codespacesRebuildDesc => 'Rebuild recreates the container from your current devcontainer. Your code and uncommitted changes are preserved, but installed tools and running processes inside the container are lost.';
+  String get codespacesRebuildDesc =>
+      'Rebuild recreates the container from your current devcontainer. Your code and uncommitted changes are preserved, but installed tools and running processes inside the container are lost.';
 
   @override
-  String get codespacesRebuildFull => 'Full rebuild (also clears cached Docker images; slower)';
+  String get codespacesRebuildFull =>
+      'Full rebuild (also clears cached Docker images; slower)';
 
   @override
   String get settingsLog => 'Logs';
@@ -2981,7 +3079,8 @@ class AppLocalizationsEn extends AppLocalizations {
   String get logLevel => 'Log level';
 
   @override
-  String get logLevelDesc => 'Logs below this level are dropped. VERBOSE records everything during development; NONE disables logging.';
+  String get logLevelDesc =>
+      'Logs below this level are dropped. VERBOSE records everything during development; NONE disables logging.';
 
   @override
   String get logCopied => 'Copied';
@@ -3028,7 +3127,8 @@ class AppLocalizationsEn extends AppLocalizations {
   String get logFollowLatest => 'Follow latest';
 
   @override
-  String get logFileLocation => 'Log files are located in Android/data/<package>/files/logs/.';
+  String get logFileLocation =>
+      'Log files are located in Android/data/<package>/files/logs/.';
 
   @override
   String get logLevelVerbose => 'VERBOSE';
@@ -3049,7 +3149,8 @@ class AppLocalizationsEn extends AppLocalizations {
   String get logLevelNone => 'NONE';
 
   @override
-  String get credentialTokenHint => 'Use a GitHub token with the codespace scope; one token covers both git push and Codespaces sign-in';
+  String get credentialTokenHint =>
+      'Use a GitHub token with the codespace scope; one token covers both git push and Codespaces sign-in';
 
   @override
   String get credentialHostOptional => 'Host (optional)';
@@ -3058,13 +3159,15 @@ class AppLocalizationsEn extends AppLocalizations {
   String get credentialHostAny => 'Leave empty for all hosts';
 
   @override
-  String get credentialHostHint => 'Fill only to give one host its own token, e.g. gitlab.com';
+  String get credentialHostHint =>
+      'Fill only to give one host its own token, e.g. gitlab.com';
 
   @override
   String get codespacesNeedCredentialTitle => 'No GitHub credential yet';
 
   @override
-  String get codespacesNeedCredentialDesc => 'Codespaces uses the token from your Git credentials (must include the codespace scope); nothing to fill in here.';
+  String get codespacesNeedCredentialDesc =>
+      'Codespaces uses the token from your Git credentials (must include the codespace scope); nothing to fill in here.';
 
   @override
   String get codespacesGoToCredentials => 'Open Git credentials';
@@ -3079,7 +3182,8 @@ class AppLocalizationsEn extends AppLocalizations {
   String get chatMentionSkill => 'Mention a skill';
 
   @override
-  String get chatMentionSkillEmpty => 'No skills yet — import or create one in settings first.';
+  String get chatMentionSkillEmpty =>
+      'No skills yet — import or create one in settings first.';
 
   @override
   String get chatMentionSkillManage => 'Manage skills';
@@ -3131,10 +3235,12 @@ class AppLocalizationsEn extends AppLocalizations {
   }
 
   @override
-  String get fileBrowserCreateFailed => 'Could not create — a name clash or no write permission';
+  String get fileBrowserCreateFailed =>
+      'Could not create — a name clash or no write permission';
 
   @override
-  String get fileBrowserRenameFailed => 'Could not rename — a name clash may exist';
+  String get fileBrowserRenameFailed =>
+      'Could not rename — a name clash may exist';
 
   @override
   String get fileBrowserDeleteFailed => 'Could not delete';
@@ -3189,7 +3295,8 @@ class AppLocalizationsEn extends AppLocalizations {
   String get writingFolderNeedAccessTitle => 'Storage access needed';
 
   @override
-  String get writingFolderNeedAccessDesc => 'Reading the AI-writing folder on your device needs all-files access. You can skip and pick a folder directly instead.';
+  String get writingFolderNeedAccessDesc =>
+      'Reading the AI-writing folder on your device needs all-files access. You can skip and pick a folder directly instead.';
 
   @override
   String get writingFolderGrant => 'Grant';
@@ -3237,7 +3344,8 @@ class AppLocalizationsEn extends AppLocalizations {
   String get sessionDeleteConfirm => 'Delete this chat and all its messages?';
 
   @override
-  String get fileBrowserNeedPermission => 'Cannot read this folder — storage access may be required';
+  String get fileBrowserNeedPermission =>
+      'Cannot read this folder — storage access may be required';
 
   @override
   String get checkpointRewindTitle => 'Rewind to here';
@@ -3248,22 +3356,26 @@ class AppLocalizationsEn extends AppLocalizations {
   }
 
   @override
-  String get checkpointRestoreCodeAndConversation => 'Restore code and conversation';
+  String get checkpointRestoreCodeAndConversation =>
+      'Restore code and conversation';
 
   @override
-  String get checkpointRestoreCodeAndConversationDesc => 'Roll back workspace files and delete all later messages; the prompt returns to the input box';
+  String get checkpointRestoreCodeAndConversationDesc =>
+      'Roll back workspace files and delete all later messages; the prompt returns to the input box';
 
   @override
   String get checkpointRestoreConversation => 'Restore conversation only';
 
   @override
-  String get checkpointRestoreConversationDesc => 'Delete all later messages; workspace files stay unchanged';
+  String get checkpointRestoreConversationDesc =>
+      'Delete all later messages; workspace files stay unchanged';
 
   @override
   String get checkpointRestoreCode => 'Restore code only';
 
   @override
-  String get checkpointRestoreCodeDesc => 'Roll back workspace files; the conversation stays unchanged';
+  String get checkpointRestoreCodeDesc =>
+      'Roll back workspace files; the conversation stays unchanged';
 
   @override
   String checkpointRewindSkipped(int count) {
@@ -3319,19 +3431,22 @@ class AppLocalizationsEn extends AppLocalizations {
   String get projectKindCoding => 'Coding';
 
   @override
-  String get projectKindCodingDesc => 'Write code, run commands and edit files in a sandbox workspace';
+  String get projectKindCodingDesc =>
+      'Write code, run commands and edit files in a sandbox workspace';
 
   @override
   String get projectKindWriting => 'Writing';
 
   @override
-  String get projectKindWritingDesc => 'Draft and revise documents in the AI Writing folder';
+  String get projectKindWritingDesc =>
+      'Draft and revise documents in the AI Writing folder';
 
   @override
   String get projectKindReverse => 'App reverse engineering';
 
   @override
-  String get projectKindReverseDesc => 'APK analysis, traffic capture, static reversing & debugging aids';
+  String get projectKindReverseDesc =>
+      'APK analysis, traffic capture, static reversing & debugging aids';
 
   @override
   String projectDeleteConfirm(String name) {
@@ -3354,7 +3469,8 @@ class AppLocalizationsEn extends AppLocalizations {
   String get softwarePermissionsTitle => 'App permissions';
 
   @override
-  String get softwarePermissionsSubtitle => 'Tap an item to let the system ask for permission, or open the matching system settings page.';
+  String get softwarePermissionsSubtitle =>
+      'Tap an item to let the system ask for permission, or open the matching system settings page.';
 
   @override
   String get systemPermissionsGroup => 'System permissions';
@@ -3366,13 +3482,15 @@ class AppLocalizationsEn extends AppLocalizations {
   String get permissionBatteryTitle => 'Ignore battery optimization';
 
   @override
-  String get permissionBatteryDesc => 'Keep running in the background instead of being killed';
+  String get permissionBatteryDesc =>
+      'Keep running in the background instead of being killed';
 
   @override
   String get permissionAutoStartTitle => 'Auto-start';
 
   @override
-  String get permissionAutoStartDesc => 'Let the system launch the app in the background';
+  String get permissionAutoStartDesc =>
+      'Let the system launch the app in the background';
 
   @override
   String get permissionShizukuTitle => 'Shizuku';
@@ -3396,13 +3514,16 @@ class AppLocalizationsEn extends AppLocalizations {
   String get permissionAppsTitle => 'App list';
 
   @override
-  String get permissionAppsDesc => 'Read installed apps\' name, package and version';
+  String get permissionAppsDesc =>
+      'Read installed apps\' name, package and version';
 
   @override
-  String get apkPathUnavailable => 'Can\'t locate this app\'s APK. Try another app.';
+  String get apkPathUnavailable =>
+      'Can\'t locate this app\'s APK. Try another app.';
 
   @override
-  String get apkExtractHint => 'This project shows the files inside the selected APK. Extract it once to browse.';
+  String get apkExtractHint =>
+      'This project shows the files inside the selected APK. Extract it once to browse.';
 
   @override
   String get apkExtractAction => 'Extract APK';
@@ -3411,7 +3532,8 @@ class AppLocalizationsEn extends AppLocalizations {
   String get apkExtracting => 'Extracting…';
 
   @override
-  String get apkExtractFailed => 'Extraction failed — the APK may not be readable.';
+  String get apkExtractFailed =>
+      'Extraction failed — the APK may not be readable.';
 
   @override
   String get terminalAgentTab => 'AI commands';
@@ -3426,10 +3548,12 @@ class AppLocalizationsEn extends AppLocalizations {
   String get runModePlan => 'Plan mode';
 
   @override
-  String get runModePlanIntercept => 'Write operations are blocked in plan mode';
+  String get runModePlanIntercept =>
+      'Write operations are blocked in plan mode';
 
   @override
-  String get runModeBuildAuthorize => 'AI wants to perform a write operation. Allow?';
+  String get runModeBuildAuthorize =>
+      'AI wants to perform a write operation. Allow?';
 
   @override
   String get runModeBuildAllow => 'Allow';
@@ -3452,7 +3576,8 @@ class AppLocalizationsEn extends AppLocalizations {
   String get subagentSubtitle => 'Model tiers & custom definitions';
 
   @override
-  String get subagentTierSubtitle => 'Bind a provider and model to each tier. Unconfigured tiers use the definition\'s pinned model, or inherit the current session\'s model';
+  String get subagentTierSubtitle =>
+      'Bind a provider and model to each tier. Unconfigured tiers use the definition\'s pinned model, or inherit the current session\'s model';
 
   @override
   String get subagentTierSection => 'Model tiers';
@@ -3467,13 +3592,15 @@ class AppLocalizationsEn extends AppLocalizations {
   String get subagentTierStrong => 'Strong';
 
   @override
-  String get subagentTierLightDesc => 'Read-only exploration, batch locating, mechanical renames';
+  String get subagentTierLightDesc =>
+      'Read-only exploration, batch locating, mechanical renames';
 
   @override
   String get subagentTierStandardDesc => 'Single-file edits and routine fixes';
 
   @override
-  String get subagentTierStrongDesc => 'Cross-module refactors, tricky debugging, and solution design';
+  String get subagentTierStrongDesc =>
+      'Cross-module refactors, tricky debugging, and solution design';
 
   @override
   String get subagentTierUnset => 'Not set (inherit session model)';
@@ -3496,7 +3623,8 @@ class AppLocalizationsEn extends AppLocalizations {
   }
 
   @override
-  String get subagentTierSheetHint => 'Pick the provider and model for this tier';
+  String get subagentTierSheetHint =>
+      'Pick the provider and model for this tier';
 
   @override
   String get subagentTierSheetInherit => 'Inherit session model';
@@ -3571,7 +3699,8 @@ class AppLocalizationsEn extends AppLocalizations {
   String get promptsFieldSummary => 'Summary (optional)';
 
   @override
-  String get promptsFieldSummaryPlaceholder => 'Brief description; not included in the prompt';
+  String get promptsFieldSummaryPlaceholder =>
+      'Brief description; not included in the prompt';
 
   @override
   String get promptsFieldContent => 'Fragment content';
@@ -3592,7 +3721,8 @@ class AppLocalizationsEn extends AppLocalizations {
   String get promptsResetCustom => 'Reset custom prompts';
 
   @override
-  String get promptsResetConfirm => 'Deletes every custom prompt fragment in this project and the global layer; each number falls back to the built-in prompt. This cannot be undone.';
+  String get promptsResetConfirm =>
+      'Deletes every custom prompt fragment in this project and the global layer; each number falls back to the built-in prompt. This cannot be undone.';
 
   @override
   String get promptsResetAction => 'Reset';
@@ -3604,7 +3734,8 @@ class AppLocalizationsEn extends AppLocalizations {
   String get promptsDisableBuiltin => 'Disable all built-in prompts';
 
   @override
-  String get promptsDisableBuiltinHint => 'Keep only your fragments; you must supply every rule yourself';
+  String get promptsDisableBuiltinHint =>
+      'Keep only your fragments; you must supply every rule yourself';
 
   @override
   String get promptsBatchDeleteTitle => 'Delete Prompts';
@@ -3715,7 +3846,8 @@ class AppLocalizationsEn extends AppLocalizations {
   String get agentListEmpty => 'No custom sub-agents yet';
 
   @override
-  String get agentListEmptyHint => 'Tap + to create a custom sub-agent definition';
+  String get agentListEmptyHint =>
+      'Tap + to create a custom sub-agent definition';
 
   @override
   String get agentScopeProject => 'Current project';
@@ -3768,7 +3900,8 @@ class AppLocalizationsEn extends AppLocalizations {
   String get agentPrompt => 'Prompt body';
 
   @override
-  String get agentPromptHint => 'Instructions appended to the base system prompt';
+  String get agentPromptHint =>
+      'Instructions appended to the base system prompt';
 
   @override
   String get agentProvider => 'Provider';
@@ -3795,7 +3928,8 @@ class AppLocalizationsEn extends AppLocalizations {
   String get agentInject => 'Injected rules';
 
   @override
-  String get agentInjectHint => 'base/mainRules/skills/memory/projectRules or none';
+  String get agentInjectHint =>
+      'base/mainRules/skills/memory/projectRules or none';
 
   @override
   String get agentEnable => 'Enable';
@@ -3816,7 +3950,8 @@ class AppLocalizationsEn extends AppLocalizations {
   String get agentErrorEmptyPrompt => 'Prompt body is required';
 
   @override
-  String get agentErrorNameConflict => 'A sub-agent with this name already exists in this scope';
+  String get agentErrorNameConflict =>
+      'A sub-agent with this name already exists in this scope';
 
   @override
   String get agentErrorIoFailed => 'Failed to write file';
@@ -3834,7 +3969,8 @@ class AppLocalizationsEn extends AppLocalizations {
   String get agentBuiltin => 'Built-in';
 
   @override
-  String get agentBuiltinHint => 'Released on first launch, preserved across upgrades';
+  String get agentBuiltinHint =>
+      'Released on first launch, preserved across upgrades';
 
   @override
   String get agentSelectMode => 'Select';
@@ -3913,7 +4049,8 @@ class AppLocalizationsEn extends AppLocalizations {
   String get promptsSaveFailed => 'Save failed';
 
   @override
-  String get promptsNoOverrideToDelete => 'No custom override to delete for this prompt';
+  String get promptsNoOverrideToDelete =>
+      'No custom override to delete for this prompt';
 
   @override
   String get codespacesSearchHint => 'Search by name, repository, or branch';
@@ -3937,7 +4074,8 @@ class AppLocalizationsEn extends AppLocalizations {
   String get codespacesConnecting => 'Connecting…';
 
   @override
-  String get codespacesWaitingForStart => 'Waiting for Codespace to become available…';
+  String get codespacesWaitingForStart =>
+      'Waiting for Codespace to become available…';
 
   @override
   String codespacesConnectError(String error) {
@@ -4046,13 +4184,15 @@ class AppLocalizationsEn extends AppLocalizations {
   String get codespacesAdvanced => 'Advanced options';
 
   @override
-  String get codespacesDevcontainerPathHint => 'Path to devcontainer.json (optional)';
+  String get codespacesDevcontainerPathHint =>
+      'Path to devcontainer.json (optional)';
 
   @override
   String get codespacesIdleTimeoutHint => 'Minutes before idle stop (optional)';
 
   @override
-  String get codespacesRetentionHint => 'Days to retain stopped codespace (optional)';
+  String get codespacesRetentionHint =>
+      'Days to retain stopped codespace (optional)';
 
   @override
   String get codespacesReadinessTitle => 'Connection readiness';
@@ -4061,13 +4201,15 @@ class AppLocalizationsEn extends AppLocalizations {
   String get codespacesReadinessCredOk => 'GitHub credentials: configured';
 
   @override
-  String get codespacesReadinessCredMissing => 'GitHub credentials: missing (token needs codespace scope)';
+  String get codespacesReadinessCredMissing =>
+      'GitHub credentials: missing (token needs codespace scope)';
 
   @override
   String get codespacesReadinessGhOk => 'gh CLI: ready';
 
   @override
-  String get codespacesReadinessGhMissing => 'gh CLI: not ready (run `codecraft` in terminal and install the Codespaces scenario)';
+  String get codespacesReadinessGhMissing =>
+      'gh CLI: not ready (run `codecraft` in terminal and install the Codespaces scenario)';
 
   @override
   String get codespacesOpenTerminal => 'Open terminal';
@@ -4079,7 +4221,8 @@ class AppLocalizationsEn extends AppLocalizations {
   String get codespacesManageCredentials => 'Manage credentials';
 
   @override
-  String get codespacesDeploySyncHint => 'Git push/pull and other operations run in the current execution environment. After connecting a Codespace, deploy/sync runs on the remote repo.';
+  String get codespacesDeploySyncHint =>
+      'Git push/pull and other operations run in the current execution environment. After connecting a Codespace, deploy/sync runs on the remote repo.';
 
   @override
   String gitExecutionTargetCodespace(String name) {
@@ -4093,10 +4236,12 @@ class AppLocalizationsEn extends AppLocalizations {
   String get gitDeploySyncSection => 'Deploy / Sync';
 
   @override
-  String get gitDeploySyncHintCodespace => 'Push, pull, and remote operations run inside the connected Codespace.';
+  String get gitDeploySyncHintCodespace =>
+      'Push, pull, and remote operations run inside the connected Codespace.';
 
   @override
-  String get gitDeploySyncHintLocal => 'Push, pull, and remote operations run in the local container; connect a Codespace to deploy/sync remotely.';
+  String get gitDeploySyncHintLocal =>
+      'Push, pull, and remote operations run in the local container; connect a Codespace to deploy/sync remotely.';
 
   @override
   String get gitOpenCodespaces => 'Codespaces';
@@ -4135,10 +4280,12 @@ class AppLocalizationsEn extends AppLocalizations {
   String get captureSearchHint => 'Search URL / method / status';
 
   @override
-  String get captureEmpty => 'No captured flows. Start proxy and route target traffic to 127.0.0.1:<port>.';
+  String get captureEmpty =>
+      'No captured flows. Start proxy and route target traffic to 127.0.0.1:<port>.';
 
   @override
-  String get captureLimitHint => 'Only proxied traffic is captured. HTTPS requires installing/trusting the CA. Android 7+ apps and pinned apps may not be MITM-decryptable.';
+  String get captureLimitHint =>
+      'Only proxied traffic is captured. HTTPS requires installing/trusting the CA. Android 7+ apps and pinned apps may not be MITM-decryptable.';
 
   @override
   String get captureCaTitle => 'CA certificate';
@@ -4147,7 +4294,8 @@ class AppLocalizationsEn extends AppLocalizations {
   String get captureCaPath => 'Certificate path';
 
   @override
-  String get captureCaGuide => 'Install and trust this CA for network/HTTPS capture. Android path varies by device (Security/Encryption & credentials/Install a certificate). Then set HTTP proxy to 127.0.0.1:<port>.';
+  String get captureCaGuide =>
+      'Install and trust this CA for network/HTTPS capture. Android path varies by device (Security/Encryption & credentials/Install a certificate). Then set HTTP proxy to 127.0.0.1:<port>.';
 
   @override
   String get captureCopyPath => 'Copy path';
@@ -4177,10 +4325,12 @@ class AppLocalizationsEn extends AppLocalizations {
   String get captureDownloadCa => 'Save certificate';
 
   @override
-  String get captureCaInstallFail => 'Direct install unavailable (path copied). Install the certificate from system security settings.';
+  String get captureCaInstallFail =>
+      'Direct install unavailable (path copied). Install the certificate from system security settings.';
 
   @override
-  String get captureVpnPermissionDenied => 'VPN permission denied. Please grant VPN permission to enable capture.';
+  String get captureVpnPermissionDenied =>
+      'VPN permission denied. Please grant VPN permission to enable capture.';
 
   @override
   String get captureSequence => 'All requests';
@@ -4200,7 +4350,8 @@ class AppLocalizationsEn extends AppLocalizations {
   String get capturePip => 'Window mode';
 
   @override
-  String get capturePipUnsupported => 'Picture-in-picture is not supported on this device';
+  String get capturePipUnsupported =>
+      'Picture-in-picture is not supported on this device';
 
   @override
   String get capturePipNoTraffic => 'No traffic yet';

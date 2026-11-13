@@ -1,3 +1,5 @@
+// ignore: unused_import
+import 'package:intl/intl.dart' as intl;
 import 'app_localizations.dart';
 
 // ignore_for_file: type=lint
@@ -61,7 +63,8 @@ class AppLocalizationsZh extends AppLocalizations {
   String get reverseEditString => '修改字符串';
 
   @override
-  String get reverseEqualLengthHint => '只能等长替换:新内容编码后的字节数必须与原字符串一致,否则文件内偏移会全部错位';
+  String get reverseEqualLengthHint =>
+      '只能等长替换:新内容编码后的字节数必须与原字符串一致,否则文件内偏移会全部错位';
 
   @override
   String get reverseEditByte => '修改字节';
@@ -211,7 +214,8 @@ class AppLocalizationsZh extends AppLocalizations {
   String get license => '开源协议';
 
   @override
-  String get licenseBody => '本项目是 jieapi/Codecraft 的 Flutter 复刻,按 GPL-3.0 协议开源。';
+  String get licenseBody =>
+      '本项目是 jieapi/Codecraft 的 Flutter 复刻,按 GPL-3.0 协议开源。';
 
   @override
   String get addProvider => '添加供应商';
@@ -336,7 +340,8 @@ class AppLocalizationsZh extends AppLocalizations {
   String get useFullUrlHint => 'baseUrl 已是完整端点';
 
   @override
-  String get aboutBody => 'Codecraft Flutter 是 jieapi/Codecraft 的 Flutter 复刻(Phase 1:核心对话闭环)。';
+  String get aboutBody =>
+      'Codecraft Flutter 是 jieapi/Codecraft 的 Flutter 复刻(Phase 1:核心对话闭环)。';
 
   @override
   String get chatPlaceholder => '有什么可以帮你的?';
@@ -877,7 +882,8 @@ class AppLocalizationsZh extends AppLocalizations {
   String get providerMultiKeyStrategyRoundRobin => '轮询';
 
   @override
-  String get providerMultiKeyStrategyRoundRobinDesc => '新会话轮流起步以摊平额度;同一会话内不换 Key,保持缓存命中';
+  String get providerMultiKeyStrategyRoundRobinDesc =>
+      '新会话轮流起步以摊平额度;同一会话内不换 Key,保持缓存命中';
 
   @override
   String get providerMultiKeyStatusCodes => '自动切换状态码';
@@ -1347,7 +1353,8 @@ class AppLocalizationsZh extends AppLocalizations {
   String get gitCloneDialogTitle => '克隆 Git 仓库';
 
   @override
-  String get gitCloneDesc => '将远程仓库克隆到当前工作区根目录(工作区需为空)。若为私有仓库,可先点右上角钥匙登录 GitHub 或填入访问令牌。';
+  String get gitCloneDesc =>
+      '将远程仓库克隆到当前工作区根目录(工作区需为空)。若为私有仓库,可先点右上角钥匙登录 GitHub 或填入访问令牌。';
 
   @override
   String get gitCloneUrlLabel => '仓库地址';
@@ -1581,7 +1588,8 @@ class AppLocalizationsZh extends AppLocalizations {
   String get gitPushMasterConfirmTitle => '分支命名建议';
 
   @override
-  String get gitPushMasterConfirmDesc => '当前本地分支为 master,GitHub 与 GitLab 推荐使用 main 作为默认主分支。是否将本地分支重命名为 main 后再推送?';
+  String get gitPushMasterConfirmDesc =>
+      '当前本地分支为 master,GitHub 与 GitLab 推荐使用 main 作为默认主分支。是否将本地分支重命名为 main 后再推送?';
 
   @override
   String get gitPushRenameToMain => '重命名为 main 并推送';
@@ -1819,7 +1827,8 @@ class AppLocalizationsZh extends AppLocalizations {
   String get mcpJsonImportTitle => '从 JSON 导入';
 
   @override
-  String get mcpJsonImportHint => '粘贴标准 mcpServers 配置:键是服务器名,值里填 url(远程 HTTP)或 command(本地 stdio)。';
+  String get mcpJsonImportHint =>
+      '粘贴标准 mcpServers 配置:键是服务器名,值里填 url(远程 HTTP)或 command(本地 stdio)。';
 
   @override
   String get mcpJsonImportAction => '导入';
@@ -2097,7 +2106,8 @@ class AppLocalizationsZh extends AppLocalizations {
   String get settingsDeleteExternalWorkspaceSessions => '删除外部工作区聊天记录';
 
   @override
-  String get settingsDeleteExternalWorkspaceSessionsDesc => '移除外部本地工作区时,一并删除该工作区的聊天记录';
+  String get settingsDeleteExternalWorkspaceSessionsDesc =>
+      '移除外部本地工作区时,一并删除该工作区的聊天记录';
 
   @override
   String get settingsGeneralInput => '输入';
@@ -2841,7 +2851,8 @@ class AppLocalizationsZh extends AppLocalizations {
   String get editorSaveConflictTitle => '文件已被修改';
 
   @override
-  String get editorSaveConflictMessage => '该文件在你打开之后已被 AI 或其他程序修改。直接保存会覆盖对方的改动。';
+  String get editorSaveConflictMessage =>
+      '该文件在你打开之后已被 AI 或其他程序修改。直接保存会覆盖对方的改动。';
 
   @override
   String editorSaveConflictDiff(String diff) {
@@ -2872,7 +2883,8 @@ class AppLocalizationsZh extends AppLocalizations {
   String get codespacesDisconnect => '断开';
 
   @override
-  String get codespacesGhMissing => '容器里还没有 gh(GitHub CLI)。请先在终端执行命令 codecraft,选择「GitHub Codespaces」场景安装依赖。';
+  String get codespacesGhMissing =>
+      '容器里还没有 gh(GitHub CLI)。请先在终端执行命令 codecraft,选择「GitHub Codespaces」场景安装依赖。';
 
   @override
   String get codespacesExecutionEnv => '执行环境';
@@ -2949,7 +2961,8 @@ class AppLocalizationsZh extends AppLocalizations {
   String get codespacesRebuild => '重建容器';
 
   @override
-  String get codespacesRebuildDesc => '重建会按当前 devcontainer 重新创建容器:代码与未提交改动保留,容器内已安装的工具与运行状态会丢失。';
+  String get codespacesRebuildDesc =>
+      '重建会按当前 devcontainer 重新创建容器:代码与未提交改动保留,容器内已安装的工具与运行状态会丢失。';
 
   @override
   String get codespacesRebuildFull => '完全重建(同时清除缓存的 Docker 镜像,更慢)';
@@ -3049,7 +3062,8 @@ class AppLocalizationsZh extends AppLocalizations {
   String get logLevelNone => '关闭';
 
   @override
-  String get credentialTokenHint => '建议用带 codespace 作用域的 GitHub 令牌,填一次同时供 Git 推送与 Codespaces 登录使用';
+  String get credentialTokenHint =>
+      '建议用带 codespace 作用域的 GitHub 令牌,填一次同时供 Git 推送与 Codespaces 登录使用';
 
   @override
   String get credentialHostOptional => '主机(可选)';
@@ -3064,7 +3078,8 @@ class AppLocalizationsZh extends AppLocalizations {
   String get codespacesNeedCredentialTitle => '尚未配置 GitHub 凭据';
 
   @override
-  String get codespacesNeedCredentialDesc => 'Codespaces 使用「Git 凭据」里的令牌(需含 codespace 作用域),不再单独填写。';
+  String get codespacesNeedCredentialDesc =>
+      'Codespaces 使用「Git 凭据」里的令牌(需含 codespace 作用域),不再单独填写。';
 
   @override
   String get codespacesGoToCredentials => '去填写 Git 凭据';
@@ -3189,7 +3204,8 @@ class AppLocalizationsZh extends AppLocalizations {
   String get writingFolderNeedAccessTitle => '需要存储访问权限';
 
   @override
-  String get writingFolderNeedAccessDesc => '读取手机里的「AI写作」目录需要「所有文件访问权限」。也可以跳过,直接在下一步选择目录。';
+  String get writingFolderNeedAccessDesc =>
+      '读取手机里的「AI写作」目录需要「所有文件访问权限」。也可以跳过,直接在下一步选择目录。';
 
   @override
   String get writingFolderGrant => '去授权';
@@ -3251,7 +3267,8 @@ class AppLocalizationsZh extends AppLocalizations {
   String get checkpointRestoreCodeAndConversation => '还原代码与会话';
 
   @override
-  String get checkpointRestoreCodeAndConversationDesc => '回滚工作区文件,并删除这之后的所有消息,提问会回填到输入框';
+  String get checkpointRestoreCodeAndConversationDesc =>
+      '回滚工作区文件,并删除这之后的所有消息,提问会回填到输入框';
 
   @override
   String get checkpointRestoreConversation => '只还原会话';
@@ -3452,7 +3469,8 @@ class AppLocalizationsZh extends AppLocalizations {
   String get subagentSubtitle => '模型档位与自定义定义';
 
   @override
-  String get subagentTierSubtitle => '为每个档位绑定提供商与模型。未配置的档位:子代理定义写死模型时用定义模型,否则继承当前会话模型';
+  String get subagentTierSubtitle =>
+      '为每个档位绑定提供商与模型。未配置的档位:子代理定义写死模型时用定义模型,否则继承当前会话模型';
 
   @override
   String get subagentTierSection => '模型档位';
@@ -3592,7 +3610,8 @@ class AppLocalizationsZh extends AppLocalizations {
   String get promptsResetCustom => '重置自定义提示词';
 
   @override
-  String get promptsResetConfirm => '将删除当前项目与全局层里的所有自定义提示词,各编号回落到内置提示词。此操作不可撤销。';
+  String get promptsResetConfirm =>
+      '将删除当前项目与全局层里的所有自定义提示词,各编号回落到内置提示词。此操作不可撤销。';
 
   @override
   String get promptsResetAction => '重置';
@@ -3795,7 +3814,8 @@ class AppLocalizationsZh extends AppLocalizations {
   String get agentInject => '注入规则片段';
 
   @override
-  String get agentInjectHint => 'base/mainRules/skills/memory/projectRules 或 none';
+  String get agentInjectHint =>
+      'base/mainRules/skills/memory/projectRules 或 none';
 
   @override
   String get agentEnable => '启用';
@@ -4061,13 +4081,15 @@ class AppLocalizationsZh extends AppLocalizations {
   String get codespacesReadinessCredOk => 'GitHub 凭据：已配置';
 
   @override
-  String get codespacesReadinessCredMissing => 'GitHub 凭据：未配置（需含 codespace 权限的令牌）';
+  String get codespacesReadinessCredMissing =>
+      'GitHub 凭据：未配置（需含 codespace 权限的令牌）';
 
   @override
   String get codespacesReadinessGhOk => 'gh CLI：已就绪';
 
   @override
-  String get codespacesReadinessGhMissing => 'gh CLI：未就绪（终端执行 codecraft 安装「GitHub Codespaces」场景）';
+  String get codespacesReadinessGhMissing =>
+      'gh CLI：未就绪（终端执行 codecraft 安装「GitHub Codespaces」场景）';
 
   @override
   String get codespacesOpenTerminal => '在终端打开';
@@ -4079,7 +4101,8 @@ class AppLocalizationsZh extends AppLocalizations {
   String get codespacesManageCredentials => '管理凭证';
 
   @override
-  String get codespacesDeploySyncHint => 'Git 的推送/拉取等操作会作用于当前执行环境；连接 Codespace 后即在远端仓库执行部署/同步。';
+  String get codespacesDeploySyncHint =>
+      'Git 的推送/拉取等操作会作用于当前执行环境；连接 Codespace 后即在远端仓库执行部署/同步。';
 
   @override
   String gitExecutionTargetCodespace(String name) {
@@ -4096,7 +4119,8 @@ class AppLocalizationsZh extends AppLocalizations {
   String get gitDeploySyncHintCodespace => '推送、拉取与远程操作在已连接的 Codespace 中执行。';
 
   @override
-  String get gitDeploySyncHintLocal => '推送、拉取与远程操作在本地容器中执行；连接 Codespace 可在远端部署/同步。';
+  String get gitDeploySyncHintLocal =>
+      '推送、拉取与远程操作在本地容器中执行；连接 Codespace 可在远端部署/同步。';
 
   @override
   String get gitOpenCodespaces => 'Codespaces';
@@ -4138,7 +4162,8 @@ class AppLocalizationsZh extends AppLocalizations {
   String get captureEmpty => '暂无抓包记录。启动代理后，将目标流量代理到 127.0.0.1:<端口>。';
 
   @override
-  String get captureLimitHint => '仅抓取经代理的流量。HTTPS 需安装并信任 CA；Android 7+ 多数应用与证书锁定应用无法 MITM（可用调试版/受信任证书场景）。';
+  String get captureLimitHint =>
+      '仅抓取经代理的流量。HTTPS 需安装并信任 CA；Android 7+ 多数应用与证书锁定应用无法 MITM（可用调试版/受信任证书场景）。';
 
   @override
   String get captureCaTitle => 'CA 证书';
@@ -4147,7 +4172,8 @@ class AppLocalizationsZh extends AppLocalizations {
   String get captureCaPath => '证书路径';
 
   @override
-  String get captureCaGuide => '将证书安装到系统/用户证书并设为信任（用于网络/HTTPS 抓包）。Android 设置路径因机型不同，通常在「安全/加密与凭据/安装证书」。安装后需将 HTTP 代理设为 127.0.0.1:<端口>。';
+  String get captureCaGuide =>
+      '将证书安装到系统/用户证书并设为信任（用于网络/HTTPS 抓包）。Android 设置路径因机型不同，通常在「安全/加密与凭据/安装证书」。安装后需将 HTTP 代理设为 127.0.0.1:<端口>。';
 
   @override
   String get captureCopyPath => '复制路径';
