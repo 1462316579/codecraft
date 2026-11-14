@@ -19,4 +19,4 @@ build_script:
   - set JAVA_HOME= && for /d %%d in ("C:\Program Files\Java\jdk-17*") do set JAVA_HOME=%%d && if "%JAVA_HOME%"=="" for /d %%d in ("C:\Program Files\Java\jdk-*") do set JAVA_HOME=%%d && java -version && flutter build apk --release
 
 artifacts:
-  - path: build\app\outputs\flutter-apk\app-release.apk
+  - path: build/app/outputs/**/*.apk
