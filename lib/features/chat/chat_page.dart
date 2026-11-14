@@ -214,7 +214,6 @@ class _ChatPageState extends ConsumerState<ChatPage> {
             onUploadFile: _pickFiles,
             onAttachImage: _pickImages,
             onTakePhoto: _takePhoto,
-            uploadingCount: _uploadingCount,
             onHeightChanged: (height) {
               if ((height - _composerHeight).abs() > 0.5) {
                 setState(() => _composerHeight = height);

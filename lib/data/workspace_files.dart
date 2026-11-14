@@ -268,11 +268,11 @@ class LocalWorkspaceFiles implements WorkspaceFiles {
         await target.writeAsBytes(_decodeSingleStream(suffix, bytes));
         return 1;
       }
+      await extractFileToDisk(archivePath, destDir);
       var count = 0;
-      // archive 的解压实现已处理路径穿越、符号链接与权限位,不必自己写。
-      await extractFileToDisk(archivePath, destDir, callback: (file) {
-        if (file.isFile) count++;
-      });
+      await for (final entity in Directory(destDir).list(recursive: true)) {
+        if (entity is File) count++;
+      }
       return count;
     } catch (error) {
       throw WorkspaceFileException('解压失败:$error');
@@ -745,7 +745,7 @@ Uint8List _decodeSingleStream(String suffix, Uint8List bytes) => switch (suffix)
       '.gz' => GZipDecoder().decodeBytes(bytes),
       '.bz2' => BZip2Decoder().decodeBytes(bytes),
       '.xz' => XZDecoder().decodeBytes(bytes),
-      _ => ZstdDecoder().decodeBytes(bytes),
+      _ => throw UnsupportedError('不支持的压缩格式: $suffix'),
     };
 
 /// 远端解压命令(依赖 Codespace 上常见的 unzip/tar/gzip/bzip2/xz)。

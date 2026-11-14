@@ -171,7 +171,6 @@ _CertMaterial _generateCaMaterial() {
     privateKey,
     csr,
     3650,
-    cA: true,
     keyUsage: const [
       KeyUsage.KEY_CERT_SIGN,
       KeyUsage.CRL_SIGN,

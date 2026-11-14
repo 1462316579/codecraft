@@ -258,7 +258,7 @@ class _TerminalViewBodyState extends ConsumerState<_TerminalViewBody> {
         final tab = widget.notifier.state.active;
         if (tab == null) return;
         // 通过 shell 通道发送用户输入到终端进程
-        tab.pty?.write(bytes);
+        tab.pty?.write(Uint8List.fromList(bytes));
       },
       onPtyOutput: (bytes) {
         widget.controller.feedOutput(bytes);

@@ -291,7 +291,7 @@ class _MessageSectionState extends State<_MessageSection> {
                 ),
                 const SizedBox(width: 2),
                 Icon(
-                  _headersExpanded ? Iconfont.chevronDown : Iconfont.chevronRight,
+                  _headersExpanded ? Icons.arrow_drop_down : Iconfont.chevronRight,
                   size: 14,
                   color: context.semantic.subtleText,
                 ),

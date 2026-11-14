@@ -63,7 +63,7 @@ class PtyCommandEngine implements CommandEngine {
     var timedOut = false;
     final timer = Timer(clamped, () {
       timedOut = true;
-      pty.close(killProcess: true);
+      pty.kill();
       completer.complete(-1);
     });
 
@@ -72,17 +72,17 @@ class PtyCommandEngine implements CommandEngine {
       pty.write(Uint8List.fromList(utf8.encode('\n')));
       await completer.future.timeout(clamped, onTimeout: () {
         timedOut = true;
-        pty.close(killProcess: true);
+        pty.kill();
         return -1;
       });
     } catch (e) {
       timedOut = true;
-      pty.close(killProcess: true);
+      pty.kill();
       return CommandResult(output: '无法执行命令: $e', exitCode: -1);
     } finally {
       timer.cancel();
       await subscription.cancel();
-      pty.close();
+      pty.kill();
     }
 
     return CommandResult(
@@ -138,7 +138,7 @@ class PtyCommandEngine implements CommandEngine {
     }
 
     timer.cancel();
-    pty.close();
+    pty.kill();
 
     yield CommandExitEvent(timedOut ? -1 : 0, timedOut: timedOut);
   }
