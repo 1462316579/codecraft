@@ -1,7 +1,7 @@
 import '../../data/container/command_engine.dart';
 import 'tool.dart';
 
-/// 在当前执行环境(Termux)中执行一次性 shell 命令(对齐上游 Bash 工具)。
+/// 在当前执行环境中执行一次性 shell 命令(对齐上游 Bash 工具)。
 /// 命令在当前工作区目录内执行,使 shell 操作与文件工具作用于同一目录。
 class BashTool extends AgentTool {
   BashTool({
@@ -33,7 +33,7 @@ class BashTool extends AgentTool {
 
   @override
   String get description =>
-      '在当前执行环境(Termux)中执行一次性 Shell 命令,同步返回输出。需要实时输出的长任务请拆分成多次短命令或调大 timeout,不要用 `&` 挂后台。';
+      '在当前执行环境中执行一次性 Shell 命令,同步返回输出。需要实时输出的长任务请拆分成多次短命令或调大 timeout,不要用 `&` 挂后台。';
 
   @override
   ToolPermissionPolicy get permissionPolicy => ToolPermissionPolicy.ask;

@@ -1,6 +1,5 @@
 import 'dart:async';
 import 'dart:convert';
-import 'dart:io';
 import 'dart:typed_data';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -28,7 +27,7 @@ class PtyCommandEngine implements CommandEngine {
   static const Duration defaultTimeout = Duration(seconds: 120);
   static const Duration maxTimeout = Duration(seconds: 1800);
 
-  bool _ready = false;
+  bool _ready = true;
 
   @override
   Future<bool> isReady() async => _ready;
@@ -46,31 +45,26 @@ class PtyCommandEngine implements CommandEngine {
     Duration timeout = defaultTimeout,
   }) async {
     final clamped = _clamp(timeout);
-    final pty = Pty.start(shell);
+    final pty = Pty.start(shell, arguments: ['-c', command], workingDirectory: workdir);
 
     final output = BoundedOutput();
-    final completer = Completer<int>();
+    var timedOut = false;
 
     final subscription = pty.output.listen(
       (data) {
         final text = String.fromCharCodes(data);
         output.append(text);
       },
-      onDone: () => completer.complete(0),
-      onError: (e) => completer.completeError(e),
     );
 
-    var timedOut = false;
     final timer = Timer(clamped, () {
       timedOut = true;
       pty.kill();
-      completer.complete(-1);
     });
 
+    int exitCode;
     try {
-      pty.write(Uint8List.fromList(utf8.encode(command)));
-      pty.write(Uint8List.fromList(utf8.encode('\n')));
-      await completer.future.timeout(clamped, onTimeout: () {
+      exitCode = await pty.exitCode.timeout(clamped, onTimeout: () {
         timedOut = true;
         pty.kill();
         return -1;
@@ -78,7 +72,12 @@ class PtyCommandEngine implements CommandEngine {
     } catch (e) {
       timedOut = true;
       pty.kill();
-      return CommandResult(output: '无法执行命令: $e', exitCode: -1);
+      return CommandResult(
+        output: '无法执行命令: $e',
+        exitCode: -1,
+        timedOut: true,
+        truncated: output.truncated,
+      );
     } finally {
       timer.cancel();
       await subscription.cancel();
@@ -87,7 +86,7 @@ class PtyCommandEngine implements CommandEngine {
 
     return CommandResult(
       output: output.build(),
-      exitCode: timedOut ? -1 : await completer.future,
+      exitCode: timedOut ? -1 : exitCode,
       timedOut: timedOut,
       truncated: output.truncated,
     );
@@ -100,7 +99,7 @@ class PtyCommandEngine implements CommandEngine {
     Duration timeout = defaultTimeout,
   }) async* {
     final clamped = _clamp(timeout);
-    final pty = Pty.start(shell);
+    final pty = Pty.start(shell, arguments: ['-c', command], workingDirectory: workdir);
 
     final controller = StreamController<Object>();
     var timedOut = false;
@@ -125,13 +124,7 @@ class PtyCommandEngine implements CommandEngine {
       },
     );
 
-    try {
-      pty.write(Uint8List.fromList(utf8.encode(command)));
-      pty.write(Uint8List.fromList(utf8.encode('\n')));
-    } catch (e) {
-      controller.add(CommandLineEvent('无法执行命令: $e'));
-      controller.close();
-    }
+    // -c 模式下无需写入，shell 已在启动时执行命令
 
     await for (final event in controller.stream) {
       yield event;
@@ -150,7 +143,12 @@ class PtyCommandEngine implements CommandEngine {
     int rows = 24,
     String? workdir,
   }) async {
-    final pty = Pty.start(shell);
+    final pty = Pty.start(
+      shell,
+      workingDirectory: workdir,
+      rows: rows,
+      columns: cols,
+    );
 
     final outputController = StreamController<List<int>>();
     final exitCompleter = Completer<int>();
