@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'dart:typed_data';
+import 'dart:ui';
 
 import 'package:flutter/material.dart';
 import '../../core/icons/iconfont.dart';
@@ -393,33 +394,6 @@ class _ProjectNameDialogState extends State<_ProjectNameDialog> {
           child: Text(widget.confirm),
         ),
       ],
-    );
-  }
-}
-
-/// 空态:图标 + 文案 + 新建按钮。
-class _EmptyState extends StatelessWidget {
-  const _EmptyState({required this.onCreate});
-
-  final VoidCallback onCreate;
-
-  @override
-  Widget build(BuildContext context) {
-    final l10n = AppLocalizations.of(context);
-    return Center(
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Icon(Iconfont.folderOpen, size: 48, color: context.semantic.subtleText),
-          const SizedBox(height: 10),
-          Text(
-            l10n.projectListEmpty,
-            style: TextStyle(fontSize: 14, color: context.semantic.subtleText),
-          ),
-          const SizedBox(height: Spacing.md),
-          FilledButton.tonal(onPressed: onCreate, child: Text(l10n.projectNew)),
-        ],
-      ),
     );
   }
 }
