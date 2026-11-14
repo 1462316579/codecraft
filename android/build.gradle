@@ -15,18 +15,12 @@ subprojects {
 
 // 强制所有 Flutter plugin 子项目（如 audioplayers_android）使用 compileSdk 34+，
 // 满足 androidx.window / fragment / lifecycle / core 等库的最低编译版本要求。
-// 使用 plugins.withId 确保在 Android 插件应用到子项目后立即设置，
-// 避免 "It is too late to set compileSdk" 错误。
-subprojects { project ->
-    project.plugins.withId('com.android.library') {
+// 使用 gradle.projectsEvaluated 确保在所有子项目（包括 Flutter 动态引入的 plugin）
+// 都配置完成后、任务创建前统一覆盖 compileSdk，避免 "It is too late to set compileSdk"。
+gradle.projectsEvaluated {
+    subprojects { project ->
         def android = project.extensions.findByName('android')
-        if (android != null) {
-            android.compileSdk = 34
-        }
-    }
-    project.plugins.withId('com.android.application') {
-        def android = project.extensions.findByName('android')
-        if (android != null) {
+        if (android != null && android.compileSdk < 34) {
             android.compileSdk = 34
         }
     }
