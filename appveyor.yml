@@ -4,12 +4,10 @@ clone_depth: 1
 
 init:
   - git config --global core.autocrlf input
-  - for /d %%d in ("C:\Program Files\Java\jdk-*") do set JAVA_HOME=%%d
-  - java -version
 
 environment:
   FLUTTER_HOME: C:\flutter
-  PATH: C:\flutter\bin;C:\Program Files\Java\jdk-17\bin;%PATH%
+  PATH: C:\flutter\bin;%PATH%
 
 install:
   - if exist "%FLUTTER_HOME%" rmdir /s /q "%FLUTTER_HOME%"
@@ -18,7 +16,7 @@ install:
 
 build_script:
   - flutter pub get
-  - flutter build apk --release
+  - set JAVA_HOME= && for /d %%d in ("C:\Program Files\Java\jdk-17*") do set JAVA_HOME=%%d && if "%JAVA_HOME%"=="" for /d %%d in ("C:\Program Files\Java\jdk-*") do set JAVA_HOME=%%d && java -version && flutter build apk --release
 
 artifacts:
   - path: build\app\outputs\flutter-apk\app-release.apk
