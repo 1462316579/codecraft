@@ -10,6 +10,7 @@ environment:
   PATH: C:\flutter\bin;C:\Program Files\Java\jdk-17\bin;%PATH%
 
 install:
+  - if exist "%FLUTTER_HOME%" rmdir /s /q "%FLUTTER_HOME%"
   - git clone https://github.com/flutter/flutter.git -b stable --depth 1 "%FLUTTER_HOME%"
   - "%FLUTTER_HOME%\bin\flutter --version"
 
