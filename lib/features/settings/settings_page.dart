@@ -159,7 +159,7 @@ class SettingsPage extends ConsumerWidget {
           ),
         ],
       ),
-    ));
+    );
   }
 }
 /// 页面顶部的液态玻璃标题卡片。
