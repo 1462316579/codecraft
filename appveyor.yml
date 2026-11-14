@@ -16,7 +16,6 @@ install:
 
 build_script:
   - flutter pub get
-  - flutter doctor --android-licenses
   - flutter build apk --debug
 
 artifacts:
