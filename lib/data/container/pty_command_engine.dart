@@ -106,7 +106,7 @@ class PtyCommandEngine implements CommandEngine {
     var timedOut = false;
     final timer = Timer(clamped, () {
       timedOut = true;
-      pty.close(killProcess: true);
+      pty.kill();
     });
 
     pty.output.listen(
@@ -186,7 +186,7 @@ class PtyCommandEngine implements CommandEngine {
       },
       onKill: () {
         subscription.cancel();
-        pty.close(killProcess: true);
+        pty.kill();
         if (!outputController.isClosed) outputController.close();
       },
     );

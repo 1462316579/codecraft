@@ -742,9 +742,9 @@ String archiveTargetName(String name) {
 }
 
 Uint8List _decodeSingleStream(String suffix, Uint8List bytes) => switch (suffix) {
-      '.gz' => GZipDecoder().decodeBytes(bytes),
-      '.bz2' => BZip2Decoder().decodeBytes(bytes),
-      '.xz' => XZDecoder().decodeBytes(bytes),
+      '.gz' => Uint8List.fromList(GZipDecoder().decodeBytes(bytes)),
+      '.bz2' => Uint8List.fromList(BZip2Decoder().decodeBytes(bytes)),
+      '.xz' => Uint8List.fromList(XZDecoder().decodeBytes(bytes)),
       _ => throw UnsupportedError('不支持的压缩格式: $suffix'),
     };
 
