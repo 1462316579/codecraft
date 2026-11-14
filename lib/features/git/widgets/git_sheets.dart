@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
+import '../../../core/icons/iconfont.dart';
 import 'package:flutter/services.dart';
-import 'package:lucide_icons/lucide_icons.dart';
 
 import '../../credentials/credential_login.dart';
 
@@ -257,7 +257,7 @@ class _CommitDialogState extends State<CommitDialog> {
                       child: CircularProgressIndicator(strokeWidth: 1.8),
                     )
                   else
-                    Icon(LucideIcons.zap, size: 13, color: theme.colorScheme.primary),
+                    Icon(Iconfont.zap, size: 13, color: theme.colorScheme.primary),
                   const SizedBox(width: 4),
                   Text(
                     widget.isGenerating ? l10n.gitCommitGenerating : l10n.gitCommitAiGenerate,
@@ -519,7 +519,7 @@ class _StashSheetState extends State<StashSheet> {
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          const Icon(LucideIcons.archive, size: 16),
+                          const Icon(Iconfont.archive, size: 16),
                           const SizedBox(width: Spacing.xs),
                           Text(l10n.gitActionStash),
                         ],
@@ -655,7 +655,7 @@ class _StashItemRow extends StatelessWidget {
                   padding: EdgeInsets.zero,
                   onPressed: busy ? null : onDrop,
                   tooltip: l10n.gitStashDrop,
-                  icon: Icon(LucideIcons.trash2, size: 15, color: theme.colorScheme.error),
+                  icon: Icon(Iconfont.trash2, size: 15, color: theme.colorScheme.error),
                 ),
               ),
             ],
@@ -747,7 +747,7 @@ class RepoPickerSheet extends StatelessWidget {
                         child: Row(
                           children: [
                             Icon(
-                              LucideIcons.folder,
+                              Iconfont.folder,
                               size: 20,
                               color: isSelected
                                   ? theme.colorScheme.primary
@@ -1046,7 +1046,7 @@ class _CommitDetailSheetState extends State<CommitDetailSheet> {
               children: [
                 Expanded(
                   child: _DetailAction(
-                    icon: LucideIcons.gitBranch,
+                    icon: Iconfont.gitBranch,
                     label: l10n.gitTabBranches,
                     onPressed: _promptBranch,
                   ),
@@ -1054,7 +1054,7 @@ class _CommitDetailSheetState extends State<CommitDetailSheet> {
                 const SizedBox(width: Spacing.xs),
                 Expanded(
                   child: _DetailAction(
-                    icon: LucideIcons.tag,
+                    icon: Iconfont.tag,
                     label: l10n.gitTags,
                     onPressed: _promptTag,
                   ),
@@ -1062,7 +1062,7 @@ class _CommitDetailSheetState extends State<CommitDetailSheet> {
                 const SizedBox(width: Spacing.xs),
                 Expanded(
                   child: _DetailAction(
-                    icon: LucideIcons.rotateCcw,
+                    icon: Iconfont.rotateCcw,
                     label: 'Reset',
                     onPressed: _promptReset,
                   ),

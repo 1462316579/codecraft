@@ -1,27 +1,27 @@
 import 'package:flutter/material.dart';
-import 'package:lucide_icons/lucide_icons.dart';
+import '../../core/icons/iconfont.dart';
 
 /// 按文件语义与扩展名挑选侧边栏文件树的单色线性图标(逐值移植上游 `FileTypeIcon.kt`)。
 ///
 /// 风格与全局一致:极简线性,渲染时跟随主题色着色。
 IconData fileTypeIconFor(String name) {
   final lower = name.toLowerCase();
-  if (_specialTerminalFiles.contains(lower)) return LucideIcons.terminal;
+  if (_specialTerminalFiles.contains(lower)) return Iconfont.terminal;
   if (_specialTextFiles.contains(lower) || lower.startsWith('.env')) {
-    return LucideIcons.fileText;
+    return Iconfont.fileText;
   }
 
   final dot = name.lastIndexOf('.');
   final ext = dot <= 0 ? '' : name.substring(dot + 1).toLowerCase();
-  if (_codeExts.contains(ext)) return LucideIcons.code;
-  if (_terminalExts.contains(ext)) return LucideIcons.terminal;
-  if (_textAndConfigExts.contains(ext)) return LucideIcons.fileText;
-  if (_imageExts.contains(ext)) return LucideIcons.image;
-  if (_videoExts.contains(ext)) return LucideIcons.video;
-  if (_audioExts.contains(ext)) return LucideIcons.music;
-  if (_archiveExts.contains(ext)) return LucideIcons.package;
-  if (_databaseExts.contains(ext)) return LucideIcons.database;
-  return LucideIcons.file;
+  if (_codeExts.contains(ext)) return Iconfont.code;
+  if (_terminalExts.contains(ext)) return Iconfont.terminal;
+  if (_textAndConfigExts.contains(ext)) return Iconfont.fileText;
+  if (_imageExts.contains(ext)) return Iconfont.image;
+  if (_videoExts.contains(ext)) return Iconfont.video;
+  if (_audioExts.contains(ext)) return Iconfont.music;
+  if (_archiveExts.contains(ext)) return Iconfont.package;
+  if (_databaseExts.contains(ext)) return Iconfont.database;
+  return Iconfont.file;
 }
 
 /// 源代码文件扩展名。

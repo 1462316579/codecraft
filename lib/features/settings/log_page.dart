@@ -2,9 +2,9 @@ import 'dart:async';
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import '../../core/icons/iconfont.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:lucide_icons/lucide_icons.dart';
 
 import '../../core/log/file_logger.dart';
 import '../../core/log/log_store.dart';
@@ -271,7 +271,7 @@ class _LogPageState extends ConsumerState<LogPage> {
             SettingsGroup(
               children: [
                 SettingsRow(
-                  icon: LucideIcons.fileText,
+                  icon: Iconfont.fileText,
                   title: l10n.logLevel,
                   trailing: _levelBadge(l10n, theme),
                   onTap: () => _openLevelSheet(),
@@ -370,7 +370,7 @@ class _LogPageState extends ConsumerState<LogPage> {
             onPressed: _clearFilter,
             constraints: const BoxConstraints(),
             padding: EdgeInsets.zero,
-            icon: Icon(LucideIcons.x, size: 14, color: theme.colorScheme.primary),
+            icon: Icon(Iconfont.x, size: 14, color: theme.colorScheme.primary),
           ),
         ],
       ),
@@ -504,7 +504,7 @@ class _LogPageState extends ConsumerState<LogPage> {
             if (copied)
               Padding(
                 padding: const EdgeInsets.only(left: Spacing.xs, top: 2),
-                child: Icon(LucideIcons.check, size: 14, color: theme.colorScheme.primary),
+                child: Icon(Iconfont.check, size: 14, color: theme.colorScheme.primary),
               ),
           ],
         ),
@@ -617,7 +617,7 @@ class _LogPageState extends ConsumerState<LogPage> {
                             ),
                           ),
                           if (level == _level)
-                            Icon(LucideIcons.check, size: 20, color: theme.colorScheme.primary),
+                            Icon(Iconfont.check, size: 20, color: theme.colorScheme.primary),
                         ],
                       ),
                     ),
@@ -683,7 +683,7 @@ class _LogPageState extends ConsumerState<LogPage> {
                                     ),
                                   ),
                                   if (file.name == _selectedFileName)
-                                    Icon(LucideIcons.check, size: 20, color: theme.colorScheme.primary),
+                                    Icon(Iconfont.check, size: 20, color: theme.colorScheme.primary),
                                 ],
                               ),
                             ),
@@ -733,7 +733,7 @@ class _LogPageState extends ConsumerState<LogPage> {
                 const SizedBox(height: Spacing.sm),
                 _menuRow(
                   sheetContext,
-                  LucideIcons.copy,
+                  Iconfont.copy,
                   l10n.logCopyLine,
                   () {
                     Navigator.pop(sheetContext);
@@ -744,7 +744,7 @@ class _LogPageState extends ConsumerState<LogPage> {
                 if (stack.isNotEmpty)
                   _menuRow(
                     sheetContext,
-                    LucideIcons.fileText,
+                    Iconfont.fileText,
                     l10n.logCopyWithStack,
                     () {
                       Navigator.pop(sheetContext);
@@ -754,7 +754,7 @@ class _LogPageState extends ConsumerState<LogPage> {
                   ),
                 _menuRow(
                   sheetContext,
-                  LucideIcons.messageSquare,
+                  Iconfont.messageSquare,
                   l10n.logCopyMessage,
                   () {
                     Navigator.pop(sheetContext);
@@ -838,7 +838,7 @@ class _CopyLogButtonState extends State<_CopyLogButton> {
         child: Padding(
           padding: const EdgeInsets.all(10),
           child: Icon(
-            _copied ? LucideIcons.check : LucideIcons.copy,
+            _copied ? Iconfont.check : Iconfont.copy,
             size: 18,
             color: _copied
                 ? theme.colorScheme.primary

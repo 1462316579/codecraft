@@ -4,7 +4,6 @@ import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:path/path.dart' as p;
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:lucide_icons/lucide_icons.dart';
 
 import '../../core/icons/iconfont.dart';
 import 'package:go_router/go_router.dart';
@@ -174,12 +173,12 @@ class _SessionsDrawerState extends ConsumerState<SessionsDrawer> {
                 ),
               ),
               _SheetAction(
-                icon: session.isPinned ? LucideIcons.pinOff : LucideIcons.pin,
+                icon: session.isPinned ? Iconfont.pinOff : Iconfont.pin,
                 label: session.isPinned ? l10n.unpin : l10n.pin,
                 onTap: () => Navigator.pop(sheetContext, 'pin'),
               ),
               _SheetAction(
-                icon: LucideIcons.edit2,
+                icon: Iconfont.edit2,
                 label: l10n.rename,
                 onTap: () => Navigator.pop(sheetContext, 'rename'),
               ),
@@ -382,7 +381,7 @@ class _SessionsDrawerState extends ConsumerState<SessionsDrawer> {
                 child: SettingsGroup(
                   children: [
                     SettingsRow(
-                      icon: LucideIcons.radio,
+                      icon: Iconfont.radio,
                       title: l10n.captureTitle,
                       onTap: () => context.push('/capture'),
                     ),
@@ -400,7 +399,7 @@ class _SessionsDrawerState extends ConsumerState<SessionsDrawer> {
                       ),
                       const SettingsDivider(),
                       SettingsRow(
-                        icon: LucideIcons.cloud,
+                        icon: Iconfont.cloud,
                         title: l10n.codespacesTitle,
                         onTap: () => context.push('/codespaces'),
                       ),

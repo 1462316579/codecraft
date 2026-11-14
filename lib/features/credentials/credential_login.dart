@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
+import '../../core/icons/iconfont.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:lucide_icons/lucide_icons.dart';
 
 import '../../core/theme/semantic_colors.dart';
 import '../../core/theme/tokens.dart';
@@ -86,7 +86,7 @@ class _TokenLoginSheetState extends ConsumerState<_TokenLoginSheet> {
                 border: const OutlineInputBorder(),
                 isDense: true,
                 suffixIcon: IconButton(
-                  icon: Icon(_obscure ? LucideIcons.eyeOff : LucideIcons.eye),
+                  icon: Icon(_obscure ? Iconfont.eyeOff : Iconfont.eye),
                   tooltip: _obscure ? l10n.commonShow : l10n.commonHide,
                   onPressed: () => setState(() => _obscure = !_obscure),
                 ),

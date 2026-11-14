@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
+import '../../core/icons/iconfont.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
-import 'package:lucide_icons/lucide_icons.dart';
 
 import '../../core/theme/semantic_colors.dart';
 import '../../core/theme/tokens.dart';
@@ -40,7 +40,7 @@ Future<void> showMcpAddSheet(BuildContext context, WidgetRef ref) async {
             child: SettingsGroup(
               children: [
                 SettingsRow(
-                  icon: LucideIcons.pencil,
+                  icon: Iconfont.pencil,
                   title: l10n.mcpAddManual,
                   subtitle: l10n.mcpAddManualDesc,
                   onTap: () {
@@ -50,7 +50,7 @@ Future<void> showMcpAddSheet(BuildContext context, WidgetRef ref) async {
                 ),
                 const SettingsDivider(indent: SettingsRow.textIndent),
                 SettingsRow(
-                  icon: LucideIcons.fileText,
+                  icon: Iconfont.fileText,
                   title: l10n.mcpAddFromJson,
                   subtitle: l10n.mcpAddFromJsonDesc,
                   onTap: () {
@@ -328,14 +328,14 @@ class _McpEditorSheetState extends ConsumerState<_McpEditorSheet> {
                     children: [
                       if (server != null)
                         IconButton(
-                          icon: const Icon(LucideIcons.fileText, size: 20),
+                          icon: const Icon(Iconfont.fileText, size: 20),
                           tooltip: l10n.mcpViewLogs,
                           onPressed: () => context.push(
                             '/settings/logs?server=${Uri.encodeComponent(server.name)}',
                           ),
                         ),
                       IconButton(
-                        icon: const Icon(LucideIcons.refreshCw, size: 20),
+                        icon: const Icon(Iconfont.refreshCw, size: 20),
                         tooltip: l10n.mcpRefreshTools,
                         onPressed: server == null
                             ? null
@@ -386,7 +386,7 @@ class _McpEditorSheetState extends ConsumerState<_McpEditorSheet> {
                   height: 44,
                   child: FilledButton.icon(
                     onPressed: (_saving || _nameInvalid) ? null : _save,
-                    icon: const Icon(LucideIcons.check, size: 18),
+                    icon: const Icon(Iconfont.check, size: 18),
                     label: Text(l10n.save),
                   ),
                 ),
@@ -553,7 +553,7 @@ class _McpEditorSheetState extends ConsumerState<_McpEditorSheet> {
                 ),
                 alignment: Alignment.center,
                 child: Icon(
-                  LucideIcons.shield,
+                  Iconfont.shield,
                   size: 18,
                   color: _authEnabled ? theme.colorScheme.primary : semantic.subtleText,
                 ),
@@ -593,7 +593,7 @@ class _McpEditorSheetState extends ConsumerState<_McpEditorSheet> {
               padding: const EdgeInsets.symmetric(horizontal: Spacing.md, vertical: 12),
               child: Row(
                 children: [
-                  Icon(LucideIcons.info, size: 18, color: theme.colorScheme.primary),
+                  Icon(Iconfont.info, size: 18, color: theme.colorScheme.primary),
                   const SizedBox(width: 10),
                   Expanded(
                     child: Text(l10n.mcpAuthSaveFirst, style: theme.textTheme.bodySmall),
@@ -611,7 +611,7 @@ class _McpEditorSheetState extends ConsumerState<_McpEditorSheet> {
               padding: const EdgeInsets.symmetric(vertical: 4),
               child: Row(
                 children: [
-                  Icon(LucideIcons.slidersHorizontal, size: 16, color: semantic.subtleText),
+                  Icon(Iconfont.slidersHorizontal, size: 16, color: semantic.subtleText),
                   const SizedBox(width: Spacing.sm),
                   Expanded(
                     child: Text(
@@ -716,7 +716,7 @@ class _McpEditorSheetState extends ConsumerState<_McpEditorSheet> {
                         child: CircularProgressIndicator(strokeWidth: 1.8, color: statusColor),
                       )
                     else if (isAuthorized)
-                      Icon(LucideIcons.check, size: 12, color: statusColor),
+                      Icon(Iconfont.check, size: 12, color: statusColor),
                     const SizedBox(width: 6),
                     Text(
                       statusLabel,
@@ -740,7 +740,7 @@ class _McpEditorSheetState extends ConsumerState<_McpEditorSheet> {
               child: Row(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Icon(LucideIcons.alertCircle, size: 16, color: theme.colorScheme.error),
+                  Icon(Iconfont.alertCircle, size: 16, color: theme.colorScheme.error),
                   const SizedBox(width: 8),
                   Expanded(
                     child: Text(
@@ -840,7 +840,7 @@ class _McpEditorSheetState extends ConsumerState<_McpEditorSheet> {
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
-              Icon(LucideIcons.wrench, size: 32, color: semantic.subtleText.withValues(alpha: 0.5)),
+              Icon(Iconfont.wrench, size: 32, color: semantic.subtleText.withValues(alpha: 0.5)),
               const SizedBox(height: 8),
               Text(
                 server == null ? l10n.mcpSaveFirstHint : l10n.mcpNoToolsHint,
@@ -874,7 +874,7 @@ class _McpEditorSheetState extends ConsumerState<_McpEditorSheet> {
                 onChanged: (value) => setState(() => _toolsQuery = value),
                 decoration: InputDecoration(
                   hintText: l10n.mcpToolsSearch,
-                  prefixIcon: const Icon(LucideIcons.search, size: 18),
+                  prefixIcon: const Icon(Iconfont.search, size: 18),
                   border: const OutlineInputBorder(),
                   isDense: true,
                 ),
@@ -910,7 +910,7 @@ class _McpEditorSheetState extends ConsumerState<_McpEditorSheet> {
               child: Center(
                 child: Column(
                   children: [
-                    Icon(LucideIcons.search, size: 24, color: semantic.subtleText.withValues(alpha: 0.5)),
+                    Icon(Iconfont.search, size: 24, color: semantic.subtleText.withValues(alpha: 0.5)),
                     const SizedBox(height: 6),
                     Text(
                       l10n.mcpToolsSearchEmpty,
@@ -1046,7 +1046,7 @@ class _McpEditorSheetState extends ConsumerState<_McpEditorSheet> {
             ),
             TextButton.icon(
               onPressed: onAdd,
-              icon: const Icon(LucideIcons.plus, size: 16),
+              icon: const Icon(Iconfont.plus, size: 16),
               label: Text(addLabel),
             ),
           ],
@@ -1067,7 +1067,7 @@ class _McpEditorSheetState extends ConsumerState<_McpEditorSheet> {
                 children: [
                   Expanded(child: pairs[index]),
                   IconButton(
-                    icon: Icon(LucideIcons.trash2, size: 18, color: theme.colorScheme.error),
+                    icon: Icon(Iconfont.trash2, size: 18, color: theme.colorScheme.error),
                     onPressed: () => onRemove(index),
                   ),
                 ],

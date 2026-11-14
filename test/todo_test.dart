@@ -11,7 +11,7 @@ import 'package:codecraft/features/chat/widgets/message_bubble.dart';
 import 'package:codecraft/features/chat/widgets/todo_views.dart';
 import 'package:codecraft/l10n/app_localizations.dart';
 import 'package:flutter/material.dart';
-import 'package:lucide_icons/lucide_icons.dart';
+import '../lib/core/icons/iconfont.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:sqflite_common_ffi/sqflite_ffi.dart';
@@ -216,10 +216,10 @@ void main() {
     });
 
     testWidgets('工具行图标:todo 用对勾(对齐上游 toolIcon)', (tester) async {
-      expect(toolIconFor('todo'), LucideIcons.check);
-      expect(toolIconFor('Todo'), LucideIcons.check, reason: '工具名忽略大小写');
-      expect(toolIconFor('bash'), LucideIcons.terminal);
-      expect(toolIconFor('unknownTool'), LucideIcons.wrench,
+      expect(toolIconFor('todo'), Iconfont.check);
+      expect(toolIconFor('Todo'), Iconfont.check, reason: '工具名忽略大小写');
+      expect(toolIconFor('bash'), Iconfont.terminal);
+      expect(toolIconFor('unknownTool'), Iconfont.wrench,
           reason: '未归类工具回落通用图标');
 
       await tester.pumpWidget(
@@ -237,7 +237,7 @@ void main() {
         ),
       );
 
-      expect(find.byIcon(LucideIcons.check), findsOneWidget);
+      expect(find.byIcon(Iconfont.check), findsOneWidget);
     });
 
     testWidgets('执行中场景文案:todo 说「正在整理待办」,空闲说「正在思考」', (tester) async {

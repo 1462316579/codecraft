@@ -1,8 +1,8 @@
 import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
+import '../../core/icons/iconfont.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:lucide_icons/lucide_icons.dart';
 
 import '../../core/theme/semantic_colors.dart';
 import '../../core/theme/tokens.dart';
@@ -152,7 +152,7 @@ class _HexEditorPageState extends ConsumerState<HexEditorPage> {
                     height: 18,
                     child: CircularProgressIndicator(strokeWidth: 2),
                   )
-                : const Icon(LucideIcons.save, size: 18),
+                : const Icon(Iconfont.save, size: 18),
           ),
         ],
       ),

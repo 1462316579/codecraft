@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
+import '../../core/icons/iconfont.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:lucide_icons/lucide_icons.dart';
 
 import '../../core/theme/semantic_colors.dart';
 import '../../core/theme/tokens.dart';
@@ -46,14 +46,14 @@ class ThemePage extends ConsumerWidget {
             child: SettingsGroup(
               children: [
                 SettingsRow(
-                  icon: LucideIcons.sunMoon,
+                  icon: Iconfont.sunMoon,
                   title: l10n.themeMode,
                   trailing: _trailingValue(context, _themeModeLabel(l10n, settings.themeMode)),
                   onTap: () => _pickThemeMode(context, settings.themeMode, notifier.setThemeMode),
                 ),
                 const SettingsDivider(indent: SettingsRow.textIndent),
                 SettingsRow(
-                  icon: LucideIcons.languages,
+                  icon: Iconfont.languages,
                   title: l10n.language,
                   trailing: _trailingValue(context, _localeLabel(l10n, settings.localeCode)),
                   onTap: () => _pickLocale(context, settings.localeCode, notifier.setLocale),

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
+import '../../core/icons/iconfont.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:lucide_icons/lucide_icons.dart';
 
 import '../../core/theme/semantic_colors.dart';
 import '../../core/theme/tokens.dart';
@@ -125,7 +125,7 @@ class _SoftwarePermissionsPageState extends ConsumerState<SoftwarePermissionsPag
                 SettingsGroup(
                   children: [
                     SettingsRow(
-                      icon: LucideIcons.folderOpen,
+                      icon: Iconfont.folderOpen,
                       title: l10n.permissionStorageTitle,
                       subtitle: '读写工作区文件',
                       trailing: _statusText(_storage ? l10n.permissionAllowed : l10n.permissionNotAllowed),
@@ -133,7 +133,7 @@ class _SoftwarePermissionsPageState extends ConsumerState<SoftwarePermissionsPag
                     ),
                     SettingsDivider(indent: SettingsRow.textIndent),
                     SettingsRow(
-                      icon: LucideIcons.appWindow,
+                      icon: Iconfont.appWindow,
                       title: l10n.permissionAppsTitle,
                       subtitle: l10n.permissionAppsDesc,
                       trailing: _statusText(_appList ? l10n.permissionAllowed : l10n.permissionNotAllowed),
@@ -141,7 +141,7 @@ class _SoftwarePermissionsPageState extends ConsumerState<SoftwarePermissionsPag
                     ),
                     SettingsDivider(indent: SettingsRow.textIndent),
                     SettingsRow(
-                      icon: LucideIcons.zap,
+                      icon: Iconfont.zap,
                       title: l10n.permissionBatteryTitle,
                       subtitle: l10n.permissionBatteryDesc,
                       trailing: _statusText(_status.battery ? l10n.permissionAllowed : l10n.permissionNotAllowed),
@@ -149,14 +149,14 @@ class _SoftwarePermissionsPageState extends ConsumerState<SoftwarePermissionsPag
                     ),
                     SettingsDivider(indent: SettingsRow.textIndent),
                     SettingsRow(
-                      icon: LucideIcons.power,
+                      icon: Iconfont.power,
                       title: l10n.permissionAutoStartTitle,
                       subtitle: l10n.permissionAutoStartDesc,
                       onTap: SoftwarePermissions.openAutoStart,
                     ),
                     SettingsDivider(indent: SettingsRow.textIndent),
                     SettingsRow(
-                      icon: LucideIcons.terminal,
+                      icon: Iconfont.terminal,
                       title: l10n.permissionShizukuTitle,
                       subtitle: l10n.permissionShizukuDesc,
                       trailing: _statusText(

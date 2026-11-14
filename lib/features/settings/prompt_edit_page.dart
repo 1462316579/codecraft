@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
+import '../../core/icons/iconfont.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
-import 'package:lucide_icons/lucide_icons.dart';
 
 import '../../core/theme/semantic_colors.dart';
 import '../../core/theme/tokens.dart';
@@ -152,7 +152,7 @@ class _PromptEditPageState extends ConsumerState<PromptEditPage> {
         elevation: 0,
         scrolledUnderElevation: 0,
         leading: IconButton(
-          icon: const Icon(LucideIcons.arrowLeft),
+          icon: const Icon(Iconfont.arrowLeft),
           onPressed: () => context.pop(),
         ),
         actions: [
@@ -204,7 +204,7 @@ class _PromptEditPageState extends ConsumerState<PromptEditPage> {
                         padding: const EdgeInsets.only(left: 0),
                         child: Row(
                           children: [
-                            Icon(LucideIcons.folder, size: 20, color: context.semantic.subtleText),
+                            Icon(Iconfont.folder, size: 20, color: context.semantic.subtleText),
                             const SizedBox(width: Spacing.sm),
                             Expanded(
                               child: Text(

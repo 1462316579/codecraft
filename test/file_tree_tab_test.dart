@@ -17,10 +17,10 @@ import 'package:codecraft/features/sessions/file_tree_tab.dart';
 import 'package:codecraft/features/sessions/file_type_icon.dart';
 import 'package:codecraft/l10n/app_localizations.dart';
 import 'package:flutter/material.dart';
+import '../lib/core/icons/iconfont.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:lucide_icons/lucide_icons.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 /// 侧边栏「文件」Tab:真实临时目录 + 真实 IO(用 runAsync 推进事件循环)。
@@ -217,20 +217,20 @@ void main() {
 
   group('文件类型图标', () {
     test('按扩展名区分代码/脚本/文本/图片/压缩包/数据库', () {
-      expect(fileTypeIconFor('main.dart'), LucideIcons.code);
-      expect(fileTypeIconFor('run.sh'), LucideIcons.terminal);
-      expect(fileTypeIconFor('README.md'), LucideIcons.fileText);
-      expect(fileTypeIconFor('logo.png'), LucideIcons.image);
-      expect(fileTypeIconFor('pkg.zip'), LucideIcons.package);
-      expect(fileTypeIconFor('app.db'), LucideIcons.database);
-      expect(fileTypeIconFor('unknown.xyz'), LucideIcons.file);
+      expect(fileTypeIconFor('main.dart'), Iconfont.code);
+      expect(fileTypeIconFor('run.sh'), Iconfont.terminal);
+      expect(fileTypeIconFor('README.md'), Iconfont.fileText);
+      expect(fileTypeIconFor('logo.png'), Iconfont.image);
+      expect(fileTypeIconFor('pkg.zip'), Iconfont.package);
+      expect(fileTypeIconFor('app.db'), Iconfont.database);
+      expect(fileTypeIconFor('unknown.xyz'), Iconfont.file);
     });
 
     test('无后缀特殊文件名', () {
-      expect(fileTypeIconFor('Dockerfile'), LucideIcons.terminal);
-      expect(fileTypeIconFor('.gitignore'), LucideIcons.fileText);
-      expect(fileTypeIconFor('.env'), LucideIcons.fileText);
-      expect(fileTypeIconFor('.env.local'), LucideIcons.fileText);
+      expect(fileTypeIconFor('Dockerfile'), Iconfont.terminal);
+      expect(fileTypeIconFor('.gitignore'), Iconfont.fileText);
+      expect(fileTypeIconFor('.env'), Iconfont.fileText);
+      expect(fileTypeIconFor('.env.local'), Iconfont.fileText);
     });
   });
 

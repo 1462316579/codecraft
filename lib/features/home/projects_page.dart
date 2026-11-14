@@ -2,8 +2,8 @@ import 'dart:async';
 import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
+import '../../core/icons/iconfont.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:lucide_icons/lucide_icons.dart';
 import 'package:path/path.dart' as p;
 
 import '../../agent/chat_controller.dart';
@@ -48,7 +48,7 @@ class ProjectsPage extends ConsumerWidget {
         actions: [
           IconButton(
             tooltip: l10n.projectNew,
-            icon: const Icon(LucideIcons.plus, size: 20),
+            icon: const Icon(Iconfont.plus, size: 20),
             onPressed: () => _pickKind(context, ref),
           ),
         ],
@@ -109,19 +109,19 @@ class ProjectsPage extends ConsumerWidget {
             mainAxisSize: MainAxisSize.min,
             children: [
               _KindItem(
-                icon: LucideIcons.code,
+                icon: Iconfont.code,
                 title: l10n.projectKindCoding,
                 description: l10n.projectKindCodingDesc,
                 onTap: () => Navigator.pop(sheetContext, ProjectKind.coding),
               ),
               _KindItem(
-                icon: LucideIcons.pencil,
+                icon: Iconfont.pencil,
                 title: l10n.projectKindWriting,
                 description: l10n.projectKindWritingDesc,
                 onTap: () => Navigator.pop(sheetContext, ProjectKind.writing),
               ),
               _KindItem(
-                icon: LucideIcons.binary,
+                icon: Iconfont.binary,
                 title: l10n.projectKindReverse,
                 description: l10n.projectKindReverseDesc,
                 onTap: () => Navigator.pop(sheetContext, ProjectKind.reverse),
@@ -272,12 +272,12 @@ class ProjectsPage extends ConsumerWidget {
           mainAxisSize: MainAxisSize.min,
           children: [
             ListTile(
-              leading: const Icon(LucideIcons.pencil, size: 20),
+              leading: const Icon(Iconfont.pencil, size: 20),
               title: Text(l10n.rename),
               onTap: () => Navigator.pop(sheetContext, 'rename'),
             ),
             ListTile(
-              leading: Icon(LucideIcons.trash2, size: 20, color: Theme.of(context).colorScheme.error),
+              leading: Icon(Iconfont.trash2, size: 20, color: Theme.of(context).colorScheme.error),
               title: Text(
                 l10n.delete,
                 style: TextStyle(color: Theme.of(context).colorScheme.error),
@@ -403,7 +403,7 @@ class _EmptyState extends StatelessWidget {
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          Icon(LucideIcons.folderOpen, size: 48, color: context.semantic.subtleText),
+          Icon(Iconfont.folderOpen, size: 48, color: context.semantic.subtleText),
           const SizedBox(height: 10),
           Text(
             l10n.projectListEmpty,
@@ -502,7 +502,7 @@ class _ProjectRow extends StatelessWidget {
                 color: theme.colorScheme.surfaceContainerHighest,
               ),
               child: Icon(
-                writing ? LucideIcons.pencil : LucideIcons.code,
+                writing ? Iconfont.pencil : Iconfont.code,
                 size: 24,
                 color: theme.colorScheme.primary,
               ),

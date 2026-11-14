@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:lucide_icons/lucide_icons.dart';
+import '../../core/icons/iconfont.dart';
 
 import '../../core/theme/semantic_colors.dart';
 import '../../core/theme/tokens.dart';
@@ -60,7 +60,7 @@ class DiffViewerScreen extends StatelessWidget {
         leading: IconButton(
           onPressed: onBack,
           tooltip: l10n.back,
-          icon: const Icon(LucideIcons.arrowLeft),
+          icon: const Icon(Iconfont.arrowLeft),
         ),
         actions: [
           if (path != null && onOpenInEditor != null)
@@ -70,14 +70,14 @@ class DiffViewerScreen extends StatelessWidget {
                 onOpenInEditor!(path);
               },
               tooltip: l10n.gitOpenInEditor,
-              icon: const Icon(LucideIcons.pencil, size: 18),
+              icon: const Icon(Iconfont.pencil, size: 18),
             ),
         ],
       ),
       body: switch (diffData) {
         null => _DiffLoading(),
         final data when data.isBinary => const _DiffHint(
-            icon: LucideIcons.file,
+            icon: Iconfont.file,
             messageKey: _DiffHintKind.binary,
           ),
         final data when data.isLarge => const _DiffHint(

@@ -1,7 +1,7 @@
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
-import 'package:lucide_icons/lucide_icons.dart';
+import '../icons/iconfont.dart';
 
 import '../theme/semantic_colors.dart';
 import '../theme/tokens.dart';
@@ -150,7 +150,7 @@ class _SwipeToDeleteRowState extends State<SwipeToDeleteRow>
                                   child: Row(
                                     mainAxisAlignment: MainAxisAlignment.center,
                                     children: [
-                                      const Icon(LucideIcons.trash2, size: 20, color: Colors.white),
+                                      const Icon(Iconfont.trash2, size: 20, color: Colors.white),
                                       const SizedBox(width: 8),
                                       Text(
                                         AppLocalizations.of(context).delete,

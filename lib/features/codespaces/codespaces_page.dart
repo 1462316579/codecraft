@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:lucide_icons/lucide_icons.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import '../../core/icons/iconfont.dart';
@@ -113,7 +112,7 @@ class _CodespacesPageState extends ConsumerState<CodespacesPage> {
                       color: theme.colorScheme.primary.withValues(alpha: 0.12),
                       borderRadius: BorderRadius.circular(Radii.mdLarge),
                     ),
-                    child: Icon(LucideIcons.github, size: 26, color: theme.colorScheme.primary),
+                    child: Icon(Iconfont.github, size: 26, color: theme.colorScheme.primary),
                   ),
                   const SizedBox(width: Spacing.md),
                   Expanded(
@@ -210,7 +209,7 @@ class _CodespacesPageState extends ConsumerState<CodespacesPage> {
                   Row(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Icon(LucideIcons.alertTriangle, size: 18, color: theme.colorScheme.error),
+                      Icon(Iconfont.alertTriangle, size: 18, color: theme.colorScheme.error),
                       const SizedBox(width: Spacing.sm),
                       Expanded(
                         child: Text(
@@ -298,13 +297,13 @@ class _CodespacesPageState extends ConsumerState<CodespacesPage> {
           SettingsGroup(
             children: [
               SettingsRow(
-                icon: LucideIcons.github,
+                icon: Iconfont.github,
                 title: state.login,
                 subtitle: codespacesHost,
               ),
               const SettingsDivider(),
               SettingsRow(
-                icon: target.isRemote ? LucideIcons.cloud : LucideIcons.hardDrive,
+                icon: target.isRemote ? Iconfont.cloud : Iconfont.hardDrive,
                 title: l10n.codespacesExecutionEnv,
                 subtitle: target.isRemote
                     ? '${l10n.codespacesEnvCodespace} · ${target.label}'
@@ -598,7 +597,7 @@ class _CodespaceRow extends StatelessWidget {
                 color: theme.colorScheme.surfaceContainerHighest,
                 borderRadius: BorderRadius.circular(8),
               ),
-              child: Icon(LucideIcons.cloud, size: 22, color: theme.colorScheme.onSurfaceVariant),
+              child: Icon(Iconfont.cloud, size: 22, color: theme.colorScheme.onSurfaceVariant),
             ),
             const SizedBox(width: Spacing.md),
             Expanded(
@@ -744,7 +743,7 @@ class _CodespaceRow extends StatelessWidget {
                 },
               ),
             ListTile(
-              leading: const Icon(LucideIcons.network),
+              leading: const Icon(Iconfont.network),
               title: Text(l10n.codespacesPorts),
               onTap: () {
                 Navigator.of(sheetContext).pop();
@@ -768,7 +767,7 @@ class _CodespaceRow extends StatelessWidget {
               },
             ),
             ListTile(
-              leading: const Icon(LucideIcons.externalLink),
+              leading: const Icon(Iconfont.externalLink),
               title: Text(l10n.codespacesOpenInBrowser),
               onTap: () {
                 Navigator.of(sheetContext).pop();
@@ -848,7 +847,7 @@ class _EmptyCodespaces extends StatelessWidget {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  const Icon(LucideIcons.externalLink, size: 16),
+                  const Icon(Iconfont.externalLink, size: 16),
                   const SizedBox(width: Spacing.sm),
                   Text(l10n.codespacesCreateOnWeb, style: theme.textTheme.bodyMedium),
                 ],

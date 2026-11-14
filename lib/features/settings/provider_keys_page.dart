@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:lucide_icons/lucide_icons.dart';
+import '../../core/icons/iconfont.dart';
 
 import '../../core/theme/semantic_colors.dart';
 import '../../core/theme/tokens.dart';
@@ -160,7 +160,7 @@ class _ProviderKeysPageState extends State<ProviderKeysPage> {
       padding: const EdgeInsets.symmetric(horizontal: Spacing.lg, vertical: Spacing.sm),
       child: Row(
         children: [
-          Icon(LucideIcons.key, size: 18, color: theme.colorScheme.primary),
+          Icon(Iconfont.key, size: 18, color: theme.colorScheme.primary),
           const SizedBox(width: Spacing.md),
           Expanded(
             child: TextField(
@@ -182,7 +182,7 @@ class _ProviderKeysPageState extends State<ProviderKeysPage> {
                 : () => setState(
                     () => _keys[index] = ProviderKey(key.value, weight: key.weight - 1)),
             iconSize: 18,
-            icon: const Icon(LucideIcons.minus),
+            icon: const Icon(Iconfont.minus),
           ),
           Text(
             '${key.weight}',
@@ -192,7 +192,7 @@ class _ProviderKeysPageState extends State<ProviderKeysPage> {
             onPressed: () => setState(
                 () => _keys[index] = ProviderKey(key.value, weight: key.weight + 1)),
             iconSize: 18,
-            icon: const Icon(LucideIcons.plus),
+            icon: const Icon(Iconfont.plus),
           ),
           IconButton(
             tooltip: l10n.delete,
@@ -202,7 +202,7 @@ class _ProviderKeysPageState extends State<ProviderKeysPage> {
             }),
             iconSize: 18,
             color: theme.colorScheme.error,
-            icon: const Icon(LucideIcons.trash2),
+            icon: const Icon(Iconfont.trash2),
           ),
         ],
       ),
@@ -225,14 +225,14 @@ class _ProviderKeysPageState extends State<ProviderKeysPage> {
           IconButton(
             onPressed: value <= 0 ? null : () => onChanged(value - 1),
             iconSize: 18,
-            icon: const Icon(LucideIcons.minus),
+            icon: const Icon(Iconfont.minus),
           ),
           Text('$value$suffix',
               style: theme.textTheme.labelLarge?.copyWith(color: context.semantic.subtleText)),
           IconButton(
             onPressed: () => onChanged(value + 1),
             iconSize: 18,
-            icon: const Icon(LucideIcons.plus),
+            icon: const Icon(Iconfont.plus),
           ),
         ],
       ),

@@ -1,8 +1,8 @@
 import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
+import '../../core/icons/iconfont.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:lucide_icons/lucide_icons.dart';
 
 import '../../core/theme/semantic_colors.dart';
 import '../../core/theme/tokens.dart';
@@ -167,7 +167,7 @@ class _ArscEditorPageState extends ConsumerState<ArscEditorPage>
                     height: 18,
                     child: CircularProgressIndicator(strokeWidth: 2),
                   )
-                : const Icon(LucideIcons.save, size: 18),
+                : const Icon(Iconfont.save, size: 18),
           ),
         ],
         bottom: TabBar(
@@ -237,7 +237,7 @@ class _ArscEditorPageState extends ConsumerState<ArscEditorPage>
             decoration: InputDecoration(
               isDense: true,
               hintText: l10n.reverseSearchResourceHint,
-              prefixIcon: const Icon(LucideIcons.search, size: 16),
+              prefixIcon: const Icon(Iconfont.search, size: 16),
               border: const OutlineInputBorder(),
             ),
             onChanged: (_) => setState(() {}),
@@ -373,7 +373,7 @@ class _ArscEditorPageState extends ConsumerState<ArscEditorPage>
             decoration: InputDecoration(
               isDense: true,
               hintText: l10n.reverseSearchStringHint,
-              prefixIcon: const Icon(LucideIcons.search, size: 16),
+              prefixIcon: const Icon(Iconfont.search, size: 16),
               border: const OutlineInputBorder(),
             ),
             onChanged: (_) => setState(() {}),

@@ -1,9 +1,9 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import '../lib/core/icons/iconfont.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:lucide_icons/lucide_icons.dart';
 
 import 'package:codecraft/data/credentials.dart';
 import 'package:codecraft/features/credentials/credential_login.dart';
@@ -104,10 +104,10 @@ void main() {
     await tester.pump();
     await tester.pump(const Duration(milliseconds: 400));
 
-    expect(find.byIcon(LucideIcons.eyeOff), findsOneWidget);
-    await tester.tap(find.byIcon(LucideIcons.eyeOff));
+    expect(find.byIcon(Iconfont.eyeOff), findsOneWidget);
+    await tester.tap(find.byIcon(Iconfont.eyeOff));
     await tester.pump();
-    expect(find.byIcon(LucideIcons.eye), findsOneWidget);
+    expect(find.byIcon(Iconfont.eye), findsOneWidget);
   });
 
   test('通用令牌对所有主机生效,精确主机条目优先(真实落盘)', () async {

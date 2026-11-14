@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
+import '../../core/icons/iconfont.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
-import 'package:lucide_icons/lucide_icons.dart';
 
 import '../../core/theme/semantic_colors.dart';
 import '../../core/theme/tokens.dart';
@@ -49,54 +49,54 @@ class SettingsPage extends ConsumerWidget {
                 SettingsGroup(
                   children: [
                     SettingsRow(
-                      icon: LucideIcons.slidersHorizontal,
+                      icon: Iconfont.slidersHorizontal,
                       title: l10n.settingsGeneral,
                       onTap: () => context.push('/settings/general'),
                     ),
                     const SettingsDivider(indent: SettingsRow.textIndent),
                     SettingsRow(
-                      icon: LucideIcons.server,
+                      icon: Iconfont.server,
                       title: l10n.providers,
                       subtitle: l10n.providersSubtitle,
                       onTap: () => context.push('/settings/providers'),
                     ),
                     const SettingsDivider(indent: SettingsRow.textIndent),
                     SettingsRow(
-                      icon: LucideIcons.puzzle,
+                      icon: Iconfont.puzzle,
                       title: l10n.skillsTitle,
                       subtitle: l10n.skillsSubtitle,
                       onTap: () => context.push('/settings/skills'),
                     ),
                     const SettingsDivider(indent: SettingsRow.textIndent),
                     SettingsRow(
-                      icon: LucideIcons.messageSquare,
+                      icon: Iconfont.messageSquare,
                       title: l10n.promptsTitle,
                       subtitle: l10n.promptsSubtitle,
                       onTap: () => context.push('/settings/prompts'),
                     ),
                     const SettingsDivider(indent: SettingsRow.textIndent),
                     SettingsRow(
-                      icon: LucideIcons.plug,
+                      icon: Iconfont.plug,
                       title: l10n.mcpTitle,
                       subtitle: l10n.mcpSubtitle,
                       onTap: () => context.push('/settings/mcp'),
                     ),
                     SettingsRow(
-                      icon: LucideIcons.shield,
+                      icon: Iconfont.shield,
                       title: l10n.permissionsTitle,
                       subtitle: l10n.permissionsSubtitle,
                       onTap: () => context.push('/settings/permissions'),
                     ),
                     const SettingsDivider(indent: SettingsRow.textIndent),
                     SettingsRow(
-                      icon: LucideIcons.smartphone,
+                      icon: Iconfont.smartphone,
                       title: l10n.softwarePermissionsTitle,
                       subtitle: l10n.softwarePermissionsSubtitle,
                       onTap: () => context.push('/permissions-system'),
                     ),
                     const SettingsDivider(indent: SettingsRow.textIndent),
                     SettingsRow(
-                      icon: LucideIcons.palette,
+                      icon: Iconfont.palette,
                       title: l10n.themeTitle,
                       subtitle: l10n.themeSubtitle,
                       onTap: () => context.push('/settings/theme'),
@@ -107,19 +107,19 @@ class SettingsPage extends ConsumerWidget {
                 SettingsGroup(
                   children: [
                     SettingsRow(
-                      icon: LucideIcons.barChart,
+                      icon: Iconfont.barChart,
                       title: l10n.tokenStatsTitle,
                       onTap: () => context.push('/settings/token-stats'),
                     ),
                     const SettingsDivider(indent: SettingsRow.textIndent),
                     SettingsRow(
-                      icon: LucideIcons.hardDrive,
+                      icon: Iconfont.hardDrive,
                       title: '存储空间',
                       onTap: () => context.push('/settings/storage'),
                     ),
                     const SettingsDivider(indent: SettingsRow.textIndent),
                     SettingsRow(
-                      icon: LucideIcons.fileText,
+                      icon: Iconfont.fileText,
                       title: l10n.settingsLog,
                       subtitle: l10n.settingsLogSubtitle,
                       onTap: () => context.push('/settings/logs'),
@@ -130,7 +130,7 @@ class SettingsPage extends ConsumerWidget {
                 SettingsGroup(
                   children: [
                     SettingsRow(
-                      icon: LucideIcons.info,
+                      icon: Iconfont.info,
                       title: l10n.about,
                       subtitle: l10n.aboutSubtitle,
                       onTap: () => context.push('/settings/about'),

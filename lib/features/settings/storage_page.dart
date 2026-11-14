@@ -1,8 +1,8 @@
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
+import '../../core/icons/iconfont.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:lucide_icons/lucide_icons.dart';
 
 import '../../core/theme/semantic_colors.dart';
 import '../../core/theme/tokens.dart';
@@ -64,7 +64,7 @@ class _StoragePageState extends ConsumerState<StoragePage> {
         actions: [
           IconButton(
             tooltip: '重新统计',
-            icon: const Icon(LucideIcons.refreshCw, size: 22),
+            icon: const Icon(Iconfont.refreshCw, size: 22),
             onPressed: state.cleaning ? null : () => controller.refresh(),
           ),
         ],
@@ -418,7 +418,7 @@ class _CategoryRow extends StatelessWidget {
                 if (expandable) ...[
                   const SizedBox(width: Spacing.xs),
                   Icon(
-                    expanded ? LucideIcons.chevronDown : LucideIcons.chevronRight,
+                    expanded ? Iconfont.chevronDown : Iconfont.chevronRight,
                     size: 18,
                     color: subtle,
                   ),

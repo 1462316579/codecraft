@@ -1,9 +1,9 @@
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
+import '../../core/icons/iconfont.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
-import 'package:lucide_icons/lucide_icons.dart';
 
 import '../../agent/models/project.dart';
 import '../../core/theme/semantic_colors.dart';
@@ -150,7 +150,7 @@ class _PromptsPageState extends ConsumerState<PromptsPage> {
           if (!_selectionMode)
             IconButton(
               tooltip: l10n.promptsResetCustom,
-              icon: const Icon(LucideIcons.rotateCcw),
+              icon: const Icon(Iconfont.rotateCcw),
               onPressed: _confirmReset,
             ),
 
@@ -159,19 +159,19 @@ class _PromptsPageState extends ConsumerState<PromptsPage> {
               tooltip: _selectedNumbers.length == state.fragments.length && state.fragments.isNotEmpty
                   ? l10n.promptsDeselectAll
                   : l10n.promptsSelectAll,
-              icon: const Icon(LucideIcons.checkSquare),
+              icon: const Icon(Iconfont.checkSquare),
               onPressed: () => _selectAll(state.fragments),
             ),
             IconButton(
               tooltip: l10n.commonBatchDelete,
-              icon: const Icon(LucideIcons.trash2),
+              icon: const Icon(Iconfont.trash2),
               onPressed: _selectedNumbers.isNotEmpty ? _confirmBatchDelete : null,
               color: Theme.of(context).colorScheme.error,
             ),
           ] else
             IconButton(
               tooltip: l10n.promptsSelectMode,
-              icon: const Icon(LucideIcons.checkSquare),
+              icon: const Icon(Iconfont.checkSquare),
               onPressed: _toggleSelectionMode,
             ),
 
@@ -205,7 +205,7 @@ class _PromptsPageState extends ConsumerState<PromptsPage> {
           : FloatingActionButton(
               onPressed: () => context.push('/settings/prompts/edit'),
               tooltip: l10n.promptsAddPrompt,
-              child: const Icon(LucideIcons.plus),
+              child: const Icon(Iconfont.plus),
             ),
     );
   }
@@ -263,7 +263,7 @@ class _PromptsPageState extends ConsumerState<PromptsPage> {
             child: Column(
               mainAxisSize: MainAxisSize.min,
               children: [
-                Icon(LucideIcons.fileText, size: 48, color: context.semantic.subtleText),
+                Icon(Iconfont.fileText, size: 48, color: context.semantic.subtleText),
                 const SizedBox(height: Spacing.md),
                 Text(l10n.promptsEmpty, style: Theme.of(context).textTheme.titleMedium),
               ],
@@ -376,7 +376,7 @@ class _PromptListItem extends StatelessWidget {
               ),
               alignment: Alignment.center,
               child: Icon(
-                LucideIcons.fileText,
+                Iconfont.fileText,
                 size: 20,
                 color: theme.colorScheme.onSurfaceVariant,
               ),
@@ -423,7 +423,7 @@ class _PromptListItem extends StatelessWidget {
             // 箭头
             if (!selectionMode)
               Icon(
-                LucideIcons.chevronRight,
+                Iconfont.chevronRight,
                 size: 18,
                 color: semantic.subtleText,
               ),
@@ -465,9 +465,9 @@ class _ScenarioRow extends StatelessWidget {
   }
 
   IconData _scenarioIcon(ProjectKind kind) => switch (kind) {
-        ProjectKind.coding => LucideIcons.code,
-        ProjectKind.writing => LucideIcons.pencil,
-        ProjectKind.reverse => LucideIcons.binary,
+        ProjectKind.coding => Iconfont.code,
+        ProjectKind.writing => Iconfont.pencil,
+        ProjectKind.reverse => Iconfont.binary,
       };
 
   String _scenarioTitle(AppLocalizations l10n, ProjectKind kind) => switch (kind) {

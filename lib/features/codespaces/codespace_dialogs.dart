@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
+import '../../core/icons/iconfont.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:lucide_icons/lucide_icons.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import '../../core/theme/semantic_colors.dart';
@@ -139,7 +139,7 @@ class _CreateCodespaceDialogState extends ConsumerState<_CreateCodespaceDialog> 
               decoration: InputDecoration(
                 isDense: true,
                 hintText: l10n.codespacesRepoSearchHint,
-                prefixIcon: const Icon(LucideIcons.search, size: 16),
+                prefixIcon: const Icon(Iconfont.search, size: 16),
                 border: const OutlineInputBorder(),
               ),
             ),
@@ -177,7 +177,7 @@ class _CreateCodespaceDialogState extends ConsumerState<_CreateCodespaceDialog> 
                       dense: true,
                       selected: selected,
                       leading: Icon(
-                        repo.private ? LucideIcons.lock : LucideIcons.github,
+                        repo.private ? Iconfont.lock : Iconfont.github,
                         size: 16,
                       ),
                       title: Text(repo.fullName, maxLines: 1, overflow: TextOverflow.ellipsis),
@@ -483,7 +483,7 @@ class _PortsDialogState extends ConsumerState<_PortsDialog> {
           IconButton(
             onPressed: _loading ? null : _load,
             tooltip: l10n.codespacesRefresh,
-            icon: const Icon(LucideIcons.refreshCw, size: 18),
+            icon: const Icon(Iconfont.refreshCw, size: 18),
           ),
         ],
       ),
@@ -566,7 +566,7 @@ class _PortsDialogState extends ConsumerState<_PortsDialog> {
                                     children: [
                                       PopupMenuButton<PortVisibility>(
                                         tooltip: l10n.codespacesPortVisibility,
-                                        icon: const Icon(LucideIcons.shield, size: 18),
+                                        icon: const Icon(Iconfont.shield, size: 18),
                                         onSelected: (value) => _setVisibility(port, value),
                                         itemBuilder: (context) => [
                                           PopupMenuItem(
@@ -591,7 +591,7 @@ class _PortsDialogState extends ConsumerState<_PortsDialog> {
                                                   Uri.parse(port.browseUrl),
                                                   mode: LaunchMode.externalApplication,
                                                 ),
-                                        icon: const Icon(LucideIcons.externalLink, size: 18),
+                                        icon: const Icon(Iconfont.externalLink, size: 18),
                                       ),
                                     ],
                                   ),

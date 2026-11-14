@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:lucide_icons/lucide_icons.dart';
+import '../../core/icons/iconfont.dart';
 
 import '../../agent/models/git_models.dart';
 import '../../core/theme/semantic_colors.dart';
@@ -163,17 +163,17 @@ class _GitBranchesTabState extends State<GitBranchesTab> {
       if (isRemote) ...[
         RefMenuItem(
           label: l10n.switchLabel,
-          icon: LucideIcons.gitCommit,
+          icon: Iconfont.gitCommit,
           onSelected: () => _confirmCheckout(branch.name, isRemote: true),
         ),
         RefMenuItem(
           label: l10n.gitActionMerge,
-          icon: LucideIcons.gitMerge,
+          icon: Iconfont.gitMerge,
           onSelected: () => _confirmMerge(branch.name),
         ),
         RefMenuItem(
           label: l10n.delete,
-          icon: LucideIcons.trash2,
+          icon: Iconfont.trash2,
           destructive: true,
           onSelected: () => _confirm(
             title: l10n.gitDeleteRemoteBranch,
@@ -186,24 +186,24 @@ class _GitBranchesTabState extends State<GitBranchesTab> {
         if (!branch.current) ...[
           RefMenuItem(
             label: l10n.switchLabel,
-            icon: LucideIcons.gitCommit,
+            icon: Iconfont.gitCommit,
             onSelected: () => _confirmCheckout(branch.name, isRemote: false),
           ),
           RefMenuItem(
             label: l10n.gitActionMerge,
-            icon: LucideIcons.gitMerge,
+            icon: Iconfont.gitMerge,
             onSelected: () => _confirmMerge(branch.name),
           ),
         ],
         RefMenuItem(
           label: l10n.rename,
-          icon: LucideIcons.pencil,
+          icon: Iconfont.pencil,
           onSelected: () => _promptRename(branch.name),
         ),
         if (!branch.current)
           RefMenuItem(
             label: l10n.delete,
-            icon: LucideIcons.trash2,
+            icon: Iconfont.trash2,
             destructive: true,
             onSelected: () => _confirm(
               title: l10n.gitDeleteBranch,
@@ -501,7 +501,7 @@ class _GitBranchesTabState extends State<GitBranchesTab> {
               RefRow(
                 name: currentBranch,
                 subtitle: l10n.gitCheckedOut,
-                icon: LucideIcons.gitCommit,
+                icon: Iconfont.gitCommit,
                 isCurrent: true,
               ),
             ],
@@ -546,7 +546,7 @@ class _GitBranchesTabState extends State<GitBranchesTab> {
                   RefRow(
                     name: _state.tags[i].name,
                     subtitle: _state.tags[i].commitHash,
-                    icon: LucideIcons.tag,
+                    icon: Iconfont.tag,
                     isCurrent: false,
                     isLoading: _state.checkoutLoading == _state.tags[i].name,
                     onTap: () async {
@@ -554,12 +554,12 @@ class _GitBranchesTabState extends State<GitBranchesTab> {
                       final actions = [
                         RefMenuItem(
                           label: l10n.switchLabel,
-                          icon: LucideIcons.gitCommit,
+                          icon: Iconfont.gitCommit,
                           onSelected: () => _confirmCheckout(tag, isRemote: false),
                         ),
                         RefMenuItem(
                           label: l10n.delete,
-                          icon: LucideIcons.trash2,
+                          icon: Iconfont.trash2,
                           destructive: true,
                           onSelected: () => _confirm(
                             title: l10n.gitDeleteTag,
@@ -604,7 +604,7 @@ class _GitBranchesTabState extends State<GitBranchesTab> {
           widgets.add(RefRow(
             name: node.segment,
             subtitle: isRemote ? null : _branchSubtitle(branch),
-            icon: isRemote ? LucideIcons.cloud : LucideIcons.gitBranch,
+            icon: isRemote ? Iconfont.cloud : Iconfont.gitBranch,
             isCurrent: branch.current,
             isLoading: _state.checkoutLoading == branch.name,
             indent: depth,
@@ -649,7 +649,7 @@ class _BranchesOverview extends StatelessWidget {
         children: [
           Row(
             children: [
-              Icon(LucideIcons.gitBranch, size: 18, color: theme.colorScheme.primary),
+              Icon(Iconfont.gitBranch, size: 18, color: theme.colorScheme.primary),
               const SizedBox(width: Spacing.sm),
               Expanded(
                 child: Column(

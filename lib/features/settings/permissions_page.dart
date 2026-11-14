@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
+import '../../core/icons/iconfont.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:lucide_icons/lucide_icons.dart';
 
 import '../../core/theme/semantic_colors.dart';
 import '../../core/theme/tokens.dart';
@@ -170,7 +170,7 @@ class _RuleRow extends StatelessWidget {
         padding: const EdgeInsets.fromLTRB(Spacing.lg, 11, Spacing.xs, 11),
         child: Row(
           children: [
-            Icon(allowed ? LucideIcons.checkCircle : LucideIcons.xCircle, size: 18, color: tint),
+            Icon(allowed ? Iconfont.checkCircle : Iconfont.xCircle, size: 18, color: tint),
             const SizedBox(width: Spacing.md),
             Expanded(
               child: Column(
@@ -193,7 +193,7 @@ class _RuleRow extends StatelessWidget {
             ),
             if (onPromote != null)
               IconButton(
-                icon: Icon(LucideIcons.plus, size: 18, color: tint),
+                icon: Icon(Iconfont.plus, size: 18, color: tint),
                 tooltip: l10n.permPromoteToGlobal,
                 onPressed: onPromote,
               ),

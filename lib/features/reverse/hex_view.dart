@@ -1,7 +1,7 @@
 import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
-import 'package:lucide_icons/lucide_icons.dart';
+import '../../core/icons/iconfont.dart';
 
 import '../../core/theme/semantic_colors.dart';
 import '../../core/theme/tokens.dart';
@@ -150,7 +150,7 @@ class HexJumpButton extends StatelessWidget {
     final l10n = AppLocalizations.of(context);
     return IconButton(
       tooltip: l10n.reverseJumpToOffset,
-      icon: const Icon(LucideIcons.crosshair, size: 18),
+      icon: const Icon(Iconfont.crosshair, size: 18),
       onPressed: () async {
         final offset = await showDialog<int>(
           context: context,

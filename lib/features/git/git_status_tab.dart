@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
+import '../../core/icons/iconfont.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
-import 'package:lucide_icons/lucide_icons.dart';
 
 import '../../agent/models/git_models.dart';
 import '../../core/theme/semantic_colors.dart';
@@ -100,7 +100,7 @@ class _GitStatusTabState extends ConsumerState<GitStatusTab> {
     final actions = <FileMenuItem>[
       FileMenuItem(
         label: l10n.gitViewDiff,
-        icon: LucideIcons.fileText,
+        icon: Iconfont.fileText,
         onSelected: () => staged
             ? _controller.loadStagedDiff(file.path)
             : _controller.loadWorktreeDiff(file.path),
@@ -108,7 +108,7 @@ class _GitStatusTabState extends ConsumerState<GitStatusTab> {
       if (staged)
         FileMenuItem(
           label: l10n.gitRevert,
-          icon: LucideIcons.rotateCcw,
+          icon: Iconfont.rotateCcw,
           destructive: true,
           onSelected: () => _confirm(
             title: l10n.gitRevert,
@@ -120,7 +120,7 @@ class _GitStatusTabState extends ConsumerState<GitStatusTab> {
       else
         FileMenuItem(
           label: deleted ? l10n.gitActionRestoreFile : l10n.gitRevert,
-          icon: LucideIcons.rotateCcw,
+          icon: Iconfont.rotateCcw,
           destructive: !deleted,
           onSelected: () => _confirm(
             title: deleted ? l10n.gitActionRestoreFile : l10n.gitRevert,
@@ -134,7 +134,7 @@ class _GitStatusTabState extends ConsumerState<GitStatusTab> {
         ),
       FileMenuItem(
         label: l10n.gitCopyPath,
-        icon: LucideIcons.copy,
+        icon: Iconfont.copy,
         onSelected: () => _copyPath(file.path),
       ),
     ];
@@ -151,23 +151,23 @@ class _GitStatusTabState extends ConsumerState<GitStatusTab> {
     final actions = <FileMenuItem>[
       FileMenuItem(
         label: l10n.gitViewDiff,
-        icon: LucideIcons.fileText,
+        icon: Iconfont.fileText,
         onSelected: () => _controller.loadUntrackedDiff(path),
       ),
       FileMenuItem(
         label: l10n.gitIgnoreFile(name),
-        icon: LucideIcons.eyeOff,
+        icon: Iconfont.eyeOff,
         onSelected: () => _controller.addToGitignore('/$path'),
       ),
       if (ext.isNotEmpty)
         FileMenuItem(
           label: l10n.gitIgnoreExtension(ext),
-          icon: LucideIcons.eyeOff,
+          icon: Iconfont.eyeOff,
           onSelected: () => _controller.addToGitignore('*.$ext'),
         ),
       FileMenuItem(
         label: l10n.gitActionDeleteFile,
-        icon: LucideIcons.trash2,
+        icon: Iconfont.trash2,
         destructive: true,
         onSelected: () => _confirm(
           title: l10n.gitActionDeleteFile,
@@ -178,7 +178,7 @@ class _GitStatusTabState extends ConsumerState<GitStatusTab> {
       ),
       FileMenuItem(
         label: l10n.gitCopyPath,
-        icon: LucideIcons.copy,
+        icon: Iconfont.copy,
         onSelected: () => _copyPath(path),
       ),
     ];
@@ -194,12 +194,12 @@ class _GitStatusTabState extends ConsumerState<GitStatusTab> {
     final actions = <FileMenuItem>[
       FileMenuItem(
         label: l10n.gitIgnoreDir(name),
-        icon: LucideIcons.eyeOff,
+        icon: Iconfont.eyeOff,
         onSelected: () => _controller.addToGitignore('/$trimmed/'),
       ),
       FileMenuItem(
         label: l10n.gitActionDeleteDir,
-        icon: LucideIcons.trash2,
+        icon: Iconfont.trash2,
         destructive: true,
         onSelected: () => _confirm(
           title: l10n.gitActionDeleteDir,
@@ -210,7 +210,7 @@ class _GitStatusTabState extends ConsumerState<GitStatusTab> {
       ),
       FileMenuItem(
         label: l10n.gitCopyPath,
-        icon: LucideIcons.copy,
+        icon: Iconfont.copy,
         onSelected: () => _copyPath(path),
       ),
     ];
@@ -363,7 +363,7 @@ class _GitStatusTabState extends ConsumerState<GitStatusTab> {
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      const Icon(LucideIcons.check, size: 17),
+                      const Icon(Iconfont.check, size: 17),
                       const SizedBox(width: Spacing.xs),
                       Flexible(
                         child: Text(
@@ -406,7 +406,7 @@ class _GitStatusTabState extends ConsumerState<GitStatusTab> {
                 Row(
                   children: [
                     Icon(
-                      target.isRemote ? LucideIcons.cloud : LucideIcons.hardDrive,
+                      target.isRemote ? Iconfont.cloud : Iconfont.hardDrive,
                       size: 14,
                       color: theme.colorScheme.primary,
                     ),
@@ -445,7 +445,7 @@ class _GitStatusTabState extends ConsumerState<GitStatusTab> {
                     Expanded(
                       child: GitActionButton(
                         label: l10n.gitStageAll,
-                        icon: LucideIcons.plus,
+                        icon: Iconfont.plus,
                         enabled: !_state.busy && hasChanges,
                         onPressed: _controller.stageAll,
                       ),
@@ -454,7 +454,7 @@ class _GitStatusTabState extends ConsumerState<GitStatusTab> {
                     Expanded(
                       child: GitActionButton(
                         label: l10n.gitTabStash,
-                        icon: LucideIcons.archive,
+                        icon: Iconfont.archive,
                         enabled: !_state.busy,
                         onPressed: _openStashSheet,
                       ),
@@ -463,7 +463,7 @@ class _GitStatusTabState extends ConsumerState<GitStatusTab> {
                     Expanded(
                       child: GitActionButton(
                         label: l10n.gitPull,
-                        icon: LucideIcons.downloadCloud,
+                        icon: Iconfont.downloadCloud,
                         enabled: !_state.busy && _state.hasRemote,
                         onPressed: _confirmPull,
                       ),
@@ -472,7 +472,7 @@ class _GitStatusTabState extends ConsumerState<GitStatusTab> {
                     Expanded(
                       child: GitActionButton(
                         label: l10n.gitPush,
-                        icon: LucideIcons.uploadCloud,
+                        icon: Iconfont.uploadCloud,
                         enabled: !_state.busy && _state.hasRemote,
                         onPressed: _push,
                       ),
@@ -523,7 +523,7 @@ class _GitStatusTabState extends ConsumerState<GitStatusTab> {
                 count: status.conflicted.length,
                 child: GitFileRow(
                   file: status.conflicted[i],
-                  actionIcon: LucideIcons.plus,
+                  actionIcon: Iconfont.plus,
                   actionTooltip: l10n.gitStage,
                   onAction: () => _controller.stage(status.conflicted[i].path),
                   enabled: !_state.busy,
@@ -605,7 +605,7 @@ class _GitStatusTabState extends ConsumerState<GitStatusTab> {
                 count: status.staged.length,
                 child: GitFileRow(
                   file: status.staged[i],
-                  actionIcon: LucideIcons.minus,
+                  actionIcon: Iconfont.minus,
                   actionTooltip: l10n.gitUnstage,
                   onAction: () => _controller.unstage(status.staged[i].path),
                   enabled: !_state.busy,
@@ -638,7 +638,7 @@ class _GitStatusTabState extends ConsumerState<GitStatusTab> {
                 count: status.unstaged.length,
                 child: GitFileRow(
                   file: status.unstaged[i],
-                  actionIcon: LucideIcons.plus,
+                  actionIcon: Iconfont.plus,
                   actionTooltip: l10n.gitStage,
                   onAction: () => _controller.stage(status.unstaged[i].path),
                   enabled: !_state.busy,
@@ -667,7 +667,7 @@ class _GitStatusTabState extends ConsumerState<GitStatusTab> {
                     ),
                   _UntrackedChild(:final path, :final indent) => GitFileRow(
                       file: GitFileChange(path: path, statusCode: '?', staged: false),
-                      actionIcon: LucideIcons.plus,
+                      actionIcon: Iconfont.plus,
                       actionTooltip: l10n.gitStage,
                       onAction: () => _controller.stage(path),
                       enabled: !_state.busy,
@@ -727,7 +727,7 @@ class _StatusOverview extends StatelessWidget {
         children: [
           Row(
             children: [
-              Icon(LucideIcons.gitBranch, size: 18, color: theme.colorScheme.primary),
+              Icon(Iconfont.gitBranch, size: 18, color: theme.colorScheme.primary),
               const SizedBox(width: Spacing.sm),
               Expanded(
                 child: Column(

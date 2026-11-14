@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
+import '../../core/icons/iconfont.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:lucide_icons/lucide_icons.dart';
 
 import '../../core/theme/semantic_colors.dart';
 import '../../core/theme/tokens.dart';
@@ -334,7 +334,7 @@ class GeneralPage extends ConsumerWidget {
                         ),
                       ),
                       if (mode == current)
-                        Icon(LucideIcons.check, size: 20, color: theme.colorScheme.primary),
+                        Icon(Iconfont.check, size: 20, color: theme.colorScheme.primary),
                     ],
                   ),
                 ),

@@ -1,8 +1,8 @@
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
+import '../../core/icons/iconfont.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:lucide_icons/lucide_icons.dart';
 
 import '../../core/theme/semantic_colors.dart';
 import '../../core/theme/tokens.dart';
@@ -52,7 +52,7 @@ class _TokenStatsPageState extends ConsumerState<TokenStatsPage> {
           IconButton(
             onPressed: () => _confirmReset(context, l10n, controller),
             tooltip: l10n.tokenStatsReset,
-            icon: const Icon(LucideIcons.trash2, size: 20),
+            icon: const Icon(Iconfont.trash2, size: 20),
           ),
         ],
       ),
@@ -202,7 +202,7 @@ class _TokenStatsPageState extends ConsumerState<TokenStatsPage> {
           IconButton(
             onPressed: controller.clearFilters,
             tooltip: l10n.tokenStatsFilterClear,
-            icon: const Icon(LucideIcons.x, size: 18),
+            icon: const Icon(Iconfont.x, size: 18),
           ),
         ],
       ],
@@ -258,7 +258,7 @@ class _TokenStatsPageState extends ConsumerState<TokenStatsPage> {
                 ),
                 const SizedBox(width: 6),
                 Icon(
-                  LucideIcons.chevronDown,
+                  Iconfont.chevronDown,
                   size: 16,
                   color: selected
                       ? theme.colorScheme.onPrimaryContainer
@@ -274,7 +274,7 @@ class _TokenStatsPageState extends ConsumerState<TokenStatsPage> {
           MenuItemButton(
             onPressed: () => onSelected(value),
             trailingIcon: value == selectedValue
-                ? const Icon(LucideIcons.check, size: 16)
+                ? const Icon(Iconfont.check, size: 16)
                 : null,
             child: Text(text),
           ),

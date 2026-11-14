@@ -13,7 +13,7 @@ import 'package:codecraft/data/workspaces.dart';
 import 'package:codecraft/features/chat/widgets/chat_composer.dart';
 import 'package:codecraft/l10n/app_localizations.dart';
 import 'package:flutter/material.dart';
-import 'package:lucide_icons/lucide_icons.dart';
+import '../lib/core/icons/iconfont.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -345,7 +345,7 @@ void main() {
     // 溢出会以异常形式抛给测试框架;这里断言渲染期没有异常。
     expect(tester.takeException(), isNull);
     // 工具按钮行与发送键始终可见。
-    expect(find.byIcon(LucideIcons.arrowUp), findsOneWidget);
+    expect(find.byIcon(Iconfont.arrowUp), findsOneWidget);
   });
 
   testWidgets('输入框直接键入 @ 触发面板,继续输入实时筛选', (tester) async {
@@ -424,7 +424,7 @@ void main() {
     await tester.tap(find.byType(TextField));
     await tester.pump();
     // 发送按钮:有内容时显示,点击把当前文本交出去。
-    await tester.tap(find.byIcon(LucideIcons.arrowUp));
+    await tester.tap(find.byIcon(Iconfont.arrowUp));
     await tester.pump();
 
     expect(sent, '你好');

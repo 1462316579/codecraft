@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
+import '../../core/icons/iconfont.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:lucide_icons/lucide_icons.dart';
 
 import '../../core/theme/semantic_colors.dart';
 import '../../core/theme/tokens.dart';
@@ -54,14 +54,14 @@ class _McpPageState extends ConsumerState<McpPage> {
                     height: 18,
                     child: CircularProgressIndicator(strokeWidth: 2),
                   )
-                : const Icon(LucideIcons.refreshCw, size: 22),
+                : const Icon(Iconfont.refreshCw, size: 22),
             tooltip: l10n.settingsReconnect,
             onPressed: mcpState.reloading
                 ? null
                 : () => ref.read(mcpManagerProvider.notifier).reload(),
           ),
           IconButton(
-            icon: const Icon(LucideIcons.plus, size: 22),
+            icon: const Icon(Iconfont.plus, size: 22),
             tooltip: l10n.settingsAddMcpServer,
             onPressed: () => showMcpAddSheet(context, ref),
           ),
@@ -113,7 +113,7 @@ class _McpPageState extends ConsumerState<McpPage> {
                           child: Column(
                             children: [
                               Icon(
-                                LucideIcons.search,
+                                Iconfont.search,
                                 size: 28,
                                 color: context.semantic.subtleText.withValues(alpha: 0.5),
                               ),
@@ -185,7 +185,7 @@ class _EmptyState extends StatelessWidget {
               ),
               alignment: Alignment.center,
               child: Icon(
-                LucideIcons.terminal,
+                Iconfont.terminal,
                 size: 28,
                 color: theme.colorScheme.onSurfaceVariant,
               ),
@@ -263,7 +263,7 @@ class _McpServerRow extends StatelessWidget {
               ),
               alignment: Alignment.center,
               child: Icon(
-                LucideIcons.box,
+                Iconfont.box,
                 size: 22,
                 color: theme.colorScheme.onSurfaceVariant,
               ),
@@ -320,7 +320,7 @@ class _McpServerRow extends StatelessWidget {
               background: statusColor.withValues(alpha: 0.12),
             ),
             const SizedBox(width: Spacing.xs),
-            Icon(LucideIcons.chevronRight, size: 18, color: semantic.subtleText),
+            Icon(Iconfont.chevronRight, size: 18, color: semantic.subtleText),
           ],
         ),
       ),

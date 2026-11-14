@@ -13,10 +13,10 @@ import 'package:codecraft/data/settings/app_settings.dart';
 import 'package:codecraft/features/home/installed_apps_page.dart';
 import 'package:codecraft/l10n/app_localizations.dart';
 import 'package:flutter/material.dart';
+import '../lib/core/icons/iconfont.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:lucide_icons/lucide_icons.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:sqlite3/open.dart';
 import 'package:sqflite_common_ffi/sqflite_ffi.dart';
@@ -196,7 +196,7 @@ void main() {
     }
 
     final l10n = AppLocalizations.of(tester.element(find.byType(Scaffold).first));
-    await tester.tap(find.byIcon(LucideIcons.plus).first);
+    await tester.tap(find.byIcon(Iconfont.plus).first);
     await tester.pump();
     await tester.pump(const Duration(milliseconds: 300));
     await tester.tap(find.text(l10n.projectKindReverse).first);

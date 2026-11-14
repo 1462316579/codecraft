@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:lucide_icons/lucide_icons.dart';
+import '../../../core/icons/iconfont.dart';
 
 import '../../../agent/models/git_models.dart';
 import '../../../core/theme/git_colors.dart';
@@ -353,7 +353,7 @@ class UntrackedDirRow extends StatelessWidget {
                   style: Theme.of(context).textTheme.labelSmall?.copyWith(color: subtle),
                 ),
               Icon(
-                expanded ? LucideIcons.chevronDown : LucideIcons.chevronRight,
+                expanded ? Iconfont.chevronDown : Iconfont.chevronRight,
                 size: 16,
                 color: subtle,
               ),
@@ -361,7 +361,7 @@ class UntrackedDirRow extends StatelessWidget {
             IconButton(
               onPressed: enabled ? onStage : null,
               tooltip: stageTooltip,
-              icon: Icon(LucideIcons.plus, size: 18, color: subtle),
+              icon: Icon(Iconfont.plus, size: 18, color: subtle),
             ),
           ],
         ),
@@ -399,7 +399,7 @@ class RefSectionHeader extends StatelessWidget {
         child: Row(
           children: [
             Icon(
-              expanded ? LucideIcons.chevronDown : LucideIcons.chevronRight,
+              expanded ? Iconfont.chevronDown : Iconfont.chevronRight,
               size: 16,
               color: subtle,
             ),
@@ -423,7 +423,7 @@ class RefSectionHeader extends StatelessWidget {
                   onPressed: onAdd,
                   tooltip: addTooltip,
                   icon: Icon(
-                    LucideIcons.plus,
+                    Iconfont.plus,
                     size: 16,
                     color: Theme.of(context).colorScheme.onSurfaceVariant,
                   ),

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:lucide_icons/lucide_icons.dart';
+import '../../core/icons/iconfont.dart';
 
 import '../../core/theme/semantic_colors.dart';
 import '../../core/theme/tokens.dart';
@@ -41,13 +41,13 @@ class AboutPage extends StatelessWidget {
             child: SettingsGroup(
               children: [
                 SettingsRow(
-                  icon: LucideIcons.info,
+                  icon: Iconfont.info,
                   title: l10n.version,
                   subtitle: '0.1.0 · Phase 1',
                 ),
                 const SettingsDivider(indent: SettingsRow.textIndent),
                 SettingsRow(
-                  icon: LucideIcons.fileText,
+                  icon: Iconfont.fileText,
                   title: l10n.license,
                   subtitle: 'GPL-3.0',
                   onTap: () => _showLicense(context, l10n),

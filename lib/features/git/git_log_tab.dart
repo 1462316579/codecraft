@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:lucide_icons/lucide_icons.dart';
+import '../../core/icons/iconfont.dart';
 
 import '../../agent/models/git_models.dart';
 import '../../core/theme/semantic_colors.dart';
@@ -172,11 +172,11 @@ class _GitLogTabState extends State<GitLogTab> {
             decoration: InputDecoration(
               hintText: l10n.gitSearchCommitsHint,
               isDense: true,
-              prefixIcon: const Icon(LucideIcons.search, size: 16),
+              prefixIcon: const Icon(Iconfont.search, size: 16),
               suffixIcon: _query.isEmpty
                   ? null
                   : IconButton(
-                      icon: const Icon(LucideIcons.x, size: 16),
+                      icon: const Icon(Iconfont.x, size: 16),
                       onPressed: () {
                         _searchController.clear();
                         setState(() => _query = '');
@@ -347,7 +347,7 @@ class _GraphCommitRow extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Icon(
-                          LucideIcons.chevronRight,
+                          Iconfont.chevronRight,
                           size: 16,
                           color: theme.colorScheme.onSurfaceVariant,
                         ),
@@ -451,10 +451,10 @@ class _RefPills extends StatelessWidget {
               children: [
                 Icon(
                   ref.isRemote
-                      ? LucideIcons.cloud
+                      ? Iconfont.cloud
                       : ref.isBranch
-                          ? LucideIcons.gitBranch
-                          : LucideIcons.tag,
+                          ? Iconfont.gitBranch
+                          : Iconfont.tag,
                   size: 11,
                   color: ref.isCurrent
                       ? theme.colorScheme.onPrimary

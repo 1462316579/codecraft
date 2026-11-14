@@ -2,8 +2,8 @@
 import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
+import '../../core/icons/iconfont.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:lucide_icons/lucide_icons.dart';
 
 import '../../core/theme/semantic_colors.dart';
 import '../../core/theme/tokens.dart';
@@ -43,7 +43,7 @@ class _InstalledAppsPageState extends ConsumerState<InstalledAppsPage> {
               onChanged: (value) => setState(() => _query = value.trim().toLowerCase()),
               decoration: InputDecoration(
                 isDense: true,
-                prefixIcon: const Icon(LucideIcons.search, size: 18),
+                prefixIcon: const Icon(Iconfont.search, size: 18),
                 hintText: l10n.installedAppsSearch,
                 border: OutlineInputBorder(borderRadius: BorderRadius.circular(12)),
               ),

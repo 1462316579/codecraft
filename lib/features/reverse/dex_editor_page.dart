@@ -1,8 +1,8 @@
 import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
+import '../../core/icons/iconfont.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:lucide_icons/lucide_icons.dart';
 
 import '../../core/theme/semantic_colors.dart';
 import '../../core/theme/tokens.dart';
@@ -179,7 +179,7 @@ class _DexEditorPageState extends ConsumerState<DexEditorPage>
                     height: 18,
                     child: CircularProgressIndicator(strokeWidth: 2),
                   )
-                : const Icon(LucideIcons.save, size: 18),
+                : const Icon(Iconfont.save, size: 18),
           ),
         ],
         bottom: TabBar(
@@ -262,7 +262,7 @@ class _DexEditorPageState extends ConsumerState<DexEditorPage>
                     '${l10n.reverseFieldCount(type.fields.length)}',
                     style: const TextStyle(fontSize: 11),
                   ),
-                  trailing: const Icon(LucideIcons.chevronRight, size: 16),
+                  trailing: const Icon(Iconfont.chevronRight, size: 16),
                   onTap: () => Navigator.of(context).push(
                     MaterialPageRoute<void>(
                       builder: (_) => DexClassPage(dex: dex, type: type),
@@ -364,7 +364,7 @@ class _DexEditorPageState extends ConsumerState<DexEditorPage>
         decoration: InputDecoration(
           isDense: true,
           hintText: hint,
-          prefixIcon: const Icon(LucideIcons.search, size: 16),
+          prefixIcon: const Icon(Iconfont.search, size: 16),
           border: const OutlineInputBorder(),
         ),
         onChanged: (_) => setState(() {}),
@@ -425,7 +425,7 @@ class DexClassPage extends StatelessWidget {
                 style: const TextStyle(fontSize: 11),
               ),
               trailing: method.hasCode
-                  ? const Icon(LucideIcons.chevronRight, size: 16)
+                  ? const Icon(Iconfont.chevronRight, size: 16)
                   : Text(
                       l10n.reverseAbstractMethod,
                       style: theme.textTheme.bodySmall?.copyWith(

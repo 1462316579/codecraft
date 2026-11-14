@@ -1,8 +1,8 @@
 import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
+import '../../core/icons/iconfont.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:lucide_icons/lucide_icons.dart';
 
 import '../../core/theme/semantic_colors.dart';
 import '../../core/theme/tokens.dart';
@@ -95,7 +95,7 @@ class _AXmlEditorPageState extends ConsumerState<AXmlEditorPage> {
           IconButton(
             tooltip: _showHex ? '显示 XML' : '显示十六进制',
             onPressed: () => setState(() => _showHex = !_showHex),
-            icon: Icon(_showHex ? LucideIcons.fileCode : LucideIcons.hash, size: 18),
+            icon: Icon(_showHex ? Iconfont.fileCode : Iconfont.hash, size: 18),
           ),
         ],
       ),

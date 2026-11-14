@@ -1,8 +1,8 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
+import '../../core/icons/iconfont.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:lucide_icons/lucide_icons.dart';
 
 import '../../data/execution_target.dart';
 import '../../data/workspaces.dart';
@@ -131,13 +131,13 @@ class _CredentialPageState extends ConsumerState<CredentialPage> {
         leading: IconButton(
           onPressed: widget.onNavigateBack ?? () => Navigator.of(context).maybePop(),
           tooltip: l10n.back,
-          icon: const Icon(LucideIcons.arrowLeft),
+          icon: const Icon(Iconfont.arrowLeft),
         ),
         actions: [
           IconButton(
             onPressed: () => _openEditor(null),
             tooltip: l10n.credentialAdd,
-            icon: const Icon(LucideIcons.plus),
+            icon: const Icon(Iconfont.plus),
           ),
         ],
       ),
@@ -163,8 +163,8 @@ class _CredentialPageState extends ConsumerState<CredentialPage> {
               controller: _pageController,
               page: _page,
               items: [
-                FloatingTabItem(icon: LucideIcons.user, label: l10n.gitTabIdentity),
-                FloatingTabItem(icon: LucideIcons.key, label: l10n.gitTabCredentials),
+                FloatingTabItem(icon: Iconfont.user, label: l10n.gitTabIdentity),
+                FloatingTabItem(icon: Iconfont.key, label: l10n.gitTabCredentials),
               ],
               maskColor: context.semantic.pageBackground,
               onSelect: (index) => _pageController.animateToPage(
@@ -287,7 +287,7 @@ class _IdentityTabState extends ConsumerState<_IdentityTab> {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                const Icon(LucideIcons.check, size: 17),
+                const Icon(Iconfont.check, size: 17),
                 const SizedBox(width: Spacing.sm),
                 Text(
                   l10n.save,
@@ -379,8 +379,8 @@ class _CredentialItem extends StatelessWidget {
                     ),
                     child: Icon(
                       universal || credential.host.contains('github')
-                          ? LucideIcons.github
-                          : LucideIcons.key,
+                          ? Iconfont.github
+                          : Iconfont.key,
                       size: 22,
                       color: subtle,
                     ),
@@ -417,7 +417,7 @@ class _CredentialItem extends StatelessWidget {
                       ],
                     ),
                   ),
-                  Icon(LucideIcons.chevronRight, size: 18, color: subtle),
+                  Icon(Iconfont.chevronRight, size: 18, color: subtle),
                 ],
               ),
             ),
@@ -425,7 +425,7 @@ class _CredentialItem extends StatelessWidget {
           IconButton(
             onPressed: onDelete,
             tooltip: Theme.of(context).platform == TargetPlatform.iOS ? '删除' : '删除',
-            icon: Icon(LucideIcons.trash2, size: 18, color: theme.colorScheme.error),
+            icon: Icon(Iconfont.trash2, size: 18, color: theme.colorScheme.error),
           ),
         ],
       ),
@@ -509,7 +509,7 @@ class _EmptyCredentials extends StatelessWidget {
                   color: theme.colorScheme.primary.withValues(alpha: 0.12),
                   borderRadius: BorderRadius.circular(Radii.mdLarge),
                 ),
-                child: Icon(LucideIcons.key, size: 26, color: theme.colorScheme.primary),
+                child: Icon(Iconfont.key, size: 26, color: theme.colorScheme.primary),
               ),
               const SizedBox(height: Spacing.md),
               Text(
@@ -538,7 +538,7 @@ class _EmptyCredentials extends StatelessWidget {
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      const Icon(LucideIcons.pencil, size: 16),
+                      const Icon(Iconfont.pencil, size: 16),
                       const SizedBox(width: Spacing.sm),
                       Text(
                         l10n.credentialAdd,

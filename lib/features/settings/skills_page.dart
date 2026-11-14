@@ -1,8 +1,8 @@
 import 'package:file_selector/file_selector.dart' as file_selector;
 import 'package:flutter/material.dart';
+import '../../core/icons/iconfont.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
-import 'package:lucide_icons/lucide_icons.dart';
 
 import '../../agent/models/skill.dart';
 import '../../core/theme/semantic_colors.dart';
@@ -39,7 +39,7 @@ class SkillsPage extends ConsumerWidget {
           ),
           IconButton(
             tooltip: l10n.skillsImport,
-            icon: const Icon(LucideIcons.fileUp),
+            icon: const Icon(Iconfont.fileUp),
             onPressed: () => _importMarkdown(context, ref, SkillScope.global),
           ),
         ],
@@ -90,7 +90,7 @@ class SkillsPage extends ConsumerWidget {
                 ),
                 alignment: Alignment.center,
                 child: Icon(
-                  LucideIcons.book,
+                  Iconfont.book,
                   size: 28,
                   color: Theme.of(context).colorScheme.onSurfaceVariant,
                 ),
@@ -167,7 +167,7 @@ class SkillsPage extends ConsumerWidget {
     final disabled = ref.watch(disabledSkillsProvider).valueOrNull ?? const <String>{};
     final isDisabled = disabled.contains(entry.skill.name.toLowerCase());
     final row = SettingsRow(
-      icon: LucideIcons.book,
+      icon: Iconfont.book,
       title: entry.skill.name,
       subtitle: entry.skill.description.isEmpty ? null : entry.skill.description,
       onTap: () => context.push(

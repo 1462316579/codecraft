@@ -5,6 +5,7 @@ import 'dart:io';
 
 import 'package:audioplayers/audioplayers.dart';
 import 'package:flutter/material.dart';
+import '../../core/icons/iconfont.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:flutter/services.dart';
@@ -12,7 +13,6 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter_markdown/flutter_markdown.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:lucide_icons/lucide_icons.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:video_player/video_player.dart';
 
@@ -638,7 +638,7 @@ class _EditorPageState extends ConsumerState<EditorPage> {
       leading: IconButton(
         onPressed: _handleBack,
         tooltip: widget.embedded ? l10n.close : l10n.back,
-        icon: Icon(widget.embedded ? LucideIcons.x : LucideIcons.arrowLeft, size: 20),
+        icon: Icon(widget.embedded ? Iconfont.x : Iconfont.arrowLeft, size: 20),
       ),
       title: Row(
         children: [
@@ -657,12 +657,12 @@ class _EditorPageState extends ConsumerState<EditorPage> {
         ],
       ),
       actions: [
-        _actionIcon(tooltip: l10n.editorUndo, icon: LucideIcons.undo2, onTap: canEdit && _canUndo ? () => _invoke('undo') : null),
-        _actionIcon(tooltip: l10n.editorRedo, icon: LucideIcons.redo2, onTap: canEdit && _canRedo ? () => _invoke('redo') : null),
-        if (_isMarkdown && canEdit) _actionIcon(tooltip: _previewMode ? l10n.editorMdShowSource : l10n.editorMdPreview, icon: _previewMode ? LucideIcons.code : LucideIcons.eye, onTap: _togglePreview),
-        _actionIcon(tooltip: l10n.editorSearch, icon: LucideIcons.search, onTap: canEdit ? (_searchOpen ? _closeSearch : _openSearch) : null),
-        _actionIcon(tooltip: l10n.editorTypeset, icon: LucideIcons.type, onTap: canEdit ? _typeset : null),
-        _actionIcon(tooltip: l10n.editorCopy, icon: LucideIcons.copy, onTap: canEdit ? _copyAll : null),
+        _actionIcon(tooltip: l10n.editorUndo, icon: Iconfont.undo2, onTap: canEdit && _canUndo ? () => _invoke('undo') : null),
+        _actionIcon(tooltip: l10n.editorRedo, icon: Iconfont.redo2, onTap: canEdit && _canRedo ? () => _invoke('redo') : null),
+        if (_isMarkdown && canEdit) _actionIcon(tooltip: _previewMode ? l10n.editorMdShowSource : l10n.editorMdPreview, icon: _previewMode ? Iconfont.code : Iconfont.eye, onTap: _togglePreview),
+        _actionIcon(tooltip: l10n.editorSearch, icon: Iconfont.search, onTap: canEdit ? (_searchOpen ? _closeSearch : _openSearch) : null),
+        _actionIcon(tooltip: l10n.editorTypeset, icon: Iconfont.type, onTap: canEdit ? _typeset : null),
+        _actionIcon(tooltip: l10n.editorCopy, icon: Iconfont.copy, onTap: canEdit ? _copyAll : null),
         const SizedBox(width: Spacing.xs),
       ],
     );
@@ -678,14 +678,14 @@ class _EditorPageState extends ConsumerState<EditorPage> {
       leading: IconButton(
         onPressed: _handleBack,
         tooltip: widget.embedded ? l10n.close : l10n.back,
-        icon: Icon(widget.embedded ? LucideIcons.x : LucideIcons.arrowLeft, size: 18),
+        icon: Icon(widget.embedded ? Iconfont.x : Iconfont.arrowLeft, size: 18),
       ),
       actions: [
-        if (_isMarkdown && _editable) IconButton(onPressed: _togglePreview, tooltip: _previewMode ? l10n.editorMdShowSource : l10n.editorMdPreview, icon: Icon(_previewMode ? LucideIcons.code : LucideIcons.eye, size: 18)),
-        IconButton(onPressed: _editable && _canUndo ? () => _invoke('undo') : null, tooltip: l10n.editorUndo, icon: const Icon(LucideIcons.undo2, size: 18)),
-        IconButton(onPressed: _editable && _canRedo ? () => _invoke('redo') : null, tooltip: l10n.editorRedo, icon: const Icon(LucideIcons.redo2, size: 18)),
-        IconButton(onPressed: _editable && _dirty && !_saving ? _requestSave : null, tooltip: l10n.save, icon: _saving ? SizedBox(height: 18, width: 18, child: CircularProgressIndicator(strokeWidth: 2)) : const Icon(LucideIcons.save, size: 18)),
-        IconButton(onPressed: _editable ? () => Navigator.of(context).push(MaterialPageRoute(builder: (_) => const EditorSettingsPage())) : null, tooltip: l10n.editorSettings, icon: const Icon(LucideIcons.slidersHorizontal, size: 18)),
+        if (_isMarkdown && _editable) IconButton(onPressed: _togglePreview, tooltip: _previewMode ? l10n.editorMdShowSource : l10n.editorMdPreview, icon: Icon(_previewMode ? Iconfont.code : Iconfont.eye, size: 18)),
+        IconButton(onPressed: _editable && _canUndo ? () => _invoke('undo') : null, tooltip: l10n.editorUndo, icon: const Icon(Iconfont.undo2, size: 18)),
+        IconButton(onPressed: _editable && _canRedo ? () => _invoke('redo') : null, tooltip: l10n.editorRedo, icon: const Icon(Iconfont.redo2, size: 18)),
+        IconButton(onPressed: _editable && _dirty && !_saving ? _requestSave : null, tooltip: l10n.save, icon: _saving ? SizedBox(height: 18, width: 18, child: CircularProgressIndicator(strokeWidth: 2)) : const Icon(Iconfont.save, size: 18)),
+        IconButton(onPressed: _editable ? () => Navigator.of(context).push(MaterialPageRoute(builder: (_) => const EditorSettingsPage())) : null, tooltip: l10n.editorSettings, icon: const Icon(Iconfont.slidersHorizontal, size: 18)),
       ],
     );
   }
@@ -713,16 +713,16 @@ class _EditorPageState extends ConsumerState<EditorPage> {
               decoration: InputDecoration(
                 isDense: true,
                 hintText: l10n.editorSearchHint,
-                prefixIcon: const Icon(LucideIcons.search, size: 16),
+                prefixIcon: const Icon(Iconfont.search, size: 16),
                 prefixIconConstraints: const BoxConstraints(minWidth: 32),
                 border: InputBorder.none,
               ),
             ),
           ),
           Text(counter, style: theme.textTheme.bodySmall?.copyWith(color: context.semantic.subtleText)),
-          _actionIcon(tooltip: l10n.editorSearchPrev, icon: LucideIcons.chevronUp, onTap: _matchCount == 0 ? null : () => _goToMatch(next: false)),
-          _actionIcon(tooltip: l10n.editorSearchNext, icon: LucideIcons.chevronDown, onTap: _matchCount == 0 ? null : () => _goToMatch(next: true)),
-          _actionIcon(tooltip: l10n.close, icon: LucideIcons.x, onTap: _closeSearch),
+          _actionIcon(tooltip: l10n.editorSearchPrev, icon: Iconfont.chevronUp, onTap: _matchCount == 0 ? null : () => _goToMatch(next: false)),
+          _actionIcon(tooltip: l10n.editorSearchNext, icon: Iconfont.chevronDown, onTap: _matchCount == 0 ? null : () => _goToMatch(next: true)),
+          _actionIcon(tooltip: l10n.close, icon: Iconfont.x, onTap: _closeSearch),
         ],
       ),
     );
@@ -1003,7 +1003,7 @@ class _AudioPlayerWidgetState extends State<_AudioPlayerWidget> {
           mainAxisSize: MainAxisSize.min,
           children: [
             const SizedBox(height: 32),
-            Icon(LucideIcons.music, size: 48, color: theme.colorScheme.primary),
+            Icon(Iconfont.music, size: 48, color: theme.colorScheme.primary),
             const SizedBox(height: 16),
             Text(widget.fileName, style: theme.textTheme.titleMedium, textAlign: TextAlign.center, maxLines: 1, overflow: TextOverflow.ellipsis),
             const SizedBox(height: 24),
@@ -1029,7 +1029,7 @@ class _AudioPlayerWidgetState extends State<_AudioPlayerWidget> {
                 const SizedBox(height: 16),
                 IconButton(
                   onPressed: _playing ? _player.pause : _player.resume,
-                  icon: Icon(_playing ? LucideIcons.pause : LucideIcons.play, size: 36),
+                  icon: Icon(_playing ? Iconfont.pause : Iconfont.play, size: 36),
                   style: IconButton.styleFrom(backgroundColor: theme.colorScheme.primaryContainer, foregroundColor: theme.colorScheme.onPrimaryContainer),
                 ),
               ],
@@ -1109,7 +1109,7 @@ class _VideoPlayerWidgetState extends State<_VideoPlayerWidget> {
                   child: GestureDetector(
                     onTap: () => setState(() => _controller.value.isPlaying ? _controller.pause() : _controller.play()),
                     child: Center(
-                      child: Icon(_controller.value.isPlaying ? LucideIcons.pause : LucideIcons.play, size: 64, color: Colors.white.withOpacity(0.7)),
+                      child: Icon(_controller.value.isPlaying ? Iconfont.pause : Iconfont.play, size: 64, color: Colors.white.withOpacity(0.7)),
                     ),
                   ),
                 ),

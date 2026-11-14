@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
+import '../../core/icons/iconfont.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:lucide_icons/lucide_icons.dart';
 
 import '../../agent/models/model_metadata.dart';
 import '../../core/theme/semantic_colors.dart';
@@ -129,7 +129,7 @@ class _ProviderEditPageState extends ConsumerState<ProviderEditPage> {
               IconButton(
                 tooltip: l10n.providerModelsSelect,
                 icon: Icon(
-                  LucideIcons.checkSquare,
+                  Iconfont.checkSquare,
                   color: _selectionMode
                       ? Theme.of(context).colorScheme.primary
                       : Theme.of(context).colorScheme.onSurfaceVariant,
@@ -193,8 +193,8 @@ class _ProviderEditPageState extends ConsumerState<ProviderEditPage> {
                   controller: _page,
                   page: _pageIndex,
                   items: [
-                    FloatingTabItem(icon: LucideIcons.sliders, label: l10n.providerConfig),
-                    FloatingTabItem(icon: LucideIcons.cpu, label: l10n.model),
+                    FloatingTabItem(icon: Iconfont.sliders, label: l10n.providerConfig),
+                    FloatingTabItem(icon: Iconfont.cpu, label: l10n.model),
                   ],
                   maskColor: context.semantic.pageBackground,
                   onSelect: (index) => _page.animateToPage(
@@ -236,7 +236,7 @@ class _ProviderEditPageState extends ConsumerState<ProviderEditPage> {
                   iconSize: 20,
                   color: theme.colorScheme.onSurfaceVariant,
                   tooltip: _apiKeyVisible ? l10n.providerHideApiKey : l10n.providerShowApiKey,
-                  icon: Icon(_apiKeyVisible ? LucideIcons.eyeOff : LucideIcons.eye),
+                  icon: Icon(_apiKeyVisible ? Iconfont.eyeOff : Iconfont.eye),
                 ),
               ),
             if (!_multiKeyEnabled) const SettingsDivider(),
@@ -313,7 +313,7 @@ class _ProviderEditPageState extends ConsumerState<ProviderEditPage> {
             ],
             const SettingsDivider(),
             SettingsRow(
-              icon: LucideIcons.trash2,
+              icon: Iconfont.trash2,
               title: l10n.delete,
               onTap: () => _delete(provider),
             ),
@@ -351,14 +351,14 @@ class _ProviderEditPageState extends ConsumerState<ProviderEditPage> {
                 ),
                 _batchAction(
                   label: l10n.providerModelsBatchTest,
-                  icon: LucideIcons.play,
+                  icon: Iconfont.play,
                   color: theme.colorScheme.primary,
                   enabled: _selectedModels.isNotEmpty,
                   onTap: () => _testSelected(provider),
                 ),
                 _batchAction(
                   label: l10n.providerModelsBatchDelete,
-                  icon: LucideIcons.trash2,
+                  icon: Iconfont.trash2,
                   color: theme.colorScheme.error,
                   enabled: _selectedModels.isNotEmpty,
                   onTap: () => _batchDelete(provider),
@@ -379,7 +379,7 @@ class _ProviderEditPageState extends ConsumerState<ProviderEditPage> {
                 ),
                 TextButton.icon(
                   onPressed: () => _fetchModels(provider),
-                  icon: const Icon(LucideIcons.download, size: 18),
+                  icon: const Icon(Iconfont.download, size: 18),
                   label: Text(l10n.providerFetchModels),
                 ),
               ],
@@ -1136,7 +1136,7 @@ class _HeadersSheetState extends State<_HeadersSheet> {
                               row.$1.dispose();
                               row.$2.dispose();
                             }),
-                            icon: const Icon(LucideIcons.x, size: 18),
+                            icon: const Icon(Iconfont.x, size: 18),
                           ),
                         ],
                       ),

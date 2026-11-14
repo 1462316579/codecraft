@@ -12,9 +12,9 @@ import 'package:codecraft/features/settings/settings_page.dart';
 import 'package:codecraft/features/settings/theme_page.dart';
 import 'package:codecraft/l10n/app_localizations.dart';
 import 'package:flutter/material.dart';
+import '../lib/core/icons/iconfont.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:lucide_icons/lucide_icons.dart';
 import 'package:path/path.dart' as p;
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:codecraft/agent/models/chat_session.dart';
@@ -326,17 +326,17 @@ void main() {
     // 偏好设置 / AI 提供商 / Skill 管理 / 提示词 / 子代理 / MCP 服务器 / 容器与镜像 / 工具授权 / 软件权限 /
     // 主题 / Token 统计 / 存储空间 / 日志 / 关于,共 14 行导航
     expect(find.byIcon(Icons.chevron_right), findsNWidgets(14));
-    expect(find.byIcon(LucideIcons.cpu), findsOneWidget);
-    expect(find.byIcon(LucideIcons.barChart), findsOneWidget);
-    expect(find.byIcon(LucideIcons.server), findsOneWidget);
-    expect(find.byIcon(LucideIcons.puzzle), findsOneWidget);
-    expect(find.byIcon(LucideIcons.palette), findsOneWidget);
-    expect(find.byIcon(LucideIcons.plug), findsOneWidget);
-    expect(find.byIcon(LucideIcons.shield), findsOneWidget);
-    expect(find.byIcon(LucideIcons.smartphone), findsOneWidget);
-    expect(find.byIcon(LucideIcons.box), findsOneWidget);
-    expect(find.byIcon(LucideIcons.info), findsOneWidget);
-    expect(find.byIcon(LucideIcons.fileText), findsOneWidget);
+    expect(find.byIcon(Iconfont.cpu), findsOneWidget);
+    expect(find.byIcon(Iconfont.barChart), findsOneWidget);
+    expect(find.byIcon(Iconfont.server), findsOneWidget);
+    expect(find.byIcon(Iconfont.puzzle), findsOneWidget);
+    expect(find.byIcon(Iconfont.palette), findsOneWidget);
+    expect(find.byIcon(Iconfont.plug), findsOneWidget);
+    expect(find.byIcon(Iconfont.shield), findsOneWidget);
+    expect(find.byIcon(Iconfont.smartphone), findsOneWidget);
+    expect(find.byIcon(Iconfont.box), findsOneWidget);
+    expect(find.byIcon(Iconfont.info), findsOneWidget);
+    expect(find.byIcon(Iconfont.fileText), findsOneWidget);
   });
 
   testWidgets('主题页:主题模式与语言,带当前值与行尾箭头', (tester) async {
@@ -366,7 +366,7 @@ void main() {
     expect(find.text('语言'), findsOneWidget);
     // 主题模式与语言(系统默认)的当前值都是「跟随系统」,因此两处匹配
     expect(find.text('跟随系统'), findsNWidgets(2));
-    expect(find.byIcon(LucideIcons.sunMoon), findsOneWidget);
-    expect(find.byIcon(LucideIcons.languages), findsOneWidget);
+    expect(find.byIcon(Iconfont.sunMoon), findsOneWidget);
+    expect(find.byIcon(Iconfont.languages), findsOneWidget);
   });
 }

@@ -1,8 +1,8 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
+import '../../core/icons/iconfont.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
-import 'package:lucide_icons/lucide_icons.dart';
 import 'package:path/path.dart' as p;
 
 import '../../core/theme/semantic_colors.dart';
@@ -210,7 +210,7 @@ class _FileTreeTabState extends ConsumerState<FileTreeTab> {
                 visualDensity: VisualDensity.compact,
                 color: context.semantic.subtleText,
                 tooltip: l10n.fileBrowserRefresh,
-                icon: const Icon(LucideIcons.refreshCw),
+                icon: const Icon(Iconfont.refreshCw),
                 onPressed: () => _refresh(root),
               ),
             ],
@@ -416,7 +416,7 @@ class _FileTreeTabState extends ConsumerState<FileTreeTab> {
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
-            Icon(LucideIcons.package, size: 32, color: context.semantic.subtleText),
+            Icon(Iconfont.package, size: 32, color: context.semantic.subtleText),
             const SizedBox(height: Spacing.md),
             Text(
               l10n.apkExtractHint,
@@ -580,20 +580,20 @@ class _FileTreeTabState extends ConsumerState<FileTreeTab> {
               ),
             ),
             if (_clipboard != null && node.isDirectory)
-              _actionRow(sheetContext, LucideIcons.clipboard, l10n.fileBrowserPasteHere,
+              _actionRow(sheetContext, Iconfont.clipboard, l10n.fileBrowserPasteHere,
                   'paste', tint: theme.colorScheme.primary),
             if (node.isDirectory) ...[
-              _actionRow(sheetContext, LucideIcons.filePlus, l10n.fileBrowserNewFile, 'newFile'),
+              _actionRow(sheetContext, Iconfont.filePlus, l10n.fileBrowserNewFile, 'newFile'),
               _actionRow(
-                  sheetContext, LucideIcons.folderPlus, l10n.fileBrowserNewFolder, 'newFolder'),
+                  sheetContext, Iconfont.folderPlus, l10n.fileBrowserNewFolder, 'newFolder'),
             ],
             if (!node.isDirectory && supportsArchiveExtraction(node.path))
-              _actionRow(sheetContext, LucideIcons.packageOpen, l10n.fileBrowserExtract, 'extract'),
+              _actionRow(sheetContext, Iconfont.packageOpen, l10n.fileBrowserExtract, 'extract'),
             if (!node.isRoot) ...[
-              _actionRow(sheetContext, LucideIcons.copy, l10n.commonCopy, 'copy'),
-              _actionRow(sheetContext, LucideIcons.scissors, l10n.commonCut, 'cut'),
-              _actionRow(sheetContext, LucideIcons.edit2, l10n.rename, 'rename'),
-              _actionRow(sheetContext, LucideIcons.trash2, l10n.delete, 'delete',
+              _actionRow(sheetContext, Iconfont.copy, l10n.commonCopy, 'copy'),
+              _actionRow(sheetContext, Iconfont.scissors, l10n.commonCut, 'cut'),
+              _actionRow(sheetContext, Iconfont.edit2, l10n.rename, 'rename'),
+              _actionRow(sheetContext, Iconfont.trash2, l10n.delete, 'delete',
                   destructive: true),
             ],
           ],
@@ -943,7 +943,7 @@ class _FileRow extends StatelessWidget {
               )
             else
               Icon(
-                node.isDirectory ? LucideIcons.folder : fileTypeIconFor(node.name),
+                node.isDirectory ? Iconfont.folder : fileTypeIconFor(node.name),
                 size: 20,
                 color: decorationColor ??
                     (node.isDirectory
@@ -993,7 +993,7 @@ class _ClipboardIndicator extends StatelessWidget {
         child: Row(
           mainAxisSize: MainAxisSize.min,
           children: [
-            Icon(LucideIcons.clipboard, size: 12, color: theme.colorScheme.primary),
+            Icon(Iconfont.clipboard, size: 12, color: theme.colorScheme.primary),
             const SizedBox(width: 4),
             Flexible(
               child: Text(

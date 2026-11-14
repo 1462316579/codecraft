@@ -1,7 +1,7 @@
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
-import 'package:lucide_icons/lucide_icons.dart';
+import '../../core/icons/iconfont.dart';
 
 import '../../../core/theme/semantic_colors.dart';
 import '../../../core/theme/tokens.dart';
@@ -55,14 +55,14 @@ class HomeBottomNav extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       _NavItem(
-                        icon: current == HomeTab.projects ? LucideIcons.folderOpen : LucideIcons.folder,
+                        icon: current == HomeTab.projects ? Iconfont.folderOpen : Iconfont.folder,
                         label: l10n.tabProjects,
                         selected: current == HomeTab.projects,
                         onTap: () => onSelect(HomeTab.projects),
                       ),
                       const SizedBox(width: 46),
                       _NavItem(
-                        icon: LucideIcons.settings,
+                        icon: Iconfont.settings,
                         label: l10n.settings,
                         selected: current == HomeTab.settings,
                         onTap: () => onSelect(HomeTab.settings),

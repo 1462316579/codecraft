@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
+import '../../core/icons/iconfont.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
-import 'package:lucide_icons/lucide_icons.dart';
 
 import '../../agent/models/skill.dart';
 import '../../core/theme/semantic_colors.dart';
@@ -86,7 +86,7 @@ class _SkillEditPageState extends ConsumerState<SkillEditPage> {
           if (!_isNew)
             IconButton(
               tooltip: l10n.delete,
-              icon: const Icon(LucideIcons.trash2),
+              icon: const Icon(Iconfont.trash2),
               onPressed: _saving ? null : () => _delete(l10n),
             ),
           TextButton(

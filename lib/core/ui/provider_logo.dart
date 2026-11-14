@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
+import '../icons/iconfont.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:lucide_icons/lucide_icons.dart';
 
 import '../../data/providers/provider_config.dart';
 
@@ -108,7 +108,7 @@ class ProviderLogoIcon extends StatelessWidget {
     return BrandLogoIcon(
       brandKey: providerBrandKey(provider),
       semanticLabel: provider?.name ?? '',
-      fallbackIcon: LucideIcons.cloud,
+      fallbackIcon: Iconfont.cloud,
       size: size,
     );
   }
@@ -126,7 +126,7 @@ class ModelLogoIcon extends StatelessWidget {
     return BrandLogoIcon(
       brandKey: modelBrandKey(modelName),
       semanticLabel: modelName,
-      fallbackIcon: LucideIcons.cpu,
+      fallbackIcon: Iconfont.cpu,
       size: size,
     );
   }

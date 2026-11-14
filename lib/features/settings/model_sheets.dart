@@ -1,8 +1,8 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import '../../core/icons/iconfont.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:lucide_icons/lucide_icons.dart';
 
 import '../../agent/models/chat_session.dart';
 import '../../agent/models/model_metadata.dart';
@@ -246,7 +246,7 @@ class _FetchModelsSheetState extends ConsumerState<_FetchModelsSheet> {
               controller: _search,
               decoration: InputDecoration(
                 hintText: l10n.providerFilterModelsHint,
-                prefixIcon: const Icon(LucideIcons.search, size: 16),
+                prefixIcon: const Icon(Iconfont.search, size: 16),
                 isDense: true,
                 border: const OutlineInputBorder(),
               ),
@@ -278,7 +278,7 @@ class _FetchModelsSheetState extends ConsumerState<_FetchModelsSheet> {
                     title: l10n.providerFetchModels,
                     result: _debug!,
                   ),
-          icon: Icon(LucideIcons.alertCircle, size: 16, color: Theme.of(context).colorScheme.error),
+          icon: Icon(Iconfont.alertCircle, size: 16, color: Theme.of(context).colorScheme.error),
           label: Text(
             message,
             style: Theme.of(context)
@@ -745,7 +745,7 @@ class _ModelEditSheetState extends State<_ModelEditSheet> {
                 child: Row(
                   mainAxisSize: MainAxisSize.min,
                   children: [
-                    const Icon(LucideIcons.check, size: 18),
+                    const Icon(Iconfont.check, size: 18),
                     const SizedBox(width: Spacing.xs),
                     Text(
                       widget.confirmLabel ?? l10n.save,
@@ -918,7 +918,7 @@ class _ModelTestSheet extends StatelessWidget {
             Row(
               children: [
                 Icon(
-                  result.success ? LucideIcons.checkCircle : LucideIcons.alertCircle,
+                  result.success ? Iconfont.checkCircle : Iconfont.alertCircle,
                   size: 18,
                   color: statusColor,
                 ),
@@ -1024,7 +1024,7 @@ class ModelTestResultLine extends StatelessWidget {
           child: Row(
             children: [
               Icon(
-                result.success ? LucideIcons.checkCircle : LucideIcons.alertCircle,
+                result.success ? Iconfont.checkCircle : Iconfont.alertCircle,
                 size: 14,
                 color: color,
               ),
@@ -1039,7 +1039,7 @@ class ModelTestResultLine extends StatelessWidget {
               ),
               const SizedBox(width: 4),
               Icon(
-                LucideIcons.chevronRight,
+                Iconfont.chevronRight,
                 size: 12,
                 color: theme.colorScheme.onSurfaceVariant.withValues(alpha: 0.5),
               ),

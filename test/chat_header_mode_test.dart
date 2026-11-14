@@ -15,7 +15,7 @@ import 'package:codecraft/l10n/app_localizations.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:lucide_icons/lucide_icons.dart';
+import '../../core/icons/iconfont.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:sqlite3/open.dart';
 import 'package:sqflite_common_ffi/sqflite_ffi.dart';
@@ -108,8 +108,8 @@ void main() {
     await openProject(tester, '编程项目');
 
     expect(find.byType(ChatHeader), findsOneWidget);
-    expect(headerIcon(LucideIcons.gitBranch), findsOneWidget, reason: '编程项目应有 Git 入口');
-    expect(headerIcon(LucideIcons.terminal), findsOneWidget, reason: '编程项目应有终端入口');
+    expect(headerIcon(Iconfont.gitBranch), findsOneWidget, reason: '编程项目应有 Git 入口');
+    expect(headerIcon(Iconfont.terminal), findsOneWidget, reason: '编程项目应有终端入口');
   });
 
   testWidgets('写作项目:顶栏没有 Git 与终端入口', (tester) async {
@@ -117,8 +117,8 @@ void main() {
     await openProject(tester, '写作项目');
 
     expect(find.byType(ChatHeader), findsOneWidget);
-    expect(headerIcon(LucideIcons.gitBranch), findsNothing, reason: '写作项目不该有 Git 入口');
-    expect(headerIcon(LucideIcons.terminal), findsNothing, reason: '写作项目不该有终端入口');
+    expect(headerIcon(Iconfont.gitBranch), findsNothing, reason: '写作项目不该有 Git 入口');
+    expect(headerIcon(Iconfont.terminal), findsNothing, reason: '写作项目不该有终端入口');
   });
 
   testWidgets('逆向项目:顶栏没有 Git(终端保留)', (tester) async {
@@ -126,8 +126,8 @@ void main() {
     await openProject(tester, '逆向项目');
 
     expect(find.byType(ChatHeader), findsOneWidget);
-    expect(headerIcon(LucideIcons.gitBranch), findsNothing, reason: '逆向项目不该有 Git 入口');
-    expect(headerIcon(LucideIcons.terminal), findsOneWidget, reason: '终端仍可用于看 APK 内容');
+    expect(headerIcon(Iconfont.gitBranch), findsNothing, reason: '逆向项目不该有 Git 入口');
+    expect(headerIcon(Iconfont.terminal), findsOneWidget, reason: '终端仍可用于看 APK 内容');
   });
 
   testWidgets('逆向项目:侧栏没有浏览器与 Codespaces', (tester) async {
@@ -216,7 +216,7 @@ void main() {
       await tester.pump(const Duration(milliseconds: 30));
     }
 
-    await tester.tap(find.byIcon(LucideIcons.plus).first);
+    await tester.tap(find.byIcon(Icons.plus).first);
     await tester.pump();
     await tester.pump(const Duration(milliseconds: 300));
     // 文案随系统语言变化,按 l10n 键定位而不是写死中文。
@@ -246,7 +246,7 @@ void main() {
       reason: '写作项目的侧栏不该有浏览器入口',
     );
     expect(
-      find.descendant(of: drawer, matching: find.byIcon(LucideIcons.cloud)),
+      find.descendant(of: drawer, matching: find.byIcon(Iconfont.cloud)),
       findsNothing,
       reason: '写作项目的侧栏不该有 Codespaces 入口',
     );
@@ -264,7 +264,7 @@ void main() {
       reason: '编程项目的侧栏应保留浏览器入口',
     );
     expect(
-      find.descendant(of: drawer, matching: find.byIcon(LucideIcons.cloud)),
+      find.descendant(of: drawer, matching: find.byIcon(Iconfont.cloud)),
       findsWidgets,
       reason: '编程项目的侧栏应保留 Codespaces 入口',
     );

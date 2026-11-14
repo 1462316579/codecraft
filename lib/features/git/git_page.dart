@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
+import '../../core/icons/iconfont.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:lucide_icons/lucide_icons.dart';
 
 import '../../core/theme/semantic_colors.dart';
 import '../../core/theme/tokens.dart';
@@ -141,7 +141,7 @@ class _GitPageState extends ConsumerState<GitPage> {
                       ),
                     ),
                     Icon(
-                      LucideIcons.chevronDown,
+                      Iconfont.chevronDown,
                       size: 16,
                       color: Theme.of(context).colorScheme.onSurfaceVariant,
                     ),
@@ -154,19 +154,19 @@ class _GitPageState extends ConsumerState<GitPage> {
         leading: IconButton(
           onPressed: widget.onNavigateBack ?? () => Navigator.of(context).maybePop(),
           tooltip: widget.embedded ? l10n.close : l10n.back,
-          icon: Icon(widget.embedded ? LucideIcons.x : LucideIcons.arrowLeft),
+          icon: Icon(widget.embedded ? Iconfont.x : Iconfont.arrowLeft),
         ),
         actions: [
           if (widget.onNavigateToCredentials != null)
             IconButton(
               onPressed: widget.onNavigateToCredentials,
               tooltip: l10n.gitCredentialsAndIdentity,
-              icon: const Icon(LucideIcons.key),
+              icon: const Icon(Iconfont.key),
             ),
           IconButton(
             onPressed: state.busy ? null : controller.refresh,
             tooltip: l10n.gitRefresh,
-            icon: const Icon(LucideIcons.refreshCw),
+            icon: const Icon(Iconfont.refreshCw),
           ),
         ],
       ),
@@ -205,9 +205,9 @@ class _GitPageState extends ConsumerState<GitPage> {
                   controller: _pageController,
                   page: _page,
                   items: [
-                    FloatingTabItem(icon: LucideIcons.activity, label: l10n.gitTabStatus),
-                    FloatingTabItem(icon: LucideIcons.gitBranch, label: l10n.gitTabBranches),
-                    FloatingTabItem(icon: LucideIcons.gitCommit, label: l10n.gitTabCommits),
+                    FloatingTabItem(icon: Iconfont.activity, label: l10n.gitTabStatus),
+                    FloatingTabItem(icon: Iconfont.gitBranch, label: l10n.gitTabBranches),
+                    FloatingTabItem(icon: Iconfont.gitCommit, label: l10n.gitTabCommits),
                   ],
                   maskColor: context.semantic.pageBackground,
                   onSelect: (index) => _pageController.animateToPage(
@@ -298,7 +298,7 @@ class _NotARepoState extends StatelessWidget {
                     child: Row(
                       mainAxisSize: MainAxisSize.min,
                       children: [
-                        const Icon(LucideIcons.gitBranch, size: 18),
+                        const Icon(Iconfont.gitBranch, size: 18),
                         const SizedBox(width: Spacing.xs),
                         Text(l10n.gitInitRepo),
                       ],
@@ -310,7 +310,7 @@ class _NotARepoState extends StatelessWidget {
                     child: Row(
                       mainAxisSize: MainAxisSize.min,
                       children: [
-                        const Icon(LucideIcons.download, size: 18),
+                        const Icon(Iconfont.download, size: 18),
                         const SizedBox(width: Spacing.xs),
                         Text(l10n.gitCloneRepo),
                       ],
@@ -324,7 +324,7 @@ class _NotARepoState extends StatelessWidget {
                 child: Row(
                   mainAxisSize: MainAxisSize.min,
                   children: [
-                    const Icon(LucideIcons.folder, size: 18),
+                    const Icon(Iconfont.folder, size: 18),
                     const SizedBox(width: Spacing.xs),
                     Text(l10n.gitPickExistingRepo),
                   ],
@@ -357,7 +357,7 @@ class _ExecutionEnvSubtitle extends ConsumerWidget {
         mainAxisSize: MainAxisSize.min,
         children: [
           Icon(
-            target.isRemote ? LucideIcons.cloud : LucideIcons.hardDrive,
+            target.isRemote ? Iconfont.cloud : Iconfont.hardDrive,
             size: 12,
             color: theme.colorScheme.primary,
           ),
