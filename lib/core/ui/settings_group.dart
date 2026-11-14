@@ -112,7 +112,10 @@ class CollapsibleGroupHeader extends StatelessWidget {
   }
 }
 
-/// 分组圆角卡片容器:圆角 14、cardSurface 底色、无描边无阴影;行间由 [SettingsDivider] 分隔。
+/// 分组圆角卡片容器:液态柔光玻璃风格。
+///
+/// 强模糊 + 半透明品牌色染色 + 细微亮边 + 大圆角，配合页面渐变背景
+/// 呈现“液体悬浮”的玻璃质感。行间由 [SettingsDivider] 分隔。
 class SettingsGroup extends StatelessWidget {
   const SettingsGroup({super.key, required this.children});
 
@@ -121,21 +124,37 @@ class SettingsGroup extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
+    final bright = theme.brightness == Brightness.light;
+    final base = bright
+        ? Brand.violet.withValues(alpha: 0.10)
+        : Brand.violet.withValues(alpha: 0.14);
     return ClipRRect(
-      borderRadius: BorderRadius.circular(Radii.lg),
+      borderRadius: BorderRadius.circular(Radii.xl),
       child: BackdropFilter(
-        filter: ImageFilter.blur(sigmaX: 16, sigmaY: 16),
+        filter: ImageFilter.blur(sigmaX: 24, sigmaY: 24),
         child: DecoratedBox(
           decoration: BoxDecoration(
-            color: (theme.brightness == Brightness.light
-                    ? Colors.white
-                    : context.semantic.cardSurface)
-                .withValues(alpha: 0.35),
-            borderRadius: BorderRadius.circular(Radii.lg),
-            border: Border.all(
-              width: 0.5,
-              color: theme.colorScheme.outlineVariant.withValues(alpha: 0.3),
+            gradient: LinearGradient(
+              begin: Alignment.topLeft,
+              end: Alignment.bottomRight,
+              colors: [
+                base.withValues(alpha: 0.55),
+                base.withValues(alpha: 0.25),
+              ],
             ),
+            borderRadius: BorderRadius.circular(Radii.xl),
+            border: Border.all(
+              width: 1,
+              color: Colors.white.withValues(alpha: bright ? 0.55 : 0.20),
+            ),
+            boxShadow: [
+              BoxShadow(
+                color: Brand.violet.withValues(alpha: bright ? 0.08 : 0.16),
+                blurRadius: 24,
+                spreadRadius: 0,
+                offset: const Offset(0, 12),
+              ),
+            ],
           ),
           child: Column(children: children),
         ),
@@ -185,8 +204,24 @@ class SettingsRow extends StatelessWidget {
                   width: iconBoxSize,
                   height: iconBoxSize,
                   decoration: BoxDecoration(
-                    color: theme.colorScheme.primary.withValues(alpha: 0.12),
+                    gradient: LinearGradient(
+                      colors: [
+                        theme.colorScheme.primary.withValues(alpha: 0.28),
+                        theme.colorScheme.primary.withValues(alpha: 0.08),
+                      ],
+                    ),
                     borderRadius: BorderRadius.circular(Radii.mdLarge),
+                    border: Border.all(
+                      width: 0.5,
+                      color: Colors.white.withValues(alpha: 0.45),
+                    ),
+                    boxShadow: [
+                      BoxShadow(
+                        color: theme.colorScheme.primary.withValues(alpha: 0.12),
+                        blurRadius: 10,
+                        offset: const Offset(0, 4),
+                      ),
+                    ],
                   ),
                   alignment: Alignment.center,
                   child: Icon(icon, size: 22, color: theme.colorScheme.primary),
@@ -239,13 +274,17 @@ class SettingsDivider extends StatelessWidget {
   final double indent;
 
   @override
-  Widget build(BuildContext context) => Divider(
-        height: 0.5,
-        thickness: 0.5,
-        indent: indent,
-        endIndent: Spacing.lg,
-        color: context.semantic.subtleBorder,
-      );
+  Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    final bright = theme.brightness == Brightness.light;
+    return Divider(
+      height: 0.5,
+      thickness: 0.5,
+      indent: indent,
+      endIndent: Spacing.lg,
+      color: context.semantic.subtleBorder.withValues(alpha: bright ? 0.45 : 0.30),
+    );
+  }
 }
 
 /// iOS 风格搜索框(上游 ModelSearchField):胶囊底色、无边框、最小高度 40。
@@ -265,21 +304,31 @@ class CapsuleSearchField extends StatelessWidget {
   Widget build(BuildContext context) {
     final semantic = context.semantic;
     final theme = Theme.of(context);
+    final bright = theme.brightness == Brightness.light;
     return ClipRRect(
       borderRadius: BorderRadius.circular(Radii.pill),
       child: BackdropFilter(
-        filter: ImageFilter.blur(sigmaX: 14, sigmaY: 14),
+        filter: ImageFilter.blur(sigmaX: 22, sigmaY: 22),
         child: DecoratedBox(
           decoration: BoxDecoration(
-            color: (theme.brightness == Brightness.light
-                    ? Colors.white
-                    : semantic.capsuleSurface)
-                .withValues(alpha: 0.35),
+            gradient: LinearGradient(
+              colors: [
+                Colors.white.withValues(alpha: bright ? 0.55 : 0.22),
+                Colors.white.withValues(alpha: bright ? 0.22 : 0.08),
+              ],
+            ),
             borderRadius: BorderRadius.circular(Radii.pill),
             border: Border.all(
-              width: 0.5,
-              color: theme.colorScheme.outlineVariant.withValues(alpha: 0.3),
+              width: 1,
+              color: Colors.white.withValues(alpha: bright ? 0.6 : 0.22),
             ),
+            boxShadow: [
+              BoxShadow(
+                color: Brand.violet.withValues(alpha: bright ? 0.08 : 0.14),
+                blurRadius: 16,
+                offset: const Offset(0, 8),
+              ),
+            ],
           ),
           child: Container(
             constraints: const BoxConstraints(minHeight: 40),

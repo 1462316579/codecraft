@@ -28,6 +28,7 @@ class HomeBottomNav extends StatelessWidget {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     final l10n = AppLocalizations.of(context);
+    final bright = theme.brightness == Brightness.light;
     return Align(
       alignment: Alignment.bottomCenter,
       child: Padding(
@@ -35,45 +36,54 @@ class HomeBottomNav extends StatelessWidget {
         child: ClipRRect(
           borderRadius: BorderRadius.circular(999),
           child: BackdropFilter(
-            filter: ImageFilter.blur(sigmaX: 16, sigmaY: 16),
+            filter: ImageFilter.blur(sigmaX: 26, sigmaY: 26),
             child: DecoratedBox(
               decoration: BoxDecoration(
-                color: (theme.brightness == Brightness.light
-                        ? Colors.white
-                        : context.semantic.mutedSurface)
-                    .withValues(alpha: 0.3),
+                gradient: LinearGradient(
+                  colors: [
+                    Colors.white.withValues(alpha: bright ? 0.55 : 0.18),
+                    Colors.white.withValues(alpha: bright ? 0.22 : 0.06),
+                  ],
+                ),
                 borderRadius: BorderRadius.circular(999),
                 border: Border.all(
-                  width: 0.5,
-                  color: theme.colorScheme.outlineVariant.withValues(alpha: 0.25),
+                  width: 1,
+                  color: Colors.white.withValues(alpha: bright ? 0.6 : 0.2),
                 ),
+                boxShadow: [
+                  BoxShadow(
+                    color: Brand.violet.withValues(alpha: bright ? 0.08 : 0.16),
+                    blurRadius: 24,
+                    offset: const Offset(0, 12),
+                  ),
+                ],
               ),
               child: SizedBox(
                 height: 54,
-                  child: Row(
-                    mainAxisSize: MainAxisSize.min,
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      _NavItem(
-                        icon: current == HomeTab.projects ? Iconfont.folderOpen : Iconfont.folder,
-                        label: l10n.tabProjects,
-                        selected: current == HomeTab.projects,
-                        onTap: () => onSelect(HomeTab.projects),
-                      ),
-                      const SizedBox(width: 46),
-                      _NavItem(
-                        icon: Iconfont.settings,
-                        label: l10n.settings,
-                        selected: current == HomeTab.settings,
-                        onTap: () => onSelect(HomeTab.settings),
-                      ),
-                    ],
-                  ),
+                child: Row(
+                  mainAxisSize: MainAxisSize.min,
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    _NavItem(
+                      icon: current == HomeTab.projects ? Iconfont.folderOpen : Iconfont.folder,
+                      label: l10n.tabProjects,
+                      selected: current == HomeTab.projects,
+                      onTap: () => onSelect(HomeTab.projects),
+                    ),
+                    const SizedBox(width: 46),
+                    _NavItem(
+                      icon: Iconfont.settings,
+                      label: l10n.settings,
+                      selected: current == HomeTab.settings,
+                      onTap: () => onSelect(HomeTab.settings),
+                    ),
+                  ],
                 ),
               ),
             ),
           ),
         ),
+      ),
     );
   }
 }

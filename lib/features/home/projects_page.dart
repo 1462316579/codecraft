@@ -53,50 +53,57 @@ class ProjectsPage extends ConsumerWidget {
           ),
         ],
       ),
-      body: Container(
-        constraints: BoxConstraints.expand(),
-        decoration: BoxDecoration(
-          gradient: LinearGradient(
-            begin: Alignment.topLeft,
-            end: Alignment.bottomRight,
-            colors: theme.brightness == Brightness.light
-                ? const [Color(0xFFEDE9FE), Color(0xFFDBEAFE), Color(0xFFFCE7F3)]
-                : const [Color(0xFF1E1B4B), Color(0xFF1E3A8A), Color(0xFF4C1D95)],
-          ),
-        ),
-        child: projectsAsync.when(
-        loading: () => const Center(child: CircularProgressIndicator()),
-        error: (error, _) => Center(child: Text('${l10n.errorGeneric}: $error')),
-        data: (projects) {
-          if (projects.isEmpty) {
-            return _EmptyState(onCreate: () => _pickKind(context, ref));
-          }
-          return RefreshIndicator(
-            onRefresh: () async {
-              ref.invalidate(projectsProvider);
-              await ref.read(projectsProvider.future);
-            },
-            child: ListView.builder(
-              physics: const AlwaysScrollableScrollPhysics(),
-              padding: EdgeInsets.fromLTRB(Spacing.md, MediaQuery.of(context).padding.top + kToolbarHeight + Spacing.sm, Spacing.md, Spacing.sm),
-              itemCount: projects.length,
-              itemBuilder: (context, index) {
-                final project = projects[index];
-                return _ProjectRow(
-                  project: project,
-                  onTap: () => onOpenProject(project),
-                  onLongPress: () => _showActions(context, ref, project),
-                );
-              },
+      body: Stack(
+        children: [
+          Container(
+            constraints: BoxConstraints.expand(),
+            decoration: BoxDecoration(
+              gradient: LinearGradient(
+                begin: Alignment.topLeft,
+                end: Alignment.bottomRight,
+                colors: theme.brightness == Brightness.light
+                    ? const [Color(0xFFEDE9FE), Color(0xFFDBEAFE), Color(0xFFFCE7F3)]
+                    : const [Color(0xFF1E1B4B), Color(0xFF1E3A8A), Color(0xFF4C1D95)],
+              ),
             ),
-          );
-        },
-      ),
+          ),
+          projectsAsync.when(
+            loading: () => const Center(child: CircularProgressIndicator()),
+            error: (error, _) => Center(child: Text('${l10n.errorGeneric}: $error')),
+            data: (projects) {
+              if (projects.isEmpty) {
+                return _EmptyState(onCreate: () => _pickKind(context, ref));
+              }
+              return RefreshIndicator(
+                onRefresh: () async {
+                  ref.invalidate(projectsProvider);
+                  await ref.read(projectsProvider.future);
+                },
+                child: ListView.builder(
+                  physics: const AlwaysScrollableScrollPhysics(),
+                  padding: EdgeInsets.fromLTRB(
+                    Spacing.md,
+                    MediaQuery.of(context).padding.top + kToolbarHeight + Spacing.sm,
+                    Spacing.md,
+                    Spacing.sm,
+                  ),
+                  itemCount: projects.length,
+                  itemBuilder: (context, index) {
+                    final project = projects[index];
+                    return _GlassProjectRow(
+                      project: project,
+                      onTap: () => onOpenProject(project),
+                      onLongPress: () => _showActions(context, ref, project),
+                    );
+                  },
+                ),
+              );
+            },
+          ),
+        ],
       ),
     );
   }
-
-  /// 新建菜单:编程 / 写作 / 逆向反编译。
   Future<void> _pickKind(BuildContext context, WidgetRef ref) async {
     final kind = await showModalBottomSheet<ProjectKind>(
       context: context,
@@ -470,11 +477,9 @@ class _KindItem extends StatelessWidget {
   }
 }
 
-/// 项目行(对齐上游 AppItem 布局)。
-///
-/// 「应用逆向」项目展示目标应用信息:应用图标 + 应用名 + 包名 + 版本(参考样式)。
-class _ProjectRow extends StatelessWidget {
-  const _ProjectRow({
+/// 项目行(液态柔光玻璃卡片)。
+class _GlassProjectRow extends StatelessWidget {
+  const _GlassProjectRow({
     required this.project,
     required this.onTap,
     required this.onLongPress,
@@ -488,76 +493,176 @@ class _ProjectRow extends StatelessWidget {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     final l10n = AppLocalizations.of(context);
+    final semantic = context.semantic;
+    final bright = theme.brightness == Brightness.light;
     final isReverse = project.kind == ProjectKind.reverse;
     final writing = project.mode == AgentMode.write;
-    return ListTile(
-      contentPadding: const EdgeInsets.symmetric(vertical: 4),
-      leading: isReverse
-          ? _ProjectAppIcon(bytes: project.appIcon, label: project.appName ?? project.name)
-          : Container(
-              width: 48,
-              height: 48,
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(12),
-                color: theme.colorScheme.surfaceContainerHighest,
-              ),
-              child: Icon(
-                writing ? Iconfont.pencil : Iconfont.code,
-                size: 24,
-                color: theme.colorScheme.primary,
-              ),
+    return ClipRRect(
+      borderRadius: BorderRadius.circular(Radii.xl),
+      child: BackdropFilter(
+        filter: ImageFilter.blur(sigmaX: 20, sigmaY: 20),
+        child: DecoratedBox(
+          decoration: BoxDecoration(
+            gradient: LinearGradient(
+              colors: [
+                Colors.white.withValues(alpha: bright ? 0.5 : 0.14),
+                Colors.white.withValues(alpha: bright ? 0.2 : 0.05),
+              ],
             ),
-      title: Text(
-        project.name.trim().isEmpty ? l10n.projectUntitled : project.name,
-        style: const TextStyle(fontSize: 14, fontWeight: FontWeight.bold),
-        maxLines: 1,
-        overflow: TextOverflow.ellipsis,
+            borderRadius: BorderRadius.circular(Radii.xl),
+            border: Border.all(
+              width: 1,
+              color: Colors.white.withValues(alpha: bright ? 0.55 : 0.2),
+            ),
+            boxShadow: [
+              BoxShadow(
+                color: Brand.violet.withValues(alpha: bright ? 0.06 : 0.14),
+                blurRadius: 16,
+                offset: const Offset(0, 8),
+              ),
+            ],
+          ),
+          child: ListTile(
+            contentPadding: const EdgeInsets.symmetric(vertical: 6, horizontal: 14),
+            leading: isReverse
+                ? _ProjectAppIcon(bytes: project.appIcon, label: project.appName ?? project.name)
+                : Container(
+                    width: 48,
+                    height: 48,
+                    decoration: BoxDecoration(
+                      gradient: LinearGradient(
+                        colors: [
+                          theme.colorScheme.primary.withValues(alpha: 0.22),
+                          theme.colorScheme.primary.withValues(alpha: 0.06),
+                        ],
+                      ),
+                      borderRadius: BorderRadius.circular(12),
+                      border: Border.all(
+                        width: 0.5,
+                        color: Colors.white.withValues(alpha: 0.45),
+                      ),
+                    ),
+                    child: Icon(
+                      writing ? Iconfont.pencil : Iconfont.code,
+                      size: 24,
+                      color: theme.colorScheme.primary,
+                    ),
+                  ),
+            title: Text(
+              project.name.trim().isEmpty ? l10n.projectUntitled : project.name,
+              style: const TextStyle(fontSize: 14, fontWeight: FontWeight.bold),
+              maxLines: 1,
+              overflow: TextOverflow.ellipsis,
+            ),
+            subtitle: isReverse
+                ? Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        project.appPackage ?? '',
+                        style: TextStyle(
+                          fontSize: 12,
+                          color: theme.colorScheme.onSurface.withValues(alpha: 0.55),
+                        ),
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
+                      ),
+                      Text(
+                        project.appVersionLabel,
+                        style: TextStyle(
+                          fontSize: 11,
+                          color: theme.colorScheme.onSurface.withValues(alpha: 0.4),
+                        ),
+                      ),
+                    ],
+                  )
+                : Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        writing ? l10n.projectKindWriting : l10n.projectKindCoding,
+                        style: TextStyle(
+                          fontSize: 11,
+                          color: theme.colorScheme.onSurface.withValues(alpha: 0.6),
+                        ),
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
+                      ),
+                      Text(
+                        formatDate(project.updatedAt),
+                        style: TextStyle(
+                          fontSize: 10,
+                          color: theme.colorScheme.onSurface.withValues(alpha: 0.4),
+                        ),
+                      ),
+                    ],
+                  ),
+            onTap: onTap,
+            onLongPress: onLongPress,
+          ),
+        ),
       ),
-      subtitle: isReverse
-          ? Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  project.appPackage ?? '',
-                  style: TextStyle(
-                    fontSize: 12,
-                    color: theme.colorScheme.onSurface.withValues(alpha: 0.55),
-                  ),
-                  maxLines: 1,
-                  overflow: TextOverflow.ellipsis,
-                ),
-                Text(
-                  project.appVersionLabel,
-                  style: TextStyle(
-                    fontSize: 11,
-                    color: theme.colorScheme.onSurface.withValues(alpha: 0.4),
-                  ),
-                ),
-              ],
-            )
-          : Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  writing ? l10n.projectKindWriting : l10n.projectKindCoding,
-                  style: TextStyle(
-                    fontSize: 11,
-                    color: theme.colorScheme.onSurface.withValues(alpha: 0.6),
-                  ),
-                  maxLines: 1,
-                  overflow: TextOverflow.ellipsis,
-                ),
-                Text(
-                  formatDate(project.updatedAt),
-                  style: TextStyle(
-                    fontSize: 10,
-                    color: theme.colorScheme.onSurface.withValues(alpha: 0.4),
-                  ),
+    );
+  }
+}
+
+/// 空态(液态柔光玻璃卡片)。
+class _EmptyState extends StatelessWidget {
+  const _EmptyState({required this.onCreate});
+
+  final VoidCallback onCreate;
+
+  @override
+  Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context);
+    final theme = Theme.of(context);
+    final bright = theme.brightness == Brightness.light;
+    return Center(
+      child: ClipRRect(
+        borderRadius: BorderRadius.circular(Radii.xl),
+        child: BackdropFilter(
+          filter: ImageFilter.blur(sigmaX: 20, sigmaY: 20),
+          child: DecoratedBox(
+            decoration: BoxDecoration(
+              gradient: LinearGradient(
+                colors: [
+                  Colors.white.withValues(alpha: bright ? 0.45 : 0.12),
+                  Colors.white.withValues(alpha: bright ? 0.16 : 0.04),
+                ],
+              ),
+              borderRadius: BorderRadius.circular(Radii.xl),
+              border: Border.all(
+                width: 1,
+                color: Colors.white.withValues(alpha: bright ? 0.5 : 0.16),
+              ),
+              boxShadow: [
+                BoxShadow(
+                  color: Brand.violet.withValues(alpha: bright ? 0.06 : 0.14),
+                  blurRadius: 20,
+                  offset: const Offset(0, 10),
                 ),
               ],
             ),
-      onTap: onTap,
-      onLongPress: onLongPress,
+            child: Padding(
+              padding: const EdgeInsets.all(Spacing.xl),
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Icon(Iconfont.folderOpen, size: 48, color: context.semantic.subtleText),
+                  const SizedBox(height: 10),
+                  Text(
+                    l10n.projectListEmpty,
+                    style: TextStyle(fontSize: 14, color: context.semantic.subtleText),
+                  ),
+                  const SizedBox(height: Spacing.md),
+                  FilledButton.tonal(onPressed: onCreate, child: Text(l10n.projectNew)),
+                ],
+              ),
+            ),
+          ),
+        ),
+      ),
     );
   }
 }
