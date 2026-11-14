@@ -63,7 +63,7 @@ class _CodespacesPageState extends ConsumerState<CodespacesPage> {
           IconButton(
             onPressed: () => context.push('/credentials'),
             tooltip: l10n.codespacesManageCredentials,
-            icon: const Icon(LucideIcons.keyRound),
+            icon: const Icon(Icons.keyboard),
           ),
           if (state.token.isNotEmpty)
             IconButton(
@@ -689,7 +689,7 @@ class _CodespaceRow extends StatelessWidget {
           children: [
             if (codespace.isAvailable)
               ListTile(
-                leading: Icon(active ? LucideIcons.unplug : LucideIcons.plug),
+                leading: Icon(active ? Icons.power_off : Icons.power),
                 title: Text(active ? l10n.codespacesDisconnect : l10n.codespacesConnect),
                 onTap: () {
                   Navigator.of(sheetContext).pop();
@@ -736,7 +736,7 @@ class _CodespaceRow extends StatelessWidget {
             ),
             if (codespace.isAvailable)
               ListTile(
-                leading: const Icon(Iconfont.refreshCcw),
+                leading: const Icon(Icons.refresh),
                 title: const Text('重建环境'),
                 onTap: () {
                   Navigator.of(sheetContext).pop();
@@ -819,7 +819,7 @@ class _EmptyCodespaces extends StatelessWidget {
               color: theme.colorScheme.primary.withValues(alpha: 0.12),
               borderRadius: BorderRadius.circular(Radii.mdLarge),
             ),
-            child: Icon(Iconfont.cloud, size: 26, color: theme.colorScheme.primary),
+            child: Icon(Icons.cloud, size: 26, color: theme.colorScheme.primary),
           ),
           const SizedBox(height: Spacing.md),
           Text(
