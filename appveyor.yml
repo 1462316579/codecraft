@@ -1,0 +1,22 @@
+version: 1.0.{build}
+image: Visual Studio 2022
+clone_depth: 1
+
+init:
+  - git config --global core.autocrlf input
+
+environment:
+  FLUTTER_HOME: C:\flutter
+  PATH: C:\flutter\bin;C:\Program Files\Java\jdk-17\bin;%PATH%
+
+install:
+  - git clone https://github.com/flutter/flutter.git -b stable --depth 1 %FLUTTER_HOME%
+  - %FLUTTER_HOME%\bin\flutter --version
+
+build_script:
+  - flutter pub get
+  - flutter doctor --android-licenses
+  - flutter build apk --debug
+
+artifacts:
+  - path: build\app\outputs\flutter-apk\app-debug.apk
