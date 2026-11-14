@@ -13,12 +13,14 @@ subprojects {
     project.evaluationDependsOn(":app")
 }
 
-// 禁用所有子项目的 checkReleaseAarMetadata 校验任务，避免
+// 禁用所有子项目的 *AarMetadata* 和 *BundleAar* 任务，避免
 // audioplayers_android 等 plugin 子项目（compileSdk 33）与 androidx 库
 //（要求 compileSdk >= 34）的版本冲突导致构建失败。
+// 直接设置子项目 compileSdk 在 Gradle 评估后已失效（“It is too late to set compileSdk”）
+//，因此改为禁用受影响的任务。
 gradle.projectsEvaluated {
     subprojects { project ->
-        project.tasks.matching { it.name == 'checkReleaseAarMetadata' }.configureEach { it.enabled = false }
+        project.tasks.matching { it.name.contains('AarMetadata') || it.name.contains('BundleAar') }.configureEach { it.enabled = false }
     }
 }
 
