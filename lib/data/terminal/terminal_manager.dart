@@ -32,6 +32,7 @@ class TerminalTab {
 }
 
 /// 终端标签状态
+class TerminalTabsState {
   final List<TerminalTab> tabs;
   final String? activeTabId;
   final bool preparing;
@@ -144,10 +145,10 @@ class TerminalTabsNotifier extends Notifier<TerminalTabsState> {
           state = state.copyWith();
         }
       },
-      onCopyTextToClipboard: (text) {
+      copyCallback: (text) {
         Clipboard.setData(ClipboardData(text: text));
       },
-      onPasteTextFromClipboard: () {
+      pasteCallback: () {
         final clipboard = Clipboard.getData(Clipboard.kTextPlain);
         if (clipboard != null && clipboard.text != null) {
           pty.write(Uint8List.fromList(utf8.encode(clipboard.text!)));
@@ -284,14 +285,14 @@ class _MirrorOutput implements TerminalOutput {
 class _PtyOutput implements TerminalOutput {
   final String tabId;
   final void Function(String oldTitle, String newTitle)? onTitleChanged;
-  final void Function(String text)? onCopyTextToClipboard;
-  final VoidCallback? onPasteTextFromClipboard;
+  final void Function(String text)? copyCallback;
+  final VoidCallback? pasteCallback;
 
   _PtyOutput({
     required this.tabId,
     this.onTitleChanged,
-    this.onCopyTextToClipboard,
-    this.onPasteTextFromClipboard,
+    this.copyCallback,
+    this.pasteCallback,
   });
 
   @override
@@ -304,12 +305,12 @@ class _PtyOutput implements TerminalOutput {
 
   @override
   void onCopyTextToClipboard(String text) {
-    onCopyTextToClipboard?.call(text);
+    copyCallback?.call(text);
   }
 
   @override
   void onPasteTextFromClipboard() {
-    onPasteTextFromClipboard?.call();
+    pasteCallback?.call();
   }
 
   @override

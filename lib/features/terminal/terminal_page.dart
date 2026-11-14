@@ -278,7 +278,7 @@ class _TerminalViewBodyState extends ConsumerState<_TerminalViewBody> {
       onPasteFromClipboard: () async {
         final clipboard = await Clipboard.getData(Clipboard.kTextPlain);
         if (clipboard?.text != null) {
-          tab.controller.writeString(clipboard.text!);
+          widget.controller.writeString(clipboard.text!);
         }
       },
     );
