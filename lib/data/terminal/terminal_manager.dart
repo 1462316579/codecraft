@@ -139,7 +139,10 @@ class TerminalTabsNotifier extends Notifier<TerminalTabsState> {
     final emulator = TerminalEmulator(buffer, _PtyOutput(
       tabId: tabId,
       onTitleChanged: (oldTitle, newTitle) {
-        final tab = state.tabs.firstWhereOrNull((t) => t.id == tabId);
+        final tab = state.tabs.firstWhere(
+          (t) => t.id == tabId,
+          orElse: () => throw StateError('tab not found'),
+        );
         if (tab != null && tab.title != newTitle && newTitle.isNotEmpty) {
           tab.title = newTitle;
           state = state.copyWith();
@@ -149,10 +152,11 @@ class TerminalTabsNotifier extends Notifier<TerminalTabsState> {
         Clipboard.setData(ClipboardData(text: text));
       },
       pasteCallback: () {
-        final clipboard = Clipboard.getData(Clipboard.kTextPlain);
-        if (clipboard != null && clipboard.text != null) {
-          pty.write(Uint8List.fromList(utf8.encode(clipboard.text!)));
-        }
+        Clipboard.getData(Clipboard.kTextPlain).then((clipboard) {
+          if (clipboard != null && clipboard.text != null) {
+            pty.write(Uint8List.fromList(utf8.encode(clipboard.text!)));
+          }
+        });
       },
     ));
     final controller = TerminalController(
