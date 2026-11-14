@@ -5,10 +5,10 @@ import 'dart:ui' as ui;
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:lucide_icons/lucide_icons.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 import 'package:webview_flutter_android/webview_flutter_android.dart';
 
+import '../../core/icons/iconfont.dart';
 import '../../core/theme/app_theme.dart';
 import '../../core/theme/semantic_colors.dart';
 import '../../core/theme/tokens.dart';
@@ -148,7 +148,7 @@ class _BrowserPageState extends ConsumerState<BrowserPage> {
                         IconButton(
                           onPressed: () => manager.reload(),
                           icon: Icon(
-                            LucideIcons.refreshCw,
+                            Iconfont.refreshCw,
                             color: Theme.of(context).colorScheme.onErrorContainer,
                           ),
                         ),
@@ -168,7 +168,7 @@ class _BrowserPageState extends ConsumerState<BrowserPage> {
                     mainAxisSize: MainAxisSize.min,
                     children: [
                       Icon(
-                        LucideIcons.globe,
+                        Iconfont.globe,
                         size: 56,
                         color: Theme.of(context).colorScheme.primary.withValues(alpha: 0.45),
                       ),
@@ -236,7 +236,7 @@ class _BrowserPageState extends ConsumerState<BrowserPage> {
                             Navigator.of(sheetContext).pop();
                           },
                           icon: Icon(
-                            LucideIcons.plus,
+                            Iconfont.plus,
                             color: Theme.of(sheetContext).colorScheme.primary,
                           ),
                           tooltip: l10n.browserNewTab,
@@ -293,7 +293,7 @@ class _BrowserPageState extends ConsumerState<BrowserPage> {
         child: Row(
           children: [
             Icon(
-              LucideIcons.globe,
+              Iconfont.globe,
               size: 18,
               color: selected ? theme.colorScheme.primary : theme.colorScheme.onSurfaceVariant,
             ),
@@ -326,7 +326,7 @@ class _BrowserPageState extends ConsumerState<BrowserPage> {
               onPressed: () => manager.closeTab(tab.id),
               tooltip: l10n.browserCloseTab,
               icon: Icon(
-                LucideIcons.x,
+                Iconfont.close,
                 size: 16,
                 color: theme.colorScheme.onSurfaceVariant,
               ),
@@ -390,7 +390,7 @@ class _BrowserMenuSheetState extends State<_BrowserMenuSheet> {
                           constraints: const BoxConstraints.tightFor(width: 32, height: 32),
                           padding: EdgeInsets.zero,
                           icon: Icon(
-                            LucideIcons.arrowLeft,
+                            Iconfont.arrowLeft,
                             size: 18,
                             color: theme.colorScheme.onSurface,
                           ),
@@ -409,7 +409,7 @@ class _BrowserMenuSheetState extends State<_BrowserMenuSheet> {
                   SettingsGroup(
                     children: [
                       SettingsRow(
-                        icon: state.nightMode ? LucideIcons.moon : LucideIcons.sun,
+                        icon: state.nightMode ? Iconfont.night : Iconfont.day,
                         title: l10n.browserNightModeTitle,
                         trailing: Switch(
                           value: state.nightMode,
@@ -418,7 +418,7 @@ class _BrowserMenuSheetState extends State<_BrowserMenuSheet> {
                       ),
                       const SettingsDivider(),
                       SettingsRow(
-                        icon: LucideIcons.code,
+                        icon: Iconfont.code,
                         title: l10n.browserDevtoolsTitle,
                         trailing: Switch(
                           value: state.devToolsOpen,
@@ -427,7 +427,7 @@ class _BrowserMenuSheetState extends State<_BrowserMenuSheet> {
                       ),
                       const SettingsDivider(),
                       SettingsRow(
-                        icon: LucideIcons.globe,
+                        icon: Iconfont.globe,
                         title: l10n.browserUaSection,
                         trailing: Text(
                           _uaTitle(l10n, state.userAgentPreset),
@@ -472,13 +472,13 @@ class _BrowserMenuSheetState extends State<_BrowserMenuSheet> {
     final theme = Theme.of(context);
     final selected = state.userAgentPreset == preset;
     final icon = switch (preset) {
-      BrowserUserAgentPreset.defaultValue => LucideIcons.globe,
-      BrowserUserAgentPreset.androidPhone => LucideIcons.smartphone,
-      BrowserUserAgentPreset.androidTablet => LucideIcons.tablet,
-      BrowserUserAgentPreset.desktopPc => LucideIcons.monitor,
-      BrowserUserAgentPreset.iphone => LucideIcons.smartphone,
-      BrowserUserAgentPreset.ipad => LucideIcons.tablet,
-      BrowserUserAgentPreset.custom => LucideIcons.sliders,
+      BrowserUserAgentPreset.defaultValue => Iconfont.globe,
+      BrowserUserAgentPreset.androidPhone => Iconfont.phone,
+      BrowserUserAgentPreset.androidTablet => Iconfont.tablet,
+      BrowserUserAgentPreset.desktopPc => Iconfont.desktop,
+      BrowserUserAgentPreset.iphone => Iconfont.phone,
+      BrowserUserAgentPreset.ipad => Iconfont.tablet,
+      BrowserUserAgentPreset.custom => Iconfont.sliders,
     };
     final subtitle = preset == BrowserUserAgentPreset.custom && state.customUserAgent.isNotEmpty
         ? state.customUserAgent
@@ -525,7 +525,7 @@ class _BrowserMenuSheetState extends State<_BrowserMenuSheet> {
               ),
             ),
             if (selected)
-              Icon(LucideIcons.check, size: 18, color: theme.colorScheme.primary),
+              Icon(Iconfont.check, size: 18, color: theme.colorScheme.primary),
           ],
         ),
       ),
@@ -707,7 +707,7 @@ class _BrowserTopBar extends StatelessWidget {
                       tooltip: editing
                           ? l10n.cancel
                           : MaterialLocalizations.of(context).backButtonTooltip,
-                      icon: Icon(editing || embedded ? LucideIcons.x : LucideIcons.arrowLeft),
+                      icon: Icon(editing || embedded ? Iconfont.close : Iconfont.arrowLeft),
                     ),
                     Expanded(
                       child: Padding(
@@ -722,7 +722,7 @@ class _BrowserTopBar extends StatelessWidget {
                           child: editing
                               ? Row(
                                   children: [
-                                    Icon(LucideIcons.globe,
+                                    Icon(Iconfont.globe,
                                         size: 15, color: theme.colorScheme.primary),
                                     const SizedBox(width: Spacing.xs),
                                     Expanded(
@@ -755,7 +755,7 @@ class _BrowserTopBar extends StatelessWidget {
                                   onTap: () => onEditingChange(true),
                                   child: Row(
                                     children: [
-                                      Icon(LucideIcons.globe,
+                                      Icon(Iconfont.globe,
                                           size: 15,
                                           color: theme.colorScheme.onSurfaceVariant),
                                       const SizedBox(width: Spacing.xs),
@@ -792,7 +792,7 @@ class _BrowserTopBar extends StatelessWidget {
                                   color: theme.colorScheme.primary,
                                 ),
                               )
-                            : const Icon(LucideIcons.refreshCw, size: 18),
+                            : const Icon(Iconfont.refreshCw, size: 18),
                       ),
                     ),
                   ],
@@ -858,17 +858,17 @@ class _BrowserBottomBar extends StatelessWidget {
                 IconButton(
                   onPressed: canGoBack ? onGoBack : null,
                   tooltip: l10n.browserBack,
-                  icon: const Icon(LucideIcons.chevronLeft, size: 24),
+                  icon: const Icon(Iconfont.chevronLeft, size: 24),
                 ),
                 IconButton(
                   onPressed: canGoForward ? onGoForward : null,
                   tooltip: l10n.browserForward,
-                  icon: const Icon(LucideIcons.chevronRight, size: 24),
+                  icon: const Icon(Iconfont.chevronRight, size: 24),
                 ),
                 IconButton(
                   onPressed: onNewTab,
                   tooltip: l10n.browserNewTab,
-                  icon: Icon(LucideIcons.plus, size: 24, color: theme.colorScheme.primary),
+                  icon: Icon(Iconfont.plus, size: 24, color: theme.colorScheme.primary),
                 ),
                   InkWell(
                     onTap: onOpenTabs,
@@ -897,7 +897,7 @@ class _BrowserBottomBar extends StatelessWidget {
                   onPressed: onOpenMenu,
                   tooltip: l10n.browserMenu,
                   icon: Icon(
-                    LucideIcons.menu,
+                    Iconfont.menu,
                     size: 23,
                     color: hasActiveSettings
                         ? theme.colorScheme.primary

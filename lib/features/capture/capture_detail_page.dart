@@ -3,8 +3,8 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:lucide_icons/lucide_icons.dart';
 
+import '../../core/icons/iconfont.dart';
 import '../../core/theme/semantic_colors.dart';
 import '../../core/theme/tokens.dart';
 import '../../data/capture/capture_manager.dart';
@@ -37,7 +37,7 @@ class CaptureDetailPage extends ConsumerWidget {
           titleSpacing: Spacing.md,
           actions: [
             IconButton(
-              icon: const Icon(LucideIcons.copy, size: 18),
+              icon: const Icon(Iconfont.copy, size: 18),
               tooltip: l10n.captureCopyUrl,
               onPressed: () async {
                 await Clipboard.setData(ClipboardData(text: flow.url));
@@ -291,7 +291,7 @@ class _MessageSectionState extends State<_MessageSection> {
                 ),
                 const SizedBox(width: 2),
                 Icon(
-                  _headersExpanded ? LucideIcons.chevronDown : LucideIcons.chevronRight,
+                  _headersExpanded ? Iconfont.chevronDown : Iconfont.chevronRight,
                   size: 14,
                   color: context.semantic.subtleText,
                 ),
@@ -314,7 +314,7 @@ class _MessageSectionState extends State<_MessageSection> {
                         );
                       }
                     },
-                    icon: const Icon(LucideIcons.copy),
+                    icon: const Icon(Iconfont.copy),
                   ),
               ],
             ),

@@ -88,5 +88,5 @@ bool codespacesErrorSuggestsGhOrConnection(String? error) {
       lower.contains('ssh') ||
       lower.contains('tunnel') ||
       lower.contains('隧道') ||
-      lower.contains('连接') && lower.contains('codespace');
+      (lower.contains('连接') && lower.contains('codespace'));
 }

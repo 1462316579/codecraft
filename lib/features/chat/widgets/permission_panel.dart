@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:lucide_icons/lucide_icons.dart';
 
+import '../../../core/icons/iconfont.dart';
 import '../../../core/theme/semantic_colors.dart';
 import '../../../core/theme/tokens.dart';
 import '../../../data/permissions.dart';
@@ -65,7 +65,7 @@ class _PermissionPanelState extends State<PermissionPanel> {
                     shape: BoxShape.circle,
                   ),
                   alignment: Alignment.center,
-                  child: Icon(LucideIcons.shield, size: 15, color: theme.colorScheme.primary),
+                  child: Icon(Iconfont.shield, size: 15, color: theme.colorScheme.primary),
                 ),
                 const SizedBox(width: Spacing.sm),
                 Expanded(

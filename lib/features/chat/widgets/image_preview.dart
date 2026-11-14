@@ -1,8 +1,8 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
-import 'package:lucide_icons/lucide_icons.dart';
 
+import '../../../core/icons/iconfont.dart';
 import '../../../core/theme/tokens.dart';
 import '../../../l10n/app_localizations.dart';
 
@@ -50,7 +50,7 @@ class _ImagePreviewDialog extends StatelessWidget {
                   child: Column(
                     mainAxisSize: MainAxisSize.min,
                     children: [
-                      Icon(LucideIcons.image, size: 40, color: Colors.white.withValues(alpha: 0.6)),
+                      Icon(Iconfont.image, size: 40, color: Colors.white.withValues(alpha: 0.6)),
                       const SizedBox(height: Spacing.sm),
                       Text(
                         l10n.imageLoadFailed,
@@ -74,7 +74,7 @@ class _ImagePreviewDialog extends StatelessWidget {
               child: IconButton(
                 onPressed: () => Navigator.pop(context),
                 tooltip: l10n.close,
-                icon: const Icon(LucideIcons.x, color: Colors.white),
+                icon: const Icon(Iconfont.x, color: Colors.white),
               ),
             ),
           ),

@@ -261,6 +261,9 @@ class ContainerGit {
 
   /// 提交列表(对齐上游 log + 图接口的字段):`%H %h %an %ar %s %P %b`,
   /// `%ar` 是 git 的英文相对时间;`%P` 用于判定合并提交,`%b` 供详情弹层展示(只取首行)。
+  ///
+  /// 注意：`%b`(提交正文)可能包含多行，按 `\n` 分割后会把 body 的多行拆开。
+  /// 这里按 40 位 SHA-1 哈希作为提交边界重新组合，避免多行 body 被误拆导致提交丢失。
   Future<List<GitCommit>> log(String path, {int skip = 0, int limit = 100}) async {
     final args = <String>[
       'log',
@@ -271,20 +274,36 @@ class ContainerGit {
     final result = await _runner.run(path, args);
     final raw = result.output;
     if (raw.trim().isEmpty || raw.startsWith('fatal:')) return const [];
+    final sha1Boundary = RegExp(r'^[0-9a-f]{40}\x1f');
     final commits = <GitCommit>[];
-    for (final line in raw.split('\n')) {
-      final parts = (line.endsWith('\r')
-              ? line.substring(0, line.length - 1)
-              : line)
-          .split('\u001f');
-      if (parts.length < 6) continue;
+    final lines = raw.split('\n');
+    var i = 0;
+    while (i < lines.length) {
+      final line = lines[i].endsWith('\r') ? lines[i].substring(0, lines[i].length - 1) : lines[i];
+      if (!sha1Boundary.hasMatch(line)) {
+        i++;
+        continue;
+      }
+      final parts = line.split('\u001f');
+      if (parts.length < 6) {
+        i++;
+        continue;
+      }
+      var body = parts.length > 6 ? parts[6] : '';
+      i++;
+      while (i < lines.length) {
+        final nextLine = lines[i].endsWith('\r') ? lines[i].substring(0, lines[i].length - 1) : lines[i];
+        if (sha1Boundary.hasMatch(nextLine)) break;
+        body = body.isEmpty ? nextLine : '$body\n$nextLine';
+        i++;
+      }
       commits.add(GitCommit(
         hash: parts[0],
         author: parts[2],
         date: parts[3],
         message: parts[4],
         parents: parts[5].split(' ').where((hash) => hash.trim().isNotEmpty).toList(),
-        body: parts.length > 6 ? parts[6].trim() : '',
+        body: body.trim(),
       ));
     }
     return commits;

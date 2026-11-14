@@ -3,11 +3,11 @@ import 'dart:ui';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:lucide_icons/lucide_icons.dart';
 
 import '../../../agent/models/agent_attachment.dart';
 import '../../../agent/models/agent_ui_state.dart';
 import '../../../agent/models/chat_session.dart';
+import '../../../core/icons/iconfont.dart';
 import '../../../core/theme/semantic_colors.dart';
 import '../../../core/theme/tokens.dart';
 import '../../../data/attachment_store.dart';
@@ -97,7 +97,7 @@ class ChatComposer extends ConsumerStatefulWidget {
     required this.onUploadFile,
     required this.onAttachImage,
     required this.onTakePhoto,
-    this.uploadingCount = 0,
+    this.uploadingCount,
     this.onHeightChanged,
   });
 
@@ -114,7 +114,7 @@ class ChatComposer extends ConsumerStatefulWidget {
   final VoidCallback onTakePhoto;
 
   /// 正在上传的附件数(>0 时输入框上方挂上传提示条)。
-  final int uploadingCount;
+  final int uploadingCount = 0;
 
   /// 整栏高度变化回调:欢迎页用它把文案向上抬(对齐上游 inputBarReservePx)。
   final ValueChanged<double>? onHeightChanged;
@@ -352,12 +352,12 @@ class _ChatComposerState extends ConsumerState<ChatComposer> {
                           mainAxisAlignment: MainAxisAlignment.start,
                           children: [
                             _IconAction(
-                              icon: LucideIcons.atSign,
+                              icon: Iconfont.atSign,
                               tooltip: l10n.chatMentionSkill,
                               onTap: () => _openMention('skill'),
                             ),
                             _IconAction(
-                              icon: LucideIcons.filePlus,
+                              icon: Iconfont.filePlus,
                               tooltip: l10n.chatPickFile,
                               onTap: () => _openMention('file'),
                             ),
@@ -370,7 +370,7 @@ class _ChatComposerState extends ConsumerState<ChatComposer> {
                             ),
                             // 思考强度:紧跟工作区按钮之后(对齐上游顺序),固定可见、不参与滚动。
                             _IconAction(
-                              icon: LucideIcons.zap,
+                              icon: Iconfont.zap,
                               tooltip: l10n.reasoningEffort,
                               enabled: !busy,
                               onTap: () => _pickEffort(
@@ -383,7 +383,7 @@ class _ChatComposerState extends ConsumerState<ChatComposer> {
                         ),
                       ),
                       _IconAction(
-                        icon: LucideIcons.plus,
+                        icon: Iconfont.plus,
                         tooltip: l10n.chatAddAttachment,
                         enabled: !busy,
                         onTap: () => _pickAttachment(context),
@@ -491,7 +491,7 @@ class _ChatComposerState extends ConsumerState<ChatComposer> {
                 ),
               ),
               _SheetItem(
-                icon: LucideIcons.fileText,
+                icon: Iconfont.fileText,
                 title: l10n.chatUploadFile,
                 onTap: () {
                   Navigator.pop(sheetContext);
@@ -499,7 +499,7 @@ class _ChatComposerState extends ConsumerState<ChatComposer> {
                 },
               ),
               _SheetItem(
-                icon: LucideIcons.image,
+                icon: Iconfont.image,
                 title: l10n.chatUploadImage,
                 onTap: () {
                   Navigator.pop(sheetContext);
@@ -507,7 +507,7 @@ class _ChatComposerState extends ConsumerState<ChatComposer> {
                 },
               ),
               _SheetItem(
-                icon: LucideIcons.camera,
+                icon: Iconfont.camera,
                 title: l10n.chatTakePhoto,
                 onTap: () {
                   Navigator.pop(sheetContext);
@@ -743,7 +743,7 @@ class _SendButton extends StatelessWidget {
               decoration: BoxDecoration(color: buttonColor, shape: BoxShape.circle),
               alignment: Alignment.center,
               child: Icon(
-                showStop ? Icons.square : LucideIcons.arrowUp,
+                showStop ? Icons.square : Iconfont.arrowUp,
                 size: 18,
                 color: iconTint,
                 semanticLabel: showStop ? l10n.stop : l10n.send,
@@ -796,7 +796,7 @@ class _PendingAttachmentTile extends StatelessWidget {
                   iconSize: 14,
                   color: theme.colorScheme.onSurface,
                   tooltip: l10n.removeAttachment,
-                  icon: const Icon(LucideIcons.x),
+                  icon: const Icon(Iconfont.x),
                 ),
               ),
             ),
@@ -818,7 +818,7 @@ class _PendingAttachmentTile extends StatelessWidget {
         child: Image.file(
           File(attachment.localPath),
           fit: BoxFit.cover,
-          errorBuilder: (context, error, stack) => _placeholder(context, LucideIcons.image),
+          errorBuilder: (context, error, stack) => _placeholder(context, Iconfont.image),
         ),
       ),
     );
@@ -831,7 +831,7 @@ class _PendingAttachmentTile extends StatelessWidget {
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          Icon(LucideIcons.fileText, size: 22, color: theme.colorScheme.primary),
+          Icon(Iconfont.fileText, size: 22, color: theme.colorScheme.primary),
           const SizedBox(height: 4),
           Text(
             attachment.fileName,
@@ -956,7 +956,7 @@ class _EffortRow extends StatelessWidget {
         padding: const EdgeInsets.symmetric(horizontal: Spacing.lg, vertical: Spacing.md),
         child: Row(
           children: [
-            Icon(LucideIcons.zap, size: 20, color: selected ? primary : subtle),
+            Icon(Iconfont.zap, size: 20, color: selected ? primary : subtle),
             const SizedBox(width: Spacing.md),
             Expanded(
               child: Text(
@@ -1050,7 +1050,7 @@ class _MentionPanel extends ConsumerWidget {
                       padding: const EdgeInsets.all(Spacing.lg),
                       child: Row(
                         children: [
-                          Icon(LucideIcons.info, size: 16, color: theme.colorScheme.onSurfaceVariant),
+                          Icon(Iconfont.info, size: 16, color: theme.colorScheme.onSurfaceVariant),
                           const SizedBox(width: Spacing.sm),
                           Expanded(
                             child: Text(
@@ -1090,7 +1090,7 @@ class _MentionPanel extends ConsumerWidget {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Icon(
-                                kind == 'file' ? LucideIcons.hash : LucideIcons.atSign,
+                                kind == 'file' ? Iconfont.hash : Iconfont.atSign,
                                 size: 18,
                                 color: theme.colorScheme.primary,
                               ),

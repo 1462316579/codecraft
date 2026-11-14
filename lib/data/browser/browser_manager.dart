@@ -793,6 +793,7 @@ $_selectorHelper
       for (final tab in _tabs) {
         if (tab.id == tabId) return tab;
       }
+      return null;
     }
     return _state.activeTab;
   }

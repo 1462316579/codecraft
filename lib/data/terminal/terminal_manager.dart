@@ -2,8 +2,8 @@ import 'dart:convert';
 import 'dart:async';
 import 'dart:typed_data';
 
-import 'package:kyroon_pty/kyroon_pty.dart';
-import 'package:flutter/services.dart';
+import 'package:flutter/material.dart' hide TextStyle;
+import 'package:flutter/painting.dart' as painting;
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../core/terminal/terminal.dart';

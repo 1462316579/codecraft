@@ -9,12 +9,33 @@ class GitGraphBuilder {
   ///
   /// 字段用 0x1f 分隔:提交信息/作者名可能含 `|`,用 `|` 分隔会把 parents 解析成假父,
   /// 提交被误判为 merge 并产生幽灵泳道。
+  ///
+  /// 注意：`%b`(提交正文)可能包含多行，按 `\n` 分割后会把 body 的多行拆开。
+  /// 这里按 40 位 SHA-1 哈希作为提交边界重新组合，避免多行 body 被误拆导致提交丢失。
   static List<GraphCommit> parseGraphCommits(String raw) {
     final commits = <GraphCommit>[];
-    for (final line in raw.split('\n')) {
-      final trimmed = line.endsWith('\r') ? line.substring(0, line.length - 1) : line;
+    final sha1Boundary = RegExp(r'^[0-9a-f]{40}\x1f');
+    final lines = raw.split('\n');
+    var i = 0;
+    while (i < lines.length) {
+      final trimmed = lines[i].endsWith('\r') ? lines[i].substring(0, lines[i].length - 1) : lines[i];
+      if (!sha1Boundary.hasMatch(trimmed)) {
+        i++;
+        continue;
+      }
       final parts = trimmed.split('\u001f');
-      if (parts.length < 6) continue;
+      if (parts.length < 6) {
+        i++;
+        continue;
+      }
+      var body = parts.length > 6 ? parts[6] : '';
+      i++;
+      while (i < lines.length) {
+        final nextTrimmed = lines[i].endsWith('\r') ? lines[i].substring(0, lines[i].length - 1) : lines[i];
+        if (sha1Boundary.hasMatch(nextTrimmed)) break;
+        body = body.isEmpty ? nextTrimmed : '$body\n$nextTrimmed';
+        i++;
+      }
       commits.add(GraphCommit(
         hash: parts[0],
         shortHash: parts[1],
@@ -22,7 +43,7 @@ class GitGraphBuilder {
         date: parts[3],
         message: parts[4],
         parents: parts[5].split(' ').where((hash) => hash.isNotEmpty).toList(),
-        body: parts.length > 6 ? parts[6] : '',
+        body: body.trim(),
       ));
     }
     return commits;

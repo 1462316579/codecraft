@@ -7,7 +7,6 @@ import 'package:flutter/services.dart';
 import 'package:flutter_markdown/flutter_markdown.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
-import 'package:lucide_icons/lucide_icons.dart';
 import 'package:path/path.dart' as p;
 
 import '../../../agent/models/agent_attachment.dart';
@@ -15,6 +14,7 @@ import '../../../agent/models/agent_message.dart';
 import '../../../agent/models/project.dart';
 import '../../../agent/models/todo_item.dart';
 import '../../../app/current_project.dart';
+import '../../../core/icons/iconfont.dart';
 import '../../../core/theme/semantic_colors.dart';
 import '../../../core/theme/tokens.dart';
 import '../../../data/attachment_store.dart';
@@ -46,32 +46,32 @@ IconData toolIconFor(String? toolName) {
     case 'editfile':
     case 'writefile':
     case 'generateimage':
-      return LucideIcons.edit3;
+      return Iconfont.edit3;
     case 'readfile':
     case 'list':
     case 'sendfile':
-      return LucideIcons.fileText;
+      return Iconfont.fileText;
     case 'viewimage':
-      return LucideIcons.image;
+      return Iconfont.image;
     case 'search':
     case 'websearch':
     case 'webfetch':
-      return LucideIcons.search;
+      return Iconfont.search;
     case 'browser':
-      return LucideIcons.globe;
+      return Iconfont.globe;
     case 'bash':
     case 'terminal':
-      return LucideIcons.terminal;
+      return Iconfont.terminal;
     case 'askuserquestion':
-      return LucideIcons.helpCircle;
+      return Iconfont.helpCircle;
     case 'todo':
-      return LucideIcons.check;
+      return Iconfont.check;
     case 'task':
-      return LucideIcons.cpu;
+      return Iconfont.cpu;
     case 'memory':
-      return LucideIcons.database;
+      return Iconfont.database;
     default:
-      return LucideIcons.wrench;
+      return Iconfont.wrench;
   }
 }
 
@@ -410,7 +410,7 @@ class MessageBubble extends StatelessWidget {
       if (onRewind != null) {
         gap(_metaGap);
         children.add(_MetaAction(
-          icon: LucideIcons.rotateCcw,
+          icon: Iconfont.rotateCcw,
           tooltip: l10n.checkpointRewindTitle,
           onTap: onRewind!,
         ));
@@ -426,14 +426,14 @@ class MessageBubble extends StatelessWidget {
       final cacheRate = formatCacheHitRate(inputTokens, cachedInputTokens);
       if (cacheRate != null) {
         gap(Spacing.sm);
-        children.add(Icon(LucideIcons.database, size: 12, color: context.semantic.subtleText));
+        children.add(Icon(Iconfont.database, size: 12, color: context.semantic.subtleText));
         children.add(const SizedBox(width: 2));
         children.add(ChatMetaText(text: cacheRate));
         emitted = true;
       }
       if (durationMs != null && durationMs! > 0) {
         gap(Spacing.sm);
-        children.add(Icon(LucideIcons.clock, size: 13, color: context.semantic.subtleText));
+        children.add(Icon(Iconfont.clock, size: 13, color: context.semantic.subtleText));
         children.add(const SizedBox(width: 2));
         children.add(ChatMetaText(text: formatTaskDuration(durationMs!)));
         emitted = true;
@@ -449,7 +449,7 @@ class MessageBubble extends StatelessWidget {
     if (onMore != null && (_isUser || showActions)) {
       gap(_metaGap);
       children.add(_MetaAction(
-        icon: LucideIcons.moreHorizontal,
+        icon: Iconfont.moreHorizontal,
         tooltip: l10n.chatMoreOptions,
         onTap: onMore!,
       ));
@@ -773,10 +773,10 @@ class _AttachmentThumb extends StatelessWidget {
                   cacheWidth: thumbPixels,
                   cacheHeight: thumbPixels,
                   fit: BoxFit.cover,
-                  errorBuilder: (context, error, stack) => _fallbackIcon(context, LucideIcons.image),
+                  errorBuilder: (context, error, stack) => _fallbackIcon(context, Iconfont.image),
                 ),
               )
-            : _fallbackIcon(context, LucideIcons.fileText),
+            : _fallbackIcon(context, Iconfont.fileText),
       ),
     );
   }
@@ -835,7 +835,7 @@ class _CopyActionState extends State<_CopyAction> {
       padding: EdgeInsets.zero,
       color: context.semantic.subtleText,
       tooltip: _copied ? l10n.copied : l10n.copy,
-      icon: Icon(_copied ? Icons.check : LucideIcons.copy, size: 14),
+      icon: Icon(_copied ? Icons.check : Iconfont.copy, size: 14),
       onPressed: () {
         Clipboard.setData(ClipboardData(text: widget.text));
         setState(() => _copied = true);
@@ -986,7 +986,7 @@ class _ReasoningRowState extends State<ReasoningRow> {
             constraints: const BoxConstraints(minHeight: 28),
             child: Row(
               children: [
-                Icon(LucideIcons.atom, size: ChatStyle.rowIconSize, color: iconGray),
+                Icon(Iconfont.atom, size: ChatStyle.rowIconSize, color: iconGray),
                 const SizedBox(width: Spacing.sm),
                 Text(
                   label,

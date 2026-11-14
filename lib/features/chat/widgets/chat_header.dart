@@ -2,11 +2,11 @@ import 'dart:ui';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:lucide_icons/lucide_icons.dart';
 
 import '../../../agent/models/chat_session.dart';
 import '../../../agent/models/project.dart';
 import '../../../app/shell.dart';
+import '../../../core/icons/iconfont.dart';
 import '../../../core/theme/semantic_colors.dart';
 import '../../../core/theme/tokens.dart';
 import '../../../core/util/window_size.dart';
@@ -117,7 +117,7 @@ class ChatHeader extends ConsumerWidget {
           // Git 入口(对齐上游 chat_open_git):大屏开工作台右栏,窄屏跳整屏路由
           IconButton(
             icon: Icon(
-              LucideIcons.gitBranch,
+              Iconfont.gitBranch,
               color: ref.watch(workbenchProvider).kind == WorkbenchPaneKind.git
                   ? Theme.of(context).colorScheme.primary
                   : semantic.subtleText,
@@ -134,7 +134,7 @@ class ChatHeader extends ConsumerWidget {
           // 终端入口:大屏开工作台右栏,窄屏跳整屏路由(对齐上游 openWorkbench)
           IconButton(
             icon: Icon(
-              LucideIcons.terminal,
+              Iconfont.terminal,
               color: ref.watch(workbenchProvider).kind == WorkbenchPaneKind.terminal
                   ? Theme.of(context).colorScheme.primary
                   : semantic.subtleText,

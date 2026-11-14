@@ -3,7 +3,6 @@ import 'dart:ui';
 import 'package:flutter/widgets.dart';
 import 'package:file_selector/file_selector.dart' as file_selector;
 import 'package:flutter/material.dart';
-import 'package:lucide_icons/lucide_icons.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:image_picker/image_picker.dart';
 
@@ -14,6 +13,7 @@ import '../../agent/models/auto_model.dart';
 import '../../agent/models/chat_session.dart';
 import '../../agent/sessions_controller.dart';
 import '../../app/shell.dart';
+import '../../core/icons/iconfont.dart';
 import '../../core/util/window_size.dart';
 import '../../core/theme/semantic_colors.dart';
 import '../../core/theme/tokens.dart';
@@ -665,7 +665,7 @@ class _ModelPickerSheetState extends ConsumerState<_ModelPickerSheet> {
                         subtitle: l10n.modelAutoDesc,
                         selected: isAutoModel(widget.currentModel),
                         leading: Icon(
-                          LucideIcons.sparkles,
+                          Iconfont.sparkles,
                           size: 20,
                           color: theme.colorScheme.primary,
                         ),
@@ -822,7 +822,7 @@ class _ModelRow extends StatelessWidget {
                         iconSize: 18,
                         tooltip: l10n.providerTestModel,
                         onPressed: onTest,
-                        icon: Icon(LucideIcons.flaskConical,
+                        icon: Icon(Iconfont.flaskConical,
                             color: context.semantic.subtleText),
                       ),
               ),
@@ -912,7 +912,7 @@ class _ScrollToBottomButton extends StatelessWidget {
               width: 34,
               height: 34,
               child: Icon(
-                LucideIcons.arrowDown,
+                Iconfont.arrowDown,
                 size: 20,
                 color: theme.colorScheme.onSurface,
               ),

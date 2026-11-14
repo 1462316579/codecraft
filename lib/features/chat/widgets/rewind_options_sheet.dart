@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:lucide_icons/lucide_icons.dart';
 
 import '../../../agent/checkpoint_manager.dart';
+import '../../../core/icons/iconfont.dart';
 import '../../../core/theme/semantic_colors.dart';
 import '../../../core/theme/tokens.dart';
 import '../../../l10n/app_localizations.dart';
@@ -43,19 +43,19 @@ Future<RewindOption?> showRewindOptionsSheet(
               ],
               const SizedBox(height: Spacing.md),
               _OptionRow(
-                icon: LucideIcons.rotateCcw,
+                icon: Iconfont.rotateCcw,
                 title: l10n.checkpointRestoreCodeAndConversation,
                 description: l10n.checkpointRestoreCodeAndConversationDesc,
                 onTap: () => Navigator.pop(sheetContext, RewindOption.codeAndConversation),
               ),
               _OptionRow(
-                icon: LucideIcons.messageSquare,
+                icon: Iconfont.messageSquare,
                 title: l10n.checkpointRestoreConversation,
                 description: l10n.checkpointRestoreConversationDesc,
                 onTap: () => Navigator.pop(sheetContext, RewindOption.conversation),
               ),
               _OptionRow(
-                icon: LucideIcons.fileText,
+                icon: Iconfont.fileText,
                 title: l10n.checkpointRestoreCode,
                 description: l10n.checkpointRestoreCodeDesc,
                 onTap: () => Navigator.pop(sheetContext, RewindOption.code),

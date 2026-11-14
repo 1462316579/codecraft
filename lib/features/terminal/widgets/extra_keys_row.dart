@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:lucide_icons/lucide_icons.dart';
+
+import '../../core/icons/iconfont.dart';
 
 /// 底部附加按键行（ZeroTermux 风格）
 class ExtraKeysRow extends StatelessWidget {
@@ -47,19 +48,19 @@ class ExtraKeysRow extends StatelessWidget {
           ),
           const Spacer(),
           _KeyButton(
-            icon: LucideIcons.arrowLeft,
+            icon: Iconfont.arrowLeft,
             onPressed: () => onArrow('left'),
           ),
           _KeyButton(
-            icon: LucideIcons.arrowUp,
+            icon: Iconfont.arrowUp,
             onPressed: () => onArrow('up'),
           ),
           _KeyButton(
-            icon: LucideIcons.arrowDown,
+            icon: Iconfont.arrowDown,
             onPressed: () => onArrow('down'),
           ),
           _KeyButton(
-            icon: LucideIcons.arrowRight,
+            icon: Iconfont.arrowRight,
             onPressed: () => onArrow('right'),
           ),
         ],

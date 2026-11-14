@@ -4,7 +4,8 @@ import 'dart:typed_data';
 import 'package:flutter/material.dart' hide TextStyle;
 import 'package:flutter/painting.dart' as painting;
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:lucide_icons/lucide_icons.dart';
+
+import '../../core/icons/iconfont.dart';
 
 import '../../core/terminal/terminal.dart';
 import '../../data/terminal/terminal_manager.dart';
@@ -79,7 +80,7 @@ class _TerminalPageState extends ConsumerState<TerminalPage> {
               child: Row(
                 children: [
                   IconButton(
-                    icon: Icon(LucideIcons.menu, size: 20, color: fgColor),
+                    icon: Icon(Iconfont.menu, size: 20, color: fgColor),
                     tooltip: '会话列表',
                     onPressed: () => _scaffoldKey.currentState?.openDrawer(),
                   ),
@@ -98,12 +99,12 @@ class _TerminalPageState extends ConsumerState<TerminalPage> {
                     ),
                   ),
                   IconButton(
-                    icon: Icon(LucideIcons.plus, size: 20, color: fgColor),
+                    icon: Icon(Iconfont.plus, size: 20, color: fgColor),
                     tooltip: l10n.terminalNewTab,
                     onPressed: () => notifier.newTab(),
                   ),
                   IconButton(
-                    icon: Icon(LucideIcons.settings, size: 18, color: fgColor),
+                    icon: Icon(Iconfont.settings, size: 18, color: fgColor),
                     tooltip: l10n.terminalSettingsTitle,
                     onPressed: () => showTerminalSettingsSheet(context, ref),
                   ),
@@ -310,7 +311,7 @@ class _SessionDrawer extends StatelessWidget {
                   ),
                   const Spacer(),
                   IconButton(
-                    icon: const Icon(LucideIcons.plus, size: 20),
+                    icon: const Icon(Iconfont.plus, size: 20),
                     tooltip: '新建会话',
                     onPressed: onNewTab,
                   ),
@@ -336,7 +337,7 @@ class _SessionDrawer extends StatelessWidget {
                         return ListTile(
                           selected: isActive,
                           leading: Icon(
-                            LucideIcons.terminal,
+                            Iconfont.terminal,
                             size: 18,
                             color: isActive
                                 ? theme.colorScheme.primary
@@ -356,7 +357,7 @@ class _SessionDrawer extends StatelessWidget {
                             ),
                           ),
                           trailing: IconButton(
-                            icon: const Icon(LucideIcons.x, size: 16),
+                            icon: const Icon(Iconfont.x, size: 16),
                             tooltip: '关闭',
                             onPressed: () => onClose(tab.id),
                           ),
@@ -367,12 +368,12 @@ class _SessionDrawer extends StatelessWidget {
             ),
             const Divider(height: 1),
             ListTile(
-              leading: const Icon(LucideIcons.settings, size: 20),
+              leading: const Icon(Iconfont.settings, size: 20),
               title: const Text('终端设置'),
               onTap: onSettings,
             ),
             ListTile(
-              leading: const Icon(LucideIcons.x, size: 20),
+              leading: const Icon(Iconfont.x, size: 20),
               title: const Text('关闭终端'),
               onTap: () => Navigator.of(context).maybePop(),
             ),
@@ -410,7 +411,7 @@ class _ErrorView extends StatelessWidget {
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
-              Icon(LucideIcons.alertCircle, size: 48, color: foreground.withValues(alpha: 0.5)),
+              Icon(Iconfont.alertCircle, size: 48, color: foreground.withValues(alpha: 0.5)),
               const SizedBox(height: 16),
               Text(
                 message,

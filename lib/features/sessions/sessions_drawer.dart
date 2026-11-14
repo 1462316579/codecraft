@@ -5,6 +5,8 @@ import 'package:flutter/material.dart';
 import 'package:path/path.dart' as p;
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:lucide_icons/lucide_icons.dart';
+
+import '../../core/icons/iconfont.dart';
 import 'package:go_router/go_router.dart';
 import 'package:intl/intl.dart';
 
@@ -92,7 +94,7 @@ class _SessionsDrawerState extends ConsumerState<SessionsDrawer> {
             tooltip: l10n.sessionDeleteSelected,
             onPressed: selected.isEmpty ? null : () => _deleteSelected(),
             icon: Icon(
-              LucideIcons.trash2,
+              Iconfont.trash2,
               size: 18,
               color: selected.isEmpty
                   ? context.semantic.subtleText
@@ -105,7 +107,7 @@ class _SessionsDrawerState extends ConsumerState<SessionsDrawer> {
               _selectionMode = false;
               ref.read(sessionSelectionProvider.notifier).clear();
             }),
-            icon: const Icon(LucideIcons.x, size: 18),
+            icon: const Icon(Iconfont.x, size: 18),
           ),
         ],
       ),
@@ -182,17 +184,17 @@ class _SessionsDrawerState extends ConsumerState<SessionsDrawer> {
                 onTap: () => Navigator.pop(sheetContext, 'rename'),
               ),
               _SheetAction(
-                icon: LucideIcons.download,
+                icon: Iconfont.download,
                 label: l10n.sessionExport,
                 onTap: () => Navigator.pop(sheetContext, 'export'),
               ),
               _SheetAction(
-                icon: LucideIcons.checkSquare,
+                icon: Iconfont.checkSquare,
                 label: l10n.sessionBatchSelect,
                 onTap: () => Navigator.pop(sheetContext, 'batch'),
               ),
               _SheetAction(
-                icon: LucideIcons.trash2,
+                icon: Iconfont.trash2,
                 label: l10n.delete,
                 color: Theme.of(sheetContext).colorScheme.error,
                 onTap: () => Navigator.pop(sheetContext, 'delete'),

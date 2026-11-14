@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:lucide_icons/lucide_icons.dart';
 
+import '../../../core/icons/iconfont.dart';
 import '../../../core/theme/semantic_colors.dart';
 import '../../../core/theme/tokens.dart';
 import '../../../l10n/app_localizations.dart';
@@ -33,12 +33,12 @@ Future<MessageAction?> showMessageActionsSheet(BuildContext context) {
             ),
             const SizedBox(height: Spacing.xs),
             _ActionItem(
-              icon: LucideIcons.pencil,
+              icon: Iconfont.pencil,
               title: l10n.chatActionEdit,
               onTap: () => Navigator.pop(sheetContext, MessageAction.edit),
             ),
             _ActionItem(
-              icon: LucideIcons.trash2,
+              icon: Iconfont.trash2,
               title: l10n.chatActionDelete,
               isDestructive: true,
               onTap: () => Navigator.pop(sheetContext, MessageAction.delete),

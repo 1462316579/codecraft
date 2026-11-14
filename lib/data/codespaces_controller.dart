@@ -108,6 +108,13 @@ class CodespacesController extends StateNotifier<CodespacesUiState> {
       return;
     }
     state = state.copyWith(initialized: true, token: token, loading: true, clearError: true);
+    try {
+      final login = await CodespacesClient(token: token).fetchLogin();
+      if (!mounted) return;
+      state = state.copyWith(login: login);
+    } catch (_) {
+      // 登录名读取失败不影响主流程，保留为空
+    }
     await _fetch();
   }
 

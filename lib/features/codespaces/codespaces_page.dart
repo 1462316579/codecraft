@@ -3,6 +3,8 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:lucide_icons/lucide_icons.dart';
 import 'package:url_launcher/url_launcher.dart';
 
+import '../../core/icons/iconfont.dart';
+
 import '../../core/theme/semantic_colors.dart';
 import '../../core/theme/tokens.dart';
 import '../../core/ui/settings_group.dart';
@@ -55,7 +57,7 @@ class _CodespacesPageState extends ConsumerState<CodespacesPage> {
         leading: IconButton(
           onPressed: widget.onNavigateBack ?? () => Navigator.of(context).maybePop(),
           tooltip: l10n.back,
-          icon: const Icon(LucideIcons.arrowLeft),
+          icon: const Icon(Iconfont.arrowLeft),
         ),
         actions: [
           IconButton(
@@ -67,13 +69,13 @@ class _CodespacesPageState extends ConsumerState<CodespacesPage> {
             IconButton(
               onPressed: state.creating ? null : _createCodespace,
               tooltip: l10n.codespacesNew,
-              icon: const Icon(LucideIcons.plus),
+              icon: const Icon(Iconfont.plus),
             ),
           if (state.token.isNotEmpty)
             IconButton(
               onPressed: state.loading ? null : _controller.refresh,
               tooltip: l10n.codespacesRefresh,
-              icon: const Icon(LucideIcons.refreshCw),
+              icon: const Icon(Iconfont.refreshCw),
             ),
         ],
       ),
@@ -665,7 +667,7 @@ class _CodespaceRow extends StatelessWidget {
               onPressed: enabled ? () => _openMenu(context) : null,
               tooltip: l10n.codespacesMoreActions,
               icon: Icon(
-                LucideIcons.moreVertical,
+                Iconfont.moreVertical,
                 size: 18,
                 color: theme.colorScheme.onSurfaceVariant,
               ),
@@ -700,7 +702,7 @@ class _CodespaceRow extends StatelessWidget {
               ),
             if (codespace.isStopped)
               ListTile(
-                leading: const Icon(LucideIcons.play),
+                leading: const Icon(Iconfont.play),
                 title: Text(l10n.codespacesStart),
                 onTap: () {
                   Navigator.of(sheetContext).pop();
@@ -709,7 +711,7 @@ class _CodespaceRow extends StatelessWidget {
               )
             else if (codespace.isAvailable)
               ListTile(
-                leading: const Icon(LucideIcons.square),
+                leading: const Icon(Iconfont.square),
                 title: Text(l10n.codespacesStop),
                 onTap: () {
                   Navigator.of(sheetContext).pop();
@@ -717,7 +719,7 @@ class _CodespaceRow extends StatelessWidget {
                 },
               ),
             ListTile(
-              leading: const Icon(LucideIcons.pencil),
+              leading: const Icon(Iconfont.pencil),
               title: Text(l10n.codespacesRename),
               onTap: () {
                 Navigator.of(sheetContext).pop();
@@ -725,7 +727,7 @@ class _CodespaceRow extends StatelessWidget {
               },
             ),
             ListTile(
-              leading: const Icon(LucideIcons.cpu),
+              leading: const Icon(Iconfont.cpu),
               title: Text(l10n.codespacesChangeMachine),
               onTap: () {
                 Navigator.of(sheetContext).pop();
@@ -734,7 +736,7 @@ class _CodespaceRow extends StatelessWidget {
             ),
             if (codespace.isAvailable)
               ListTile(
-                leading: const Icon(LucideIcons.refreshCcw),
+                leading: const Icon(Iconfont.refreshCcw),
                 title: const Text('重建环境'),
                 onTap: () {
                   Navigator.of(sheetContext).pop();
@@ -750,7 +752,7 @@ class _CodespaceRow extends StatelessWidget {
               },
             ),
             ListTile(
-              leading: const Icon(LucideIcons.terminal),
+              leading: const Icon(Iconfont.terminal),
               title: Text(l10n.codespacesOpenTerminal),
               onTap: () {
                 Navigator.of(sheetContext).pop();
@@ -758,7 +760,7 @@ class _CodespaceRow extends StatelessWidget {
               },
             ),
             ListTile(
-              leading: const Icon(LucideIcons.gitBranch),
+              leading: const Icon(Iconfont.gitBranch),
               title: Text(l10n.codespacesOpenGit),
               onTap: () {
                 Navigator.of(sheetContext).pop();
@@ -774,7 +776,7 @@ class _CodespaceRow extends StatelessWidget {
               },
             ),
             ListTile(
-              leading: Icon(LucideIcons.trash2, color: Theme.of(sheetContext).colorScheme.error),
+              leading: Icon(Iconfont.trash2, color: Theme.of(sheetContext).colorScheme.error),
               title: Text(
                 l10n.codespacesDelete,
                 style: TextStyle(color: Theme.of(sheetContext).colorScheme.error),
@@ -817,7 +819,7 @@ class _EmptyCodespaces extends StatelessWidget {
               color: theme.colorScheme.primary.withValues(alpha: 0.12),
               borderRadius: BorderRadius.circular(Radii.mdLarge),
             ),
-            child: Icon(LucideIcons.cloud, size: 26, color: theme.colorScheme.primary),
+            child: Icon(Iconfont.cloud, size: 26, color: theme.colorScheme.primary),
           ),
           const SizedBox(height: Spacing.md),
           Text(

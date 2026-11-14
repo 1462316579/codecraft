@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../core/icons/iconfont.dart';
 import '../../data/terminal/terminal_settings.dart';
 
 /// 终端设置页
@@ -94,6 +95,45 @@ class TerminalSettingsSheet extends ConsumerWidget {
           Text(
             '字体族：${settings.fontFamily.displayName}',
             style: Theme.of(context).textTheme.bodySmall,
+          ),
+          const SizedBox(height: 8),
+          ListTile(
+            title: const Text('字体族'),
+            trailing: DropdownButton<TerminalFontFamily>(
+              value: settings.fontFamily,
+              onChanged: (v) {
+                if (v != null) {
+                  ref.read(terminalSettingsProvider.notifier).state =
+                      settings.copyWith(fontFamily: v);
+                }
+              },
+              items: const [
+                DropdownMenuItem(
+                  value: TerminalFontFamily('monospace', 'Monospace'),
+                  child: Text('系统 Monospace'),
+                ),
+                DropdownMenuItem(
+                  value: TerminalFontFamily('JetBrainsMono', 'JetBrainsMono'),
+                  child: Row(
+                    children: [
+                      Icon(Iconfont.code, size: 16),
+                      const SizedBox(width: 8),
+                      Text('JetBrainsMono'),
+                    ],
+                  ),
+                ),
+                DropdownMenuItem(
+                  value: TerminalFontFamily('Iconfont', 'Iconfont'),
+                  child: Row(
+                    children: [
+                      Icon(Iconfont.menu, size: 16),
+                      const SizedBox(width: 8),
+                      Text('阿里巴巴 iconfont'),
+                    ],
+                  ),
+                ),
+              ],
+            ),
           ),
         ],
       ),

@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:lucide_icons/lucide_icons.dart';
 
 import '../../../agent/models/todo_item.dart';
+import '../../../core/icons/iconfont.dart';
 import '../../../core/theme/semantic_colors.dart';
 import '../../../core/theme/tokens.dart';
 import '../../../data/todos.dart';
@@ -75,7 +75,7 @@ class _TodoDashboardBarState extends ConsumerState<TodoDashboardBar> {
                 padding: const EdgeInsets.symmetric(vertical: 2),
                 child: Row(
                   children: [
-                    Icon(LucideIcons.checkSquare, size: 15, color: theme.colorScheme.primary),
+                    Icon(Iconfont.checkSquare, size: 15, color: theme.colorScheme.primary),
                     const SizedBox(width: Spacing.xs),
                     Text(
                       l10n.todoDashboardTitle,
@@ -193,7 +193,7 @@ class TodoItemRow extends StatelessWidget {
           children: [
             if (isCompleted)
               Icon(
-                LucideIcons.check,
+                Iconfont.check,
                 size: 16,
                 color: semantic.diffAdd,
                 semanticLabel: l10n.todoCompleted,

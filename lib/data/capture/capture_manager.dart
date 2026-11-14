@@ -102,6 +102,7 @@ class CaptureManager extends ChangeNotifier {
       flowCount: store.count,
       caReady: ca.ready,
     );
+    notifyListeners();
     return _state;
   }
 
@@ -170,7 +171,7 @@ class CaptureManager extends ChangeNotifier {
 
   @override
   void dispose() {
-    server.stop();
+    unawaited(server.stop());
     super.dispose();
   }
 }

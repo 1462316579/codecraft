@@ -152,5 +152,5 @@ class CodespacesGhException implements Exception {
 }
 
 final codespacesGhServiceProvider = FutureProvider<CodespacesGhService>((ref) async {
-  return CodespacesGhService(engine: await ref.watch(containerEngineProvider.future));
+  return CodespacesGhService(engine: await ref.read(containerEngineProvider.future));
 });

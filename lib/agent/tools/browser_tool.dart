@@ -252,6 +252,9 @@ class BrowserTool extends AgentTool {
             ? ToolSuccess('条件已满足: $condition')
             : ToolError('等待超时(${timeout}ms): $condition');
       case 'dialog':
+        if (manager.state.pendingDialog == null) {
+          return const ToolError('当前没有待处理的对话框');
+        }
         final accept = (args['accept'] as bool?) ?? true;
         manager.resolveDialog(accept: accept, text: args['text'] as String?);
         return ToolSuccess(accept ? '已确认对话框' : '已取消对话框');

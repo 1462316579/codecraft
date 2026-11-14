@@ -3,13 +3,12 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:lucide_icons/lucide_icons.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:share_plus/share_plus.dart';
 
+import '../../core/icons/iconfont.dart';
 import '../../core/theme/semantic_colors.dart';
 import '../../core/theme/tokens.dart';
-import '../../data/capture/capture_channel.dart';
 import '../../data/capture/capture_manager.dart';
 import '../../data/capture/capture_pip.dart';
 import '../../data/capture/capture_models.dart';
@@ -191,17 +190,17 @@ class _CapturePageState extends ConsumerState<CapturePage> {
                     tooltip: l10n.capturePip,
                     icon: _pipBusy
                         ? const SizedBox(width: 20, height: 20, child: CircularProgressIndicator(strokeWidth: 2))
-                        : const Icon(LucideIcons.pictureInPicture, size: 20),
+                        : const Icon(Iconfont.pictureInPicture, size: 20),
                     onPressed: _pipBusy ? null : _enterPip,
                   ),
                 IconButton(
                   tooltip: l10n.captureCaTitle,
-                  icon: const Icon(LucideIcons.shield),
+                  icon: const Icon(Iconfont.shield),
                   onPressed: () => _installCa(context),
                 ),
                 IconButton(
                   tooltip: l10n.captureClear,
-                  icon: const Icon(LucideIcons.trash2),
+                  icon: const Icon(Iconfont.trash2),
                   onPressed: s.flowCount == 0 ? null : _clearWithConfirm,
                 ),
               ],
@@ -217,11 +216,11 @@ class _CapturePageState extends ConsumerState<CapturePage> {
                     controller: _searchController,
                     decoration: InputDecoration(
                       hintText: l10n.captureSearchHint,
-                      prefixIcon: const Icon(LucideIcons.search, size: 18),
+                      prefixIcon: const Icon(Iconfont.search, size: 18),
                       suffixIcon: _query.isEmpty
                           ? null
                           : IconButton(
-                              icon: const Icon(LucideIcons.x, size: 16),
+                              icon: const Icon(Iconfont.x, size: 16),
                               onPressed: () {
                                 _searchController.clear();
                                 setState(() => _query = '');
@@ -274,7 +273,7 @@ class _CapturePageState extends ConsumerState<CapturePage> {
                         if (mounted) setState(() => _busy = false);
                       }
                     },
-              child: Icon(s.running ? LucideIcons.pause : LucideIcons.play),
+              child: Icon(s.running ? Iconfont.pause : Iconfont.play),
             ),
             floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
           );
@@ -304,7 +303,7 @@ class _StatusBar extends StatelessWidget {
         child: Row(
           children: [
             Icon(
-              state.running ? LucideIcons.circleDot : LucideIcons.square,
+              state.running ? Iconfont.circleDot : Iconfont.square,
               size: 12,
               color: state.running ? context.semantic.success : context.semantic.subtleText,
             ),
@@ -473,12 +472,12 @@ class _FlowList extends StatelessWidget {
   }
 
   IconData _statusIcon(BuildContext context, CaptureFlow f) {
-    if (f.error != null) return LucideIcons.alertCircle;
+    if (f.error != null) return Iconfont.alertCircle;
     final code = f.statusCode;
-    if (code == null) return LucideIcons.clock;
-    if (code < 300) return LucideIcons.checkCircle2;
-    if (code < 400) return LucideIcons.arrowRightCircle;
-    return LucideIcons.alertCircle;
+    if (code == null) return Iconfont.clock;
+    if (code < 300) return Iconfont.checkCircle2;
+    if (code < 400) return Iconfont.arrowRightCircle;
+    return Iconfont.alertCircle;
   }
 }
 
@@ -514,7 +513,7 @@ class _HostList extends StatelessWidget {
             ),
             style: TextStyle(fontSize: 11, color: context.semantic.subtleText),
           ),
-          trailing: const Icon(LucideIcons.chevronRight, size: 16),
+          trailing: const Icon(Iconfont.chevronRight, size: 16),
           onTap: () => onSelect(e.host),
         );
       },
