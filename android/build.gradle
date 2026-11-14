@@ -18,7 +18,7 @@ subprojects {
 //（要求 compileSdk >= 34）的版本冲突导致构建失败。
 gradle.projectsEvaluated {
     subprojects { project ->
-        project.tasks.withType(com.android.build.gradle.tasks.CheckAarMetadata) { it.enabled = false }
+        project.tasks.matching { it.name == 'checkReleaseAarMetadata' }.configureEach { it.enabled = false }
     }
 }
 
