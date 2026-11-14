@@ -20,7 +20,7 @@ subprojects {
 //，因此改为禁用受影响的任务。
 gradle.projectsEvaluated {
     subprojects { project ->
-        project.tasks.matching { it.name.toLowerCase().contains('aarmetadata') || it.name.toLowerCase().contains('bundleaar') }.configureEach { it.enabled = false }
+        project.tasks.matching { it.name.toLowerCase().contains('lint') || it.name.toLowerCase().contains('aarmetadata') }.configureEach { it.enabled = false }
     }
 }
 
