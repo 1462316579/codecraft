@@ -76,7 +76,7 @@ class ExecutionTargetController extends Notifier<ExecutionTarget> {
 
 /// 跟随当前执行环境的命令引擎:本地容器,或包一层 gh 隧道的 [CodespacesEngine]。
 final executionEngineProvider = FutureProvider<CommandEngine>((ref) async {
-  final local = await ref.watch(containerEngineProvider.future);
+  final local = await ref.read(containerEngineProvider);
   final target = ref.watch(executionTargetProvider);
   return switch (target) {
     LocalExecutionTarget() => local,

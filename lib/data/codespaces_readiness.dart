@@ -36,7 +36,7 @@ final codespacesReadinessProvider = FutureProvider<CodespacesReadiness>((ref) as
   final store = ref.watch(credentialStoreProvider);
   final token = await codespacesTokenFrom(store);
   final hasCred = token.isNotEmpty;
-  final local = await ref.watch(containerEngineProvider.future);
+  final local = ref.read(containerEngineProvider);
   final hasGh = await _hasGh(local);
   final target = ref.watch(executionTargetProvider);
   return CodespacesReadiness(

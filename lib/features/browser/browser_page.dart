@@ -858,7 +858,7 @@ class _BrowserBottomBar extends StatelessWidget {
                 IconButton(
                   onPressed: canGoBack ? onGoBack : null,
                   tooltip: l10n.browserBack,
-                  icon: const Icon(Iconfont.chevronLeft, size: 24),
+                  icon: const Icon(Iconfont.arrowLeft, size: 24),
                 ),
                 IconButton(
                   onPressed: canGoForward ? onGoForward : null,

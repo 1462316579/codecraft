@@ -5,6 +5,7 @@ import 'dart:typed_data';
 import 'package:flutter/material.dart' hide TextStyle;
 import 'package:flutter/painting.dart' as painting;
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:kyroon_pty/kyroon_pty.dart';
 
 import '../../../core/terminal/terminal.dart';
 

@@ -11,6 +11,7 @@ import '../../core/theme/semantic_colors.dart';
 import '../../core/theme/tokens.dart';
 import '../../data/capture/capture_manager.dart';
 import '../../data/capture/capture_pip.dart';
+import '../../data/capture/capture_channel.dart';
 import '../../data/capture/capture_models.dart';
 import '../../l10n/app_localizations.dart';
 import 'capture_detail_page.dart';

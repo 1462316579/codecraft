@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../../core/icons/iconfont.dart';
+import '../../../core/icons/iconfont.dart';
 
 /// 底部附加按键行（ZeroTermux 风格）
 class ExtraKeysRow extends StatelessWidget {

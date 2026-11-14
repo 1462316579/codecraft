@@ -97,7 +97,6 @@ class ChatComposer extends ConsumerStatefulWidget {
     required this.onUploadFile,
     required this.onAttachImage,
     required this.onTakePhoto,
-    this.uploadingCount,
     this.onHeightChanged,
   });
 
