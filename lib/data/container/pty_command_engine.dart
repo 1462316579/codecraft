@@ -180,7 +180,8 @@ class PtyCommandEngine implements CommandEngine {
       exitCode: exitCompleter.future,
       onWrite: (bytes) => pty.write(Uint8List.fromList(bytes)),
       onResize: (c, r) {
-        // kyroon_pty 目前不支持动态 resize，保留接口兼容
+        // kyroon_pty 当前版本不支持动态 resize，
+        // 若需要调整终端大小，可在下次 openTerminal 时传入新的 cols/rows。
       },
       onKill: () {
         subscription.cancel();

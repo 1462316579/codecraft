@@ -3,6 +3,7 @@ import 'dart:typed_data';
 
 import 'package:flutter/material.dart' hide TextStyle;
 import 'package:flutter/painting.dart' as painting;
+import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../core/icons/iconfont.dart';
@@ -269,6 +270,16 @@ class _TerminalViewBodyState extends ConsumerState<_TerminalViewBody> {
       },
       onTitleChanged: (title) {
         // 标题变更由外部处理
+      },
+      onCopyToClipboard: () {
+        // 终端选中文本复制到剪贴板：由 emulator/renderer 选中区域提供文本
+        // 当前先作为占位保持 API 对称，后续可扩展为将选中区域写入剪贴板
+      },
+      onPasteFromClipboard: () async {
+        final clipboard = await Clipboard.getData(Clipboard.kTextPlain);
+        if (clipboard?.text != null) {
+          tab.controller.writeString(clipboard.text!);
+        }
       },
     );
   }

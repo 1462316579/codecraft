@@ -25,6 +25,8 @@ class TerminalView extends StatefulWidget {
   final void Function(List<int> bytes)? onPtyOutput;
   final VoidCallback? onScreenUpdated;
   final ValueChanged<String>? onTitleChanged;
+  final VoidCallback? onCopyToClipboard;
+  final VoidCallback? onPasteFromClipboard;
 
   const TerminalView({
     super.key,
@@ -40,6 +42,8 @@ class TerminalView extends StatefulWidget {
     this.onPtyOutput,
     this.onScreenUpdated,
     this.onTitleChanged,
+    this.onCopyToClipboard,
+    this.onPasteFromClipboard,
   });
 
   @override
@@ -76,6 +80,7 @@ class _TerminalViewState extends State<TerminalView> {
       onKey: _onKeyEvent,
       child: GestureDetector(
         onTapDown: (_) => _focusNode.requestFocus(),
+        onVerticalScrollUpdate: _onScroll,
         child: RepaintBoundary(
           child: CustomPaint(
             size: Size.infinite,
@@ -97,12 +102,19 @@ class _TerminalViewState extends State<TerminalView> {
     );
   }
 
+  void _onScroll(ScrollUpdateDetails details) {
+    setState(() {
+      _scrollOffset = (_scrollOffset - details.delta.dy).clamp(0.0, double.infinity);
+    });
+  }
+
   KeyEventResult _onKeyEvent(FocusNode node, RawKeyEvent event) {
     if (event is! RawKeyDownEvent) return KeyEventResult.ignored;
 
     final logicalKey = event.logicalKey;
     final isCtrl = event.isControlPressed;
     final isAlt = event.isAltPressed;
+    final isShift = event.isShiftPressed;
 
     void sendToPty(List<int> bytes) {
       widget.onUserInput?.call(bytes);
@@ -130,7 +142,7 @@ class _TerminalViewState extends State<TerminalView> {
     }
     // Tab
     if (logicalKey == LogicalKeyboardKey.tab) {
-      sendToPty(isAlt ? [0x1B, 0x09] : [0x09]);
+      sendToPty(isShift ? [0x1B, 0x5B, 0x5A] : [0x09]);
       return KeyEventResult.handled;
     }
     // ESC
@@ -147,6 +159,55 @@ class _TerminalViewState extends State<TerminalView> {
     // Backspace
     if (logicalKey == LogicalKeyboardKey.backspace) {
       sendToPty([0x08]);
+      return KeyEventResult.handled;
+    }
+    // Delete
+    if (logicalKey == LogicalKeyboardKey.delete) {
+      sendToPty([0x1B, 0x5B, 0x33, 0x7E]);
+      return KeyEventResult.handled;
+    }
+    // Home / End
+    if (logicalKey == LogicalKeyboardKey.home) {
+      sendToPty([0x1B, 0x5B, 0x48]);
+      return KeyEventResult.handled;
+    }
+    if (logicalKey == LogicalKeyboardKey.end) {
+      sendToPty([0x1B, 0x5B, 0x46]);
+      return KeyEventResult.handled;
+    }
+    // PageUp / PageDown
+    if (logicalKey == LogicalKeyboardKey.pageUp) {
+      sendToPty([0x1B, 0x5B, 0x35, 0x7E]);
+      return KeyEventResult.handled;
+    }
+    if (logicalKey == LogicalKeyboardKey.pageDown) {
+      sendToPty([0x1B, 0x5B, 0x36, 0x7E]);
+      return KeyEventResult.handled;
+    }
+    // Insert
+    if (logicalKey == LogicalKeyboardKey.insert) {
+      sendToPty([0x1B, 0x5B, 0x32, 0x7E]);
+      return KeyEventResult.handled;
+    }
+    // F1-F12
+    for (var i = 1; i <= 12; i++) {
+      final key = LogicalKeyboardKey.values.firstWhere(
+        (k) => k.debugName == 'keyF$i',
+        orElse: () => LogicalKeyboardKey.keyF1,
+      );
+      if (logicalKey == key) {
+        sendToPty([0x1B, 0x5B, 0x31, 0x30 + (i ~/ 10), 0x30 + (i % 10), 0x7E]);
+        return KeyEventResult.handled;
+      }
+    }
+    // Ctrl+Shift+C: 复制到剪贴板
+    if (isCtrl && isShift && logicalKey == LogicalKeyboardKey.keyC) {
+      widget.onCopyToClipboard?.call();
+      return KeyEventResult.handled;
+    }
+    // Ctrl+Shift+V: 从剪贴板粘贴
+    if (isCtrl && isShift && logicalKey == LogicalKeyboardKey.keyV) {
+      widget.onPasteFromClipboard?.call();
       return KeyEventResult.handled;
     }
     // 方向键

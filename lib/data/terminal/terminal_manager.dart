@@ -4,6 +4,7 @@ import 'dart:typed_data';
 
 import 'package:flutter/material.dart' hide TextStyle;
 import 'package:flutter/painting.dart' as painting;
+import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:kyroon_pty/kyroon_pty.dart';
 
@@ -31,7 +32,6 @@ class TerminalTab {
 }
 
 /// 终端标签状态
-class TerminalTabsState {
   final List<TerminalTab> tabs;
   final String? activeTabId;
   final bool preparing;
@@ -135,7 +135,25 @@ class TerminalTabsNotifier extends Notifier<TerminalTabsState> {
     final tabId = id.toString();
 
     final buffer = TerminalBuffer(columns: 80, rows: 24);
-    final emulator = TerminalEmulator(buffer, _PtyOutput(tabId: tabId));
+    final emulator = TerminalEmulator(buffer, _PtyOutput(
+      tabId: tabId,
+      onTitleChanged: (oldTitle, newTitle) {
+        final tab = state.tabs.firstWhereOrNull((t) => t.id == tabId);
+        if (tab != null && tab.title != newTitle && newTitle.isNotEmpty) {
+          tab.title = newTitle;
+          state = state.copyWith();
+        }
+      },
+      onCopyTextToClipboard: (text) {
+        Clipboard.setData(ClipboardData(text: text));
+      },
+      onPasteTextFromClipboard: () {
+        final clipboard = Clipboard.getData(Clipboard.kTextPlain);
+        if (clipboard != null && clipboard.text != null) {
+          pty.write(Uint8List.fromList(utf8.encode(clipboard.text!)));
+        }
+      },
+    ));
     final controller = TerminalController(
       emulator: emulator,
       buffer: buffer,
@@ -265,19 +283,34 @@ class _MirrorOutput implements TerminalOutput {
 /// PTY 输出回调：将模拟器输出写回 PTY（kyroon_pty 不需要写回，因为用 Pty.write 直接写）
 class _PtyOutput implements TerminalOutput {
   final String tabId;
-  _PtyOutput({required this.tabId});
+  final void Function(String oldTitle, String newTitle)? onTitleChanged;
+  final void Function(String text)? onCopyTextToClipboard;
+  final VoidCallback? onPasteTextFromClipboard;
+
+  _PtyOutput({
+    required this.tabId,
+    this.onTitleChanged,
+    this.onCopyTextToClipboard,
+    this.onPasteTextFromClipboard,
+  });
 
   @override
   void write(List<int> data, int offset, int count) {}
 
   @override
-  void titleChanged(String oldTitle, String newTitle) {}
+  void titleChanged(String oldTitle, String newTitle) {
+    onTitleChanged?.call(oldTitle, newTitle);
+  }
 
   @override
-  void onCopyTextToClipboard(String text) {}
+  void onCopyTextToClipboard(String text) {
+    onCopyTextToClipboard?.call(text);
+  }
 
   @override
-  void onPasteTextFromClipboard() {}
+  void onPasteTextFromClipboard() {
+    onPasteTextFromClipboard?.call();
+  }
 
   @override
   void onBell() {}
