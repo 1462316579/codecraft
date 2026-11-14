@@ -10,8 +10,8 @@ environment:
   PATH: C:\flutter\bin;C:\Program Files\Java\jdk-17\bin;%PATH%
 
 install:
-  - git clone https://github.com/flutter/flutter.git -b stable --depth 1 %FLUTTER_HOME%
-  - %FLUTTER_HOME%\bin\flutter --version
+  - git clone https://github.com/flutter/flutter.git -b stable --depth 1 "%FLUTTER_HOME%"
+  - "%FLUTTER_HOME%\bin\flutter --version"
 
 build_script:
   - flutter pub get
