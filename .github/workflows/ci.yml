@@ -32,27 +32,20 @@ jobs:
         with:
           packages: platform-tools platforms;android-34 build-tools;35.0.0
 
-      - name: Install Android NDK
-        run: |
-          $ANDROID_HOME/cmdline-tools/latest/bin/sdkmanager "ndk;27.0.12077973" --sdk_root=$ANDROID_HOME
-
       - name: Get Flutter dependencies
         run: |
           export PATH=/opt/flutter/bin:$PATH
           flutter pub get
 
-      - name: Build Android APK (debug)
+      - name: Build Android APK (release)
         run: |
           export PATH=/opt/flutter/bin:$PATH
-          cd android
-          ./gradlew assembleDebug --stacktrace
-        env:
-          ANDROID_HOME: ${{ env.ANDROID_HOME }}
-          ANDROID_NDK_HOME: ${{ env.ANDROID_HOME }}/ndk/27.0.12077973
+          export JAVA_HOME=$JAVA_HOME_17_X64
+          flutter build apk --release
 
       - name: Upload APK artifact
         uses: actions/upload-artifact@v4
         with:
-          name: app-debug-apk
-          path: build/app/outputs/flutter-apk/app-debug.apk
+          name: app-release-apk
+          path: build/app/outputs/flutter-apk/app-release.apk
           retention-days: 7
