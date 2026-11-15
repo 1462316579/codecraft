@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'dart:async';
+import 'dart:io';
 import 'dart:typed_data';
 
 import 'package:flutter/material.dart' hide TextStyle;
@@ -130,7 +131,23 @@ class TerminalTabsNotifier extends Notifier<TerminalTabsState> {
 
   /// 通过 kyroon_pty 打开终端会话
   Future<void> _openPtyTab() async {
-    final pty = Pty.start('bash');
+    final shell = _resolveShellPath();
+    final pty = Pty.start(
+      shell,
+      rows: 24,
+      columns: 80,
+      environment: {
+        'TERM': 'xterm-256color',
+        'PATH': [
+          if (Platform.environment['PATH'] != null)
+            Platform.environment['PATH']!,
+          '/system/bin',
+          '/system/xbin',
+          '/vendor/bin',
+          '/product/bin',
+        ].join(':'),
+      },
+    );
 
     final id = ++_seq;
     final tabId = id.toString();
@@ -180,11 +197,20 @@ class TerminalTabsNotifier extends Notifier<TerminalTabsState> {
 
     final tab = TerminalTab(
       id: tabId,
-      title: 'bash',
+      title: shell.split('/').last,
       controller: controller,
       pty: pty,
     );
     tab.running = true;
+
+    // 进程退出时提示，避免终端停在空白界面无任何反馈
+    pty.exitCode.then((code) {
+      tab.running = false;
+      controller.writeString(
+        '\r\n\x1b[33m[进程已退出: $code]\x1b[0m\r\n',
+      );
+      state = state.copyWith();
+    });
 
     state = state.copyWith(
       tabs: [...state.tabs, tab],
@@ -244,7 +270,7 @@ class TerminalTabsNotifier extends Notifier<TerminalTabsState> {
       id: agentTabId,
       title: title,
       controller: controller,
-      pty: Pty.start('bash'),
+      pty: Pty.start(_resolveShellPath()),
       mirror: true,
     );
     state = state.copyWith(tabs: [...state.tabs, tab]);
@@ -350,6 +376,35 @@ class _PtyOutput implements TerminalOutput {
   void mouseEvent(int button, int state, int x, int y) {
     mouseCallback?.call(button, state, x, y);
   }
+}
+
+/// 解析可用的 shell 可执行文件。
+///
+/// Android 系统通常不自带 bash，直接 `Pty.start('bash')` 会 execvp 失败，
+/// 子进程立即退出，终端只剩一片空白。这里按优先级探测常见路径，
+/// 最终回退到系统一定存在的 /system/bin/sh。
+String _resolveShellPath() {
+  const candidates = <String>[
+    '/data/data/ids.codecraft.app/files/usr/bin/bash',
+    '/system/bin/bash',
+    '/system/xbin/bash',
+    '/vendor/bin/bash',
+    '/product/bin/bash',
+    '/bin/bash',
+    '/usr/bin/bash',
+  ];
+  for (final path in candidates) {
+    if (File(path).existsSync()) return path;
+  }
+  final pathEnv = Platform.environment['PATH'] ?? '';
+  for (final name in const ['bash', 'sh']) {
+    for (final dir in pathEnv.split(':')) {
+      if (dir.isEmpty) continue;
+      final candidate = '$dir/$name';
+      if (File(candidate).existsSync()) return candidate;
+    }
+  }
+  return '/system/bin/sh';
 }
 
 /// 终端标签提供器
