@@ -46,21 +46,21 @@ android {
         versionName = flutter.versionName
     }
 
-    buildTypes {
-        release {
-            signingConfig = signingConfigs.upload
-        }
-        debug {
-            signingConfig = signingConfigs.upload
-        }
-    }
-
     signingConfigs {
         upload {
             keyAlias keystoreProperties['keyAlias']
             keyPassword keystoreProperties['keyPassword']
             storeFile file(keystoreProperties['storeFile'] ?: 'upload-keystore.jks')
             storePassword keystoreProperties['storePassword']
+        }
+    }
+
+    buildTypes {
+        release {
+            signingConfig = signingConfigs.upload
+        }
+        debug {
+            signingConfig = signingConfigs.upload
         }
     }
 

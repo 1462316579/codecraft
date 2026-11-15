@@ -206,8 +206,8 @@ class SettingsRow extends StatelessWidget {
                   decoration: BoxDecoration(
                     gradient: LinearGradient(
                       colors: [
-                        theme.colorScheme.primary.withValues(alpha: 0.28),
-                        theme.colorScheme.primary.withValues(alpha: 0.08),
+                        Brand.violet.withValues(alpha: 0.28),
+                        Brand.violet.withValues(alpha: 0.08),
                       ],
                     ),
                     borderRadius: BorderRadius.circular(Radii.mdLarge),
@@ -217,14 +217,14 @@ class SettingsRow extends StatelessWidget {
                     ),
                     boxShadow: [
                       BoxShadow(
-                        color: theme.colorScheme.primary.withValues(alpha: 0.12),
+                        color: Brand.violet.withValues(alpha: 0.12),
                         blurRadius: 10,
                         offset: const Offset(0, 4),
                       ),
                     ],
                   ),
                   alignment: Alignment.center,
-                  child: Icon(icon, size: 22, color: theme.colorScheme.primary),
+                  child: Icon(icon, size: 22, color: Brand.violet),
                 ),
                 const SizedBox(width: Spacing.md),
               ],

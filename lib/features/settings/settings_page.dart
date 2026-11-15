@@ -47,16 +47,12 @@ class SettingsPage extends ConsumerWidget {
           ListView(
             physics: const AlwaysScrollableScrollPhysics(),
             padding: EdgeInsets.only(
-              top: 80,
+              top: Spacing.lg,
               left: Spacing.lg,
               right: Spacing.lg,
               bottom: 140,
             ),
             children: [
-              _GlassHeader(
-                title: l10n.settings,
-                subtitle: l10n.settingsSubtitle,
-              ),
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 0),
                 child: Column(
@@ -158,77 +154,6 @@ class SettingsPage extends ConsumerWidget {
             ],
           ),
         ],
-      ),
-    );
-  }
-}
-/// 页面顶部的液态玻璃标题卡片。
-class _GlassHeader extends StatelessWidget {
-  const _GlassHeader({required this.title, this.subtitle});
-
-  final String title;
-  final String? subtitle;
-
-  @override
-  Widget build(BuildContext context) {
-    final theme = Theme.of(context);
-    final semantic = context.semantic;
-    final bright = theme.brightness == Brightness.light;
-    return Padding(
-      padding: const EdgeInsets.fromLTRB(Spacing.lg, Spacing.xs, Spacing.lg, Spacing.lg),
-      child: ClipRRect(
-        borderRadius: BorderRadius.circular(Radii.xl),
-        child: BackdropFilter(
-          filter: ImageFilter.blur(sigmaX: 26, sigmaY: 26),
-          child: DecoratedBox(
-            decoration: BoxDecoration(
-              gradient: LinearGradient(
-                colors: [
-                  Colors.white.withValues(alpha: bright ? 0.55 : 0.18),
-                  Colors.white.withValues(alpha: bright ? 0.22 : 0.06),
-                ],
-              ),
-              borderRadius: BorderRadius.circular(Radii.xl),
-              border: Border.all(
-                width: 1,
-                color: Colors.white.withValues(alpha: bright ? 0.6 : 0.2),
-              ),
-              boxShadow: [
-                BoxShadow(
-                  color: Brand.violet.withValues(alpha: bright ? 0.06 : 0.14),
-                  blurRadius: 20,
-                  offset: const Offset(0, 10),
-                ),
-              ],
-            ),
-            child: Padding(
-              padding: const EdgeInsets.all(Spacing.lg),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    title,
-                    style: theme.textTheme.headlineSmall?.copyWith(
-                      fontSize: 26,
-                      fontWeight: FontWeight.w700,
-                      color: theme.colorScheme.onSurface,
-                    ),
-                  ),
-                  if (subtitle != null)
-                    Padding(
-                      padding: const EdgeInsets.only(top: Spacing.xs),
-                      child: Text(
-                        subtitle!,
-                        style: theme.textTheme.bodyMedium?.copyWith(
-                          color: semantic.subtleText,
-                        ),
-                      ),
-                    ),
-                ],
-              ),
-            ),
-          ),
-        ),
       ),
     );
   }
