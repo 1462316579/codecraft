@@ -80,11 +80,9 @@ class _TerminalViewState extends State<TerminalView> {
       onKey: _onKeyEvent,
       child: Listener(
         onPointerSignal: (event) {
-          if (event is PointerScrollEvent) {
-            setState(() {
-              _scrollOffset = (_scrollOffset - event.scrollDelta.dy).clamp(0.0, double.infinity);
-            });
-          }
+          setState(() {
+            _scrollOffset = (_scrollOffset - event.scrollDelta.dy).clamp(0.0, double.infinity);
+          });
         },
         child: GestureDetector(
           onTapDown: (_) => _focusNode.requestFocus(),
@@ -193,9 +191,7 @@ class _TerminalViewState extends State<TerminalView> {
     }
     // F1-F12
     for (var i = 1; i <= 12; i++) {
-      final keyName = 'keyF$i';
-      final key = LogicalKeyboardKey.byDebugName(keyName);
-      if (logicalKey == key) {
+      if (logicalKey.debugName == 'keyF$i') {
         sendToPty([0x1B, 0x5B, 0x31, 0x30 + (i ~/ 10), 0x30 + (i % 10), 0x7E]);
         return KeyEventResult.handled;
       }
