@@ -10,7 +10,6 @@ import '../data/container/external_storage.dart';
 import '../data/container/runtime_permissions.dart';
 import '../data/installed_apps.dart';
 import '../data/settings/app_settings.dart';
-import '../l10n/app_localizations.dart';
 
 /// 首次启动的权限引导。
 ///
@@ -36,7 +35,7 @@ class PermissionsGate extends ConsumerStatefulWidget {
   /// 旧版本用的单权限标记,升级时视为已引导(不重复打扰)。
   static const String legacyPromptedKey = 'storagePermission.prompted';
 
-  /// 「所有文件访问权限」引导过的标记键。
+  /// 「所有文件访问权限」已引导过的标记键(该权限没有运行时弹窗,只能跳设置页)。
   static const String allFilesAccessPromptedKey = 'allFilesAccessPrompted';
 
   @override
@@ -63,16 +62,19 @@ class _PermissionsGateState extends ConsumerState<PermissionsGate> {
     _checked = true;
     _askedThisRun = true;
     final prefs = ref.read(sharedPreferencesProvider);
+    // 已安装应用查询:部分 ROM 会为此弹「获取应用列表」授权框,放在启动时触发,
+    // 免得用户点「应用逆向」时才冒出来闪一下。
+    await InstalledAppsService.warmUp();
     if (prefs.getBool(PermissionsGate.onboardedKey) ?? false) {
       // 已完成首次引导的用户仍可能缺「所有文件访问权限」(升级前的老版本没引导过),
       // 这里补一次,否则写作项目的文件树会一直读不到内容。
-      await _maybePromptAllFilesAccess(prefs);
+      await _ensureAllFilesAccess(prefs);
       return;
     }
     // 老版本只引导过存储权限:视为已完成引导,不让升级用户再被拦一次。
     if (prefs.getBool(PermissionsGate.legacyPromptedKey) ?? false) {
       await prefs.setBool(PermissionsGate.onboardedKey, true);
-      await _maybePromptAllFilesAccess(prefs);
+      await _ensureAllFilesAccess(prefs);
       return;
     }
 
@@ -83,41 +85,23 @@ class _PermissionsGateState extends ConsumerState<PermissionsGate> {
       // 否则两个系统框会互相顶掉。
       await Future<void>.delayed(const Duration(milliseconds: 300));
     }
-    await InstalledAppsService.warmUp();
     await prefs.setBool(PermissionsGate.onboardedKey, true);
-    await _maybePromptAllFilesAccess(prefs);
+    await _ensureAllFilesAccess(prefs);
   }
 
-  /// 缺「所有文件访问权限」时提示一次(只提示一次,之后交给文件面板的常驻入口)。
+  /// 引导「所有文件访问权限」。
   ///
   /// 写作项目直接读写共享存储的 `AI小说` 目录;Android 11+ 没有该权限时目录能列出、
-  /// 文件却读不到,表现就是「目录是空的」。这里引导用户去系统设置授予。
-  Future<void> _maybePromptAllFilesAccess(SharedPreferences prefs) async {
+  /// 文件却读不到,表现就是「目录是空的」。
+  ///
+  /// 该权限没有运行时弹窗,只能跳系统设置页由用户打开开关,所以安装后引导一次;
+  /// 用户若取消,文件面板顶部还有常驻的「去授权」入口。
+  Future<void> _ensureAllFilesAccess(SharedPreferences prefs) async {
     if (!Platform.isAndroid) return;
     if (prefs.getBool(PermissionsGate.allFilesAccessPromptedKey) ?? false) return;
-    if (!mounted) return;
     if (await ExternalStorage.hasAccess()) return;
-    if (!mounted) return;
     await prefs.setBool(PermissionsGate.allFilesAccessPromptedKey, true);
     if (!mounted) return;
-    final l10n = AppLocalizations.of(context);
-    final go = await showDialog<bool>(
-      context: context,
-      builder: (dialogContext) => AlertDialog(
-        content: Text(l10n.fileBrowserNeedPermission),
-        actions: [
-          TextButton(
-            onPressed: () => Navigator.of(dialogContext).pop(false),
-            child: Text(l10n.commonCancel),
-          ),
-          FilledButton(
-            onPressed: () => Navigator.of(dialogContext).pop(true),
-            child: Text(l10n.storagePermissionGrant),
-          ),
-        ],
-      ),
-    );
-    if (go != true) return;
     await ExternalStorage.requestAllFilesAccess();
   }
 
