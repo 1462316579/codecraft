@@ -1,7 +1,6 @@
 import 'dart:io';
 import 'dart:isolate';
 
-import 'package:dio/dio.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:path/path.dart' as p;
 
@@ -174,21 +173,6 @@ class ContainerNotifier extends Notifier<ContainerState> {
     }
   }
 
-  /// 安装（修复）PRoot 运行环境。
-  Future<void> ensureRuntime() async {
-    if (state.runtimeInstalled) return;
-    state = state.copyWith(error: () => null);
-    final ok = await ProotRuntime.ensure(
-      onStage: (stage) => state = state.copyWith(runtimeStage: stage),
-    );
-    final status = await ProotRuntime.status();
-    state = state.copyWith(
-      runtimeInstalled: ok || status.installed,
-      runtimeStage: status.stage,
-      error: () => ok ? null : 'PRoot 运行环境安装失败${status.error == null ? '' : '：${status.error}'}',
-    );
-  }
-
   /// 下载并安装一个镜像，成功后若没有默认容器则设为默认。
   Future<ContainerInfo?> install(ContainerImage image) async {
     if (state.busy) return null;
@@ -207,49 +191,27 @@ class ContainerNotifier extends Notifier<ContainerState> {
       final archiveFile = File(p.join(downloadDir.path, '${image.id}.tar.gz'));
 
       if (!await archiveFile.exists() || await archiveFile.length() == 0) {
-        final dio = Dio(
-          BaseOptions(
-            receiveTimeout: const Duration(minutes: 15),
-            headers: {'User-Agent': 'CodeCraft-Android'},
-          ),
-        );
-        Object? lastError;
-        var downloaded = false;
-        // 国内镜像优先，失败后依次回退到备用地址。
-        for (final url in [image.url, ...image.fallbackUrls]) {
-          if (url.isEmpty) continue;
-          try {
-            await dio.download(
-              url,
-              archiveFile.path,
-              onReceiveProgress: (received, total) {
-                if (total > 0) {
-                  final ratio = (received / total).clamp(0.0, 1.0);
-                  state = state.copyWith(
-                    busyProgress: ratio,
-                    busyStage: () =>
-                        '正在下载 ${image.name} · ${(ratio * 100).toStringAsFixed(0)}%',
-                  );
-                } else {
-                  state = state.copyWith(
-                    busyStage: () => '正在下载 ${image.name}…',
-                  );
-                }
-              },
+        await _downloadImage(image, archiveFile, (received, total) {
+          if (total > 0) {
+            final ratio = (received / total).clamp(0.0, 1.0);
+            state = state.copyWith(
+              busyProgress: ratio,
+              busyStage: () =>
+                  '正在下载 ${image.name} · ${(ratio * 100).toStringAsFixed(0)}%',
             );
-            downloaded = true;
-            break;
-          } catch (e) {
-            lastError = e;
-            // 半截文件不能复用，删掉再试下一个源。
-            try {
-              if (await archiveFile.exists()) await archiveFile.delete();
-            } catch (_) {}
+          } else {
+            state = state.copyWith(
+              busyStage: () => '正在下载 ${image.name} · '
+                  '${(received / 1024 / 1024).toStringAsFixed(1)} MB',
+            );
           }
-        }
-        if (!downloaded) {
-          throw lastError ?? StateError('镜像下载失败');
-        }
+        });
+      }
+
+      // 部分镜像站出错时会返回 200 的 HTML 页面，解压前先校验 gzip 头。
+      final head = await archiveFile.openRead(0, 2).first;
+      if (head.length < 2 || head[0] != 0x1f || head[1] != 0x8b) {
+        throw StateError('下载内容不是有效的镜像压缩包，请重试');
       }
 
       state = state.copyWith(
@@ -382,6 +344,76 @@ class ContainerNotifier extends Notifier<ContainerState> {
 
   void clearError() => state = state.copyWith(error: () => null);
 
+  /// 下载镜像压缩包：直连下载，失败时依次换备用源并重试。
+  Future<void> _downloadImage(
+    ContainerImage image,
+    File target,
+    void Function(int received, int total) onProgress,
+  ) async {
+    final client = HttpClient()
+      ..connectionTimeout = const Duration(seconds: 30)
+      ..autoUncompress = false
+      ..userAgent = 'CodeCraft-Android'
+      // 系统里残留的代理（如抓包代理）会让下载卡死，这里强制直连。
+      ..findProxy = ((_) => 'DIRECT');
+    final urls = <String>[
+      image.url,
+      ...image.fallbackUrls,
+    ].where((url) => url.isNotEmpty).toList();
+
+    Object? lastError;
+    try {
+      for (final url in urls) {
+        // 单个源失败两次再换下一个，避免一次抖动就整体失败。
+        for (var attempt = 0; attempt < 2; attempt++) {
+          final part = File('${target.path}.part');
+          IOSink? sink;
+          try {
+            final request = await client.getUrl(Uri.parse(url));
+            final response = await request.close();
+            if (response.statusCode != HttpStatus.ok) {
+              await response.drain<void>();
+              throw HttpException(
+                'HTTP ${response.statusCode}',
+                uri: Uri.parse(url),
+              );
+            }
+            final total = response.contentLength;
+            var received = 0;
+            onProgress(0, total);
+            sink = part.openWrite();
+            await for (final chunk in response) {
+              sink.add(chunk);
+              received += chunk.length;
+              onProgress(received, total);
+            }
+            await sink.flush();
+            await sink.close();
+            sink = null;
+            if ((await part.length()) == 0) {
+              throw const HttpException('下载内容为空');
+            }
+            if (await target.exists()) await target.delete();
+            await part.rename(target.path);
+            return;
+          } catch (e) {
+            lastError = e;
+            // 半截文件不能复用，删掉后重新下载。
+            try {
+              await sink?.close();
+            } catch (_) {}
+            try {
+              if (await part.exists()) await part.delete();
+            } catch (_) {}
+          }
+        }
+      }
+    } finally {
+      client.close(force: true);
+    }
+    throw lastError ?? StateError('镜像下载失败');
+  }
+
   String _uniqueId(String base) {
     final existing = state.containers.map((c) => c.id).toSet();
     if (!existing.contains(base)) return base;
@@ -393,11 +425,16 @@ class ContainerNotifier extends Notifier<ContainerState> {
   }
 
   String _describe(Object e) {
-    if (e is DioException) {
-      final status = e.response?.statusCode;
-      if (status != null) return '下载失败（HTTP $status）';
-      return '下载失败：${e.message ?? e.type.name}';
+    if (e is SocketException) {
+      final detail = e.osError?.message ?? e.message;
+      return '下载失败：网络连接中断（$detail）';
     }
-    return e.toString();
+    if (e is HandshakeException) return '下载失败：HTTPS 握手失败（${e.message}）';
+    if (e is HttpException) return '下载失败：${e.message}';
+    if (e is FileSystemException) {
+      return '安装失败：写入文件出错（${e.osError?.message ?? e.message}）';
+    }
+    if (e is StateError) return '安装失败：${e.message}';
+    return '操作失败：$e';
   }
 }

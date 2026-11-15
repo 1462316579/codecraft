@@ -172,7 +172,7 @@ class _ContainerPageState extends ConsumerState<ContainerPage> {
   }
 }
 
-/// 容器下载页：只负责运行环境安装和镜像目录，不与已安装容器混排。
+/// 容器下载页：只负责镜像目录和下载状态，不与已安装容器混排。
 class ContainerDownloadPage extends ConsumerWidget {
   const ContainerDownloadPage({super.key});
 
@@ -236,32 +236,6 @@ class ContainerDownloadPage extends ConsumerWidget {
                 onDismiss: notifier.clearError,
               ),
             ],
-            const SettingsGroupHeader(text: '运行环境'),
-            SettingsGroup(
-              children: [
-                SettingsRow(
-                  icon: Iconfont.cpu,
-                  title: 'PRoot 运行环境',
-                  subtitle: state.runtimeInstalled
-                      ? '已就绪（内置资产，离线安装）'
-                      : (state.runtimeStage.isEmpty
-                          ? '未安装 · 首次使用终端时自动安装'
-                          : state.runtimeStage),
-                  trailing: state.runtimeInstalled
-                      ? Icon(
-                          Iconfont.checkCircle,
-                          size: 20,
-                          color: theme.colorScheme.primary,
-                        )
-                      : FilledButton.tonal(
-                          onPressed: state.busy
-                              ? null
-                              : () => notifier.ensureRuntime(),
-                          child: const Text('安装'),
-                        ),
-                ),
-              ],
-            ),
             const SettingsGroupHeader(text: '可用镜像'),
             SettingsGroup(
               children: [
