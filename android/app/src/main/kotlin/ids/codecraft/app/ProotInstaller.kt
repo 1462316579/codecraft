@@ -18,7 +18,7 @@ import java.io.RandomAccessFile
  * 1. 把 assets/proot 拷到 filesDir/proot-staging-*；
  * 2. 改写 ELF 的 RUNPATH（bin → $ORIGIN/../lib，lib → $ORIGIN），
  *    让 proot 在这个包名下也能找到 libtalloc / libandroid-shmem；
- * 3. 给 bin/proot 与 libexec/proot/* 加可执行位；
+ * 3. 给 bin/proot 与 libexec/proot 下的 loader 加可执行位；
  * 4. rename 成 filesDir/proot，写版本标记。
  *
  * 注意：proot 的 loader 路径是编译期硬编码的
