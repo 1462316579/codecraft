@@ -44,7 +44,9 @@ class TerminalBuffer {
     this.scrollbackRows = 2000,
   }) {
     _initTabStops();
-    _resize(columns, rows);
+    // 必须走 _resizeBuffer：只有它会初始化 _screen / _topLine / _totalRows，
+    // 否则 getLine() 始终返回 null，写入的字符会被全部丢弃（终端一片空白）。
+    _resizeBuffer(columns, rows);
   }
 
   void _initTabStops() {
@@ -52,23 +54,6 @@ class TerminalBuffer {
     for (var i = 0; i < columns; i += 8) {
       _tabStops.add(i);
     }
-  }
-
-  void _resize(int newColumns, int newRows) {
-    for (var i = 0; i < _lines.length; i++) {
-      final row = _lines[i];
-      if (row != null) {
-        row.resize(newColumns);
-      }
-    }
-    while (_lines.length < newRows) {
-      _lines.add(TerminalRow(newColumns, 0));
-    }
-    while (_lines.length > newRows) {
-      _lines.removeLast();
-    }
-    columns = newColumns;
-    rows = newRows;
   }
 
   void resize(int newCols, int newRows) {
