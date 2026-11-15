@@ -47,7 +47,7 @@ class SettingsPage extends ConsumerWidget {
           ListView(
             physics: const AlwaysScrollableScrollPhysics(),
             padding: EdgeInsets.only(
-              top: Spacing.lg,
+              top: MediaQuery.of(context).padding.top + Spacing.lg,
               left: Spacing.lg,
               right: Spacing.lg,
               bottom: 140,

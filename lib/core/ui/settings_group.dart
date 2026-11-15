@@ -206,8 +206,8 @@ class SettingsRow extends StatelessWidget {
                   decoration: BoxDecoration(
                     gradient: LinearGradient(
                       colors: [
-                        Brand.violet.withValues(alpha: 0.28),
-                        Brand.violet.withValues(alpha: 0.08),
+                        Brand.violet.withValues(alpha: 0.14),
+                        Brand.violet.withValues(alpha: 0.04),
                       ],
                     ),
                     borderRadius: BorderRadius.circular(Radii.mdLarge),
