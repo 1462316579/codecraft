@@ -16,7 +16,8 @@ class ContainerImage {
     required this.description,
     required this.url,
     required this.sizeLabel,
-    this.bundled = false,
+    this.fallbackUrls = const [],
+    this.autoInstall = false,
   });
 
   /// 镜像 id，同时作为容器 id 前缀。
@@ -26,8 +27,11 @@ class ContainerImage {
   final String url;
   final String sizeLabel;
 
-  /// 是否随 APK 内置（无需联网下载）。
-  final bool bundled;
+  /// 主地址失败时依次尝试的备用地址（国内镜像加速）。
+  final List<String> fallbackUrls;
+
+  /// 是否在首次启动时自动下载安装。
+  final bool autoInstall;
 }
 
 /// 内置镜像源。全部已验证可下载（HTTP 200）。
@@ -51,10 +55,15 @@ const List<ContainerImage> kContainerImages = [
   ContainerImage(
     id: 'ubuntu-26.04',
     name: 'Ubuntu 26.04 Base',
-    description: 'glibc + apt，最新 LTS（Resolute Raccoon），已内置',
-    url: '',
-    sizeLabel: '内置',
-    bundled: true,
+    description: 'glibc + apt，最新 LTS（Resolute Raccoon），首次启动自动下载',
+    url:
+        'https://mirrors.ustc.edu.cn/ubuntu-cdimage/ubuntu-base/releases/26.04/release/ubuntu-base-26.04.1-base-arm64.tar.gz',
+    fallbackUrls: [
+      'https://mirrors.aliyun.com/ubuntu-cdimage/ubuntu-base/releases/26.04/release/ubuntu-base-26.04.1-base-arm64.tar.gz',
+      'https://cdimage.ubuntu.com/ubuntu-base/releases/26.04/release/ubuntu-base-26.04.1-base-arm64.tar.gz',
+    ],
+    sizeLabel: '约 35 MB',
+    autoInstall: true,
   ),
   ContainerImage(
     id: 'ubuntu-24.04',
@@ -150,14 +159,17 @@ class ContainerNotifier extends Notifier<ContainerState> {
       runtimeStage: status.stage,
       loading: false,
     );
-    // 首次启动（或升级到内置 Ubuntu 26.04 的版本）自动装好内置镜像，
-    // 用户打开设置就能看到已安装的容器，不需要再下载。
-    if (!await ContainerStore.bundledSeeded()) {
+    // 首次启动自动下载 Ubuntu 26.04（国内镜像源），无需用户手动点击。
+    if (!await ContainerStore.autoInstallSeeded()) {
       final image =
-          kContainerImages.where((item) => item.bundled).firstOrNull;
+          kContainerImages.where((item) => item.autoInstall).firstOrNull;
       if (image != null && !state.busy) {
-        final info = await _installBundled(image);
-        if (info != null) await ContainerStore.markBundledSeeded();
+        if (state.containers.any((c) => c.imageId == image.id)) {
+          await ContainerStore.markAutoInstallSeeded();
+        } else {
+          final info = await install(image);
+          if (info != null) await ContainerStore.markAutoInstallSeeded();
+        }
       }
     }
   }
@@ -180,7 +192,6 @@ class ContainerNotifier extends Notifier<ContainerState> {
   /// 下载并安装一个镜像，成功后若没有默认容器则设为默认。
   Future<ContainerInfo?> install(ContainerImage image) async {
     if (state.busy) return null;
-    if (image.bundled) return _installBundled(image);
     state = state.copyWith(
       busyImageId: () => image.id,
       busyProgress: 0,
@@ -202,24 +213,43 @@ class ContainerNotifier extends Notifier<ContainerState> {
             headers: {'User-Agent': 'CodeCraft-Android'},
           ),
         );
-        await dio.download(
-          image.url,
-          archiveFile.path,
-          onReceiveProgress: (received, total) {
-            if (total > 0) {
-              final ratio = (received / total).clamp(0.0, 1.0);
-              state = state.copyWith(
-                busyProgress: ratio,
-                busyStage: () =>
-                    '正在下载 ${image.name} · ${(ratio * 100).toStringAsFixed(0)}%',
-              );
-            } else {
-              state = state.copyWith(
-                busyStage: () => '正在下载 ${image.name}…',
-              );
-            }
-          },
-        );
+        Object? lastError;
+        var downloaded = false;
+        // 国内镜像优先，失败后依次回退到备用地址。
+        for (final url in [image.url, ...image.fallbackUrls]) {
+          if (url.isEmpty) continue;
+          try {
+            await dio.download(
+              url,
+              archiveFile.path,
+              onReceiveProgress: (received, total) {
+                if (total > 0) {
+                  final ratio = (received / total).clamp(0.0, 1.0);
+                  state = state.copyWith(
+                    busyProgress: ratio,
+                    busyStage: () =>
+                        '正在下载 ${image.name} · ${(ratio * 100).toStringAsFixed(0)}%',
+                  );
+                } else {
+                  state = state.copyWith(
+                    busyStage: () => '正在下载 ${image.name}…',
+                  );
+                }
+              },
+            );
+            downloaded = true;
+            break;
+          } catch (e) {
+            lastError = e;
+            // 半截文件不能复用，删掉再试下一个源。
+            try {
+              if (await archiveFile.exists()) await archiveFile.delete();
+            } catch (_) {}
+          }
+        }
+        if (!downloaded) {
+          throw lastError ?? StateError('镜像下载失败');
+        }
       }
 
       state = state.copyWith(
@@ -292,6 +322,12 @@ class ContainerNotifier extends Notifier<ContainerState> {
       );
       return info;
     } catch (e) {
+      // 安装失败时清掉压缩包，避免下次复用不完整/损坏的文件。
+      try {
+        final dir = await ContainerStore.containersDir();
+        final archive = File(p.join(dir, '.downloads', '${image.id}.tar.gz'));
+        if (archive.existsSync()) archive.deleteSync();
+      } catch (_) {}
       state = state.copyWith(
         busyImageId: () => null,
         busyProgress: 0,
@@ -307,41 +343,6 @@ class ContainerNotifier extends Notifier<ContainerState> {
           if (dir.existsSync()) dir.deleteSync(recursive: true);
         } catch (_) {}
       }
-    }
-  }
-
-  /// 安装 APK 内置镜像（无需联网）。
-  Future<ContainerInfo?> _installBundled(ContainerImage image) async {
-    state = state.copyWith(
-      busyImageId: () => image.id,
-      busyProgress: 0,
-      busyStage: () => '正在安装内置 ${image.name}…',
-      error: () => null,
-    );
-    try {
-      final info = await ContainerLauncher.installBundled(
-        onStage: (stage) => state = state.copyWith(
-          busyProgress: 1,
-          busyStage: () => stage,
-        ),
-      );
-      final store = await ContainerStore.load();
-      state = state.copyWith(
-        containers: store.containers,
-        defaultId: () => store.defaultId,
-        busyImageId: () => null,
-        busyProgress: 0,
-        busyStage: () => null,
-      );
-      return info;
-    } catch (e) {
-      state = state.copyWith(
-        busyImageId: () => null,
-        busyProgress: 0,
-        busyStage: () => null,
-        error: () => _describe(e),
-      );
-      return null;
     }
   }
 
