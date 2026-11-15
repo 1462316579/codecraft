@@ -438,48 +438,52 @@ class _ProviderEditPageState extends ConsumerState<ProviderEditPage> {
   }
 
   /// 模型列表:长按拖拽排序(对齐上游 ProviderEditorScreen 的 ReorderableItem),
-  /// 首尾行带圆角,与设置卡片视觉一致。
+  /// 整列表套一层液态柔光玻璃面板,行本身透明(逐行模糊会让 471 行掉帧)。
   Widget _modelList(BuildContext context, AppLocalizations l10n, ProviderConfig provider) {
     Widget card(int index) => _modelCard(context, l10n, provider, _models[index], index);
-    if (_selectionMode) {
-      // 选择模式禁用拖拽排序(对齐上游:选择模式下 dragModifier 置空)。
-      return ListView.builder(
-        padding: const EdgeInsets.fromLTRB(Spacing.lg, 0, Spacing.lg, 110),
-        itemCount: _models.length,
-        itemBuilder: (context, index) => card(index),
-      );
-    }
-    return ReorderableListView.builder(
-      padding: const EdgeInsets.fromLTRB(Spacing.lg, 0, Spacing.lg, 110),
-      itemCount: _models.length,
-      onReorder: (oldIndex, newIndex) async {
-        HapticFeedback.selectionClick();
-        setState(() {
-          final moved = _models.removeAt(oldIndex);
-          _models.insert(newIndex.clamp(0, _models.length), moved);
-        });
-        await _save(provider);
-      },
-      proxyDecorator: (child, index, animation) => AnimatedBuilder(
-        animation: animation,
-        builder: (context, _) {
-          final t = Curves.easeOut.transform(animation.value);
-          return Transform.scale(
-            scale: 1 - 0.05 * t,
-            child: Material(
-              color: Colors.transparent,
-              elevation: 8 * t,
-              borderRadius: BorderRadius.circular(Radii.lg),
-              child: child,
+    const listPadding = EdgeInsets.only(top: Spacing.xs, bottom: 110);
+    final list = _selectionMode
+        // 选择模式禁用拖拽排序(对齐上游:选择模式下 dragModifier 置空)。
+        ? ListView.builder(
+            padding: listPadding,
+            itemCount: _models.length,
+            itemBuilder: (context, index) => card(index),
+          )
+        : ReorderableListView.builder(
+            padding: listPadding,
+            itemCount: _models.length,
+            onReorder: (oldIndex, newIndex) async {
+              HapticFeedback.selectionClick();
+              setState(() {
+                final moved = _models.removeAt(oldIndex);
+                _models.insert(newIndex.clamp(0, _models.length), moved);
+              });
+              await _save(provider);
+            },
+            proxyDecorator: (child, index, animation) => AnimatedBuilder(
+              animation: animation,
+              builder: (context, _) {
+                final t = Curves.easeOut.transform(animation.value);
+                return Transform.scale(
+                  scale: 1 - 0.05 * t,
+                  child: Material(
+                    color: Colors.transparent,
+                    elevation: 8 * t,
+                    borderRadius: BorderRadius.circular(Radii.lg),
+                    child: child,
+                  ),
+                );
+              },
             ),
+            itemBuilder: (context, index) => card(index),
           );
-        },
-      ),
-      itemBuilder: (context, index) => card(index),
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: Spacing.lg),
+      child: GlassPanel(child: list),
     );
   }
 
-  /// 单个模型卡片:首尾行带圆角,与设置卡片视觉一致。
+  /// 单个模型卡片:行背景透明,由外层玻璃面板统一提供材质与圆角。
   Widget _modelCard(
     BuildContext context,
     AppLocalizations l10n,
@@ -487,22 +491,11 @@ class _ProviderEditPageState extends ConsumerState<ProviderEditPage> {
     String model,
     int index,
   ) {
-    final first = index == 0;
-    final last = index == _models.length - 1;
     return Container(
       key: ValueKey('model-$model'),
-      decoration: BoxDecoration(
-        color: context.semantic.cardSurface,
-        borderRadius: BorderRadius.only(
-          topLeft: Radius.circular(first ? Radii.lg : 0),
-          topRight: Radius.circular(first ? Radii.lg : 0),
-          bottomLeft: Radius.circular(last ? Radii.lg : 0),
-          bottomRight: Radius.circular(last ? Radii.lg : 0),
-        ),
-      ),
       child: Column(
         children: [
-          if (!first) const SettingsDivider(),
+          if (index != 0) const SettingsDivider(),
           _modelRow(context, l10n, provider, model),
         ],
       ),
@@ -516,6 +509,7 @@ class _ProviderEditPageState extends ConsumerState<ProviderEditPage> {
     String model,
   ) {
     final theme = Theme.of(context);
+    final bright = theme.brightness == Brightness.light;
     final selected = model == _selectedModel;
     // 元数据合并(对齐上游 ProviderModelRow 的 mergeModelMetadata):
     // 目录 + 自定义逐字段合并,自定义优先;目录匹配不到时回退推断默认值
@@ -542,8 +536,20 @@ class _ProviderEditPageState extends ConsumerState<ProviderEditPage> {
             height: 40,
             alignment: Alignment.center,
             decoration: BoxDecoration(
-              color: theme.colorScheme.surfaceContainerHighest,
+              // 与玻璃面板同材质的浅色块:半透明白 + 高光描边,避免实心方块压住背景。
+              gradient: LinearGradient(
+                begin: Alignment.topLeft,
+                end: Alignment.bottomRight,
+                colors: [
+                  Colors.white.withValues(alpha: bright ? 0.65 : 0.16),
+                  Colors.white.withValues(alpha: bright ? 0.28 : 0.06),
+                ],
+              ),
               borderRadius: BorderRadius.circular(Radii.sm),
+              border: Border.all(
+                width: 0.8,
+                color: Colors.white.withValues(alpha: bright ? 0.80 : 0.22),
+              ),
             ),
             child: ModelLogoIcon(modelName: model),
           ),

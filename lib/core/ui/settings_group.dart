@@ -123,6 +123,20 @@ class SettingsGroup extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    return GlassPanel(child: Column(children: children));
+  }
+}
+
+/// 液态柔光玻璃面板:强模糊 + 半透明白色渐变 + 亮边 + 大圆角投影。
+///
+/// 设置分组与「编辑供应商」的模型列表共用同一材质,保证整站观感一致。
+class GlassPanel extends StatelessWidget {
+  const GlassPanel({super.key, required this.child});
+
+  final Widget child;
+
+  @override
+  Widget build(BuildContext context) {
     final theme = Theme.of(context);
     final bright = theme.brightness == Brightness.light;
     return ClipRRect(
@@ -153,7 +167,7 @@ class SettingsGroup extends StatelessWidget {
               ),
             ],
           ),
-          child: Column(children: children),
+          child: child,
         ),
       ),
     );
