@@ -34,15 +34,19 @@ class ModelMetadataTags extends StatelessWidget {
       // 顺序对齐上游 ModelMetadataTags:图片 / 工具在前,token 上下限在后。
       if (data.supportsVision) pills.add(ModelTagPill(texts: ['图片']));
       if (data.supportsTools) pills.add(ModelTagPill(texts: ['工具']));
-      final input = data.inputTokens != null && data.inputTokens! > 0
-          ? data.inputTokens!
-          : data.contextTokens;
-      final output = data.outputTokens != null && data.outputTokens! > 0 ? data.outputTokens! : 0;
-      final tokens = [
-        if (input > 0) '↑${formatTokenLimit(input)}',
-        if (output > 0) '↓${formatTokenLimit(output)}',
-      ];
-      if (tokens.isNotEmpty) pills.add(ModelTagPill(texts: tokens));
+      // 窗口是兜底推断值时不展示:否则所有未知模型都是同一个 ↑128k ↓64k,反而误导。
+      if (!data.estimated) {
+        final input = data.inputTokens != null && data.inputTokens! > 0
+            ? data.inputTokens!
+            : data.contextTokens;
+        final output =
+            data.outputTokens != null && data.outputTokens! > 0 ? data.outputTokens! : 0;
+        final tokens = [
+          if (input > 0) '↑${formatTokenLimit(input)}',
+          if (output > 0) '↓${formatTokenLimit(output)}',
+        ];
+        if (tokens.isNotEmpty) pills.add(ModelTagPill(texts: tokens));
+      }
     }
     if (pills.isEmpty && trailing.isEmpty) return const SizedBox.shrink();
     return Padding(
@@ -179,6 +183,10 @@ class _FetchModelsSheetState extends ConsumerState<_FetchModelsSheet> {
             messageFailed: l10n.providerFetchFailed,
           );
       if (!mounted) return;
+      // 服务端在 /models 里声明的窗口落盘,模型行才能显示真实 ↑/↓;
+      // 没声明的模型不再用兜底值伪装真实数据(标签会隐藏)。
+      await _persistFetchedMetadata(result);
+      if (!mounted) return;
       setState(() {
         _models = result.models;
         _debug = result.debugInfo;
@@ -200,6 +208,40 @@ class _FetchModelsSheetState extends ConsumerState<_FetchModelsSheet> {
         _loading = false;
       });
     }
+  }
+
+  /// 把服务端声明的窗口写进自定义元数据:能力标签沿用目录识别结果,避免把
+  /// 「服务端没声明」误判成「不支持工具」。
+  Future<void> _persistFetchedMetadata(FetchModelsResult result) async {
+    if (result.metadata.isEmpty) return;
+    final catalog = ref.read(modelCatalogProvider).valueOrNull ?? ModelCatalog.empty;
+    final custom = ref.read(customModelMetadataProvider).valueOrNull ?? const {};
+    final entries = <String, ModelMetadata>{};
+    for (final entry in result.metadata.entries) {
+      final base = resolveModelMetadata(
+        catalog,
+        custom,
+        providerId: widget.provider.id,
+        model: entry.key,
+        type: widget.provider.type,
+      );
+      entries[entry.key] = ModelMetadata(
+        id: entry.key,
+        providerId: widget.provider.id,
+        displayName: base.displayName,
+        contextTokens: entry.value.contextTokens,
+        inputTokens: entry.value.inputTokens,
+        outputTokens: entry.value.outputTokens,
+        supportsTools: base.supportsTools,
+        supportsVision: base.supportsVision,
+        supportsReasoning: base.supportsReasoning,
+        supportsImageOutput: base.supportsImageOutput,
+        reasoningCanDisable: base.reasoningCanDisable,
+        reasoningEffortOptions: base.reasoningEffortOptions,
+      );
+    }
+    await ref.read(modelMetadataStoreProvider).putAll(widget.provider.id, entries);
+    ref.invalidate(customModelMetadataProvider);
   }
 
   @override

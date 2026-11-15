@@ -204,6 +204,7 @@ ModelMetadata inferredModelMetadata(String model) => ModelMetadata(
       inputTokens: _defaultContextTokens,
       outputTokens: _defaultOutputTokens,
       supportsTools: true,
+      estimated: true,
     );
 
 /// 按协议类型偏好的目录供应商顺序(对齐上游 ModelMetadataService.preferredProviders)。

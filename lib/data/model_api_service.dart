@@ -3,16 +3,23 @@ import 'dart:convert';
 import 'package:dio/dio.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../agent/models/model_metadata.dart';
 import '../agent/protocols/http_transport.dart';
 import '../agent/protocols/url_utils.dart';
 import 'providers/provider_config.dart';
 
 /// 拉取模型列表的结果(对齐上游 FetchModelsResult):模型列表 + 完整调试信息。
 class FetchModelsResult {
-  const FetchModelsResult(this.models, this.debugInfo);
+  const FetchModelsResult(this.models, this.debugInfo, {this.metadata = const {}});
 
   final List<String> models;
   final ModelTestResult debugInfo;
+
+  /// 服务端在 `/models` 里声明的窗口与能力(只含真正返回了信息的模型)。
+  ///
+  /// 聚合类供应商(OpenRouter 等)会带 `context_length` / `max_completion_tokens`,
+  /// 有这些就能显示真实上下文,而不是兜底默认值。
+  final Map<String, ModelMetadata> metadata;
 }
 
 /// 模型连通性测试 / 拉取模型的调试信息(对齐上游 ModelTestResult)。
@@ -152,6 +159,7 @@ class ModelApiService {
           responseHeaders: debugBase.responseHeaders,
           responseBody: body,
         ),
+        metadata: parseModelsMetadata(body, provider.type),
       );
     } on FetchModelsException {
       rethrow;
@@ -296,6 +304,58 @@ class ModelApiService {
       return null;
     }
   }
+
+  /// 从 `/models` 响应体里解析上下文窗口与最大输出;只收录服务端真正返回了数值的模型。
+  ///
+  /// 兼容常见的几种写法:
+  /// - 聚合站(OpenRouter 等):`context_length`、`top_provider.max_completion_tokens`
+  /// - 通用:`context_window` / `max_context_length` / `max_output_tokens` / `limit.context`
+  /// - Gemini:`inputTokenLimit` / `outputTokenLimit`
+  ///
+  /// 只取窗口数字,能力标签仍交给内置目录判断——避免把「服务端没声明」误当成「不支持」。
+  static Map<String, ModelMetadata> parseModelsMetadata(String body, ProviderType type) {
+    try {
+      final decoded = jsonDecode(body);
+      if (decoded is! Map) return const {};
+      final list = type == ProviderType.gemini ? decoded['models'] : decoded['data'];
+      if (list is! List) return const {};
+      final result = <String, ModelMetadata>{};
+      for (final item in list) {
+        if (item is! Map) continue;
+        final raw = type == ProviderType.gemini ? item['name'] : item['id'];
+        if (raw is! String) continue;
+        final name =
+            (type == ProviderType.gemini ? raw.replaceFirst('models/', '') : raw).trim();
+        if (name.isEmpty) continue;
+        final topProvider = item['top_provider'];
+        final limit = item['limit'];
+        final context = _positiveInt(item['context_length']) ??
+            _positiveInt(item['context_window']) ??
+            _positiveInt(item['max_context_length']) ??
+            _positiveInt(item['inputTokenLimit']) ??
+            _positiveInt(limit is Map ? limit['context'] : null) ??
+            _positiveInt(topProvider is Map ? topProvider['context_length'] : null);
+        final output = _positiveInt(item['max_completion_tokens']) ??
+            _positiveInt(item['max_output_tokens']) ??
+            _positiveInt(item['outputTokenLimit']) ??
+            _positiveInt(limit is Map ? limit['output'] : null) ??
+            _positiveInt(topProvider is Map ? topProvider['max_completion_tokens'] : null);
+        if (context == null && output == null) continue;
+        result[name] = ModelMetadata(
+          id: name,
+          contextTokens: context ?? 0,
+          inputTokens: context,
+          outputTokens: output,
+        );
+      }
+      return result;
+    } catch (_) {
+      return const {};
+    }
+  }
+
+  static int? _positiveInt(Object? value) =>
+      value is num && value > 0 ? value.toInt() : null;
 
   static Map<String, String> _maskHeaders(Map<String, String> headers) => {
         for (final entry in headers.entries)

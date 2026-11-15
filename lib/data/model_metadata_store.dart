@@ -38,6 +38,44 @@ class CustomModelMetadataStore {
     await _write(map);
   }
 
+  /// 批量补写窗口信息(拉取模型后调用):只填空缺字段,用户已填的内容原样保留。
+  ///
+  /// 一次写盘,避免几百个模型逐个 `put` 时反复读写同一个文件。
+  Future<void> putAll(String providerId, Map<String, ModelMetadata> models) async {
+    if (models.isEmpty) return;
+    final map = Map<String, ModelMetadata>.of(await all());
+    for (final entry in models.entries) {
+      final key = modelMetadataKey(providerId, entry.key);
+      final fetched = entry.value;
+      final existing = map[key];
+      if (existing == null) {
+        map[key] = fetched;
+        continue;
+      }
+      map[key] = ModelMetadata(
+        id: existing.id,
+        providerId: existing.providerId,
+        displayName: existing.displayName,
+        contextTokens: existing.contextTokens > 0
+            ? existing.contextTokens
+            : fetched.contextTokens,
+        inputTokens: existing.inputTokens ?? fetched.inputTokens,
+        outputTokens: existing.outputTokens ?? fetched.outputTokens,
+        supportsTools: existing.supportsTools,
+        supportsVision: existing.supportsVision,
+        supportsReasoning: existing.supportsReasoning,
+        supportsImageOutput: existing.supportsImageOutput,
+        reasoningCanDisable: existing.reasoningCanDisable,
+        reasoningEffortOptions: existing.reasoningEffortOptions,
+        inputCostUsdPerM: existing.inputCostUsdPerM,
+        outputCostUsdPerM: existing.outputCostUsdPerM,
+        cacheReadCostUsdPerM: existing.cacheReadCostUsdPerM,
+        cacheWriteCostUsdPerM: existing.cacheWriteCostUsdPerM,
+      );
+    }
+    await _write(map);
+  }
+
   Future<void> remove(String providerId, String model) async {
     final map = Map<String, ModelMetadata>.of(await all());
     if (map.remove(modelMetadataKey(providerId, model)) != null) {

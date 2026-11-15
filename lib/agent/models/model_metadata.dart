@@ -17,6 +17,7 @@ class ModelMetadata {
     this.outputCostUsdPerM,
     this.cacheReadCostUsdPerM,
     this.cacheWriteCostUsdPerM,
+    this.estimated = false,
   }) : displayName = displayName ?? id;
 
   final String id;
@@ -42,6 +43,12 @@ class ModelMetadata {
   final double? outputCostUsdPerM;
   final double? cacheReadCostUsdPerM;
   final double? cacheWriteCostUsdPerM;
+
+  /// 窗口是否是「推断出来的兜底值」而不是真实数据。
+  ///
+  /// 目录与供应商都没给出窗口时会按模型名粗估(128k/64k),这类数字不适合展示给用户
+  /// ——否则所有模型都显示一模一样的 ↑128k ↓64k。内部压缩仍可用它做保守估计。
+  final bool estimated;
 
   Map<String, Object?> toJson() => {
         'id': id,
@@ -114,5 +121,10 @@ ModelMetadata mergeModelMetadata(String model, ModelMetadata? base, ModelMetadat
     outputCostUsdPerM: c.outputCostUsdPerM ?? a.outputCostUsdPerM,
     cacheReadCostUsdPerM: c.cacheReadCostUsdPerM ?? a.cacheReadCostUsdPerM,
     cacheWriteCostUsdPerM: c.cacheWriteCostUsdPerM ?? a.cacheWriteCostUsdPerM,
+    // 自定义里填了真实窗口就不再是兜底值;否则沿用基础元数据的判定。
+    estimated: a.estimated &&
+        c.contextTokens <= 0 &&
+        (c.inputTokens ?? 0) <= 0 &&
+        (c.outputTokens ?? 0) <= 0,
   );
 }
