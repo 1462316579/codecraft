@@ -226,9 +226,7 @@ class ContainerNotifier extends Notifier<ContainerState> {
       stagingPath = staging.path;
 
       // 解压耗时且是纯 CPU/磁盘操作，放到后台 isolate，避免卡住界面。
-      final execPaths = await Isolate.run(
-        () => extractTarGz(archiveFile.path, staging.path),
-      );
+      final execPaths = await _extractRootfs(archiveFile.path, staging.path);
 
       // 容器内没有 Android 的 DNS 配置，写一份公共 DNS，装包后才能联网。
       final etc = Directory(p.join(staging.path, 'etc'));
@@ -438,3 +436,8 @@ class ContainerNotifier extends Notifier<ContainerState> {
     return '操作失败：$e';
   }
 }
+
+/// 解压 rootfs。必须是顶层函数：在 `install` 里直接写闭包会共享 capture context，
+/// 把 ContainerNotifier（含 Riverpod 容器）一起发进 isolate，直接报 unsendable。
+Future<List<String>> _extractRootfs(String archive, String target) =>
+    Isolate.run(() => extractTarGz(archive, target));
