@@ -125,9 +125,6 @@ class SettingsGroup extends StatelessWidget {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     final bright = theme.brightness == Brightness.light;
-    final base = bright
-        ? Brand.violet.withValues(alpha: 0.10)
-        : Brand.violet.withValues(alpha: 0.14);
     return ClipRRect(
       borderRadius: BorderRadius.circular(Radii.xl),
       child: BackdropFilter(
@@ -138,18 +135,18 @@ class SettingsGroup extends StatelessWidget {
               begin: Alignment.topLeft,
               end: Alignment.bottomRight,
               colors: [
-                base.withValues(alpha: 0.55),
-                base.withValues(alpha: 0.25),
+                Colors.white.withValues(alpha: bright ? 0.55 : 0.12),
+                Colors.white.withValues(alpha: bright ? 0.22 : 0.05),
               ],
             ),
             borderRadius: BorderRadius.circular(Radii.xl),
             border: Border.all(
               width: 1,
-              color: Colors.white.withValues(alpha: bright ? 0.55 : 0.20),
+              color: Colors.white.withValues(alpha: bright ? 0.70 : 0.18),
             ),
             boxShadow: [
               BoxShadow(
-                color: Brand.violet.withValues(alpha: bright ? 0.08 : 0.16),
+                color: Colors.black.withValues(alpha: bright ? 0.06 : 0.28),
                 blurRadius: 24,
                 spreadRadius: 0,
                 offset: const Offset(0, 12),
@@ -191,6 +188,7 @@ class SettingsRow extends StatelessWidget {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     final semantic = context.semantic;
+    final bright = theme.brightness == Brightness.light;
     return Opacity(
       opacity: enabled ? 1 : 0.5,
       child: InkWell(
@@ -205,21 +203,23 @@ class SettingsRow extends StatelessWidget {
                   height: iconBoxSize,
                   decoration: BoxDecoration(
                     gradient: LinearGradient(
+                      begin: Alignment.topLeft,
+                      end: Alignment.bottomRight,
                       colors: [
-                        Brand.violet.withValues(alpha: 0.14),
-                        Brand.violet.withValues(alpha: 0.04),
+                        Colors.white.withValues(alpha: bright ? 0.65 : 0.16),
+                        Colors.white.withValues(alpha: bright ? 0.28 : 0.06),
                       ],
                     ),
                     borderRadius: BorderRadius.circular(Radii.mdLarge),
                     border: Border.all(
-                      width: 0.5,
-                      color: Colors.white.withValues(alpha: 0.45),
+                      width: 0.8,
+                      color: Colors.white.withValues(alpha: bright ? 0.80 : 0.22),
                     ),
                     boxShadow: [
                       BoxShadow(
-                        color: Brand.violet.withValues(alpha: 0.12),
-                        blurRadius: 10,
-                        offset: const Offset(0, 4),
+                        color: Colors.black.withValues(alpha: bright ? 0.05 : 0.25),
+                        blurRadius: 8,
+                        offset: const Offset(0, 3),
                       ),
                     ],
                   ),

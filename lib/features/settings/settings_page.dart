@@ -1,11 +1,8 @@
-import 'dart:ui';
-
 import 'package:flutter/material.dart';
 import '../../core/icons/iconfont.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
-import '../../core/theme/semantic_colors.dart';
 import '../../core/theme/tokens.dart';
 import '../../core/ui/settings_group.dart';
 import '../../l10n/app_localizations.dart';
@@ -20,14 +17,7 @@ class SettingsPage extends ConsumerWidget {
     final l10n = AppLocalizations.of(context);
     final theme = Theme.of(context);
     return Scaffold(
-      extendBody: true,
-      extendBodyBehindAppBar: true,
-      appBar: AppBar(
-        backgroundColor: Colors.transparent,
-        surfaceTintColor: Colors.transparent,
-        elevation: 0,
-        scrolledUnderElevation: 0,
-      ),
+      backgroundColor: Colors.transparent,
       body: Stack(
         children: [
           // 页面底部渐变背景（液态柔光玻璃基底）。
@@ -43,16 +33,18 @@ class SettingsPage extends ConsumerWidget {
               ),
             ),
           ),
-          // 液态玻璃内容层，随页面滚动。
-          ListView(
-            physics: const AlwaysScrollableScrollPhysics(),
-            padding: EdgeInsets.only(
-              top: MediaQuery.of(context).padding.top + Spacing.lg,
-              left: Spacing.lg,
-              right: Spacing.lg,
-              bottom: 140,
-            ),
-            children: [
+          // 液态玻璃内容层，随页面滚动；SafeArea 保证不被状态栏遮挡。
+          SafeArea(
+            bottom: false,
+            child: ListView(
+              physics: const AlwaysScrollableScrollPhysics(),
+              padding: const EdgeInsets.only(
+                top: Spacing.lg,
+                left: Spacing.lg,
+                right: Spacing.lg,
+                bottom: 140,
+              ),
+              children: [
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 0),
                 child: Column(
@@ -151,7 +143,8 @@ class SettingsPage extends ConsumerWidget {
                   ],
                 ),
               ),
-            ],
+              ],
+            ),
           ),
         ],
       ),
