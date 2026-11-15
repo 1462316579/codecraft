@@ -189,22 +189,38 @@ class ProjectsPage extends ConsumerWidget {
     );
   }
 
-  /// 新建写作项目:先弹小说向导收集书名/类型/标签/每章字数,再建项目并开首条会话。
+  /// 新建写作项目:新建小说(向导收集书名/类型/标签/每章字数)或选择已有小说,
+  /// 再建项目并开首条会话。
   Future<void> _createWritingProject(BuildContext context, WidgetRef ref) async {
-    final spec = await showNovelCreateSheet(context);
-    if (spec == null || !context.mounted) return;
+    final writingRoot = p.join(await ExternalStorage.primaryRoot(), writingWorkspaceName);
+    if (!context.mounted) return;
+    final selection = await showNovelCreateSheet(context, writingRoot: writingRoot);
+    if (selection == null || !context.mounted) return;
+
     final l10n = AppLocalizations.of(context);
     final mode = AgentMode.write;
+    final title = selection.title;
     // 先确保小说目录脚手架存在(角色关联/小说资料/小说章节),再建项目。
+    // 选择已有小说时是幂等补全:只补缺失结构,不覆盖已有内容。
     try {
-      final root = await ExternalStorage.primaryRoot();
-      final writingRoot = p.join(root, writingWorkspaceName);
-      await NovelScaffold.create(writingRoot, spec.title);
+      await NovelScaffold.create(writingRoot, title);
     } catch (_) {
       // 目录创建失败不阻断项目创建;用户可在文件页或设置中授权后重试。
     }
+
+    // 同名写作项目已存在时直接打开,避免同一本小说出现多个项目。
+    final projects = await ref.read(projectsProvider.future);
+    if (!context.mounted) return;
+    final existing = projects
+        .where((project) => project.kind == ProjectKind.writing && project.name == title)
+        .firstOrNull;
+    if (existing != null) {
+      onOpenProject(existing);
+      return;
+    }
+
     final project = await ref.read(projectsProvider.notifier).create(
-          name: spec.title,
+          name: title,
           mode: mode,
           kind: ProjectKind.writing,
         );
@@ -213,14 +229,17 @@ class ProjectsPage extends ConsumerWidget {
           projectId: project.id,
         );
     if (!context.mounted) return;
-    // 把创建时收集的小说设定直接作为首条消息发送给 AI。
-    final brief = <String>[
-      l10n.novelBriefTitle(spec.title),
-      if (spec.gender != null && spec.gender!.isNotEmpty) spec.gender!,
-      if (spec.tags.isNotEmpty) l10n.novelBriefTags(spec.tags.join('、')),
-      if (spec.wordsPerChapter != null)
-        l10n.novelBriefWords('${spec.wordsPerChapter}'),
-    ].join('\n');
+    // 把新建小说时收集的设定作为首条消息发送给 AI;已有小说则提示先读资料再续写。
+    final spec = selection.spec;
+    final brief = spec == null
+        ? l10n.novelExistingBrief(title)
+        : <String>[
+            l10n.novelBriefTitle(spec.title),
+            if (spec.gender != null && spec.gender!.isNotEmpty) spec.gender!,
+            if (spec.tags.isNotEmpty) l10n.novelBriefTags(spec.tags.join('、')),
+            if (spec.wordsPerChapter != null)
+              l10n.novelBriefWords('${spec.wordsPerChapter}'),
+          ].join('\n');
     // 异步发送,不阻塞打开聊天页;失败时用户仍可在输入框看到文本(由 controller 兜底)。
     unawaited(ref.read(chatControllerProvider(session.id).notifier).send(brief));
     onOpenProject(project.copyWith());

@@ -1942,6 +1942,19 @@
   "novelFieldWordsPerChapter": "Words per chapter",
   "novelFieldWordsHint": "Pick a preset or enter a custom count",
   "novelCreate": "Create",
+  "novelPickExisting": "Existing Novel",
+  "novelOpen": "Open",
+  "novelExistingEmpty": "No other novels in the AI Novel folder",
+  "novelExistingEmptyHint": "Put novel folders into the AI Novel folder, then come back to select one",
+  "novelExistingFailed": "Failed to load novels",
+  "novelExistingBrief": "Continue the existing novel “{title}”. Read the story materials and existing chapters first, then continue writing.",
+  "@novelExistingBrief": {
+    "placeholders": {
+      "title": {
+        "type": "String"
+      }
+    }
+  },
   "novelBriefTitle": "New novel “{title}”",
   "@novelBriefTitle": {
     "placeholders": {

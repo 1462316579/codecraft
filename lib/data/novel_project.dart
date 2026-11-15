@@ -18,6 +18,36 @@ class NovelSpec {
   final String? gender;
 }
 
+/// 写作根下已有的一本小说(目录名即书名)。
+class NovelInfo {
+  const NovelInfo({
+    required this.name,
+    required this.path,
+    required this.modified,
+  });
+
+  final String name;
+  final String path;
+  final DateTime modified;
+}
+
+/// 新建 / 选择已有小说的结果。
+class NovelSelection {
+  const NovelSelection.create(this.spec) : existingTitle = null;
+
+  const NovelSelection.existing(this.existingTitle) : spec = null;
+
+  /// 新建小说时收集的设定;选择已有小说时为 null。
+  final NovelSpec? spec;
+
+  /// 已有小说的目录名;新建小说时为 null。
+  final String? existingTitle;
+
+  bool get isExisting => existingTitle != null;
+
+  String get title => existingTitle ?? spec!.title;
+}
+
 /// 写作项目的小说目录脚手架:创建小说后在写作工作区根目录下建立固定结构。
 ///
 /// <写作根>/<书名>/
@@ -52,6 +82,23 @@ class NovelScaffold {
     }
     if (name.length > 80) name = name.substring(0, 80);
     return name.isEmpty ? '未命名小说' : name;
+  }
+
+  /// 列出写作根下已有的小说目录(按最近修改倒序),用于「选择已有小说」。
+  /// 目录不存在或不可读时返回空列表。
+  static Future<List<NovelInfo>> list(String writingRoot) async {
+    final root = Directory(writingRoot);
+    if (!await root.exists()) return const [];
+    final novels = <NovelInfo>[];
+    await for (final entity in root.list(followLinks: false)) {
+      if (entity is! Directory) continue;
+      final name = p.basename(entity.path);
+      if (name.isEmpty || name.startsWith('.')) continue;
+      final stat = await entity.stat();
+      novels.add(NovelInfo(name: name, path: entity.path, modified: stat.modified));
+    }
+    novels.sort((a, b) => b.modified.compareTo(a.modified));
+    return novels;
   }
 
   /// 在 [writingRoot] 下为 [title] 建小说目录与固定结构;已存在时幂等补全。

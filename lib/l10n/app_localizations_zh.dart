@@ -3702,6 +3702,26 @@ class AppLocalizationsZh extends AppLocalizations {
   String get novelCreate => '创建';
 
   @override
+  String get novelPickExisting => '选择已有小说';
+
+  @override
+  String get novelOpen => '打开';
+
+  @override
+  String get novelExistingEmpty => '「AI小说」目录里还没有其他小说';
+
+  @override
+  String get novelExistingEmptyHint => '把小说文件夹放进 AI小说 目录后,再回到这里选择';
+
+  @override
+  String get novelExistingFailed => '读取小说列表失败';
+
+  @override
+  String novelExistingBrief(String title) {
+    return '继续创作已有小说《$title》,先阅读「小说资料」与已有章节,了解设定与进度后再动笔。';
+  }
+
+  @override
   String novelBriefTitle(String title) {
     return '新建小说《$title》';
   }

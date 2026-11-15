@@ -6974,6 +6974,42 @@ abstract class AppLocalizations {
   /// **'创建'**
   String get novelCreate;
 
+  /// No description provided for @novelPickExisting.
+  ///
+  /// In zh, this message translates to:
+  /// **'选择已有小说'**
+  String get novelPickExisting;
+
+  /// No description provided for @novelOpen.
+  ///
+  /// In zh, this message translates to:
+  /// **'打开'**
+  String get novelOpen;
+
+  /// No description provided for @novelExistingEmpty.
+  ///
+  /// In zh, this message translates to:
+  /// **'「AI小说」目录里还没有其他小说'**
+  String get novelExistingEmpty;
+
+  /// No description provided for @novelExistingEmptyHint.
+  ///
+  /// In zh, this message translates to:
+  /// **'把小说文件夹放进 AI小说 目录后,再回到这里选择'**
+  String get novelExistingEmptyHint;
+
+  /// No description provided for @novelExistingFailed.
+  ///
+  /// In zh, this message translates to:
+  /// **'读取小说列表失败'**
+  String get novelExistingFailed;
+
+  /// No description provided for @novelExistingBrief.
+  ///
+  /// In zh, this message translates to:
+  /// **'继续创作已有小说《{title}》,先阅读「小说资料」与已有章节,了解设定与进度后再动笔。'**
+  String novelExistingBrief(String title);
+
   /// No description provided for @novelBriefTitle.
   ///
   /// In zh, this message translates to:

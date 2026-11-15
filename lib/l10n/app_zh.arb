@@ -1998,6 +1998,19 @@
   "novelFieldWordsPerChapter": "每章字数",
   "novelFieldWordsHint": "可选档位,也可以自定义",
   "novelCreate": "创建",
+  "novelPickExisting": "选择已有小说",
+  "novelOpen": "打开",
+  "novelExistingEmpty": "「AI小说」目录里还没有其他小说",
+  "novelExistingEmptyHint": "把小说文件夹放进 AI小说 目录后,再回到这里选择",
+  "novelExistingFailed": "读取小说列表失败",
+  "novelExistingBrief": "继续创作已有小说《{title}》,先阅读「小说资料」与已有章节,了解设定与进度后再动笔。",
+  "@novelExistingBrief": {
+    "placeholders": {
+      "title": {
+        "type": "String"
+      }
+    }
+  },
   "novelBriefTitle": "新建小说《{title}》",
   "@novelBriefTitle": {
     "placeholders": {

@@ -3814,6 +3814,27 @@ class AppLocalizationsEn extends AppLocalizations {
   String get novelCreate => 'Create';
 
   @override
+  String get novelPickExisting => 'Existing Novel';
+
+  @override
+  String get novelOpen => 'Open';
+
+  @override
+  String get novelExistingEmpty => 'No other novels in the AI Novel folder';
+
+  @override
+  String get novelExistingEmptyHint =>
+      'Put novel folders into the AI Novel folder, then come back to select one';
+
+  @override
+  String get novelExistingFailed => 'Failed to load novels';
+
+  @override
+  String novelExistingBrief(String title) {
+    return 'Continue the existing novel “$title”. Read the story materials and existing chapters first, then continue writing.';
+  }
+
+  @override
   String novelBriefTitle(String title) {
     return 'New novel “$title”';
   }
