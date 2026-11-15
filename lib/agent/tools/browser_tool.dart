@@ -1,5 +1,8 @@
+import 'dart:async';
+
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../app/router.dart';
 import '../../data/browser/browser_manager.dart';
 import 'tool.dart';
 
@@ -51,7 +54,7 @@ class BrowserTool extends AgentTool {
   @override
   String get description =>
       '控制应用内置浏览器执行自动化操作,与浏览器页面共用同一组标签(WebView)。'
-      '除 screenshot 需浏览器面板已挂载/可见外,多数操作可后台执行;无标签时会自动新建。'
+      '浏览器页未打开时会自动打开并等待 WebView 挂载,之后可后台执行;无标签时会自动新建。'
       'selector 支持 ref= / text= / text*= / role=button[name=xxx] / xpath= / CSS;'
       'getBackbone 返回无障碍树(role/name/ref),ref 可直接用作 selector。'
       '需查看页面视觉内容时显式调用 action="screenshot"。';
@@ -175,6 +178,27 @@ class BrowserTool extends AgentTool {
         ),
       };
 
+  /// 确保目标标签的 WebView 控制器已就绪;浏览器页未打开时自动打开并等待挂载。
+  Future<bool> _ensureAttached(BrowserManager manager, String? tabId) async {
+    bool ready() =>
+        manager.controllerFor(tabId ?? manager.state.activeTabId) != null;
+    if (ready()) return true;
+    final target = tabId ?? manager.state.activeTabId;
+    if (target.isEmpty) return false;
+    if (!manager.state.tabs.any((tab) => tab.id == target)) return false;
+
+    final router = _ref.read(routerProvider);
+    if (router.routerDelegate.currentConfiguration.uri.path != '/browser') {
+      // push 的 Future 在页面关闭时才完成,这里不等待。
+      unawaited(router.push('/browser'));
+    }
+    for (var i = 0; i < 50; i++) {
+      await Future<void>.delayed(const Duration(milliseconds: 100));
+      if (ready()) return true;
+    }
+    return false;
+  }
+
   @override
   Future<ToolResult> execute(Map<String, dynamic> args, {String? sessionId}) async {
     final manager = _ref.read(browserManagerProvider);
@@ -186,16 +210,25 @@ class BrowserTool extends AgentTool {
       manager.newTab();
     }
     ToolError notAttached() => const ToolError(
-          '浏览器标签未挂载(WebView 未渲染)。请先在应用中打开浏览器页面,或让用户打开后重试。',
+          '浏览器 WebView 启动失败。请确认应用内可以正常打开浏览器页后重试。',
           code: 'BROWSER_NOT_ATTACHED',
         );
-    bool needsController() => !manager.state.attached &&
-        manager.controllerFor(tabId ?? manager.state.activeTabId) == null;
     const jsActions = {
       'navigate', 'evaluate', 'click', 'fill', 'press', 'getText', 'getHtml',
       'scroll', 'wait', 'back', 'forward', 'reload', 'hover', 'select', 'getBackbone',
     };
-    if (jsActions.contains(action) && needsController()) return notAttached();
+    // 浏览器页没打开时 WebView 尚未创建,JS 无法执行。这里自动打开浏览器页
+    // 并等待控制器挂载,让 AI 不必先让用户手动点开浏览器。
+    if (jsActions.contains(action) && !await _ensureAttached(manager, tabId)) {
+      return notAttached();
+    }
+    if (action == 'screenshot') {
+      await _ensureAttached(manager, tabId);
+      // 等首帧渲染完成,否则抓到的可能是空白页面。
+      if (manager.state.attached) {
+        await Future<void>.delayed(const Duration(milliseconds: 300));
+      }
+    }
     switch (action) {
       case 'navigate':
         final url = args['url'] as String? ?? '';

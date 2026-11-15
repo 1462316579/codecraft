@@ -59,6 +59,7 @@ import 'tools/explorer_tools.dart';
 import 'tools/file_tools.dart';
 import 'tools/manage_mcp_tool.dart';
 import 'tools/skill_tool.dart';
+import 'tools/terminal_tool.dart';
 import 'tools/todo_tool.dart';
 import 'tools/tool.dart';
 
@@ -212,6 +213,7 @@ class ChatController extends StateNotifier<ChatViewState> {
               .read(terminalTabsProvider.notifier)
               .mirrorOutput(output, exitCode: exitCode),
         ),
+      if (!writing) TerminalTool(_ref),
       if (projectKind == ProjectKind.coding || projectKind == ProjectKind.reverse)
         CaptureTool(_ref),
       BrowserTool(_ref),

@@ -272,6 +272,40 @@ class TerminalTabsNotifier extends Notifier<TerminalTabsState> {
     tab.resize(columns, rows);
   }
 
+  /// 取一个可交互（非 AI 镜像）标签：优先当前标签，否则第一个可交互标签。
+  TerminalTab? interactiveTab([String? tabId]) {
+    if (tabId != null && tabId.isNotEmpty) {
+      final tab = state.tabs.where((item) => item.id == tabId).firstOrNull;
+      return (tab == null || tab.mirror) ? null : tab;
+    }
+    final active = state.active;
+    if (active != null && !active.mirror) return active;
+    return state.tabs.where((item) => !item.mirror).firstOrNull;
+  }
+
+  /// 读取终端屏幕文本（含最近的滚动历史），供 AI 查看交互式程序输出。
+  String readScreen({String? tabId, int lines = 60}) {
+    final tab = interactiveTab(tabId);
+    if (tab == null) return '';
+    final screen = tab.controller.screen;
+    final available = screen.scrollbackLength + screen.rows;
+    final count = lines <= 0 ? screen.rows : lines.clamp(1, available);
+    final rows = <String>[];
+    for (var index = screen.rows - count; index < screen.rows; index++) {
+      final row = screen.rowAt(index);
+      if (row != null) rows.add(row.getText());
+    }
+    return rows.join('\n').trimRight();
+  }
+
+  /// 向标签的 PTY 写入文本（AI 操作交互式终端）。
+  bool writeTo(String data, {String? tabId}) {
+    final tab = interactiveTab(tabId);
+    if (tab == null || !tab.running) return false;
+    tab.writeText(data);
+    return true;
+  }
+
   void toggleCtrl() => state = state.copyWith(ctrl: !state.ctrl);
   void toggleAlt() => state = state.copyWith(alt: !state.alt);
   void clearModifiers() {

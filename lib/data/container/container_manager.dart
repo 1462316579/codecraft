@@ -46,6 +46,14 @@ const List<ContainerImage> kContainerImages = [
     sizeLabel: '3.9 MB',
   ),
   ContainerImage(
+    id: 'ubuntu-26.04',
+    name: 'Ubuntu 26.04 Base',
+    description: 'glibc + apt，最新 LTS（Resolute Raccoon），推荐',
+    url:
+        'https://cdimage.ubuntu.com/ubuntu-base/releases/26.04/release/ubuntu-base-26.04.1-base-arm64.tar.gz',
+    sizeLabel: '约 35 MB',
+  ),
+  ContainerImage(
     id: 'ubuntu-24.04',
     name: 'Ubuntu 24.04 Base',
     description: 'glibc + apt，兼容性最好，安装较慢',
