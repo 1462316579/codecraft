@@ -191,8 +191,6 @@ class TerminalTabsNotifier extends Notifier<TerminalTabsState> {
       controller: controller,
     );
 
-    controller.writeString('CodeCraft Terminal · ${spec.containerName} (PRoot)\r\n');
-
     try {
       final pty = Pty.start(
         spec.executable,
