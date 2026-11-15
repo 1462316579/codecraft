@@ -94,10 +94,16 @@ class ProjectsPage extends ConsumerWidget {
                   itemCount: projects.length,
                   itemBuilder: (context, index) {
                     final project = projects[index];
-                    return _GlassProjectRow(
-                      project: project,
-                      onTap: () => onOpenProject(project),
-                      onLongPress: () => _showActions(context, ref, project),
+                    // 卡片之间留出间距,否则玻璃卡片会叠在一起看不出边界。
+                    return Padding(
+                      padding: EdgeInsets.only(
+                        bottom: index == projects.length - 1 ? 0 : Spacing.md,
+                      ),
+                      child: _GlassProjectRow(
+                        project: project,
+                        onTap: () => onOpenProject(project),
+                        onLongPress: () => _showActions(context, ref, project),
+                      ),
                     );
                   },
                 ),
