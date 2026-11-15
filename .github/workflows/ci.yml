@@ -40,6 +40,11 @@ jobs:
           echo "keyPassword=${{ secrets.KEY_PASSWORD }}" >> android/key.properties
           echo "keyAlias=${{ secrets.KEY_ALIAS }}" >> android/key.properties
           echo "storeFile=upload-keystore.jks" >> android/key.properties
+          echo "=== key.properties contents ==="
+          cat android/key.properties
+          echo "=== end ==="
+          echo "=== keystore file ==="
+          ls -la android/app/upload-keystore.jks
 
       - name: Get Flutter dependencies
         run: |
