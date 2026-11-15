@@ -20,6 +20,7 @@ import '../reverse/reverse_routes.dart';
 import '../../data/workbench.dart';
 import '../../data/workspaces.dart';
 import '../../data/execution_target.dart';
+import '../../data/novel_project.dart';
 import '../../l10n/app_localizations.dart';
 import 'file_type_icon.dart';
 
@@ -82,6 +83,10 @@ class _FileTreeTabState extends ConsumerState<FileTreeTab> {
   bool _loading = false;
   bool _refreshing = false;
   String? _error;
+  /// 旧写作布局迁移只在每个工作区首次加载时尝试一次。
+  bool _legacyMigrated = false;
+  /// 外部工作区是否缺少「所有文件访问权限」(缺少时可能只看到目录、看不到文件)。
+  bool _externalNoAccess = false;
   List<String> _ignorePatterns = const [];
 
   /// 树根的显示名(工作区名,如 `workspace` 或 `AI小说`)。
@@ -114,13 +119,16 @@ class _FileTreeTabState extends ConsumerState<FileTreeTab> {
     final root = ref.watch(currentWorkspaceProvider).rootPath;
     final target = ref.watch(executionTargetProvider);
     final targetChanged = _loadedTarget != target;
-    if (targetChanged) {
+    final rootChanged = _loadedRoot != root;
+    if (targetChanged || rootChanged) {
+      // 根目录或执行环境换了,旧的展开状态与缓存都不再属于当前树,必须清空。
       _loadedTarget = target;
       _expanded.clear();
       _children.clear();
       _dirErrors.clear();
+      _legacyMigrated = false;
     }
-    if (_loadedRoot != root || targetChanged) {
+    if (rootChanged || targetChanged) {
       _loadedRoot = root;
       WidgetsBinding.instance.addPostFrameCallback((_) {
         if (mounted) _refresh(root);
@@ -134,6 +142,9 @@ class _FileTreeTabState extends ConsumerState<FileTreeTab> {
         Column(
           children: [
             const SizedBox(height: Spacing.xs),
+            // 外部工作区缺「所有文件访问权限」时可能只列出目录、看不到文件,
+            // 这里给一条常驻提示(而不是等到读目录失败才出现)。
+            if (_externalNoAccess && _error == null) _permissionBanner(l10n, root),
             Expanded(
               child: _error != null
                   ? Center(
@@ -326,6 +337,24 @@ class _FileTreeTabState extends ConsumerState<FileTreeTab> {
       // 工作区目录可能尚未创建(历史项目或创建时 IO 失败):先补建再列举,
       // 否则 Directory.list 会直接抛 PathNotFoundException。
       await _ensureRoot(root);
+      // 旧写作布局(工作区根直接是「AI小说」)遗留的章节/资料搬进当前小说目录,
+      // 否则文件树只看新目录,旧内容永远看不到。每个工作区只尝试一次。
+      if (!_legacyMigrated && _isExternalWorkspace(root)) {
+        _legacyMigrated = true;
+        try {
+          await NovelScaffold.migrateLegacyLayout(p.dirname(root), p.basename(root));
+        } catch (_) {
+          // 迁移是尽力而为:失败不影响后面的正常列目录。
+        }
+        if (!mounted) return;
+      }
+      // 外部目录可能「列得出目录、读不到文件」,这里顺带把权限状态反馈给界面。
+      final noAccess =
+          _isExternalWorkspace(root) && !await ExternalStorage.hasAccess();
+      if (!mounted) return;
+      if (noAccess != _externalNoAccess) {
+        setState(() => _externalNoAccess = noAccess);
+      }
       _ignorePatterns = await _loadGitignore(root).timeout(
         const Duration(seconds: 8),
         onTimeout: () => const [],
@@ -519,6 +548,46 @@ class _FileTreeTabState extends ConsumerState<FileTreeTab> {
     final workspace = ref.watch(currentWorkspaceInfoProvider);
     if (workspace == null || !workspace.isExternal) return false;
     return !root.startsWith('/data/');
+  }
+
+  /// 同上,但可在异步流程里调用(不能用 `ref.watch`)。
+  bool _isExternalWorkspace(String root) {
+    final workspace = ref.read(currentWorkspaceInfoProvider);
+    if (workspace == null || !workspace.isExternal) return false;
+    return !root.startsWith('/data/');
+  }
+
+  /// 外部工作区缺少「所有文件访问权限」时的顶部提示条。
+  Widget _permissionBanner(AppLocalizations l10n, String root) {
+    final theme = Theme.of(context);
+    return Container(
+      margin: const EdgeInsets.symmetric(horizontal: Spacing.sm),
+      padding: const EdgeInsets.only(left: Spacing.sm, right: Spacing.xs),
+      decoration: BoxDecoration(
+        color: theme.colorScheme.surfaceContainerHighest,
+        borderRadius: BorderRadius.circular(Radii.sm),
+      ),
+      child: Row(
+        children: [
+          Expanded(
+            child: Text(
+              l10n.fileBrowserNeedPermission,
+              style: theme.textTheme.bodySmall?.copyWith(
+                color: context.semantic.subtleText,
+              ),
+            ),
+          ),
+          TextButton(
+            onPressed: () async {
+              await ExternalStorage.requestAllFilesAccess();
+              if (!mounted) return;
+              await _refresh(root);
+            },
+            child: Text(l10n.storagePermissionGrant),
+          ),
+        ],
+      ),
+    );
   }
 
   Future<void> _onTap(_Node node, String root) async {
