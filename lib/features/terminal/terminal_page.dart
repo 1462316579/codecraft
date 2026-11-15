@@ -40,10 +40,10 @@ class _TerminalPageState extends ConsumerState<TerminalPage> {
     final notifier = ref.read(terminalTabsProvider.notifier);
     final settings = ref.watch(terminalSettingsProvider);
 
-    // 内置主题色（与TerminalThemePreset.builtin保持一致）
-    const bgColor = Color(0xFF1E1E1E);
-    const fgColor = Color(0xFFD4D4D4);
-    const cursorColor = Color(0xFF00FF00);
+    // 终端配色随设置中的主题变化，默认跟随应用主题。
+    final bgColor = settings.theme.backgroundFor(context);
+    final fgColor = settings.theme.foregroundFor(context);
+    final cursorColor = settings.theme.cursorFor(context);
 
     final active = state.active;
     final title = active?.title ?? l10n.terminalTitle;
@@ -64,7 +64,7 @@ class _TerminalPageState extends ConsumerState<TerminalPage> {
         onClose: (id) => notifier.closeTab(id),
         onSettings: () {
           Navigator.of(context).pop();
-          showTerminalSettingsSheet(context, ref);
+          showTerminalSettingsSheet(context);
         },
       ),
       body: SafeArea(
@@ -105,7 +105,7 @@ class _TerminalPageState extends ConsumerState<TerminalPage> {
                   IconButton(
                     icon: Icon(Iconfont.settings, size: 18, color: fgColor),
                     tooltip: l10n.terminalSettingsTitle,
-                    onPressed: () => showTerminalSettingsSheet(context, ref),
+                    onPressed: () => showTerminalSettingsSheet(context),
                   ),
                 ],
               ),
