@@ -32,7 +32,7 @@ import java.nio.file.Paths
  */
 object BootstrapInstaller {
     private const val TAG = "BootstrapInstaller"
-    private const val BOOTSTRAP_VERSION = "2026.11.08-r1+apt.android-7"
+    private const val BOOTSTRAP_VERSION = "2026.11.08-r2+apt.android-7"
     private const val MARKER_NAME = ".bootstrapped"
 
     /** 内嵌 bootstrap 在 assets 中的目录名（已解压内容，无需解压）。 */
@@ -390,32 +390,59 @@ object BootstrapInstaller {
             return
         }
 
-        var created = 0
+        // 文件格式为「<目标>←<链接路径>」，如：
+        //   coreutils←./bin/sum        （bin/sum -> coreutils）
+        //   libreadline.so.8←./lib/libreadline.so
+        // 之前把左右两栏写反，导致 libreadline 等关键库链接成断链，bash 无法 exec。
+        var pending = ArrayList<Pair<String, String>>()
         for (line in lines) {
             if (line.isBlank()) continue
             val parts = line.split("←")
             if (parts.size != 2) continue
-            val target = parts[0]  // 原始目标路径 (如 /data/data/com.termux/files/usr/share/...)
-            val linkPath = parts[1].removePrefix("./")  // 去掉 "./" 前缀，得到相对链接路径
-
-            // 将 Termux PREFIX 替换为本应用的 staging PREFIX
-            val adjustedTarget = target.replace(TERMUX_PREFIX, stagingDir.absolutePath)
-
-            val linkFile = File(stagingDir, linkPath)
-            linkFile.parentFile?.mkdirs()
-
-            try {
-                // 删除已存在的文件/链接（assets 里是实体副本，必须让位给符号链接）
-                if (Files.exists(linkFile.toPath()) || Files.isSymbolicLink(linkFile.toPath())) {
-                    Files.deleteIfExists(linkFile.toPath())
-                }
-                Files.createSymbolicLink(linkFile.toPath(), File(adjustedTarget).toPath())
-                created++
-            } catch (e: Exception) {
-                Log.e(TAG, "创建符号链接失败: $linkPath -> $adjustedTarget", e)
-            }
+            val target = parts[0]
+            val linkRel = parts[1].removePrefix("./")
+            if (target.isBlank() || linkRel.isBlank()) continue
+            pending.add(target to linkRel)
         }
-        Log.i(TAG, "已创建 $created 个符号链接")
+
+        var created = 0
+        var pass = 0
+        // 链接可能指向同批次后面才创建的链接（如 libreadline.so -> .so.8 -> .so.8.3），
+        // 因此多轮处理，直到没有新进展。
+        while (pending.isNotEmpty() && pass < 5) {
+            val next = ArrayList<Pair<String, String>>()
+            for ((rawTarget, linkRel) in pending) {
+                val linkFile = File(stagingDir, linkRel)
+                // assets 中已是实体文件的保留实体文件，不覆盖为符号链接
+                if (!Files.isSymbolicLink(linkFile.toPath()) && linkFile.isFile) {
+                    continue
+                }
+                val targetPath =
+                    rawTarget.replace(TERMUX_PREFIX, stagingDir.absolutePath)
+                val resolvedTarget = when {
+                    targetPath.startsWith("/") -> File(targetPath)
+                    targetPath.startsWith("./") -> File(stagingDir, targetPath.removePrefix("./"))
+                    else -> File(linkFile.parentFile, targetPath)
+                }
+                // 目标不存在先跳过，避免生成断链（断链会让 bash 等二进制无法 exec）
+                if (!resolvedTarget.exists()) {
+                    next.add(rawTarget to linkRel)
+                    continue
+                }
+                try {
+                    Files.deleteIfExists(linkFile.toPath())
+                    linkFile.parentFile?.mkdirs()
+                    Files.createSymbolicLink(linkFile.toPath(), resolvedTarget.toPath())
+                    created++
+                } catch (e: Exception) {
+                    Log.e(TAG, "创建符号链接失败: $linkRel -> $resolvedTarget", e)
+                }
+            }
+            if (next.size == pending.size) break
+            pending = next
+            pass++
+        }
+        Log.i(TAG, "已创建 $created 个符号链接，未解析 ${pending.size} 个")
     }
 
     /** 设置可执行权限：bin/、libexec/、apt 相关 */

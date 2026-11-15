@@ -39,9 +39,10 @@ android {
         // Android 10 (API 29) 起，targetSdk >= 29 的应用被 SELinux 禁止执行
         // 应用私有目录 (app_data_file) 中的文件（W^X 策略）。
         // 而 Termux 用户空间的 bash/apt/coreutils 都是运行时解压到 filesDir/usr/bin
-        // 再 execve 的，targetSdk >= 29 会直接 Permission denied。
+        // 再 execve 的，targetSdk >= 29 会直接 Permission denied
+        // （表现为 bash 启动后立刻退出）。
         // targetSdk 28 使应用落在允许直接执行的 SELinux 域（untrusted_app_27）。
-        targetSdk = 34
+        targetSdk = 28
         versionCode = flutter.versionCode
         versionName = flutter.versionName
     }

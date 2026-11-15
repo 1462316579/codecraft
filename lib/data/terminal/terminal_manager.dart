@@ -456,7 +456,6 @@ class TermuxBootstrap {
       'PATH': '$prefix/bin:$prefix/bin/applets:/system/bin:/system/xbin'
           '${inherited.isEmpty ? '' : ':$inherited'}',
       'LD_LIBRARY_PATH': '$prefix/lib',
-      'LD_PRELOAD': '$prefix/lib/libtermux-exec-ld-preload.so',
     };
   }
 
