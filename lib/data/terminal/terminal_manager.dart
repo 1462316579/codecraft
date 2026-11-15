@@ -175,87 +175,93 @@ class TerminalTabsNotifier extends Notifier<TerminalTabsState> {
     );
 
     final preflight = TermuxBootstrap.lastPreflight;
-    // 自检失败就别再 exec bash（只会得到一个秒退的空白终端），
-    // 直接用系统 shell，并把失败原因写在屏幕上。
-    final useTermux = preflight == null || preflight.ok;
-    final launchPath = useTermux ? shell : '/system/bin/sh';
-
-    final pty = Pty.start(
-      launchPath,
-      arguments: useTermux ? const ['-l'] : const [],
-      rows: 24,
-      columns: 80,
-      environment:
-          useTermux ? TermuxBootstrap.environment : TermuxBootstrap.systemEnvironment,
-      workingDirectory: TermuxBootstrap.home,
-    );
-
-    controller.onResponse = (data) {
-      pty.write(Uint8List.fromList(utf8.encode(data)));
-    };
+    final specs = _launchSpecs(shell, preflight);
 
     final id = '${++_seq}';
     final tab = TerminalTab(
       id: id,
-      title: launchPath.split('/').last,
+      title: specs.first.label,
       controller: controller,
-      pty: pty,
     );
 
-    controller.writeString('CodeCraft Terminal · $launchPath\r\n');
-    if (!useTermux) {
+    controller.writeString('CodeCraft Terminal · ${specs.first.label}\r\n');
+    if (preflight != null && !preflight.ok) {
       controller.writeString('\x1b[33m[Termux 环境自检未通过]\x1b[0m\r\n');
-      controller.writeString('${preflight.detail}\r\n');
+      if (preflight.detail.isNotEmpty) {
+        controller.writeString('${preflight.detail}\r\n');
+      }
       controller.writeString(
-        '\x1b[2m已改用系统 /system/bin/sh。修正环境后重开标签即可恢复 Termux。\x1b[0m\r\n\r\n',
+        '\x1b[2m先降级到可用的 shell，修正环境后重开标签即可恢复 Termux。\x1b[0m\r\n\r\n',
       );
+    } else if (preflight != null && !preflight.loginOk) {
+      controller.writeString('\x1b[33m[登录 shell 自检未通过，改用无 profile 的 bash]\x1b[0m\r\n');
+      if (preflight.loginDetail.isNotEmpty) {
+        controller.writeString('\x1b[2m${preflight.loginDetail}\x1b[0m\r\n');
+      }
+      controller.writeString('\r\n');
     }
 
-    final startedAt = DateTime.now();
-    var fallbackTried = !useTermux;
-
-    pty.exitCode.then((code) async {
-      tab.running = false;
-      final elapsed = DateTime.now().difference(startedAt);
-      // 立刻退出（1.5s 内）或非零退出都视为启动失败：
-      // 前者覆盖 /etc/profile 里直接 exit 的情况，后者覆盖 exec/动态链接失败。
-      final quickFailure = elapsed < const Duration(milliseconds: 1500) || code != 0;
-
-      if (!fallbackTried && quickFailure && !tab.mirror) {
-        fallbackTried = true;
-        final detail = await TermuxBootstrap.preflight(force: true);
-        controller.writeString(
-          '\r\n\x1b[31m[启动失败] $shell 退出码 $code（${elapsed.inMilliseconds}ms）\x1b[0m\r\n',
+    void startAttempt(int index) {
+      if (index >= specs.length) return;
+      final spec = specs[index];
+      final Pty pty;
+      try {
+        pty = Pty.start(
+          spec.path,
+          arguments: spec.arguments,
+          rows: 24,
+          columns: 80,
+          environment: spec.termux
+              ? TermuxBootstrap.environment
+              : TermuxBootstrap.systemEnvironment,
+          workingDirectory: TermuxBootstrap.home,
         );
-        if (detail.detail.isNotEmpty) {
-          controller.writeString('\x1b[33m${detail.detail}\x1b[0m\r\n');
-        }
-        controller.writeString('\x1b[2m改用系统 /system/bin/sh 继续。\x1b[0m\r\n\r\n');
-        try {
-          final fallback = Pty.start(
-            '/system/bin/sh',
-            rows: 24,
-            columns: 80,
-            environment: TermuxBootstrap.systemEnvironment,
-            workingDirectory: TermuxBootstrap.home,
-          );
-          tab.attach(fallback);
-          tab.title = 'sh (fallback)';
-          state = state.copyWith();
-          fallback.exitCode.then((shCode) {
-            tab.running = false;
-            controller.writeString('\r\n[会话已退出，退出码: $shCode]\r\n');
-            state = state.copyWith();
-          });
-          return;
-        } catch (e) {
-          controller.writeString('\x1b[31m系统 shell 也无法启动: $e\x1b[0m\r\n');
-        }
+      } catch (e) {
+        controller.writeString('\x1b[31m无法启动 ${spec.label}：$e\x1b[0m\r\n');
+        startAttempt(index + 1);
+        return;
       }
 
-      controller.writeString('\r\n\x1b[2m[会话已退出，退出码: $code]\x1b[0m\r\n');
+      controller.onResponse = (data) {
+        pty.write(Uint8List.fromList(utf8.encode(data)));
+      };
+      tab.attach(pty);
+      tab.title = spec.label;
       state = state.copyWith();
-    });
+
+      final startedAt = DateTime.now();
+      pty.exitCode.then((code) async {
+        tab.running = false;
+        final elapsed = DateTime.now().difference(startedAt);
+        // 立刻退出（1.5s 内）或非零退出都视为启动失败：
+        // 前者覆盖 profile 直接退出，后者覆盖 exec/动态链接失败。
+        final quickFailure =
+            elapsed < const Duration(milliseconds: 1500) || code != 0;
+        final hasNext = index + 1 < specs.length;
+
+        if (quickFailure && hasNext && !tab.mirror) {
+          controller.writeString(
+            '\r\n\x1b[31m[${spec.label} 退出码 $code，耗时 ${elapsed.inMilliseconds}ms]\x1b[0m\r\n',
+          );
+          if (spec.termux) {
+            final detail = await TermuxBootstrap.preflight(force: true);
+            if (detail.detail.isNotEmpty) {
+              controller.writeString('\x1b[33m${detail.detail}\x1b[0m\r\n');
+            }
+          }
+          controller.writeString(
+            '\x1b[2m改用 ${specs[index + 1].label} 继续。\x1b[0m\r\n\r\n',
+          );
+          startAttempt(index + 1);
+          return;
+        }
+
+        controller.writeString('\r\n\x1b[2m[会话已退出，退出码: $code]\x1b[0m\r\n');
+        state = state.copyWith();
+      });
+    }
+
+    startAttempt(0);
 
     state = state.copyWith(
       tabs: [...state.tabs, tab],
@@ -264,6 +270,29 @@ class TerminalTabsNotifier extends Notifier<TerminalTabsState> {
       stage: () => null,
       error: () => null,
     );
+  }
+
+  /// 启动顺序，和 Termux 一致：先在完整的 Termux 环境里起登录 shell，
+  /// 失败就退到不带 profile 的 bash，最后退到系统 sh，保证终端一定可用。
+  List<_LaunchSpec> _launchSpecs(String shell, TerminalPreflightResult? preflight) {
+    final specs = <_LaunchSpec>[];
+    if (preflight == null || preflight.ok) {
+      if (preflight == null || preflight.loginOk) {
+        specs.add(_LaunchSpec(shell, const ['-l'], termux: true, label: 'bash -l'));
+      }
+      specs.add(
+        _LaunchSpec(
+          shell,
+          const ['--noprofile', '--norc', '-i'],
+          termux: true,
+          label: 'bash (no profile)',
+        ),
+      );
+    }
+    specs.add(
+      const _LaunchSpec('/system/bin/sh', [], termux: false, label: 'sh（系统兜底）'),
+    );
+    return specs;
   }
 
   void _updateTitle(String title) {
@@ -365,17 +394,38 @@ class TerminalPreflightResult {
   final String output;
   final String detail;
 
+  /// 登录 shell（`bash -l`，会走 profile）是否也能跑通。
+  final bool loginOk;
+  final String loginDetail;
+
   const TerminalPreflightResult({
     required this.ok,
     this.exitCode,
     this.output = '',
     this.detail = '',
+    this.loginOk = true,
+    this.loginDetail = '',
   });
 
   String get summary {
     if (ok) return '';
     return '预检失败：$detail';
   }
+}
+
+/// 一次启动尝试：可执行文件 + 参数 + 是否使用 Termux 环境。
+class _LaunchSpec {
+  final String path;
+  final List<String> arguments;
+  final bool termux;
+  final String label;
+
+  const _LaunchSpec(
+    this.path,
+    this.arguments, {
+    required this.termux,
+    required this.label,
+  });
 }
 
 /// Termux 运行环境：负责安装 bootstrap、构造环境变量、启动前自检。
@@ -488,6 +538,8 @@ class TermuxBootstrap {
         exitCode: (raw['exitCode'] as num?)?.toInt(),
         output: (raw['output'] as String?) ?? '',
         detail: (raw['detail'] as String?) ?? '',
+        loginOk: raw['loginOk'] != false,
+        loginDetail: (raw['loginDetail'] as String?) ?? '',
       );
       lastPreflight = result;
       return result;

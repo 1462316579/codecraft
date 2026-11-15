@@ -8,6 +8,7 @@ import java.io.FileInputStream
 import java.io.FilterInputStream
 import java.io.FileOutputStream
 import java.io.InputStream
+import java.io.RandomAccessFile
 import java.nio.file.Files
 import java.nio.file.Paths
 
@@ -32,7 +33,7 @@ import java.nio.file.Paths
  */
 object BootstrapInstaller {
     private const val TAG = "BootstrapInstaller"
-    private const val BOOTSTRAP_VERSION = "2026.11.08-r3+apt.android-7"
+    private const val BOOTSTRAP_VERSION = "2026.11.15-r4+apt.android-7"
     private const val MARKER_NAME = ".bootstrapped"
 
     /** 内嵌 bootstrap 在 assets 中的目录名（已解压内容，无需解压）。 */
@@ -154,29 +155,37 @@ object BootstrapInstaller {
             progress = -1
             processSymlinks(stagingDir, context)
 
-            // 4. 重写脚本里的 Termux 硬编码路径（shebang 与脚本体），
+            // 4. 改写 ELF 的 DT_RUNPATH：Termux 官方包把库路径编译成了
+            //    /data/data/com.termux/files/usr/lib（本应用没有这个目录），
+            //    不改成 $ORIGIN 相对路径的话，bash 一 exec 就因找不到
+            //    libreadline.so.8 / libncursesw.so.6 而立刻退出。
+            stage = "适配动态库路径"
+            progress = -1
+            patchElfRunpaths(stagingDir)
+
+            // 5. 重写脚本里的 Termux 硬编码路径（shebang 与脚本体），
             //    否则 login/pkg/postinst 等脚本因 shebang 指向不存在的 Termux 路径而无法 exec。
             //    注意：重写目标必须是最终 prefix 路径（而非 staging），
             //    因为 second stage 在 rename 之后运行。
             stage = "适配路径"
             rewriteTermuxPaths(stagingDir, prefixDir.absolutePath)
 
-            // 5. 设置可执行权限
+            // 6. 设置可执行权限
             stage = "设置权限"
             setExecutablePermissions(stagingDir)
 
-            // 6. 清理旧的 prefix（如果存在）
+            // 7. 清理旧的 prefix（如果存在）
             if (prefixDir.exists()) {
                 Log.i(TAG, "移除旧的 prefix 目录")
                 deleteRecursive(prefixDir)
             }
 
-            // 7. 原子性重命名 staging -> prefix
+            // 8. 原子性重命名 staging -> prefix
             if (!stagingDir.renameTo(prefixDir)) {
                 throw RuntimeException("重命名 staging 到 prefix 失败")
             }
 
-            // 8. 运行 bootstrap second stage（执行各包 postinst 维护脚本，
+            // 9. 运行 bootstrap second stage（执行各包 postinst 维护脚本，
             //    对齐 Termux/ZeroTermux：update-alternatives、termux-exec LD_PRELOAD 等）。
             //    失败仅记录错误，保留可用环境（bash 仍可工作）。
             stage = "配置环境（second stage）"
@@ -184,7 +193,12 @@ object BootstrapInstaller {
                 Log.e(TAG, "Bootstrap second stage 未完全成功，保留现有环境继续（详见 logcat）")
             }
 
-            // 9. 写入版本标记
+            // 10. 写 login shell 的启动文件，让 bash -l 能读到 $PREFIX/etc/profile
+            //     （Termux 的 bash 把 SYS_PROFILE 编译成了 com.termux 的绝对路径，
+            //      换成别的包名后读不到，只能通过 ~/.bash_profile 转一手）。
+            writeShellStartupFiles(prefixDir)
+
+            // 11. 写入版本标记
             stage = "写入完成标记"
             File(prefixDir, MARKER_NAME).writeText(BOOTSTRAP_VERSION)
 
@@ -445,6 +459,73 @@ object BootstrapInstaller {
         Log.i(TAG, "已创建 $created 个符号链接，未解析 ${pending.size} 个")
     }
 
+    /**
+     * 改写 bootstrap 中所有 ELF 的 DT_RUNPATH / DT_RPATH。
+     *
+     * Termux 官方 bootstrap 是按包名 com.termux 编译的，动态库搜索路径被写死成
+     * /data/data/com.termux/files/usr/lib。本应用包名不同，该目录不存在，
+     * 于是 bash 一 exec 就报 "CANNOT LINK EXECUTABLE ... library ... not found"
+     * 并立刻退出（这就是「bash 秒退、界面空白」的根因）。
+     *
+     * 这里把 RUNPATH 就地换成相对 $ORIGIN 的形式（比原串短，可以直接覆盖）：
+     * - bin/、libexec/ 下的可执行文件 → $ORIGIN/../lib
+     * - lib/ 下的共享库 → $ORIGIN（依赖都在同一目录）
+     * - lib/apt/methods/ 下的 apt 方法 → $ORIGIN/../../lib
+     * 这样与安装路径、包名完全无关，也不再依赖 LD_LIBRARY_PATH 是否被链接器采纳。
+     */
+    private fun patchElfRunpaths(stagingDir: File) {
+        var patched = 0
+        var failed = 0
+
+        fun patchDir(dir: File, runpath: String) {
+            if (!dir.isDirectory) return
+            for (file in dir.listFiles() ?: emptyArray()) {
+                if (!file.isFile) continue
+                try {
+                    when (ElfRunpath.patch(file, runpath)) {
+                        ElfRunpath.Result.PATCHED -> patched++
+                        ElfRunpath.Result.FAILED -> {
+                            failed++
+                            Log.w(TAG, "RUNPATH 改写失败（新串过长？）: ${file.name}")
+                        }
+                        else -> {}
+                    }
+                } catch (e: Exception) {
+                    failed++
+                    Log.w(TAG, "RUNPATH 改写异常: ${file.name}", e)
+                }
+            }
+        }
+
+        patchDir(File(stagingDir, "bin"), "\$ORIGIN/../lib")
+        patchDir(File(stagingDir, "libexec"), "\$ORIGIN/../lib")
+        patchDir(File(stagingDir, "lib"), "\$ORIGIN")
+        patchDir(File(stagingDir, "lib/apt/methods"), "\$ORIGIN/../../lib")
+
+        Log.i(TAG, "已改写 $patched 个 ELF 的 RUNPATH（失败 $failed）")
+    }
+
+    /**
+     * 写 login shell 的启动文件。
+     *
+     * Termux 的 bash 把 SYS_PROFILE 编译成了 /data/data/com.termux/files/usr/etc/profile，
+     * 换包名后 bash -l 读不到 $PREFIX/etc/profile，于是拿不到 PS1 / PATH 等设置。
+     * 用 ~/.bash_profile 转一手即可等价恢复（proot-distro、Termux 多包名 fork 都这么做）。
+     */
+    private fun writeShellStartupFiles(prefixDir: File) {
+        val homeDir = File(prefixDir.parentFile, "home").apply { mkdirs() }
+        val profile = File(homeDir, ".bash_profile")
+        if (profile.exists()) return
+        profile.writeText(
+            """
+            # CodeCraft Terminal：把 Termux 的全局 profile 接进登录 shell
+            if [ -r "${'$'}PREFIX/etc/profile" ]; then
+                . "${'$'}PREFIX/etc/profile"
+            fi
+            """.trimIndent() + "\n",
+        )
+    }
+
     /** 设置可执行权限：bin/、libexec/、apt 相关 */
     private fun setExecutablePermissions(rootDir: File) {
         val executablePrefixes = listOf("bin/", "libexec/", "lib/apt/apt-helper", "lib/apt/methods/")
@@ -465,7 +546,7 @@ object BootstrapInstaller {
     }
 
     /**
-     * 启动前自检：在真实子进程里执行一次 bash，验证 exec 权限、动态链接与基础环境。
+     * 启动前自检：在真实子进程里执行 bash，验证 exec 权限、动态链接与基础环境。
      *
      * 这一步非常关键：bash 秒退的原因可能是
      * - exec 被 SELinux 拒绝（targetSdk >= 29 时的 W^X 策略）→ IOException: error=13
@@ -473,7 +554,10 @@ object BootstrapInstaller {
      * - 前缀路径没适配 → "-c" 参数无效、找不到库
      * ProcessBuilder 会把 errno 原文带回来，可直接显示给用户。
      *
-     * @return {ok, exitCode, output, detail}
+     * 除了基础 exec，还会跑一次 `bash -l`（等价于终端里的登录 shell），
+     * 用来判断 profile 链是否把 shell 带崩；Dart 侧据此选择启动参数。
+     *
+     * @return {ok, exitCode, output, detail, loginOk, loginDetail}
      */
     fun preflight(context: Context): Map<String, Any?> {
         val prefixDir = File(context.filesDir, "usr")
@@ -501,6 +585,8 @@ object BootstrapInstaller {
                 "exitCode" to null,
                 "output" to "",
                 "detail" to detail,
+                "loginOk" to false,
+                "loginDetail" to "",
             )
         }
 
@@ -518,12 +604,53 @@ object BootstrapInstaller {
             "LC_ALL" to "en_US.UTF-8",
         )
 
-        return try {
-            val builder = ProcessBuilder(
-                bash.absolutePath,
-                "-c",
-                "echo __CODECRAFT_OK__; echo \"PREFIX=\$PREFIX\"; uname -m",
+        val basic = runBashProbe(
+            bash,
+            homeDir,
+            env,
+            listOf("-c", "echo __CODECRAFT_OK__; echo \"PREFIX=\$PREFIX\"; uname -m"),
+        )
+        if (!basic.ok) {
+            return mapOf(
+                "ok" to false,
+                "exitCode" to basic.code,
+                "output" to basic.output.take(600),
+                "detail" to basic.detail,
+                "loginOk" to false,
+                "loginDetail" to "",
             )
+        }
+
+        // 登录 shell：会读 ~/.bash_profile 与 $PREFIX/etc/profile，
+        // 这两者里任何一步写错都会让 bash 直接退出。
+        val login = runBashProbe(bash, homeDir, env, listOf("-l", "-c", "echo __CODECRAFT_OK__"))
+
+        return mapOf(
+            "ok" to true,
+            "exitCode" to basic.code,
+            "output" to basic.output.take(600),
+            "detail" to "",
+            "loginOk" to login.ok,
+            "loginDetail" to login.detail,
+        )
+    }
+
+    /** preflight 单次探测结果。 */
+    private class Probe(
+        val ok: Boolean,
+        val code: Int?,
+        val output: String,
+        val detail: String,
+    )
+
+    private fun runBashProbe(
+        bash: File,
+        homeDir: File,
+        env: Map<String, String>,
+        args: List<String>,
+    ): Probe {
+        return try {
+            val builder = ProcessBuilder(listOf(bash.absolutePath) + args)
             builder.directory(homeDir)
             builder.redirectErrorStream(true)
             builder.environment().putAll(env)
@@ -535,41 +662,32 @@ object BootstrapInstaller {
                     if (output.length < 4000) output.append(line).append('\n')
                 }
             }
+            val label = args.joinToString(" ")
             val finished = process.waitFor(10, java.util.concurrent.TimeUnit.SECONDS)
             if (!finished) {
                 process.destroyForcibly()
-                return mapOf(
-                    "ok" to false,
-                    "exitCode" to null,
-                    "output" to output.toString(),
-                    "detail" to "bash 自检超时（10s 未返回），可能卡在启动脚本",
-                )
+                Log.e(TAG, "preflight 超时: $label")
+                return Probe(false, null, output.toString(), "bash $label 自检超时（10s 未返回）")
             }
             val code = process.exitValue()
             val text = output.toString()
             val ok = code == 0 && text.contains("__CODECRAFT_OK__")
-            val detail = if (ok) {
-                ""
-            } else {
-                "bash -c 退出码 $code" + if (text.isNotBlank()) "：${text.trim()}" else ""
-            }
-            Log.i(TAG, "preflight ok=$ok code=$code output=${text.trim()}")
-            mapOf(
-                "ok" to ok,
-                "exitCode" to code,
-                "output" to text.take(600),
-                "detail" to detail,
+            Log.i(TAG, "preflight bash $label ok=$ok code=$code output=${text.trim()}")
+            Probe(
+                ok = ok,
+                code = code,
+                output = text,
+                detail = if (ok) {
+                    ""
+                } else {
+                    "bash $label 退出码 $code" + if (text.isNotBlank()) "：${text.trim()}" else ""
+                },
             )
         } catch (e: Exception) {
             // IOException 的 message 里带 errno，例如 "error=13, Permission denied"
-            val detail = "${e.javaClass.simpleName}: ${e.message ?: ""}"
+            val detail = "bash ${args.joinToString(" ")} → ${e.javaClass.simpleName}: ${e.message ?: ""}"
             Log.e(TAG, "preflight 无法执行 bash", e)
-            mapOf(
-                "ok" to false,
-                "exitCode" to null,
-                "output" to "",
-                "detail" to detail,
-            )
+            Probe(false, null, "", detail)
         }
     }
 
@@ -579,5 +697,137 @@ object BootstrapInstaller {
             file.listFiles()?.forEach { deleteRecursive(it) }
         }
         return file.delete()
+    }
+}
+
+/**
+ * 就地改写 ELF64(小端) 的 DT_RUNPATH / DT_RPATH。
+ *
+ * 只做等长或缩短的替换：新串写进原字符串位置，剩余字节补 NUL。
+ * 改的是 .dynstr 里那一段，不会移动任何偏移，所以对 ELF 结构是安全的。
+ */
+private object ElfRunpath {
+    enum class Result { NOT_ELF, NO_RUNPATH, PATCHED, FAILED }
+
+    fun patch(file: File, newRunpath: String): Result {
+        RandomAccessFile(file, "rw").use { raf ->
+            if (raf.length() < 64) return Result.NOT_ELF
+
+            val ident = ByteArray(16)
+            raf.seek(0)
+            raf.readFully(ident)
+            if (ident[0] != 0x7f.toByte() || ident[1] != 'E'.code.toByte() ||
+                ident[2] != 'L'.code.toByte() || ident[3] != 'F'.code.toByte()
+            ) {
+                return Result.NOT_ELF
+            }
+            // 只处理 ELF64 + 小端（bootstrap 只有 arm64）
+            if (ident[4].toInt() != 2 || ident[5].toInt() != 1) return Result.NOT_ELF
+
+            val phoff = raf.leLong(0x20)
+            val phentsize = raf.leShort(0x36)
+            val phnum = raf.leShort(0x38)
+            if (phoff <= 0 || phentsize < 56 || phnum <= 0) return Result.NOT_ELF
+
+            var dynOffset = -1L
+            var dynSize = 0L
+            val loads = ArrayList<LongArray>() // [p_offset, p_vaddr, p_filesz]
+
+            for (i in 0 until phnum) {
+                val base = phoff + i.toLong() * phentsize
+                when (raf.leInt(base)) {
+                    1 -> loads.add(
+                        longArrayOf(
+                            raf.leLong(base + 8),
+                            raf.leLong(base + 16),
+                            raf.leLong(base + 32),
+                        ),
+                    )
+                    2 -> {
+                        dynOffset = raf.leLong(base + 8)
+                        dynSize = raf.leLong(base + 32)
+                    }
+                }
+            }
+            if (dynOffset < 0 || dynSize <= 0) return Result.NO_RUNPATH
+
+            var strtabVaddr = -1L
+            var strtabSize = 0L
+            var runpathOffset = -1L
+            var i = 0
+            val dynEntries = (dynSize / 16).toInt()
+            while (i < dynEntries) {
+                val base = dynOffset + i * 16L
+                val tag = raf.leLong(base)
+                val value = raf.leLong(base + 8)
+                if (tag == 0L) break
+                when (tag) {
+                    5L -> strtabVaddr = value
+                    10L -> strtabSize = value
+                    15L, 29L -> if (runpathOffset < 0) runpathOffset = value
+                }
+                i++
+            }
+            if (strtabVaddr < 0 || strtabSize <= 0 || runpathOffset < 0) return Result.NO_RUNPATH
+
+            var strtabFile = -1L
+            for (seg in loads) {
+                if (strtabVaddr >= seg[1] && strtabVaddr < seg[1] + seg[2]) {
+                    strtabFile = seg[0] + (strtabVaddr - seg[1])
+                    break
+                }
+            }
+            if (strtabFile < 0) return Result.FAILED
+
+            val at = strtabFile + runpathOffset
+            raf.seek(at)
+            val oldBytes = ArrayList<Byte>()
+            val maxString = strtabSize.coerceAtMost(4096L).toInt()
+            while (oldBytes.size < maxString) {
+                val b = raf.read()
+                if (b < 0 || b == 0) break
+                oldBytes.add(b.toByte())
+            }
+            val oldLength = oldBytes.size
+            if (oldLength == 0) return Result.NO_RUNPATH
+            val oldText = String(oldBytes.toByteArray(), Charsets.ISO_8859_1)
+            // 已经是 $ORIGIN 形式（或已适配过）就不再处理
+            if (oldText.startsWith("\$")) return Result.NO_RUNPATH
+
+            val bytes = newRunpath.toByteArray(Charsets.US_ASCII)
+            if (bytes.size > oldLength) return Result.FAILED
+
+            raf.seek(at)
+            raf.write(bytes)
+            // 补 NUL，保留原来的结尾 NUL
+            raf.write(ByteArray(oldLength - bytes.size + 1))
+            return Result.PATCHED
+        }
+    }
+
+    private fun RandomAccessFile.leShort(offset: Long): Int {
+        seek(offset)
+        val b = ByteArray(2)
+        readFully(b)
+        return (b[0].toInt() and 0xFF) or ((b[1].toInt() and 0xFF) shl 8)
+    }
+
+    private fun RandomAccessFile.leInt(offset: Long): Int {
+        seek(offset)
+        val b = ByteArray(4)
+        readFully(b)
+        return (b[0].toInt() and 0xFF) or
+            ((b[1].toInt() and 0xFF) shl 8) or
+            ((b[2].toInt() and 0xFF) shl 16) or
+            ((b[3].toInt() and 0xFF) shl 24)
+    }
+
+    private fun RandomAccessFile.leLong(offset: Long): Long {
+        seek(offset)
+        val b = ByteArray(8)
+        readFully(b)
+        var v = 0L
+        for (k in 7 downTo 0) v = (v shl 8) or (b[k].toLong() and 0xFF)
+        return v
     }
 }

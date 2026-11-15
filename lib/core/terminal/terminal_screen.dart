@@ -488,11 +488,13 @@ class TerminalScreen {
     version++;
   }
 
-  /// 改变尺寸：尽量保留内容（末尾对齐），光标保持相对底部的位置。
+  /// 改变尺寸：内容锚定在上方，多出来的行补在末尾。
+  ///
+  /// 不能在开头插空行：终端刚打开时只有一行横幅，插到开头的空行会把它
+  /// 和光标一起推到屏幕中间（此前真机上「光标悬在半空、上面全空」就是这个原因）。
   void resize(int columns, int rows) {
     if (columns == _columns && rows == _rows) return;
 
-    final oldRows = _rows;
     _columns = columns;
     _rows = rows;
     _scrollTop = 0;
@@ -502,7 +504,7 @@ class TerminalScreen {
       row.resize(columns);
     }
     while (_main.length < rows) {
-      _main.insert(0, TerminalRow(columns));
+      _main.add(TerminalRow(columns));
     }
     while (_main.length > rows + scrollbackLimit) {
       _main.removeAt(0);
@@ -519,7 +521,7 @@ class TerminalScreen {
     }
 
     _cx = _cx.clamp(0, columns - 1);
-    _cy = (_cy + (rows - oldRows)).clamp(0, rows - 1);
+    _cy = _cy.clamp(0, rows - 1);
     _pendingWrap = false;
     version++;
   }
