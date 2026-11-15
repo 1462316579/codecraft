@@ -488,22 +488,41 @@ class TerminalScreen {
     version++;
   }
 
-  /// 改变尺寸：内容锚定在上方，多出来的行补在末尾。
+  /// 改变尺寸：可见区必须始终包含光标所在行。
   ///
-  /// 不能在开头插空行：终端刚打开时只有一行横幅，插到开头的空行会把它
-  /// 和光标一起推到屏幕中间（此前真机上「光标悬在半空、上面全空」就是这个原因）。
+  /// 不能简单保留缓冲区末尾 `rows` 行：终端刚打开时光标在第 0 行，
+  /// 尺寸收缩（软键盘弹出等）会把光标行推进历史，随后 shell 在新位置
+  /// 重绘提示符，等尺寸恢复时提示符就停在屏幕中间，表现为「光标和提示符错位」。
   void resize(int columns, int rows) {
     if (columns == _columns && rows == _rows) return;
+
+    final oldRows = _rows;
+    final visibleStart = _main.length - oldRows;
+    final cursorIndex = visibleStart + _cy;
 
     _columns = columns;
     _rows = rows;
     _scrollTop = 0;
     _scrollBottom = rows - 1;
 
+    if (rows < oldRows) {
+      if (_cy < rows) {
+        // 光标仍在新的可见区内：丢弃视口下方的行（本来就看不见）。
+        final keep = visibleStart + rows;
+        if (_main.length > keep) _main.removeRange(keep, _main.length);
+      } else {
+        // 光标落在新视口之外：保留光标行及其上方内容，丢弃其下方内容，
+        // 光标停在新的最后一行。
+        final keep = cursorIndex + 1;
+        if (_main.length > keep) _main.removeRange(keep, _main.length);
+        _cy = rows - 1;
+      }
+    }
+
     for (final row in _main) {
       row.resize(columns);
     }
-    while (_main.length < rows) {
+    while (_main.length < visibleStart + rows) {
       _main.add(TerminalRow(columns));
     }
     while (_main.length > rows + scrollbackLimit) {

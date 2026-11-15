@@ -58,6 +58,37 @@ void main() {
     expect(screen.cursorY, 1);
   });
 
+  test('缩小再恢复尺寸后提示符不会被推到屏幕中间', () {
+    final controller = TerminalController(columns: 20, rows: 10);
+    controller.writeString('# ');
+    final screen = controller.screen;
+
+    // 模拟软键盘弹出时终端变矮。
+    controller.resize(20, 4);
+    expect(screen.cursorY, 0);
+    expect(screen.rowAt(0)!.getText(0, 2), '#');
+    expect(screen.cursorX, 2);
+
+    // 键盘收起后恢复高度，提示符仍应在第一行。
+    controller.resize(20, 12);
+    expect(screen.cursorY, 0);
+    expect(screen.rowAt(0)!.getText(0, 2), '#');
+    expect(screen.cursorX, 2);
+  });
+
+  test('缩小尺寸时光标所在行保持可见', () {
+    final controller = TerminalController(columns: 10, rows: 5);
+    controller.writeString('a\r\nb\r\nc\r\nd\r\ne');
+    final screen = controller.screen;
+    expect(screen.cursorY, 4);
+
+    controller.resize(10, 3);
+    expect(screen.cursorY, 2);
+    expect(screen.rowAt(0)!.getText(0, 1), 'c');
+    expect(screen.rowAt(1)!.getText(0, 1), 'd');
+    expect(screen.rowAt(2)!.getText(0, 1), 'e');
+  });
+
   test('满屏滚动后历史可回看', () {
     final controller = TerminalController(columns: 10, rows: 3);
     for (var i = 0; i < 6; i++) {

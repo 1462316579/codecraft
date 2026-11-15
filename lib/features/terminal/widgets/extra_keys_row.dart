@@ -2,7 +2,10 @@ import 'package:flutter/material.dart';
 
 import '../../../core/icons/iconfont.dart';
 
-/// 底部附加按键行（ZeroTermux 风格）
+/// 底部附加按键行（ZeroTermux 风格）。
+///
+/// 按键等分排列，最后一个为回车；整体放在 SafeArea 内，避免被系统导航条/
+/// 手势条遮挡。
 class ExtraKeysRow extends StatelessWidget {
   final bool ctrl;
   final bool alt;
@@ -11,8 +14,7 @@ class ExtraKeysRow extends StatelessWidget {
   final VoidCallback onToggleCtrl;
   final VoidCallback onToggleAlt;
   final void Function(String direction) onArrow;
-  final ValueChanged<String> onWrite;
-  final ValueChanged<List<int>> onWriteBytes;
+  final VoidCallback onEnter;
 
   const ExtraKeysRow({
     super.key,
@@ -23,47 +25,60 @@ class ExtraKeysRow extends StatelessWidget {
     required this.onToggleCtrl,
     required this.onToggleAlt,
     required this.onArrow,
-    required this.onWrite,
-    required this.onWriteBytes,
+    required this.onEnter,
   });
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      height: 48,
-      color: Theme.of(context).colorScheme.surface,
-      child: Row(
-        children: [
-          _KeyButton(label: 'ESC', onPressed: onEscape),
-          _KeyButton(label: 'TAB', onPressed: onTab),
-          _KeyButton(
-            label: 'CTRL',
-            onPressed: onToggleCtrl,
-            active: ctrl,
+    final theme = Theme.of(context);
+    return Material(
+      color: theme.colorScheme.surface,
+      child: SafeArea(
+        top: false,
+        child: Container(
+          height: 48,
+          decoration: BoxDecoration(
+            border: Border(
+              top: BorderSide(color: theme.dividerColor.withValues(alpha: 0.5)),
+            ),
           ),
-          _KeyButton(
-            label: 'ALT',
-            onPressed: onToggleAlt,
-            active: alt,
+          child: Row(
+            children: [
+              _KeyButton(label: 'ESC', onPressed: onEscape),
+              _KeyButton(label: 'TAB', onPressed: onTab),
+              _KeyButton(
+                label: 'CTRL',
+                onPressed: onToggleCtrl,
+                active: ctrl,
+              ),
+              _KeyButton(
+                label: 'ALT',
+                onPressed: onToggleAlt,
+                active: alt,
+              ),
+              _KeyButton(
+                icon: Iconfont.arrowLeft,
+                onPressed: () => onArrow('left'),
+              ),
+              _KeyButton(
+                icon: Iconfont.arrowUp,
+                onPressed: () => onArrow('up'),
+              ),
+              _KeyButton(
+                icon: Iconfont.arrowDown,
+                onPressed: () => onArrow('down'),
+              ),
+              _KeyButton(
+                icon: Iconfont.arrowRight,
+                onPressed: () => onArrow('right'),
+              ),
+              _KeyButton(
+                icon: Icons.keyboard_return,
+                onPressed: onEnter,
+              ),
+            ],
           ),
-          const Spacer(),
-          _KeyButton(
-            icon: Iconfont.arrowLeft,
-            onPressed: () => onArrow('left'),
-          ),
-          _KeyButton(
-            icon: Iconfont.arrowUp,
-            onPressed: () => onArrow('up'),
-          ),
-          _KeyButton(
-            icon: Iconfont.arrowDown,
-            onPressed: () => onArrow('down'),
-          ),
-          _KeyButton(
-            icon: Iconfont.arrowRight,
-            onPressed: () => onArrow('right'),
-          ),
-        ],
+        ),
       ),
     );
   }
@@ -95,7 +110,10 @@ class _KeyButton extends StatelessWidget {
             child: label != null
                 ? Text(
                     label!,
-                    style: const TextStyle(fontSize: 12, fontWeight: FontWeight.bold),
+                    style: const TextStyle(
+                      fontSize: 12,
+                      fontWeight: FontWeight.bold,
+                    ),
                   )
                 : Icon(icon, size: 18),
           ),
