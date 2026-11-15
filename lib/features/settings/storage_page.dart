@@ -12,6 +12,8 @@ import '../../data/storage_controller.dart';
 
 /// 分类色点(对齐上游 StorageUsagePalette)。
 Color _categoryColor(StorageCategory category) => switch (category) {
+      StorageCategory.container => const Color(0xFF8B5CF6),
+      StorageCategory.containerImage => const Color(0xFFA78BFA),
       StorageCategory.chat => const Color(0xFF3B82F6),
       StorageCategory.workspaces => const Color(0xFF22C55E),
       StorageCategory.aiConfig => const Color(0xFF14B8A6),

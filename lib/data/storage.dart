@@ -4,6 +4,8 @@ import 'package:path/path.dart' as p;
 import 'package:path_provider/path_provider.dart';
 
 import 'db/app_database.dart';
+import 'container/container_launcher.dart';
+import 'container/container_manager.dart';
 import '../core/log/log_store.dart';
 
 /// 存储占用分类。**各分类互斥**,加总即 App 总占用;枚举顺序即界面展示顺序。
@@ -11,6 +13,8 @@ import '../core/log/log_store.dart';
 /// 分类边界按物理目录划定:日志与缓存所在目录不重复计入 [other],
 /// 工作区内的聊天附件算在 [workspaces] 里(只作为副标题提示,不单列分类)。
 enum StorageCategory {
+  container('容器'),
+  containerImage('容器镜像包'),
   chat('聊天记录'),
   workspaces('工作区'),
   aiConfig('AI 配置与产物'),
@@ -159,6 +163,8 @@ class StorageScanner {
     yield await _otherDataEntry(docs);
     yield await _aiConfigEntry(docs);
     yield await _workspacesEntry(docs);
+    yield await _containerImageEntry();
+    yield await _containerEntry();
   }
 
   /// App 私有目录所在存储卷的容量。
@@ -271,6 +277,76 @@ class StorageScanner {
     }
     return StorageEntry(
       category: StorageCategory.workspaces,
+      bytes: total,
+      details: details,
+    );
+  }
+
+  /// 容器:每个已安装容器的 rootfs 占用,明细再按 rootfs 顶层目录拆开
+  /// (对齐上游「容器 → 内置 Alpine → rootfs → /usr…」的层级)。
+  Future<StorageEntry> _containerEntry() async {
+    final details = <StorageDetail>[];
+    var total = 0;
+    try {
+      final store = await ContainerStore.load();
+      for (final container in store.containers) {
+        final rootfs = Directory(container.path);
+        final size = await _dirSize(rootfs);
+        if (size == 0) continue;
+        total += size;
+        final builtIn = kContainerImages
+            .any((image) => image.id == container.imageId && image.autoInstall);
+        details.add(StorageDetail(
+          label: builtIn ? '内置 ${container.name}' : container.name,
+          bytes: size,
+          note: 'rootfs',
+        ));
+        // rootfs 顶层目录按占用从大到小取前 6 个,避免 Ubuntu 这类根目录铺满整页。
+        final children = <StorageDetail>[];
+        for (final dir in await _listDirs(rootfs)) {
+          final bytes = await _dirSize(dir);
+          if (bytes == 0) continue;
+          children.add(StorageDetail(
+            label: '/${p.basename(dir.path)}',
+            bytes: bytes,
+            indent: true,
+          ));
+        }
+        children.sort((a, b) => b.bytes.compareTo(a.bytes));
+        details.addAll(children.take(6));
+      }
+    } catch (_) {
+      // 容器目录不可读(非 Android 或运行环境未装)时按 0 计,不影响其他分类。
+    }
+    return StorageEntry(
+      category: StorageCategory.container,
+      bytes: total,
+      details: details,
+    );
+  }
+
+  /// 容器镜像包:下载后缓存下来的 rootfs 压缩包(`containers/.downloads`)。
+  Future<StorageEntry> _containerImageEntry() async {
+    final details = <StorageDetail>[];
+    var total = 0;
+    try {
+      final dir = Directory(
+        p.join(await ContainerStore.containersDir(), '.downloads'),
+      );
+      if (await dir.exists()) {
+        await for (final entity in dir.list(followLinks: false)) {
+          final bytes = await _dirSize(entity);
+          if (bytes == 0) continue;
+          total += bytes;
+          details.add(StorageDetail(label: p.basename(entity.path), bytes: bytes));
+        }
+      }
+    } catch (_) {
+      // 同上:读不到就按 0 计。
+    }
+    details.sort((a, b) => b.bytes.compareTo(a.bytes));
+    return StorageEntry(
+      category: StorageCategory.containerImage,
       bytes: total,
       details: details,
     );
