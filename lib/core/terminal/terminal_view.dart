@@ -78,29 +78,22 @@ class _TerminalViewState extends State<TerminalView> {
       focusNode: _focusNode,
       autofocus: widget.autofocus,
       onKey: _onKeyEvent,
-      child: Listener(
-        onPointerSignal: (event) {
-          setState(() {
-            _scrollOffset = (_scrollOffset - event.scrollDelta.dy).clamp(0.0, double.infinity);
-          });
-        },
-        child: GestureDetector(
-          onTapDown: (_) => _focusNode.requestFocus(),
-          child: RepaintBoundary(
-            child: CustomPaint(
-              size: Size.infinite,
-              painter: TerminalRenderer(
-                buffer: buffer,
-                fontConfig: widget.fontConfig,
-                foreground: widget.foreground,
-                background: widget.background,
-                cursorColor: widget.cursorColor,
-                selectionColor: widget.selectionColor,
-                cursorRenderStyle: widget.cursorStyle,
-                cursorVisible: true,
-                cursorEnabled: true,
-                scrollOffset: _scrollOffset,
-              ),
+      child: GestureDetector(
+        onTapDown: (_) => _focusNode.requestFocus(),
+        child: RepaintBoundary(
+          child: CustomPaint(
+            size: Size.infinite,
+            painter: TerminalRenderer(
+              buffer: buffer,
+              fontConfig: widget.fontConfig,
+              foreground: widget.foreground,
+              background: widget.background,
+              cursorColor: widget.cursorColor,
+              selectionColor: widget.selectionColor,
+              cursorRenderStyle: widget.cursorStyle,
+              cursorVisible: true,
+              cursorEnabled: true,
+              scrollOffset: _scrollOffset,
             ),
           ),
         ),
