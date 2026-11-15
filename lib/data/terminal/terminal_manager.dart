@@ -122,31 +122,28 @@ class TerminalTabsNotifier extends Notifier<TerminalTabsState> {
     state = state.copyWith(creating: true, error: () => null);
 
     try {
-      await _openPtyTab();
+      final shell = await TermuxBootstrap.ensure(
+        onStage: (stage) => state = state.copyWith(stage: () => stage),
+      );
+      await _openPtyTab(shell);
     } catch (e) {
-      state = state.copyWith(creating: false, error: () => e.toString());
+      state = state.copyWith(
+        creating: false,
+        stage: () => null,
+        error: () => e.toString(),
+      );
       rethrow;
     }
   }
 
-  /// 通过 kyroon_pty 打开终端会话
-  Future<void> _openPtyTab() async {
-    final shell = _resolveShellPath();
+  /// 通过 kyroon_pty 打开终端会话（Termux bash）
+  Future<void> _openPtyTab(String shell) async {
     final pty = Pty.start(
       shell,
+      arguments: const ['-l'],
       rows: 24,
       columns: 80,
-      environment: {
-        'TERM': 'xterm-256color',
-        'PATH': [
-          if (Platform.environment['PATH'] != null)
-            Platform.environment['PATH']!,
-          '/system/bin',
-          '/system/xbin',
-          '/vendor/bin',
-          '/product/bin',
-        ].join(':'),
-      },
+      environment: TermuxBootstrap.environment,
     );
 
     final id = ++_seq;
@@ -270,7 +267,10 @@ class TerminalTabsNotifier extends Notifier<TerminalTabsState> {
       id: agentTabId,
       title: title,
       controller: controller,
-      pty: Pty.start(_resolveShellPath()),
+      pty: Pty.start(
+        TermuxBootstrap.bashPath ?? '/system/bin/sh',
+        environment: TermuxBootstrap.environment,
+      ),
       mirror: true,
     );
     state = state.copyWith(tabs: [...state.tabs, tab]);
@@ -378,33 +378,102 @@ class _PtyOutput implements TerminalOutput {
   }
 }
 
-/// 解析可用的 shell 可执行文件。
+/// Termux 终端环境管理。
 ///
-/// Android 系统通常不自带 bash，直接 `Pty.start('bash')` 会 execvp 失败，
-/// 子进程立即退出，终端只剩一片空白。这里按优先级探测常见路径，
-/// 最终回退到系统一定存在的 /system/bin/sh。
-String _resolveShellPath() {
-  const candidates = <String>[
-    '/data/data/ids.codecraft.app/files/usr/bin/bash',
-    '/system/bin/bash',
-    '/system/xbin/bash',
-    '/vendor/bin/bash',
-    '/product/bin/bash',
-    '/bin/bash',
-    '/usr/bin/bash',
-  ];
-  for (final path in candidates) {
-    if (File(path).existsSync()) return path;
-  }
-  final pathEnv = Platform.environment['PATH'] ?? '';
-  for (final name in const ['bash', 'sh']) {
-    for (final dir in pathEnv.split(':')) {
-      if (dir.isEmpty) continue;
-      final candidate = '$dir/$name';
-      if (File(candidate).existsSync()) return candidate;
+/// 首次进入终端时，把内嵌的 Termux bootstrap 解压到 `$filesDir/usr`，
+/// 之后终端直接运行 `$PREFIX/bin/bash`，与 Termux App 的行为一致
+/// （bash / coreutils / apt / dpkg 等完整工具链，离线可用）。
+class TermuxBootstrap {
+  static const MethodChannel _channel =
+      MethodChannel('ids.codecraft.app/native_paths');
+
+  static String? _prefix;
+  static String? _home;
+
+  /// 已安装的 bash 路径；未安装时为 null。
+  static String? get bashPath => _prefix == null ? null : '$_prefix/bin/bash';
+
+  /// 确保 Termux 环境就绪，返回 bash 绝对路径。
+  static Future<String> ensure({void Function(String stage)? onStage}) async {
+    if (_prefix != null) return '$_prefix/bin/bash';
+
+    final filesDir = await _channel.invokeMethod<String>('filesDir');
+    if (filesDir == null || filesDir.isEmpty) {
+      throw StateError('无法获取应用私有目录');
     }
+    final prefix = '$filesDir/usr';
+    final home = '$filesDir/home';
+
+    var status = await _status();
+    if (status['installed'] != true) {
+      onStage?.call('正在安装 Termux 环境…');
+      _triggerInstall();
+      // 解压 ~100MB 并执行 second stage 需要数十秒，这里轮询安装进度。
+      for (var i = 0; i < 900; i++) {
+        await Future<void>.delayed(const Duration(milliseconds: 500));
+        status = await _status();
+        if (status['installed'] == true) break;
+        final error = status['error'];
+        if (error is String && error.isNotEmpty) {
+          throw StateError('Termux 环境安装失败：$error');
+        }
+        final stage = status['stage'];
+        if (stage is String && stage.isNotEmpty) {
+          onStage?.call('正在安装 Termux 环境：$stage');
+        }
+        // 安装线程可能因并发触发而提前退出，未完成时重新触发。
+        if (status['installing'] != true) {
+          _triggerInstall();
+        }
+      }
+      if (status['installed'] != true) {
+        throw StateError('Termux 环境安装超时');
+      }
+    }
+
+    Directory(home).createSync(recursive: true);
+    Directory('$prefix/tmp').createSync(recursive: true);
+
+    _prefix = prefix;
+    _home = home;
+    return '$prefix/bin/bash';
   }
-  return '/system/bin/sh';
+
+  /// Termux 风格的环境变量（与 Termux App 启动 shell 时一致）。
+  static Map<String, String>? get environment {
+    final prefix = _prefix;
+    final home = _home;
+    if (prefix == null || home == null) return null;
+    final inherited = Platform.environment['PATH'] ?? '';
+    return {
+      'PREFIX': prefix,
+      'HOME': home,
+      'TMPDIR': '$prefix/tmp',
+      'SHELL': '$prefix/bin/bash',
+      'TERM': 'xterm-256color',
+      'LANG': 'en_US.UTF-8',
+      'LC_ALL': 'en_US.UTF-8',
+      'PATH': '$prefix/bin:$prefix/bin/applets:/system/bin:/system/xbin'
+          '${inherited.isEmpty ? '' : ':$inherited'}',
+      'LD_LIBRARY_PATH': '$prefix/lib',
+      'LD_PRELOAD': '$prefix/lib/libtermux-exec-ld-preload.so',
+    };
+  }
+
+  static Future<Map<Object?, Object?>> _status() async {
+    final result =
+        await _channel.invokeMethod<Map<Object?, Object?>>('bootstrapStatus');
+    return result ?? const {};
+  }
+
+  /// 触发安装（异步进行，进度通过 [_status] 轮询）。
+  static void _triggerInstall() {
+    unawaited(
+      _channel
+          .invokeMethod<bool>('ensureBootstrap')
+          .catchError((Object _) => false),
+    );
+  }
 }
 
 /// 终端标签提供器

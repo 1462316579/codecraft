@@ -85,6 +85,19 @@ class MainActivity : FlutterActivity() {
                         result.error("INVALID", "path required", null)
                     }
                 }
+                // Termux bootstrap：状态查询与安装触发（安装流程见 BootstrapInstaller）。
+                "bootstrapStatus" -> result.success(
+                    mapOf(
+                        "installed" to BootstrapInstaller.isInstalled(this),
+                        "installing" to BootstrapInstaller.installing,
+                        "stage" to BootstrapInstaller.stage,
+                        "progress" to BootstrapInstaller.progress,
+                        "error" to BootstrapInstaller.lastError,
+                    )
+                )
+                "ensureBootstrap" -> BootstrapInstaller.ensureInstalledAsync(this) { ok ->
+                    runOnUiThread { result.success(ok) }
+                }
                 "writeFile" -> {
                     val path = call.argument<String>("path")
                     val content = call.argument<String>("content")

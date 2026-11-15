@@ -164,7 +164,10 @@ class TerminalEmulator {
   void _doEscape(int b) {
     _escapeState = ESC_GROUND;
     switch (b) {
-      case 0x3F: // DEC 私有模式前缀
+      case 0x5B: // CSI
+        _escapeState = ESC_CSI_ENTRY;
+        break;
+      case 0x3F: // DEC 私有模式前缀（等价于 CSI 后紧跟 ?）
         _escapeState = ESC_CSI_ENTRY;
         break;
       case 0x63: // RIS 重置
@@ -180,7 +183,7 @@ class TerminalEmulator {
       case 0x48: // HTS
         _buffer.setTabStop(_buffer.cursorX);
         break;
-      case 0x49: // OSC
+      case 0x5D: // OSC 字符串
         _escapeState = ESC_OSC_STRING;
         _oscBuffer.clear();
         _oscLength = 0;
@@ -193,15 +196,15 @@ class TerminalEmulator {
     _escapeState = ESC_GROUND;
     _paramCount = 0;
     for (var i = 0; i < _params.length; i++) _params[i] = 0;
-    if (b >= 0x30 && b <= 0x3F) {
+    if (b == 0x3C) {
+      // SGR-1006 mouse mode: ESC [ < ... M/m
+      _escapeState = ESC_CSI_MOUSE;
+      _mouseSeq = '';
+    } else if (b >= 0x30 && b <= 0x3F) {
       _escapeState = ESC_CSI_PARAM;
       _params[0] = b == 0x3F ? 0 : (b - 0x30);
     } else if (b >= 0x20 && b <= 0x2F) {
       _escapeState = ESC_CSI_INTERMEDIATE;
-    } else if (b == 0x3C) {
-      // SGR-1006 mouse mode: ESC [ < ... M/m
-      _escapeState = ESC_CSI_MOUSE;
-      _mouseSeq = '';
     } else if (b >= 0x40 && b <= 0x7E) {
       _doCsiFinal(b, [0]);
     }
@@ -268,14 +271,11 @@ class TerminalEmulator {
             _getParam(effective, 1, 1) - 1,
             _getParam(effective, 0, 1) - 1);
         break;
+      case 0x4A: // ED 清屏
+        _buffer.clearScreen(p0);
+        break;
       case 0x4B: // EL
         _buffer.clearLine(p0);
-        break;
-      case 0x4D: // ED
-        _buffer.clearScreen(p0);
-        break;
-      case 0x4E: // ED 别名
-        _buffer.clearScreen(p0);
         break;
       case 0x6D: // SGR
         final style = TextStyle.applySgr(
@@ -299,10 +299,10 @@ class TerminalEmulator {
                 ? _getParam(effective, 1, _buffer.rows) - 1
                 : _buffer.rows - 1);
         break;
-      case 0x3D: // DECSET
+      case 0x68: // SM / DECSET (h)
         _doDecset(effective, true);
         break;
-      case 0x3E: // DECRST
+      case 0x6C: // RM / DECRST (l)
         _doDecset(effective, false);
         break;
     }

@@ -322,21 +322,30 @@ class TerminalRenderer extends CustomPainter {
 class TerminalController {
   final TerminalEmulator emulator;
   final TerminalBuffer buffer;
-  void Function()? onScreenUpdated;
+  void Function()? _onScreenUpdated;
+
+  /// 屏幕刷新回调；同时同步给 emulator，保证所有输出都会触发重绘。
+  void Function()? get onScreenUpdated => _onScreenUpdated;
+  set onScreenUpdated(void Function()? value) {
+    _onScreenUpdated = value;
+    emulator.onScreenUpdated = value;
+  }
+
   final void Function(List<int> bytes)? onEmulatorOutput;
 
   TerminalController({
     required this.emulator,
     required this.buffer,
-    this.onScreenUpdated,
+    void Function()? onScreenUpdated,
     this.onEmulatorOutput,
   }) {
-    emulator.onScreenUpdated = onScreenUpdated;
+    if (onScreenUpdated != null) {
+      this.onScreenUpdated = onScreenUpdated;
+    }
   }
 
   void write(List<int> bytes) {
     emulator.append(bytes);
-    if (onScreenUpdated != null) onScreenUpdated!();
   }
 
   void writeString(String data) {
@@ -345,7 +354,6 @@ class TerminalController {
 
   void feedOutput(List<int> bytes) {
     emulator.append(bytes);
-    if (onScreenUpdated != null) onScreenUpdated!();
   }
 
   void _forwardEmulatorOutput(List<int> bytes) {
