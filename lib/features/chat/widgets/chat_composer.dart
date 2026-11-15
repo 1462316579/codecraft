@@ -322,8 +322,12 @@ class _ChatComposerState extends ConsumerState<ChatComposer> {
                               ref.read(runModeProvider.notifier).state = next;
                             },
                             child: Container(
-                              width: 46,
-                              padding: const EdgeInsets.symmetric(vertical: 4),
+                              // 宽度随文字自适应:写死 46 时「构建模式」四个字放不下,
+                              // 文字会溢出到胶囊外面,看起来像被背景盖住。
+                              padding: const EdgeInsets.symmetric(
+                                horizontal: Spacing.sm,
+                                vertical: 4,
+                              ),
                               decoration: BoxDecoration(
                                 color: bgColor,
                                 borderRadius: BorderRadius.circular(16),
@@ -331,8 +335,12 @@ class _ChatComposerState extends ConsumerState<ChatComposer> {
                               alignment: Alignment.center,
                               child: Text(
                                 label,
+                                maxLines: 1,
+                                softWrap: false,
+                                overflow: TextOverflow.visible,
                                 style: TextStyle(
                                   fontSize: 11,
+                                  height: 1.2,
                                   fontWeight: FontWeight.bold,
                                   color: textColor,
                                 ),
