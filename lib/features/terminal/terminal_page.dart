@@ -364,6 +364,16 @@ class _SessionDrawer extends StatelessWidget {
               title: const Text('关闭终端'),
               onTap: () => Navigator.of(context).maybePop(),
             ),
+            // 构建标识：用来确认手机上装的到底是哪一版（排查「装了新包还是旧界面」）
+            Padding(
+              padding: const EdgeInsets.fromLTRB(16, 0, 16, 8),
+              child: Text(
+                '终端引擎 $kTerminalEngineTag',
+                style: Theme.of(context).textTheme.labelSmall?.copyWith(
+                      color: Theme.of(context).colorScheme.onSurfaceVariant,
+                    ),
+              ),
+            ),
             const SizedBox(height: 8),
           ],
         ),
