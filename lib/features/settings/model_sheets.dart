@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import '../../core/icons/iconfont.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -978,6 +979,12 @@ class _ModelTestSheet extends StatelessWidget {
                   style: theme.textTheme.labelMedium
                       ?.copyWith(color: context.semantic.subtleText),
                 ),
+                IconButton(
+                  tooltip: l10n.copy,
+                  visualDensity: VisualDensity.compact,
+                  icon: const Icon(Iconfont.copy, size: 18),
+                  onPressed: () => _copyAll(context, l10n),
+                ),
               ],
             ),
             const SizedBox(height: Spacing.sm),
@@ -996,7 +1003,7 @@ class _ModelTestSheet extends StatelessWidget {
                     _section(
                       context,
                       l10n.providerTestRequestHeaders,
-                      result.requestHeaders.entries.map((e) => '${e.key}: ${e.value}').join('\n'),
+                      _requestHeadersText,
                     ),
                     if (result.requestBody.isNotEmpty)
                       _section(context, l10n.providerTestRequestBody, result.requestBody),
@@ -1014,6 +1021,38 @@ class _ModelTestSheet extends StatelessWidget {
           ],
         ),
       ),
+    );
+  }
+
+  String get _requestHeadersText =>
+      result.requestHeaders.entries.map((e) => '${e.key}: ${e.value}').join('\n');
+
+  /// 整份调试信息(复制按钮用):标题、状态码、耗时与各分节拼成纯文本,
+  /// 方便直接贴到 issue / 聊天里排查。
+  String _debugText(AppLocalizations l10n) {
+    final buffer = StringBuffer()
+      ..writeln(title)
+      ..write('HTTP ${result.responseCode} · ${result.latencyMs}ms');
+    if (result.message.isNotEmpty) buffer.write('\n${result.message}');
+    final sections = <(String, String)>[
+      (l10n.providerTestRequestUrl, result.requestUrl),
+      (l10n.providerTestRequestHeaders, _requestHeadersText),
+      if (result.requestBody.isNotEmpty) (l10n.providerTestRequestBody, result.requestBody),
+      (l10n.providerTestResponse, 'HTTP ${result.responseCode}\n${result.responseBody}'),
+      if (result.errorDetail.isNotEmpty) (l10n.providerTestError, result.errorDetail),
+    ];
+    for (final (label, content) in sections) {
+      if (content.trim().isEmpty) continue;
+      buffer.write('\n\n$label\n$content');
+    }
+    return buffer.toString();
+  }
+
+  Future<void> _copyAll(BuildContext context, AppLocalizations l10n) async {
+    await Clipboard.setData(ClipboardData(text: _debugText(l10n)));
+    if (!context.mounted) return;
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(content: Text(l10n.copied), duration: const Duration(seconds: 2)),
     );
   }
 
