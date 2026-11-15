@@ -126,10 +126,28 @@ object ProotInstaller {
             }
             File(target, "tmp").mkdirs()
             File(target, MARKER).writeText(VERSION)
+
+            // 老版本把整份 Termux 装在这里（约 97MB），现在终端只跑容器，
+            // 升级后顺手清掉，避免用户白占空间。只删 usr，不动 home 等用户数据。
+            stage = "清理旧 Termux 环境"
+            cleanupLegacyTermux(context)
+
             Log.i(TAG, "PRoot 运行环境安装完成: $target")
             return true
         } finally {
             if (staging.exists()) deleteRecursive(staging)
+        }
+    }
+
+    private fun cleanupLegacyTermux(context: Context) {
+        val filesDir = context.filesDir
+        val legacy = File(filesDir, "usr")
+        if (legacy.exists()) {
+            Log.i(TAG, "清理旧 Termux 前缀: ${legacy.absolutePath}")
+            deleteRecursive(legacy)
+        }
+        filesDir.listFiles()?.forEach { child ->
+            if (child.name.startsWith("usr-staging-")) deleteRecursive(child)
         }
     }
 
