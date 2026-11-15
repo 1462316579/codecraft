@@ -69,7 +69,10 @@ class CaptureStore {
   void remove(String id) {
     final i = _index[id];
     if (i == null || i < 0 || i >= _flows.length) return;
-    _flows.removeAt(i);
+    final removed = _flows.removeAt(i);
+    // 删除时也要同步「域名列表」的计数,否则该域名的条数会一直是旧值。
+    _hostCounts[removed.host] = (_hostCounts[removed.host] ?? 1) - 1;
+    if (_hostCounts[removed.host]! <= 0) _hostCounts.remove(removed.host);
     _reindex();
   }
 
@@ -97,12 +100,15 @@ class CaptureStore {
   }
 
   void _trim() {
+    if (_flows.length <= maxFlows) return;
+    // 原来每移除一条就 _reindex() 一次:满 500 条后每个新请求都会做 500 次
+    // 建表操作,抓包高峰时 CPU/GC 抖动明显。统一移除后再重建一次索引。
     while (_flows.length > maxFlows) {
       final removed = _flows.removeAt(0);
       _hostCounts[removed.host] = (_hostCounts[removed.host] ?? 1) - 1;
       if (_hostCounts[removed.host]! <= 0) _hostCounts.remove(removed.host);
-      _reindex();
     }
+    _reindex();
   }
 
   String exportHar({bool includeBodies = true}) {

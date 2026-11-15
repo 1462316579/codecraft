@@ -23,12 +23,26 @@ class CaptureManager extends ChangeNotifier {
   CaptureState _state = const CaptureState();
   CaptureState get state => _state;
 
+  /// 每次 start/stop 递增:VPN 授权与启动是异步的,若用户中途点了停止,
+  /// 旧的那次启动必须作废,否则停止后 VPN 才真正起来,表现为「已停止仍在抓包」。
+  int _generation = 0;
+  bool _disposed = false;
+
+  @override
+  void notifyListeners() {
+    // 页面退出后代理仍有在途请求,继续通知会抛「used after being disposed」。
+    if (_disposed) return;
+    super.notifyListeners();
+  }
+
   Future<CaptureState> start({int port = 8888, int maxFlows = 500}) async {
+    final generation = ++_generation;
     try {
       store.maxFlows = maxFlows;
 
       // 不阻塞在 CA 初始化上:首次要现场生成 2048 位 RSA(已在后台 isolate 里跑)。
       unawaited(ca.warmUp().then((_) {
+        if (_disposed || generation != _generation) return;
         if (ca.ready) {
           _state = _state.copyWith(caReady: true);
           notifyListeners();
@@ -39,6 +53,11 @@ class CaptureManager extends ChangeNotifier {
       // 否则要等系统 VPN 授权弹框与 startForegroundService 全部完成才能把
       // running 置为 true,用户会觉得点了很久都没反应。
       final actualPort = await server.start(port: port);
+      if (_disposed || generation != _generation) {
+        // 启动过程中已被停止:把刚绑定的监听收回去。
+        await server.stop();
+        return _state;
+      }
       _state = _state.copyWith(
         running: true,
         port: actualPort,
@@ -47,52 +66,79 @@ class CaptureManager extends ChangeNotifier {
         error: () => null,
       );
       notifyListeners();
+      // VPN 启动放到后台:授权弹框与 startForegroundService 都可能耗时,
+      // 不能卡在按钮的异步回调里,否则每次点开始都要等一两秒才恢复可点。
+      unawaited(_startVpn(generation, actualPort));
+    } catch (e) {
+      _state = _state.copyWith(running: false, error: () => '$e');
+      notifyListeners();
+    }
+    return _state;
+  }
 
-      // 启动 VPN 服务(Android)
-      if (Platform.isAndroid) {
-        final perm = await CaptureChannel.requestVpnPermission();
-        if (perm != "granted") {
-          await server.stop();
-          _state = _state.copyWith(
-            running: false,
-            error: () => perm == "denied" ? 'VPN permission denied' : 'VPN permission required',
-          );
-          notifyListeners();
-          return _state;
-        }
-        // 已授权，启动 VPN
-        final vpnOk = await CaptureChannel.startVpn(actualPort);
-        if (!vpnOk) {
-          final reason = await CaptureChannel.vpnLastError();
-          await server.stop();
-          _state = _state.copyWith(
-            running: false,
-            error: () => reason == null || reason.isEmpty
-                ? 'VPN 启动失败，请检查系统的 VPN 授权后重试'
-                : 'VPN 启动失败：$reason',
-          );
-          notifyListeners();
-          return _state;
-        }
+  Future<void> _startVpn(int generation, int port) async {
+    if (!Platform.isAndroid) return;
+    try {
+      final perm = await CaptureChannel.requestVpnPermission();
+      if (_disposed || generation != _generation) {
+        // 等待授权期间用户已点停止:授权结果已经拿到,把 VPN 收掉即可。
+        if (perm == 'granted') await CaptureChannel.stopVpn();
+        return;
       }
-
+      if (perm != 'granted') {
+        await _fail('${perm == 'denied' ? 'VPN permission denied' : 'VPN permission required'}');
+        return;
+      }
+      final vpnOk = await CaptureChannel.startVpn(port);
+      if (_disposed || generation != _generation) {
+        if (vpnOk) await CaptureChannel.stopVpn();
+        return;
+      }
+      if (!vpnOk) {
+        final reason = await CaptureChannel.vpnLastError();
+        await _fail(reason == null || reason.isEmpty
+            ? 'VPN 启动失败，请检查系统的 VPN 授权后重试'
+            : 'VPN 启动失败：$reason');
+        return;
+      }
+      if (_disposed || generation != _generation) return;
       // CA 若已就绪,补上证书路径供「安装 CA」按钮直接使用。
       _state = _state.copyWith(
         caReady: ca.ready,
         caPath: ca.ready ? (await ca.exportCaCertFile()).path : null,
       );
+      notifyListeners();
     } catch (e) {
-      _state = _state.copyWith(running: false, error: () => '$e');
+      await _fail('$e');
     }
+  }
+
+  /// VPN 起不来时把代理一并停掉,避免界面显示「运行中」却一条流量都抓不到。
+  Future<void> _fail(String message) async {
+    if (_disposed) return;
+    ++_generation;
+    await server.stop();
+    _state = _state.copyWith(running: false, error: () => message);
     notifyListeners();
-    return _state;
   }
 
   Future<CaptureState> stop() async {
-    await server.stop();
+    // 让在途的 start 立即作废(尤其是还停在授权弹框上的那次)。
+    ++_generation;
+    _state = _state.copyWith(running: false, flowCount: store.count);
+    notifyListeners();
+
+    // 顺序很重要:先拆 VPN 再关代理。反过来会让 VPN 在代理关闭后的窗口期
+    // 继续把连接转进来,看起来像「停止后仍在抓包」。
     if (Platform.isAndroid) {
-      await CaptureChannel.stopVpn();
+      try {
+        await CaptureChannel.stopVpn();
+      } catch (_) {}
     }
+    try {
+      await server.stop();
+    } catch (_) {}
+
     _state = _state.copyWith(running: false, flowCount: store.count);
     notifyListeners();
     return _state;
@@ -175,7 +221,20 @@ class CaptureManager extends ChangeNotifier {
 
   @override
   void dispose() {
-    unawaited(server.stop());
+    _disposed = true;
+    ++_generation;
+    // 只关代理不拆 VPN,会让 VPN 接口一直挂着:界面显示已停止,系统代理却还指向
+    // 已经关闭的 127.0.0.1 端口,设备整体断网,重进页面也看不到任何流量。
+    unawaited(() async {
+      if (Platform.isAndroid) {
+        try {
+          await CaptureChannel.stopVpn();
+        } catch (_) {}
+      }
+      try {
+        await server.stop();
+      } catch (_) {}
+    }());
     super.dispose();
   }
 }

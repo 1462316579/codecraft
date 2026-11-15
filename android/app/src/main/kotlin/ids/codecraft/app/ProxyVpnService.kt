@@ -73,9 +73,16 @@ class ProxyVpnService : VpnService() {
             val i = Intent(context, ProxyVpnService::class.java).apply { action = ACTION_STOP }
             try {
                 context.startService(i)
-            } catch (_: IllegalStateException) {
-                isRunning = false
+            } catch (_: Exception) {
             }
+            // 再补一刀 stopService:部分机型(后台限制、服务被冻结)收不到 ACTION_STOP,
+            // 只发 Intent 会留下「界面已停止、VPN 仍在转发」的残状态。
+            // stopService 一定会走 onDestroy -> stopVpn,把 tun 关掉。
+            try {
+                context.stopService(Intent(context, ProxyVpnService::class.java))
+            } catch (_: Exception) {
+            }
+            isRunning = false
         }
     }
 

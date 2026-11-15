@@ -25,6 +25,10 @@ class CaptureProxyServer {
   bool get running => _server != null;
   int get port => _server?.port ?? 0;
 
+  /// 是否还在接收新连接/记录新请求。停止后置 false:在途的 MITM 可能还会完成
+  /// 握手并回写 flow,不拦住的话界面会「已停止」却继续冒出新请求。
+  bool _accepting = false;
+
   static const int _maxBodyBytes = 1024 * 1024;
 
   Future<int> start({int port = 8888, InternetAddress? address}) async {
@@ -38,11 +42,13 @@ class CaptureProxyServer {
     } catch (_) {
       _server = await ServerSocket.bind(InternetAddress.loopbackIPv4, port, shared: false);
     }
+    _accepting = true;
     _server!.listen(_handleClient, onError: (_) {});
     return _server!.port;
   }
 
   Future<void> stop() async {
+    _accepting = false;
     final server = _server;
     _server = null;
     for (final s in _sockets.toList()) {
@@ -54,7 +60,28 @@ class CaptureProxyServer {
     await server?.close();
   }
 
+  void _add(CaptureFlow flow) {
+    if (!_accepting) return;
+    store.add(flow);
+  }
+
+  void _update(CaptureFlow flow) {
+    if (!_accepting) return;
+    store.update(flow);
+  }
+
+  void _changed() {
+    if (!_accepting) return;
+    onChanged?.call();
+  }
+
   Future<void> _handleClient(Socket client) async {
+    if (!_accepting) {
+      try {
+        client.destroy();
+      } catch (_) {}
+      return;
+    }
     _sockets.add(client);
     try {
       final conn = _Conn(client);
@@ -104,8 +131,8 @@ class CaptureProxyServer {
       requestBody: body.text,
       bodyTruncated: body.truncated,
     );
-    store.add(flow);
-    onChanged?.call();
+    _add(flow);
+    _changed();
     Socket? upstream;
     try {
       upstream = await Socket.connect(host, targetPort, timeout: const Duration(seconds: 15));
@@ -134,7 +161,7 @@ class CaptureProxyServer {
       client.add(resp);
       await client.flush();
       final parsed = _parseHttpResponse(resp);
-      store.update(CaptureFlow(
+      _update(CaptureFlow(
         id: id,
         startedAt: started,
         endedAt: DateTime.now(),
@@ -155,7 +182,7 @@ class CaptureProxyServer {
         bodyTruncated: body.truncated || parsed.truncated,
       ));
     } catch (e) {
-      store.update(CaptureFlow(
+      _update(CaptureFlow(
         id: id,
         startedAt: started,
         endedAt: DateTime.now(),
@@ -174,7 +201,7 @@ class CaptureProxyServer {
         await client.flush();
       } catch (_) {}
     }
-    onChanged?.call();
+    _changed();
     await _close(upstream);
     await _close(client);
   }
@@ -186,11 +213,11 @@ class CaptureProxyServer {
     final host = hp.$1;
     final targetPort = hp.$2;
     final id = 'connect-${started.microsecondsSinceEpoch}-$host:$targetPort';
-    store.add(CaptureFlow(
+    _add(CaptureFlow(
       id: id, startedAt: started, method: 'CONNECT', url: '$host:$targetPort',
       host: host, path: '/', scheme: 'https', tls: true,
     ));
-    onChanged?.call();
+    _changed();
     try {
       client.add(utf8.encode('HTTP/1.1 200 Connection Established\r\n\r\n'));
       await client.flush();
@@ -209,6 +236,9 @@ class CaptureProxyServer {
       // 拿到这一条连接后就可以关掉监听,不影响已建立的 socket。
       final bridgeServer = await accepted;
       unawaited(bridge.close());
+      // 桥接 socket 也要登记:停止时如果不一起拆,在途握手会在停止后继续
+      // 完成并记录 flow,看起来像「已停止还在抓包」。
+      _sockets.add(bridgeClient);
 
       // client 剩下的字节全部转给 bridgeClient,由它喂给 SecureSocket。
       conn.forwardTo(bridgeClient);
@@ -221,12 +251,12 @@ class CaptureProxyServer {
         final context = await ca.serverContextForHost(host);
         secureClient = await SecureSocket.secureServer(bridgeServer, context);
       } catch (e) {
-        store.update(CaptureFlow(
+        _update(CaptureFlow(
           id: id, startedAt: started, endedAt: DateTime.now(), method: 'CONNECT',
           url: '$host:$targetPort', host: host, path: '/', scheme: 'https', tls: true,
           error: 'TLS MITM 失败: $e。请安装并信任 CA；证书锁定/非 HTTP 流量无法解密。',
         ));
-        onChanged?.call();
+        _changed();
         try { bridgeClient.destroy(); } catch (_) {}
         try { client.destroy(); } catch (_) {}
         return;
@@ -236,14 +266,15 @@ class CaptureProxyServer {
       _sockets.remove(secureClient);
       // 等反向搬运把最后一段响应写完再收尾,否则会截断响应体。
       await pump.timeout(const Duration(seconds: 5), onTimeout: () {});
+      _sockets.remove(bridgeClient);
       try { bridgeClient.destroy(); } catch (_) {}
     } catch (e) {
-      store.update(CaptureFlow(
+      _update(CaptureFlow(
         id: id, startedAt: started, endedAt: DateTime.now(), method: 'CONNECT',
         url: '$host:$targetPort', host: host, path: '/', scheme: 'https', tls: true,
         error: '$e',
       ));
-      onChanged?.call();
+      _changed();
       try { client.destroy(); } catch (_) {}
     }
   }
@@ -259,13 +290,13 @@ class CaptureProxyServer {
     final body = await conn.readBody(head.headers, limit: _maxBodyBytes);
     final url = 'https://$host${head.target}';
     final flowId = '${started.microsecondsSinceEpoch}-${head.method}-${head.target.hashCode.abs()}';
-    store.add(CaptureFlow(
+    _add(CaptureFlow(
       id: flowId, startedAt: started, method: head.method, url: url, host: host,
       path: head.target.split('?').first, scheme: 'https', requestHeaders: head.headers,
       requestBody: body.text, requestBytes: body.bytes.length,
       bodyTruncated: body.truncated, tls: true,
     ));
-    onChanged?.call();
+    _changed();
     SecureSocket? upstream;
     try {
       upstream = await SecureSocket.connect(host, targetPort, timeout: const Duration(seconds: 15));
@@ -287,7 +318,7 @@ class CaptureProxyServer {
       client.add(resp);
       await client.flush();
       final parsed = _parseHttpResponse(resp);
-      store.update(CaptureFlow(
+      _update(CaptureFlow(
         id: flowId, startedAt: started, endedAt: DateTime.now(), method: head.method, url: url,
         host: host, path: head.target.split('?').first, scheme: 'https',
         protocolVersion: parsed.version,
@@ -299,7 +330,7 @@ class CaptureProxyServer {
         bodyTruncated: body.truncated || parsed.truncated, tls: true,
       ));
     } catch (e) {
-      store.update(CaptureFlow(
+      _update(CaptureFlow(
         id: flowId, startedAt: started, endedAt: DateTime.now(), method: head.method, url: url,
         host: host, path: head.target.split('?').first, scheme: 'https', tls: true, error: '$e',
       ));
@@ -308,7 +339,7 @@ class CaptureProxyServer {
         await client.flush();
       } catch (_) {}
     }
-    onChanged?.call();
+    _changed();
     await _close(upstream);
     await _close(client);
   }
