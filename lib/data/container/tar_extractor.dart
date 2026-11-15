@@ -92,12 +92,18 @@ List<String> _extractTar(String tarPath, String rootPath) {
           _ensureParent(targetPath);
           _recreateLink(targetPath, link);
           break;
-        case '1': // 硬链接（Android 上同样用符号链接等价实现）
+        case '1': // 硬链接：Android 上无法创建硬链接，用相对符号链接等价实现。
+          // 链接目标必须相对本文件所在目录，这样容器内（PRoot）和宿主侧
+          // 都能解析到同一份 rootfs 里的文件；用宿主绝对路径会让容器内断链。
           _ensureParent(targetPath);
           final hardTarget = _sanitizePath(link);
+          if (hardTarget == null) break;
           _recreateLink(
             targetPath,
-            hardTarget == null ? link : p.join(rootPath, hardTarget),
+            p.relative(
+              p.join(rootPath, hardTarget),
+              from: p.dirname(targetPath),
+            ),
           );
           break;
         case '3':
@@ -114,7 +120,8 @@ List<String> _extractTar(String tarPath, String rootPath) {
             final buffer = Uint8List(64 * 1024);
             while (remaining > 0) {
               raf.setPositionSync(position);
-              final chunk = remaining > buffer.length ? buffer.length : remaining;
+              final chunk =
+                  remaining > buffer.length ? buffer.length : remaining;
               final n = raf.readIntoSync(buffer, 0, chunk);
               if (n <= 0) break;
               sink.writeFromSync(buffer, 0, n);
