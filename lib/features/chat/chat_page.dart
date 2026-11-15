@@ -577,10 +577,17 @@ class _ModelPickerSheetState extends ConsumerState<_ModelPickerSheet> {
     super.dispose();
   }
 
-  ModelMetadata? _metadataOf(ProviderConfig provider, String model) {
+  ModelMetadata? _metadataOf(
+    ModelCatalog catalog,
+    Map<String, ModelMetadata> custom,
+    ProviderConfig provider,
+    String model,
+  ) {
+    // 目录/自定义元数据在 build 开头 watch 一次,这里只做查表:
+    // 原来每行都 ref.watch 两个 Provider,471 个模型就是近千次订阅与重算。
     return resolveModelMetadata(
-      ref.watch(modelCatalogProvider).valueOrNull ?? ModelCatalog.empty,
-      ref.watch(customModelMetadataProvider).valueOrNull ?? const {},
+      catalog,
+      custom,
       providerId: provider.id,
       model: model,
     );
@@ -626,6 +633,30 @@ class _ModelPickerSheetState extends ConsumerState<_ModelPickerSheet> {
       if (matched.isNotEmpty) groups.add((provider, matched));
     }
 
+    final catalog = ref.watch(modelCatalogProvider).valueOrNull ?? ModelCatalog.empty;
+    final custom =
+        ref.watch(customModelMetadataProvider).valueOrNull ?? const <String, ModelMetadata>{};
+
+    // 扁平化成「按需构建」的条目:一个供应商几百个模型时,原来整块
+    // SettingsGroup(children: [...]) 会在弹层打开的瞬间全部 build 一遍,
+    // 造成明显卡顿;改成 ListView.builder 后只构建可视区域内的行。
+    final items = <_PickerItem>[const _AutoItem()];
+    for (final (provider, models) in groups) {
+      final expanded = query.isNotEmpty || !_collapsed.contains(provider.id);
+      items.add(_HeaderItem(provider, models.length, expanded));
+      if (expanded) {
+        for (var index = 0; index < models.length; index++) {
+          items.add(_ModelItem(
+            provider,
+            models[index],
+            firstInCard: index == 0,
+            lastInCard: index == models.length - 1,
+          ));
+        }
+      }
+    }
+    if (groups.isEmpty) items.add(const _EmptyItem());
+
     return SafeArea(
       child: ConstrainedBox(
         constraints: BoxConstraints(
@@ -652,73 +683,179 @@ class _ModelPickerSheetState extends ConsumerState<_ModelPickerSheet> {
             ),
             const SizedBox(height: Spacing.sm),
             Flexible(
-              child: ListView(
-                shrinkWrap: true,
+              child: ListView.builder(
                 padding: const EdgeInsets.fromLTRB(Spacing.lg, 0, Spacing.lg, Spacing.lg),
-                children: [
-                  // Auto Model 单独成卡(与上游「默认模型」区块同款样式)。
-                  SettingsGroup(
-                    children: [
-                      _ModelRow(
-                        model: l10n.modelAuto,
-                        subtitle: l10n.modelAutoDesc,
-                        selected: isAutoModel(widget.currentModel),
-                        leading: Icon(
-                          Iconfont.sparkles,
-                          size: 20,
-                          color: theme.colorScheme.primary,
-                        ),
-                        onTap: () => Navigator.pop(context, (null, autoModelSentinel)),
-                      ),
-                    ],
-                  ),
-                  if (groups.isEmpty)
-                    Padding(
-                      padding: const EdgeInsets.symmetric(vertical: Spacing.xl),
-                      child: Center(
-                        child: Text(
-                          l10n.emptyModels,
-                          style: theme.textTheme.bodyMedium?.copyWith(
-                            color: context.semantic.subtleText,
+                itemCount: items.length,
+                itemBuilder: (context, index) {
+                  final item = items[index];
+                  if (item is _AutoItem) {
+                    // Auto Model 单独成卡(与上游「默认模型」区块同款样式)。
+                    return SettingsGroup(
+                      children: [
+                        _ModelRow(
+                          model: l10n.modelAuto,
+                          subtitle: l10n.modelAutoDesc,
+                          selected: isAutoModel(widget.currentModel),
+                          leading: Icon(
+                            Iconfont.sparkles,
+                            size: 20,
+                            color: theme.colorScheme.primary,
                           ),
+                          onTap: () => Navigator.pop(context, (null, autoModelSentinel)),
+                        ),
+                      ],
+                    );
+                  }
+                  if (item is _HeaderItem) {
+                    return Padding(
+                      padding: const EdgeInsets.only(top: Spacing.sm),
+                      child: CollapsibleGroupHeader(
+                        // 组头带模型数量(对齐上游)。
+                        text: '${item.provider.name} (${item.count})',
+                        expanded: item.expanded,
+                        onToggle: () => setState(() {
+                          if (!_collapsed.remove(item.provider.id)) {
+                            _collapsed.add(item.provider.id);
+                          }
+                        }),
+                      ),
+                    );
+                  }
+                  if (item is _ModelItem) {
+                    final provider = item.provider;
+                    final model = item.model;
+                    return _ModelCardSegment(
+                      first: item.firstInCard,
+                      last: item.lastInCard,
+                      child: _ModelRow(
+                        model: model,
+                        selected: provider.id == widget.currentProviderId &&
+                            model == widget.currentModel,
+                        leading: ModelLogoIcon(modelName: model, size: 20),
+                        metadata: _metadataOf(catalog, custom, provider, model),
+                        testing: _testing.contains(_key(provider.id, model)),
+                        testResult: _testResults[_key(provider.id, model)],
+                        onTest: () => _testModel(provider, model),
+                        onTap: () => Navigator.pop(context, (provider.id, model)),
+                      ),
+                    );
+                  }
+                  return Padding(
+                    padding: const EdgeInsets.symmetric(vertical: Spacing.xl),
+                    child: Center(
+                      child: Text(
+                        l10n.emptyModels,
+                        style: theme.textTheme.bodyMedium?.copyWith(
+                          color: context.semantic.subtleText,
                         ),
                       ),
                     ),
-                  for (final (provider, models) in groups) ...[
-                    const SizedBox(height: Spacing.sm),
-                    CollapsibleGroupHeader(
-                      // 组头带模型数量(对齐上游)。
-                      text: '${provider.name} (${models.length})',
-                      expanded: query.isNotEmpty || !_collapsed.contains(provider.id),
-                      onToggle: () => setState(() {
-                        if (!_collapsed.remove(provider.id)) _collapsed.add(provider.id);
-                      }),
-                    ),
-                    if (query.isNotEmpty || !_collapsed.contains(provider.id))
-                      SettingsGroup(
-                        children: [
-                          for (var index = 0; index < models.length; index++) ...[
-                            if (index > 0) const SettingsDivider(indent: SettingsRow.textIndent),
-                            _ModelRow(
-                              model: models[index],
-                              selected: provider.id == widget.currentProviderId &&
-                                  models[index] == widget.currentModel,
-                              leading: ModelLogoIcon(modelName: models[index], size: 20),
-                              metadata: _metadataOf(provider, models[index]),
-                              testing: _testing.contains(_key(provider.id, models[index])),
-                              testResult: _testResults[_key(provider.id, models[index])],
-                              onTest: () => _testModel(provider, models[index]),
-                              onTap: () => Navigator.pop(context, (provider.id, models[index])),
-                            ),
-                          ],
-                        ],
-                      ),
-                  ],
-                ],
+                  );
+                },
               ),
             ),
           ],
         ),
+      ),
+    );
+  }
+}
+
+/// 模型选择弹层的扁平条目:Auto / 分组头 / 模型行 / 空态。
+sealed class _PickerItem {
+  const _PickerItem();
+}
+
+class _AutoItem extends _PickerItem {
+  const _AutoItem();
+}
+
+class _HeaderItem extends _PickerItem {
+  const _HeaderItem(this.provider, this.count, this.expanded);
+
+  final ProviderConfig provider;
+  final int count;
+  final bool expanded;
+}
+
+class _ModelItem extends _PickerItem {
+  const _ModelItem(
+    this.provider,
+    this.model, {
+    required this.firstInCard,
+    required this.lastInCard,
+  });
+
+  final ProviderConfig provider;
+  final String model;
+  final bool firstInCard;
+  final bool lastInCard;
+}
+
+class _EmptyItem extends _PickerItem {
+  const _EmptyItem();
+}
+
+/// 模型行卡片切片:同组模型共用一张玻璃卡片,但按行懒加载。
+///
+/// 用首/中/末三段的圆角、边框与分隔线拼出整卡外观——这比让
+/// [SettingsGroup] 一次性构建几百行便宜得多,滚动时每帧只构建屏幕内的行。
+class _ModelCardSegment extends StatelessWidget {
+  const _ModelCardSegment({
+    required this.first,
+    required this.last,
+    required this.child,
+  });
+
+  final bool first;
+  final bool last;
+  final Widget child;
+
+  @override
+  Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    final bright = theme.brightness == Brightness.light;
+    final radius = BorderRadius.vertical(
+      top: Radius.circular(first ? Radii.xl : 0),
+      bottom: Radius.circular(last ? Radii.xl : 0),
+    );
+    final edge = BorderSide(
+      width: 1,
+      color: Colors.white.withValues(alpha: bright ? 0.70 : 0.18),
+    );
+    return DecoratedBox(
+      decoration: BoxDecoration(
+        gradient: LinearGradient(
+          begin: Alignment.topLeft,
+          end: Alignment.bottomRight,
+          colors: [
+            Colors.white.withValues(alpha: bright ? 0.55 : 0.12),
+            Colors.white.withValues(alpha: bright ? 0.22 : 0.05),
+          ],
+        ),
+        borderRadius: radius,
+        border: Border(
+          top: first ? edge : BorderSide.none,
+          bottom: last ? edge : BorderSide.none,
+          left: edge,
+          right: edge,
+        ),
+        boxShadow: last
+            ? [
+                BoxShadow(
+                  color: Colors.black.withValues(alpha: bright ? 0.06 : 0.28),
+                  blurRadius: 24,
+                  spreadRadius: 0,
+                  offset: const Offset(0, 12),
+                ),
+              ]
+            : null,
+      ),
+      child: Column(
+        children: [
+          if (!first) const SettingsDivider(indent: SettingsRow.textIndent),
+          child,
+        ],
       ),
     );
   }
