@@ -29,41 +29,50 @@ class AboutPage extends StatelessWidget {
             begin: Alignment.topLeft,
             end: Alignment.bottomRight,
             colors: theme.brightness == Brightness.light
-                ? const [Color(0xFFEDE9FE), Color(0xFFDBEAFE), Color(0xFFFCE7F3)]
-                : const [Color(0xFF1E1B4B), Color(0xFF1E3A8A), Color(0xFF4C1D95)],
+                ? const [
+                    Color(0xFFEDE9FE),
+                    Color(0xFFDBEAFE),
+                    Color(0xFFFCE7F3)
+                  ]
+                : const [
+                    Color(0xFF1E1B4B),
+                    Color(0xFF1E3A8A),
+                    Color(0xFF4C1D95)
+                  ],
           ),
         ),
         child: ListView(
           padding: const EdgeInsets.fromLTRB(0, 80, 0, Spacing.xxl),
           children: [
             SettingsPageHeader(title: l10n.about, subtitle: l10n.aboutSubtitle),
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: Spacing.lg),
-            child: SettingsGroup(
-              children: [
-                SettingsRow(
-                  icon: Iconfont.info,
-                  title: l10n.version,
-                  subtitle: '0.1.0 · Phase 1',
-                ),
-                const SettingsDivider(indent: SettingsRow.textIndent),
-                SettingsRow(
-                  icon: Iconfont.fileText,
-                  title: l10n.license,
-                  subtitle: 'GPL-3.0',
-                  onTap: () => _showLicense(context, l10n),
-                ),
-              ],
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: Spacing.lg),
+              child: SettingsGroup(
+                children: [
+                  SettingsRow(
+                    icon: Iconfont.info,
+                    title: l10n.version,
+                    subtitle: '0.1.0 · Phase 1',
+                  ),
+                  const SettingsDivider(indent: SettingsRow.textIndent),
+                  SettingsRow(
+                    icon: Iconfont.fileText,
+                    title: l10n.license,
+                    subtitle: 'GPL-3.0',
+                    onTap: () => _showLicense(context, l10n),
+                  ),
+                ],
+              ),
             ),
-          ),
-        ],
+          ],
         ),
       ),
     );
   }
 
   /// 开源协议弹窗:展示随包分发的 GPL-3.0 全文,而不是把项目简介塞进协议里。
-  Future<void> _showLicense(BuildContext context, AppLocalizations l10n) => showDialog<void>(
+  Future<void> _showLicense(BuildContext context, AppLocalizations l10n) =>
+      showDialog<void>(
         context: context,
         builder: (context) {
           final theme = Theme.of(context);
@@ -85,25 +94,16 @@ class AboutPage extends StatelessWidget {
                       ),
                     );
                   }
-                  return Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(l10n.licenseBody, style: theme.textTheme.bodySmall),
-                      const SizedBox(height: Spacing.sm),
-                      Expanded(
-                        child: Scrollbar(
-                          child: SingleChildScrollView(
-                            child: SelectableText(
-                              text,
-                              style: theme.textTheme.bodySmall?.copyWith(
-                                fontFamily: 'monospace',
-                                height: 1.45,
-                              ),
-                            ),
-                          ),
+                  return Scrollbar(
+                    child: SingleChildScrollView(
+                      child: SelectableText(
+                        text,
+                        style: theme.textTheme.bodySmall?.copyWith(
+                          fontFamily: 'monospace',
+                          height: 1.45,
                         ),
                       ),
-                    ],
+                    ),
                   );
                 },
               ),
