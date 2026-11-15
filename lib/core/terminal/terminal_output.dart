@@ -20,4 +20,8 @@ abstract class TerminalOutput {
 
   /// 颜色变更。
   void onColorsChanged();
+
+  /// 鼠标事件：按钮按下/释放/移动/滚动。
+  /// [button] 0=左,1=中,2=右；[state] 0=释放,1=按下；[x],[y] 单元格坐标。
+  void mouseEvent(int button, int state, int x, int y);
 }

@@ -16,6 +16,7 @@ class TerminalEmulator {
   static const int ESC_CSI_PARAM = 3;
   static const int ESC_CSI_INTERMEDIATE = 4;
   static const int ESC_OSC_STRING = 9;
+  static const int ESC_CSI_MOUSE = 20;
 
   final TerminalBuffer _buffer;
   final TerminalOutput _output;
@@ -28,6 +29,8 @@ class TerminalEmulator {
   String _title = '';
   int _oscLength = 0;
   final List<int> _oscBuffer = [];
+  int _mouseMode = 0; // bitmask: 1=1000, 2=1002, 4=1003, 8=1006
+  String _mouseSeq = '';
 
   TerminalEmulator(this._buffer, this._output);
 
@@ -117,6 +120,9 @@ class TerminalEmulator {
       case ESC_CSI_INTERMEDIATE:
         _doCsiIntermediate(codePoint);
         break;
+      case ESC_CSI_MOUSE:
+        _doMouseState(codePoint);
+        break;
       case ESC_OSC_STRING:
         _doOscString(codePoint);
         break;
@@ -192,6 +198,10 @@ class TerminalEmulator {
       _params[0] = b == 0x3F ? 0 : (b - 0x30);
     } else if (b >= 0x20 && b <= 0x2F) {
       _escapeState = ESC_CSI_INTERMEDIATE;
+    } else if (b == 0x3C) {
+      // SGR-1006 mouse mode: ESC [ < ... M/m
+      _escapeState = ESC_CSI_MOUSE;
+      _mouseSeq = '';
     } else if (b >= 0x40 && b <= 0x7E) {
       _doCsiFinal(b, [0]);
     }
@@ -312,6 +322,18 @@ class TerminalEmulator {
             _buffer.switchToMainBuffer();
           }
           break;
+        case 1000: // X10 mouse
+          if (isSet) _mouseMode |= 1;
+          break;
+        case 1002: // button-event mouse
+          if (isSet) _mouseMode |= 2;
+          break;
+        case 1003: // any-event mouse motion
+          if (isSet) _mouseMode |= 4;
+          break;
+        case 1006: // SGR-1006 extended mouse
+          if (isSet) _mouseMode |= 8;
+          break;
       }
     }
   }
@@ -344,5 +366,40 @@ class TerminalEmulator {
       _title = newTitle;
       _output.titleChanged(oldTitle, newTitle);
     }
+  }
+
+  /// SGR-1006 鼠标状态机：收集 ESC [ < cb ; cx ; cy M/m 序列
+  void _doMouseState(int codePoint) {
+    final ch = String.fromCharCode(codePoint);
+    if ((codePoint >= 0x30 && codePoint <= 0x3F) || codePoint == 0x3C) {
+      _mouseSeq += ch;
+    } else if (codePoint == 0x4D) {
+      // M = press
+      _parseMouseSeq(true);
+      _escapeState = ESC_GROUND;
+    } else if (codePoint == 0x6D) {
+      // m = release
+      _parseMouseSeq(false);
+      _escapeState = ESC_GROUND;
+    } else {
+      _escapeState = ESC_GROUND;
+    }
+  }
+
+  void _parseMouseSeq(bool isPress) {
+    var seq = _mouseSeq;
+    if (seq.startsWith('<')) seq = seq.substring(1);
+    final parts = seq.split(';');
+    if (parts.length < 3) return;
+
+    final cb = int.tryParse(parts[0]) ?? 0;
+    final cx = int.tryParse(parts[1]) ?? 0;
+    final cy = int.tryParse(parts[2]) ?? 0;
+
+    // SGR-1006: cb = button(0-3) + modifiers
+    final button = cb & 3;
+    final state = isPress ? 1 : 0;
+
+    _output.mouseEvent(button, state, cx, cy);
   }
 }

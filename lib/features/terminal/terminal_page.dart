@@ -282,6 +282,15 @@ class _TerminalViewBodyState extends ConsumerState<_TerminalViewBody> {
           widget.controller.writeString(text);
         }
       },
+      onMouseEvent: (button, state, x, y) {
+        final isPress = state == 1;
+        // SGR-1006: ESC [ < cb ; Cx ; Cy M (press) / m (release)
+        final seq = '\x1B[<${button};${x};${y}${isPress ? 'M' : 'm'}';
+        final tab = widget.notifier.state.active;
+        if (tab != null) {
+          tab.pty?.write(Uint8List.fromList(utf8.encode(seq)));
+        }
+      },
     );
   }
 }

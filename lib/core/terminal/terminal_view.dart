@@ -27,6 +27,7 @@ class TerminalView extends StatefulWidget {
   final ValueChanged<String>? onTitleChanged;
   final VoidCallback? onCopyToClipboard;
   final VoidCallback? onPasteFromClipboard;
+  final void Function(int button, int state, int x, int y)? onMouseEvent;
 
   const TerminalView({
     super.key,
@@ -44,6 +45,7 @@ class TerminalView extends StatefulWidget {
     this.onTitleChanged,
     this.onCopyToClipboard,
     this.onPasteFromClipboard,
+    this.onMouseEvent,
   });
 
   @override
@@ -53,6 +55,10 @@ class TerminalView extends StatefulWidget {
 class _TerminalViewState extends State<TerminalView> {
   late FocusNode _focusNode;
   double _scrollOffset = 0.0;
+  bool _selectionActive = false;
+  int? _selStartX;
+  int? _selStartY;
+  List<int>? _selection;
 
   @override
   void initState() {
@@ -69,6 +75,58 @@ class _TerminalViewState extends State<TerminalView> {
     super.dispose();
   }
 
+  void _startSelection(Offset localPosition) {
+    final buffer = widget.controller.buffer;
+    setState(() {
+      _selectionActive = true;
+      _selStartX = 0;
+      _selStartY = 0;
+      _selection = null;
+    });
+  }
+
+  void _sendMouse(int button, int state, Offset localPosition) {
+    final buffer = widget.controller.buffer;
+    final width = localPosition.dx;
+    final height = localPosition.dy + _scrollOffset;
+    final cellWidth = 16.0; // 合理的默认值，实际由布局决定
+    final cellHeight = 16.0;
+    final x = (width / cellWidth).floor().clamp(0, buffer.visibleCols - 1);
+    final y = (height / cellHeight).floor().clamp(0, buffer.visibleRows - 1);
+    widget.onMouseEvent?.call(button, state, x, y);
+  }
+
+  void _updateSelectionFromDrag(Offset? localPosition) {
+    if (!_selectionActive || localPosition == null) return;
+    final buffer = widget.controller.buffer;
+    final width = localPosition.dx;
+    final height = localPosition.dy + _scrollOffset;
+    final x = width.clamp(0, buffer.visibleCols * 16.0).floor() ~/ 16;
+    final y = height.clamp(0, buffer.visibleRows * 16.0).floor() ~/ 16;
+    if (_selStartX != null && _selStartY != null) {
+      final x1 = (_selStartX! - x).abs();
+      final y1 = (_selStartY! - y).abs();
+      if (x1 > 0 || y1 > 0) {
+        setState(() {
+          _selection = [_selStartX!, _selStartY!, x, y];
+        });
+      }
+    } else {
+      setState(() {
+        _selStartX = x.clamp(0, buffer.visibleCols - 1);
+        _selStartY = y.clamp(0, buffer.visibleRows - 1);
+        _selection = [_selStartX!, _selStartY!, _selStartX!, _selStartY!];
+      });
+    }
+  }
+
+  void _finalizeSelection() {
+    if (!_selectionActive) return;
+    setState(() {
+      _selectionActive = false;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     final controller = widget.controller;
@@ -79,22 +137,54 @@ class _TerminalViewState extends State<TerminalView> {
       autofocus: widget.autofocus,
       onKey: _onKeyEvent,
       child: GestureDetector(
-        onTapDown: (_) => _focusNode.requestFocus(),
+        onTapDown: (details) {
+          _focusNode.requestFocus();
+          _startSelection(details.localPosition);
+          _sendMouse(0, 1, details.localPosition); // left press
+        },
+        onTapUp: (details) {
+          _sendMouse(0, 0, details.localPosition); // left release
+        },
+        onVerticalDragUpdate: (details) {
+          setState(() {
+            _scrollOffset = (_scrollOffset - details.primaryDelta!).clamp(0.0, double.infinity);
+          });
+        },
+        onVerticalDragEnd: (_) => _finalizeSelection(),
+        onPanStart: (details) {
+          _startSelection(details.localPosition);
+          _sendMouse(0, 1, details.localPosition); // left press
+        },
+        onPanUpdate: (details) {
+          _updateSelectionFromDrag(details.localPosition);
+        },
+        onPanEnd: (_) {
+          _finalizeSelection();
+          // left release (position 0,0 since we don't have final details here)
+          _sendMouse(0, 0, Offset(0, 0));
+        },
         child: RepaintBoundary(
-          child: CustomPaint(
-            size: Size.infinite,
-            painter: TerminalRenderer(
-              buffer: buffer,
-              fontConfig: widget.fontConfig,
-              foreground: widget.foreground,
-              background: widget.background,
-              cursorColor: widget.cursorColor,
-              selectionColor: widget.selectionColor,
-              cursorRenderStyle: widget.cursorStyle,
-              cursorVisible: true,
-              cursorEnabled: true,
-              scrollOffset: _scrollOffset,
-            ),
+          child: LayoutBuilder(
+            builder: (context, constraints) {
+              final cellWidth = constraints.maxWidth / buffer.visibleCols;
+              final cellHeight = constraints.maxHeight / buffer.visibleRows;
+              return CustomPaint(
+                size: constraints.biggest,
+                painter: TerminalRenderer(
+                  buffer: buffer,
+                  fontConfig: widget.fontConfig,
+                  foreground: widget.foreground,
+                  background: widget.background,
+                  cursorColor: widget.cursorColor,
+                  selectionColor: widget.selectionColor,
+                  cursorRenderStyle: widget.cursorStyle,
+                  cursorVisible: true,
+                  cursorEnabled: true,
+                  scrollOffset: _scrollOffset,
+                  selection: _selection,
+                ),
+              );
+            },
           ),
         ),
       ),

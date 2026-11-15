@@ -158,6 +158,15 @@ class TerminalTabsNotifier extends Notifier<TerminalTabsState> {
           }
         });
       },
+      mouseCallback: (button, state, x, y) {
+        // SGR-1006 mouse encoding: ESC [ < cb ; Cx ; Cy M (press) / m (release)
+        final isPress = state == 1;
+        final cb = _encodeMouseButton(button, state);
+        final seq = String.fromCharCodes([
+          0x1B, 0x5B, 0x3C, // ESC [ <
+        ]) + '$cb ; $x ; ${isPress ? 'M' : 'm'}';
+        pty.write(utf8.encode(seq));
+      },
     ));
     final controller = TerminalController(
       emulator: emulator,
@@ -259,6 +268,15 @@ class TerminalTabsNotifier extends Notifier<TerminalTabsState> {
       tab.controller.writeString('\x1b[31m[exit $exitCode]\x1b[0m\r\n');
     }
   }
+
+  /// SGR-1006 鼠标编码：button 状态编码
+  int _encodeMouseButton(int button, int state) {
+    // button: 0=左,1=中,2=右；state: 0=释放,1=按下
+    // SGR-1006: cb = button + (shift<<4) + (alt<<3) + (ctrl<<2)
+    int cb = button;
+    // 如果没有修饰键状态，直接返回 button
+    return cb;
+  }
 }
 
 /// 镜像标签的输出回调：不做任何处理
@@ -283,6 +301,9 @@ class _MirrorOutput implements TerminalOutput {
 
   @override
   void onColorsChanged() {}
+
+  @override
+  void mouseEvent(int button, int state, int x, int y) {}
 }
 
 /// PTY 输出回调：将模拟器输出写回 PTY（kyroon_pty 不需要写回，因为用 Pty.write 直接写）
@@ -291,12 +312,14 @@ class _PtyOutput implements TerminalOutput {
   final void Function(String oldTitle, String newTitle)? onTitleChanged;
   final void Function(String text)? copyCallback;
   final VoidCallback? pasteCallback;
+  final void Function(int button, int state, int x, int y)? mouseCallback;
 
   _PtyOutput({
     required this.tabId,
     this.onTitleChanged,
     this.copyCallback,
     this.pasteCallback,
+    this.mouseCallback,
   });
 
   @override
@@ -322,6 +345,11 @@ class _PtyOutput implements TerminalOutput {
 
   @override
   void onColorsChanged() {}
+
+  @override
+  void mouseEvent(int button, int state, int x, int y) {
+    mouseCallback?.call(button, state, x, y);
+  }
 }
 
 /// 终端标签提供器
