@@ -1,6 +1,3 @@
-import 'dart:convert';
-import 'dart:typed_data';
-
 import 'package:flutter/material.dart' hide TextStyle;
 import 'package:flutter/painting.dart' as painting;
 import 'package:flutter/services.dart';
@@ -195,13 +192,15 @@ class _TerminalPageState extends ConsumerState<TerminalPage> {
       bgColor: bgColor,
       fgColor: fgColor,
       cursorColor: cursorColor,
+      ctrl: state.ctrl,
+      alt: state.alt,
       notifier: notifier,
     );
   }
 }
 
 /// 终端视图主体
-class _TerminalViewBody extends ConsumerStatefulWidget {
+class _TerminalViewBody extends ConsumerWidget {
   final TerminalController controller;
   final double fontSize;
   final String fontFamily;
@@ -209,6 +208,8 @@ class _TerminalViewBody extends ConsumerStatefulWidget {
   final Color bgColor;
   final Color fgColor;
   final Color cursorColor;
+  final bool ctrl;
+  final bool alt;
   final TerminalTabsNotifier notifier;
 
   const _TerminalViewBody({
@@ -219,76 +220,41 @@ class _TerminalViewBody extends ConsumerStatefulWidget {
     required this.bgColor,
     required this.fgColor,
     required this.cursorColor,
+    required this.ctrl,
+    required this.alt,
     required this.notifier,
   });
 
   @override
-  ConsumerState<_TerminalViewBody> createState() => _TerminalViewBodyState();
-}
-
-class _TerminalViewBodyState extends ConsumerState<_TerminalViewBody> {
-  @override
-  void initState() {
-    super.initState();
-    widget.controller.onScreenUpdated = () {
-      if (mounted) setState(() {});
-    };
-  }
-
-  @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     return TerminalView(
-      key: ValueKey(widget.controller),
-      controller: widget.controller,
+      key: ValueKey(controller),
+      controller: controller,
       fontConfig: TerminalFontConfig(
-        fontSize: widget.fontSize,
-        fontFamily: widget.fontFamily,
+        fontSize: fontSize,
+        fontFamily: fontFamily,
         height: 1.35,
       ),
-      foreground: widget.fgColor,
-      background: widget.bgColor,
-      cursorColor: widget.cursorColor,
-      selectionColor: widget.fgColor.withValues(alpha: 0.25),
-      cursorStyle: switch (widget.cursorStyle) {
+      foreground: fgColor,
+      background: bgColor,
+      cursorColor: cursorColor,
+      selectionColor: fgColor.withValues(alpha: 0.25),
+      cursorStyle: switch (cursorStyle) {
         TerminalCursorStyle.block => TerminalCursorRenderStyle.block,
         TerminalCursorStyle.underline => TerminalCursorRenderStyle.underline,
         TerminalCursorStyle.bar => TerminalCursorRenderStyle.bar,
       },
       autofocus: true,
-      onUserInput: (bytes) {
-        final tab = widget.notifier.state.active;
-        if (tab == null) return;
-        // 通过 shell 通道发送用户输入到终端进程
-        tab.pty?.write(Uint8List.fromList(bytes));
-      },
-      onPtyOutput: (bytes) {
-        widget.controller.feedOutput(bytes);
-        setState(() {});
-      },
-      onScreenUpdated: () {
-        setState(() {});
-      },
-      onTitleChanged: (title) {
-        // 标题变更由外部处理
-      },
-      onCopyToClipboard: () {
-        // 终端选中文本复制到剪贴板：由 emulator/renderer 选中区域提供文本
-        // 当前先作为占位保持 API 对称，后续可扩展为将选中区域写入剪贴板
-      },
-      onPasteFromClipboard: () async {
+      ctrl: ctrl,
+      alt: alt,
+      onInput: notifier.write,
+      onResize: notifier.resizeActive,
+      onModifiersConsumed: notifier.clearModifiers,
+      onPasteRequest: () async {
         final clipboard = await Clipboard.getData(Clipboard.kTextPlain);
         final text = clipboard?.text;
-        if (text != null) {
-          widget.controller.writeString(text);
-        }
-      },
-      onMouseEvent: (button, state, x, y) {
-        final isPress = state == 1;
-        // SGR-1006: ESC [ < cb ; Cx ; Cy M (press) / m (release)
-        final seq = '\x1B[<${button};${x};${y}${isPress ? 'M' : 'm'}';
-        final tab = widget.notifier.state.active;
-        if (tab != null) {
-          tab.pty?.write(Uint8List.fromList(utf8.encode(seq)));
+        if (text != null && text.isNotEmpty) {
+          notifier.write(text);
         }
       },
     );

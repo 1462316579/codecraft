@@ -98,6 +98,11 @@ class MainActivity : FlutterActivity() {
                 "ensureBootstrap" -> BootstrapInstaller.ensureInstalledAsync(this) { ok ->
                     runOnUiThread { result.success(ok) }
                 }
+                // 启动前自检：在真实进程里跑一次 bash，拿到 exec/动态链接失败的原始原因。
+                "terminalPreflight" -> Thread {
+                    val report = BootstrapInstaller.preflight(this)
+                    runOnUiThread { result.success(report) }
+                }.start()
                 "writeFile" -> {
                     val path = call.argument<String>("path")
                     val content = call.argument<String>("content")

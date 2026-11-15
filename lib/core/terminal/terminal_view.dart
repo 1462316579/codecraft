@@ -1,16 +1,14 @@
-/// 终端视图 Flutter 组件，移植自 Termux TerminalView。
-///
-/// 负责：
-/// - 键盘输入（RawKeyboardListener）
-/// - 与 TerminalController 连接，将 PTY 输出渲染到屏幕
-import 'dart:convert';
-import 'dart:ui' as ui;
-import 'package:flutter/material.dart' hide TextStyle;
+import 'dart:async';
+
+import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
-import 'terminal.dart';
+import 'terminal_controller.dart';
+import 'terminal_renderer.dart';
+import 'terminal_row.dart';
+import 'terminal_style.dart';
 
-/// 终端视图：用户交互的主界面
+/// 终端视图：绘制 + 键盘/触摸输入 + 自动调整行列数。
 class TerminalView extends StatefulWidget {
   final TerminalController controller;
   final TerminalFontConfig fontConfig;
@@ -21,13 +19,21 @@ class TerminalView extends StatefulWidget {
   final TerminalCursorRenderStyle cursorStyle;
   final bool autofocus;
 
-  final void Function(List<int> bytes)? onUserInput;
-  final void Function(List<int> bytes)? onPtyOutput;
-  final VoidCallback? onScreenUpdated;
-  final ValueChanged<String>? onTitleChanged;
-  final VoidCallback? onCopyToClipboard;
-  final VoidCallback? onPasteFromClipboard;
-  final void Function(int button, int state, int x, int y)? onMouseEvent;
+  /// 底部附加键的 CTRL/ALT 是否处于按下状态，作用于下一个输入。
+  final bool ctrl;
+  final bool alt;
+
+  /// 发送用户输入（已经是终端要接收的字节序列对应的字符串）。
+  final void Function(String data)? onInput;
+
+  /// 行列数变化，调用方应同步 PTY 尺寸。
+  final void Function(int columns, int rows)? onResize;
+
+  /// CTRL/ALT 修饰键被消费后回调，用于复位按钮状态。
+  final VoidCallback? onModifiersConsumed;
+
+  /// 请求粘贴（Ctrl+Shift+V）。
+  final VoidCallback? onPasteRequest;
 
   const TerminalView({
     super.key,
@@ -39,13 +45,12 @@ class TerminalView extends StatefulWidget {
     required this.selectionColor,
     this.cursorStyle = TerminalCursorRenderStyle.block,
     this.autofocus = true,
-    this.onUserInput,
-    this.onPtyOutput,
-    this.onScreenUpdated,
-    this.onTitleChanged,
-    this.onCopyToClipboard,
-    this.onPasteFromClipboard,
-    this.onMouseEvent,
+    this.ctrl = false,
+    this.alt = false,
+    this.onInput,
+    this.onResize,
+    this.onModifiersConsumed,
+    this.onPasteRequest,
   });
 
   @override
@@ -53,284 +58,413 @@ class TerminalView extends StatefulWidget {
 }
 
 class _TerminalViewState extends State<TerminalView> {
-  late FocusNode _focusNode;
-  double _scrollOffset = 0.0;
-  bool _selectionActive = false;
-  int? _selStartX;
-  int? _selStartY;
-  List<int>? _selection;
+  final FocusNode _focusNode = FocusNode(debugLabel: 'terminal');
+  final TextEditingController _textController = TextEditingController();
+
+  Timer? _blinkTimer;
+  bool _cursorOn = true;
+
+  int _scrollOffset = 0;
+  int _appliedColumns = 0;
+  int _appliedRows = 0;
+
+  int? _selAnchorRow;
+  int? _selAnchorCol;
+  int? _selRow;
+  int? _selCol;
+  bool _selecting = false;
+
+  bool _syncingText = false;
+  bool _resizeScheduled = false;
+  int _wantColumns = 0;
+  int _wantRows = 0;
 
   @override
   void initState() {
     super.initState();
-    _focusNode = FocusNode();
-    widget.controller.onScreenUpdated = () {
-      if (mounted) setState(() {});
-    };
+    widget.controller.onScreenUpdated = _onScreenUpdated;
+    _textController.addListener(_onEditingChanged);
+    _blinkTimer = Timer.periodic(const Duration(milliseconds: 600), (_) {
+      if (!mounted) return;
+      setState(() => _cursorOn = !_cursorOn);
+    });
+  }
+
+  @override
+  void didUpdateWidget(TerminalView oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    if (oldWidget.controller != widget.controller) {
+      oldWidget.controller.onScreenUpdated = null;
+      widget.controller.onScreenUpdated = _onScreenUpdated;
+      _scrollOffset = 0;
+    }
   }
 
   @override
   void dispose() {
+    _blinkTimer?.cancel();
+    _textController.removeListener(_onEditingChanged);
+    _textController.dispose();
     _focusNode.dispose();
+    widget.controller.onScreenUpdated = null;
     super.dispose();
   }
 
-  void _startSelection(Offset localPosition) {
-    final buffer = widget.controller.buffer;
+  void _onScreenUpdated() {
+    if (!mounted) return;
+    setState(() {});
+  }
+
+  // ---------------------------------------------------------------- 输入
+
+  void _sendRaw(String data) {
+    if (data.isEmpty) return;
+    widget.onInput?.call(data);
+  }
+
+  /// 应用 CTRL/ALT 按钮状态后发送文本。
+  void _sendWithModifiers(String text) {
+    var data = text;
+    if (widget.ctrl && text.length == 1) {
+      final code = text.codeUnitAt(0);
+      if (code >= 0x61 && code <= 0x7A) {
+        data = String.fromCharCode(code - 0x60);
+      } else if (code >= 0x41 && code <= 0x5A) {
+        data = String.fromCharCode(code - 0x40);
+      } else if (code == 0x20) {
+        data = String.fromCharCode(0);
+      }
+    } else if (widget.ctrl) {
+      data = '\x1b$text';
+    }
+    if (widget.alt) {
+      data = '\x1b$data';
+    }
+    if (widget.ctrl || widget.alt) {
+      widget.onModifiersConsumed?.call();
+    }
+    _sendRaw(data);
+  }
+
+  void _onEditingChanged() {
+    if (_syncingText) return;
+    final value = _textController.value;
+    // 输入法组词中先不发送
+    if (value.composing.isValid) return;
+    final text = value.text;
+    if (text.isEmpty) return;
+
+    _syncingText = true;
+    _textController.value = TextEditingValue.empty;
+    _syncingText = false;
+
+    _sendWithModifiers(text);
+    _scrollOffset = 0;
+  }
+
+  KeyEventResult _onKeyEvent(FocusNode node, KeyEvent event) {
+    if (event is! KeyDownEvent && event is! KeyRepeatEvent) {
+      return KeyEventResult.ignored;
+    }
+    final keyboard = HardwareKeyboard.instance;
+    final key = event.logicalKey;
+    final isCtrl = keyboard.isControlPressed;
+    final isShift = keyboard.isShiftPressed;
+
+    if (isCtrl && isShift && key == LogicalKeyboardKey.keyV) {
+      widget.onPasteRequest?.call();
+      return KeyEventResult.handled;
+    }
+
+    String? sequence;
+    // 应用光标键模式（DECCKM，vim/less 会开启）：方向键用 SS3 前缀
+    final appCursor = widget.controller.screen.appCursorKeys;
+    final cursorPrefix = appCursor ? '\x1bO' : '\x1b[';
+    if (key == LogicalKeyboardKey.enter || key == LogicalKeyboardKey.numpadEnter) {
+      sequence = '\r';
+    } else if (key == LogicalKeyboardKey.backspace) {
+      sequence = '\x7f';
+    } else if (key == LogicalKeyboardKey.tab) {
+      sequence = isShift ? '\x1b[Z' : '\t';
+    } else if (key == LogicalKeyboardKey.escape) {
+      sequence = '\x1b';
+    } else if (key == LogicalKeyboardKey.arrowUp) {
+      sequence = '${cursorPrefix}A';
+    } else if (key == LogicalKeyboardKey.arrowDown) {
+      sequence = '${cursorPrefix}B';
+    } else if (key == LogicalKeyboardKey.arrowRight) {
+      sequence = '${cursorPrefix}C';
+    } else if (key == LogicalKeyboardKey.arrowLeft) {
+      sequence = '${cursorPrefix}D';
+    } else if (key == LogicalKeyboardKey.home) {
+      sequence = '${cursorPrefix}H';
+    } else if (key == LogicalKeyboardKey.end) {
+      sequence = '${cursorPrefix}F';
+    } else if (key == LogicalKeyboardKey.delete) {
+      sequence = '\x1b[3~';
+    } else if (key == LogicalKeyboardKey.insert) {
+      sequence = '\x1b[2~';
+    } else if (key == LogicalKeyboardKey.pageUp) {
+      sequence = '\x1b[5~';
+    } else if (key == LogicalKeyboardKey.pageDown) {
+      sequence = '\x1b[6~';
+    } else if (key == LogicalKeyboardKey.f1) {
+      sequence = '\x1bOP';
+    } else if (key == LogicalKeyboardKey.f2) {
+      sequence = '\x1bOQ';
+    } else if (key == LogicalKeyboardKey.f3) {
+      sequence = '\x1bOR';
+    } else if (key == LogicalKeyboardKey.f4) {
+      sequence = '\x1bOS';
+    } else if (key == LogicalKeyboardKey.f5) {
+      sequence = '\x1b[15~';
+    } else if (key == LogicalKeyboardKey.f6) {
+      sequence = '\x1b[17~';
+    } else if (key == LogicalKeyboardKey.f7) {
+      sequence = '\x1b[18~';
+    } else if (key == LogicalKeyboardKey.f8) {
+      sequence = '\x1b[19~';
+    } else if (key == LogicalKeyboardKey.f9) {
+      sequence = '\x1b[20~';
+    } else if (key == LogicalKeyboardKey.f10) {
+      sequence = '\x1b[21~';
+    } else if (key == LogicalKeyboardKey.f11) {
+      sequence = '\x1b[23~';
+    } else if (key == LogicalKeyboardKey.f12) {
+      sequence = '\x1b[24~';
+    } else if (isCtrl) {
+      // Ctrl+字母 → 控制字符
+      final label = key.keyLabel.toUpperCase();
+      if (label.length == 1) {
+        final code = label.codeUnitAt(0);
+        if (code >= 0x40 && code <= 0x5F) {
+          sequence = String.fromCharCode(code - 0x40);
+        }
+      }
+    }
+
+    if (sequence == null) return KeyEventResult.ignored;
+    _sendRaw(sequence);
+    _scrollOffset = 0;
+    return KeyEventResult.handled;
+  }
+
+  // ---------------------------------------------------------------- 触摸
+
+  Size _cellSize() => TerminalFontMetrics.cellSize(widget.fontConfig);
+
+  ({int col, int row}) _cellAt(Offset local) {
+    final cell = _cellSize();
+    final screen = widget.controller.screen;
+    final col = (local.dx / cell.width).floor().clamp(0, screen.columns - 1);
+    final viewRow =
+        (local.dy / cell.height).floor().clamp(0, screen.rows - 1) - _scrollOffset;
+    return (col: col, row: viewRow);
+  }
+
+  void _startSelection(Offset local) {
+    final cell = _cellAt(local);
     setState(() {
-      _selectionActive = true;
-      _selStartX = 0;
-      _selStartY = 0;
-      _selection = null;
+      _selecting = true;
+      _selAnchorRow = cell.row;
+      _selAnchorCol = cell.col;
+      _selRow = cell.row;
+      _selCol = cell.col;
+      _focusNode.requestFocus();
     });
   }
 
-  void _sendMouse(int button, int state, Offset localPosition) {
-    final buffer = widget.controller.buffer;
-    final width = localPosition.dx;
-    final height = localPosition.dy + _scrollOffset;
-    final cellWidth = 16.0; // 合理的默认值，实际由布局决定
-    final cellHeight = 16.0;
-    final x = (width / cellWidth).floor().clamp(0, buffer.visibleCols - 1);
-    final y = (height / cellHeight).floor().clamp(0, buffer.visibleRows - 1);
-    widget.onMouseEvent?.call(button, state, x, y);
-  }
-
-  void _updateSelectionFromDrag(Offset? localPosition) {
-    if (!_selectionActive || localPosition == null) return;
-    final buffer = widget.controller.buffer;
-    final width = localPosition.dx;
-    final height = localPosition.dy + _scrollOffset;
-    final x = width.clamp(0, buffer.visibleCols * 16.0).floor() ~/ 16;
-    final y = height.clamp(0, buffer.visibleRows * 16.0).floor() ~/ 16;
-    if (_selStartX != null && _selStartY != null) {
-      final x1 = (_selStartX! - x).abs();
-      final y1 = (_selStartY! - y).abs();
-      if (x1 > 0 || y1 > 0) {
-        setState(() {
-          _selection = [_selStartX!, _selStartY!, x, y];
-        });
-      }
-    } else {
-      setState(() {
-        _selStartX = x.clamp(0, buffer.visibleCols - 1);
-        _selStartY = y.clamp(0, buffer.visibleRows - 1);
-        _selection = [_selStartX!, _selStartY!, _selStartX!, _selStartY!];
-      });
-    }
-  }
-
-  void _finalizeSelection() {
-    if (!_selectionActive) return;
+  void _updateSelection(Offset local) {
+    if (!_selecting) return;
+    final cell = _cellAt(local);
     setState(() {
-      _selectionActive = false;
+      _selRow = cell.row;
+      _selCol = cell.col;
+    });
+  }
+
+  TerminalSelection? get _selection {
+    if (_selAnchorRow == null || _selRow == null) return null;
+    var startRow = _selAnchorRow!;
+    var startCol = _selAnchorCol!;
+    var endRow = _selRow!;
+    var endCol = _selCol!;
+    if (endRow < startRow || (endRow == startRow && endCol < startCol)) {
+      final row = startRow;
+      final col = startCol;
+      startRow = endRow;
+      startCol = endCol;
+      endRow = row;
+      endCol = col;
+    }
+    return TerminalSelection(
+      startRow: startRow,
+      startCol: startCol,
+      endRow: endRow,
+      endCol: endCol,
+    );
+  }
+
+  String _selectedText() {
+    final sel = _selection;
+    if (sel == null) return '';
+    final screen = widget.controller.screen;
+    final buffer = StringBuffer();
+    for (var row = sel.startRow; row <= sel.endRow; row++) {
+      final line = screen.rowAt(row);
+      if (line == null) continue;
+      final from = row == sel.startRow ? sel.startCol : 0;
+      final to = row == sel.endRow ? sel.endCol + 1 : screen.columns;
+      buffer.writeln(_sliceRow(line, from, to));
+    }
+    return buffer.toString().trimRight();
+  }
+
+  String _sliceRow(TerminalRow row, int from, int to) {
+    final buffer = StringBuffer();
+    for (var col = from; col < to && col < row.columns; col++) {
+      if (CellAttr.has(row.getAttrs(col), CellAttr.wideTail)) continue;
+      buffer.writeCharCode(row.getChar(col));
+    }
+    return buffer.toString().trimRight();
+  }
+
+  Future<void> _finishSelection() async {
+    if (!_selecting) return;
+    setState(() => _selecting = false);
+    final text = _selectedText();
+    if (text.isEmpty) return;
+    await Clipboard.setData(ClipboardData(text: text));
+  }
+
+  void _clearSelection() {
+    if (_selAnchorRow == null && _selRow == null) return;
+    setState(() {
+      _selAnchorRow = null;
+      _selAnchorCol = null;
+      _selRow = null;
+      _selCol = null;
+      _selecting = false;
+    });
+  }
+
+  // ---------------------------------------------------------------- 布局
+
+  void _scheduleResize(int columns, int rows) {
+    _wantColumns = columns;
+    _wantRows = rows;
+    if (_resizeScheduled) return;
+    _resizeScheduled = true;
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      _resizeScheduled = false;
+      if (!mounted) return;
+      final screen = widget.controller.screen;
+      if (_wantColumns == _appliedColumns && _wantRows == _appliedRows) return;
+      if (screen.columns == _wantColumns && screen.rows == _wantRows) {
+        _appliedColumns = _wantColumns;
+        _appliedRows = _wantRows;
+        return;
+      }
+      _appliedColumns = _wantColumns;
+      _appliedRows = _wantRows;
+      widget.controller.resize(_wantColumns, _wantRows);
+      widget.onResize?.call(_wantColumns, _wantRows);
     });
   }
 
   @override
   Widget build(BuildContext context) {
-    final controller = widget.controller;
-    final buffer = controller.buffer;
+    final screen = widget.controller.screen;
+    final cell = _cellSize();
 
     return Focus(
-      focusNode: _focusNode,
-      autofocus: widget.autofocus,
-      onKey: _onKeyEvent,
+      onKeyEvent: _onKeyEvent,
       child: GestureDetector(
-        onTapDown: (details) {
+        behavior: HitTestBehavior.opaque,
+        onTapDown: (_) {
           _focusNode.requestFocus();
-          _startSelection(details.localPosition);
-          _sendMouse(0, 1, details.localPosition); // left press
+          _clearSelection();
         },
-        onTapUp: (details) {
-          _sendMouse(0, 0, details.localPosition); // left release
-        },
+        onLongPressStart: (details) => _startSelection(details.localPosition),
+        onLongPressMoveUpdate: (details) => _updateSelection(details.localPosition),
+        onLongPressEnd: (_) => _finishSelection(),
         onVerticalDragUpdate: (details) {
-          setState(() {
-            _scrollOffset = (_scrollOffset - details.primaryDelta!).clamp(0.0, double.infinity);
-          });
+          final delta = -(details.primaryDelta ?? 0) / cell.height;
+          final next = (_scrollOffset + delta).round();
+          final clamped = next.clamp(0, screen.scrollbackLength);
+          if (clamped != _scrollOffset) {
+            setState(() => _scrollOffset = clamped);
+          }
         },
-        onVerticalDragEnd: (_) => _finalizeSelection(),
-        onPanStart: (details) {
-          _startSelection(details.localPosition);
-          _sendMouse(0, 1, details.localPosition); // left press
-        },
-        onPanUpdate: (details) {
-          _updateSelectionFromDrag(details.localPosition);
-        },
-        onPanEnd: (_) {
-          _finalizeSelection();
-          // left release (position 0,0 since we don't have final details here)
-          _sendMouse(0, 0, Offset(0, 0));
-        },
-        child: RepaintBoundary(
-          child: LayoutBuilder(
-            builder: (context, constraints) {
-              final cellWidth = constraints.maxWidth / buffer.visibleCols;
-              final cellHeight = constraints.maxHeight / buffer.visibleRows;
-              return CustomPaint(
-                size: constraints.biggest,
-                painter: TerminalRenderer(
-                  buffer: buffer,
-                  fontConfig: widget.fontConfig,
-                  foreground: widget.foreground,
-                  background: widget.background,
-                  cursorColor: widget.cursorColor,
-                  selectionColor: widget.selectionColor,
-                  cursorRenderStyle: widget.cursorStyle,
-                  cursorVisible: true,
-                  cursorEnabled: true,
-                  scrollOffset: _scrollOffset,
-                  selection: _selection,
+        child: LayoutBuilder(
+          builder: (context, constraints) {
+            final columns =
+                (constraints.maxWidth / cell.width).floor().clamp(2, 400);
+            final rows =
+                (constraints.maxHeight / cell.height).floor().clamp(2, 400);
+            _scheduleResize(columns, rows);
+            if (_scrollOffset > screen.scrollbackLength) {
+              _scrollOffset = screen.scrollbackLength;
+            }
+
+            return Stack(
+              children: [
+                Positioned.fill(
+                  child: RepaintBoundary(
+                    child: CustomPaint(
+                      painter: TerminalRenderer(
+                        screen: screen,
+                        fontConfig: widget.fontConfig,
+                        foreground: widget.foreground,
+                        background: widget.background,
+                        cursorColor: widget.cursorColor,
+                        selectionColor: widget.selectionColor,
+                        cursorRenderStyle: widget.cursorStyle,
+                        cursorVisible: _cursorOn || !screen.blinkCursor,
+                        cursorEnabled: screen.cursorVisible,
+                        scrollOffset: _scrollOffset,
+                        selection: _selection,
+                      ),
+                    ),
+                  ),
                 ),
-              );
-            },
-          ),
+                // 隐藏输入框：软键盘 / 中文输入法需要 TextInput 连接才能送字
+                Positioned(
+                  left: 0,
+                  top: 0,
+                  width: 1,
+                  height: 1,
+                  child: Opacity(
+                    opacity: 0.01,
+                    child: TextField(
+                      controller: _textController,
+                      focusNode: _focusNode,
+                      autofocus: widget.autofocus,
+                      showCursor: false,
+                      enableInteractiveSelection: false,
+                      autocorrect: false,
+                      enableSuggestions: false,
+                      keyboardType: TextInputType.text,
+                      textInputAction: TextInputAction.none,
+                      maxLines: 1,
+                      style: const TextStyle(
+                        color: Colors.transparent,
+                        fontSize: 1,
+                        height: 1,
+                      ),
+                      decoration: const InputDecoration(
+                        isCollapsed: true,
+                        border: InputBorder.none,
+                        contentPadding: EdgeInsets.zero,
+                      ),
+                    ),
+                  ),
+                ),
+              ],
+            );
+          },
         ),
       ),
     );
-  }
-
-  KeyEventResult _onKeyEvent(FocusNode node, RawKeyEvent event) {
-    if (event is! RawKeyDownEvent) return KeyEventResult.ignored;
-
-    final logicalKey = event.logicalKey;
-    final isCtrl = event.isControlPressed;
-    final isAlt = event.isAltPressed;
-    final isShift = event.isShiftPressed;
-
-    void sendToPty(List<int> bytes) {
-      widget.onUserInput?.call(bytes);
-    }
-
-    // Ctrl+C
-    if (isCtrl && logicalKey == LogicalKeyboardKey.keyC) {
-      sendToPty([0x03]);
-      return KeyEventResult.handled;
-    }
-    // Ctrl+D
-    if (isCtrl && logicalKey == LogicalKeyboardKey.keyD) {
-      sendToPty([0x04]);
-      return KeyEventResult.handled;
-    }
-    // Ctrl+Z
-    if (isCtrl && logicalKey == LogicalKeyboardKey.keyZ) {
-      sendToPty([0x1A]);
-      return KeyEventResult.handled;
-    }
-    // Ctrl+L
-    if (isCtrl && logicalKey == LogicalKeyboardKey.keyL) {
-      sendToPty([0x0C]);
-      return KeyEventResult.handled;
-    }
-    // Tab
-    if (logicalKey == LogicalKeyboardKey.tab) {
-      sendToPty(isShift ? [0x1B, 0x5B, 0x5A] : [0x09]);
-      return KeyEventResult.handled;
-    }
-    // ESC
-    if (logicalKey == LogicalKeyboardKey.escape) {
-      sendToPty([0x1B]);
-      return KeyEventResult.handled;
-    }
-    // Enter
-    if (logicalKey == LogicalKeyboardKey.enter ||
-        logicalKey == LogicalKeyboardKey.numpadEnter) {
-      sendToPty([0x0D]);
-      return KeyEventResult.handled;
-    }
-    // Backspace
-    if (logicalKey == LogicalKeyboardKey.backspace) {
-      sendToPty([0x08]);
-      return KeyEventResult.handled;
-    }
-    // Delete
-    if (logicalKey == LogicalKeyboardKey.delete) {
-      sendToPty([0x1B, 0x5B, 0x33, 0x7E]);
-      return KeyEventResult.handled;
-    }
-    // Home / End
-    if (logicalKey == LogicalKeyboardKey.home) {
-      sendToPty([0x1B, 0x5B, 0x48]);
-      return KeyEventResult.handled;
-    }
-    if (logicalKey == LogicalKeyboardKey.end) {
-      sendToPty([0x1B, 0x5B, 0x46]);
-      return KeyEventResult.handled;
-    }
-    // PageUp / PageDown
-    if (logicalKey == LogicalKeyboardKey.pageUp) {
-      sendToPty([0x1B, 0x5B, 0x35, 0x7E]);
-      return KeyEventResult.handled;
-    }
-    if (logicalKey == LogicalKeyboardKey.pageDown) {
-      sendToPty([0x1B, 0x5B, 0x36, 0x7E]);
-      return KeyEventResult.handled;
-    }
-    // Insert
-    if (logicalKey == LogicalKeyboardKey.insert) {
-      sendToPty([0x1B, 0x5B, 0x32, 0x7E]);
-      return KeyEventResult.handled;
-    }
-    // F1-F12
-    for (var i = 1; i <= 12; i++) {
-      if (logicalKey.debugName == 'keyF$i') {
-        sendToPty([0x1B, 0x5B, 0x31, 0x30 + (i ~/ 10), 0x30 + (i % 10), 0x7E]);
-        return KeyEventResult.handled;
-      }
-    }
-    // Ctrl+Shift+C: 复制到剪贴板
-    if (isCtrl && isShift && logicalKey == LogicalKeyboardKey.keyC) {
-      widget.onCopyToClipboard?.call();
-      return KeyEventResult.handled;
-    }
-    // Ctrl+Shift+V: 从剪贴板粘贴
-    if (isCtrl && isShift && logicalKey == LogicalKeyboardKey.keyV) {
-      widget.onPasteFromClipboard?.call();
-      return KeyEventResult.handled;
-    }
-    // 方向键
-    if (logicalKey == LogicalKeyboardKey.arrowLeft) {
-      sendToPty([0x1B, 0x5B, 0x44]);
-      return KeyEventResult.handled;
-    }
-    if (logicalKey == LogicalKeyboardKey.arrowRight) {
-      sendToPty([0x1B, 0x5B, 0x43]);
-      return KeyEventResult.handled;
-    }
-    if (logicalKey == LogicalKeyboardKey.arrowUp) {
-      sendToPty([0x1B, 0x5B, 0x41]);
-      return KeyEventResult.handled;
-    }
-    if (logicalKey == LogicalKeyboardKey.arrowDown) {
-      sendToPty([0x1B, 0x5B, 0x42]);
-      return KeyEventResult.handled;
-    }
-    // 字符输入
-    if (event.character != null && event.character!.isNotEmpty) {
-      final char = event.character!;
-      final codeUnits = utf8.encode(char);
-
-      if (isCtrl && !isAlt && codeUnits.length == 1) {
-        final byte = codeUnits[0];
-        if (byte >= 0x61 && byte <= 0x7A) {
-          sendToPty([byte - 0x60]);
-        } else if (byte >= 0x41 && byte <= 0x5A) {
-          sendToPty([byte - 0x40]);
-        } else if (byte == 0x20) {
-          sendToPty([0x00]);
-        } else {
-          sendToPty(codeUnits);
-        }
-      } else {
-        if (isAlt) {
-          sendToPty([0x1B]);
-        }
-        sendToPty(codeUnits);
-      }
-      return KeyEventResult.handled;
-    }
-
-    return KeyEventResult.ignored;
   }
 }

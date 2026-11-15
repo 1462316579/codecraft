@@ -32,7 +32,7 @@ import java.nio.file.Paths
  */
 object BootstrapInstaller {
     private const val TAG = "BootstrapInstaller"
-    private const val BOOTSTRAP_VERSION = "2026.11.08-r2+apt.android-7"
+    private const val BOOTSTRAP_VERSION = "2026.11.08-r3+apt.android-7"
     private const val MARKER_NAME = ".bootstrapped"
 
     /** 内嵌 bootstrap 在 assets 中的目录名（已解压内容，无需解压）。 */
@@ -462,6 +462,115 @@ object BootstrapInstaller {
         }
 
         processFile(rootDir)
+    }
+
+    /**
+     * 启动前自检：在真实子进程里执行一次 bash，验证 exec 权限、动态链接与基础环境。
+     *
+     * 这一步非常关键：bash 秒退的原因可能是
+     * - exec 被 SELinux 拒绝（targetSdk >= 29 时的 W^X 策略）→ IOException: error=13
+     * - 动态链接失败（缺 libreadline.so.8 等）→ 退出码 127，或 IOException: error=2
+     * - 前缀路径没适配 → "-c" 参数无效、找不到库
+     * ProcessBuilder 会把 errno 原文带回来，可直接显示给用户。
+     *
+     * @return {ok, exitCode, output, detail}
+     */
+    fun preflight(context: Context): Map<String, Any?> {
+        val prefixDir = File(context.filesDir, "usr")
+        val homeDir = File(context.filesDir, "home").apply { mkdirs() }
+        val tmpDir = File(prefixDir, "tmp").apply { mkdirs() }
+        val bash = File(prefixDir, "bin/bash")
+
+        val issues = ArrayList<String>()
+        if (!bash.exists()) {
+            issues.add("未找到 ${bash.absolutePath}")
+        } else {
+            if (bash.length() < 100_000L) issues.add("bin/bash 大小异常(${bash.length()})")
+            if (!bash.canExecute()) issues.add("bin/bash 不可执行（权限位缺失）")
+        }
+        val readline = File(prefixDir, "lib/libreadline.so.8")
+        if (!readline.exists()) issues.add("lib/libreadline.so.8 缺失（符号链接未创建）")
+        val readlineReal = File(prefixDir, "lib/libreadline.so.8.3")
+        if (!readlineReal.exists()) issues.add("lib/libreadline.so.8.3 缺失（bootstrap 未完整拷贝）")
+
+        if (issues.isNotEmpty()) {
+            val detail = issues.joinToString("；")
+            Log.e(TAG, "preflight 失败: $detail")
+            return mapOf(
+                "ok" to false,
+                "exitCode" to null,
+                "output" to "",
+                "detail" to detail,
+            )
+        }
+
+        val prefixPath = prefixDir.absolutePath
+        val env = mapOf(
+            "PREFIX" to prefixPath,
+            "HOME" to homeDir.absolutePath,
+            "TMPDIR" to tmpDir.absolutePath,
+            "SHELL" to bash.absolutePath,
+            "PATH" to "$prefixPath/bin:$prefixPath/bin/applets:/system/bin:/system/xbin",
+            "LD_LIBRARY_PATH" to "$prefixPath/lib",
+            "TERM" to "xterm-256color",
+            "COLORTERM" to "truecolor",
+            "LANG" to "en_US.UTF-8",
+            "LC_ALL" to "en_US.UTF-8",
+        )
+
+        return try {
+            val builder = ProcessBuilder(
+                bash.absolutePath,
+                "-c",
+                "echo __CODECRAFT_OK__; echo \"PREFIX=\$PREFIX\"; uname -m",
+            )
+            builder.directory(homeDir)
+            builder.redirectErrorStream(true)
+            builder.environment().putAll(env)
+            val process = builder.start()
+
+            val output = StringBuilder()
+            process.inputStream.bufferedReader().useLines { lines ->
+                lines.forEach { line ->
+                    if (output.length < 4000) output.append(line).append('\n')
+                }
+            }
+            val finished = process.waitFor(10, java.util.concurrent.TimeUnit.SECONDS)
+            if (!finished) {
+                process.destroyForcibly()
+                return mapOf(
+                    "ok" to false,
+                    "exitCode" to null,
+                    "output" to output.toString(),
+                    "detail" to "bash 自检超时（10s 未返回），可能卡在启动脚本",
+                )
+            }
+            val code = process.exitValue()
+            val text = output.toString()
+            val ok = code == 0 && text.contains("__CODECRAFT_OK__")
+            val detail = if (ok) {
+                ""
+            } else {
+                "bash -c 退出码 $code" + if (text.isNotBlank()) "：${text.trim()}" else ""
+            }
+            Log.i(TAG, "preflight ok=$ok code=$code output=${text.trim()}")
+            mapOf(
+                "ok" to ok,
+                "exitCode" to code,
+                "output" to text.take(600),
+                "detail" to detail,
+            )
+        } catch (e: Exception) {
+            // IOException 的 message 里带 errno，例如 "error=13, Permission denied"
+            val detail = "${e.javaClass.simpleName}: ${e.message ?: ""}"
+            Log.e(TAG, "preflight 无法执行 bash", e)
+            mapOf(
+                "ok" to false,
+                "exitCode" to null,
+                "output" to "",
+                "detail" to detail,
+            )
+        }
     }
 
     /** 递归删除目录 */

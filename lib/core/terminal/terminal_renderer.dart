@@ -1,19 +1,16 @@
-/// 终端渲染器：CustomPainter，将终端缓冲区绘制到 Flutter Canvas。
-/// 参考 Termux TerminalRenderer.java。
-import 'dart:convert';
 import 'dart:ui' as ui;
+
 import 'package:flutter/material.dart' hide TextStyle;
 import 'package:flutter/painting.dart' as painting;
 
-import 'text_style.dart';
-import 'terminal_buffer.dart';
-import 'terminal_colors.dart';
-import 'terminal_emulator.dart';
+import 'terminal_row.dart';
+import 'terminal_screen.dart';
+import 'terminal_style.dart';
 import 'wc_width.dart';
 
 enum TerminalCursorRenderStyle { block, underline, bar }
 
-/// 终端字体配置
+/// 终端字体配置。
 class TerminalFontConfig {
   final double fontSize;
   final String fontFamily;
@@ -26,9 +23,54 @@ class TerminalFontConfig {
   });
 }
 
-/// 终端渲染器：CustomPainter
+/// 字体度量：单元格宽高（终端是按字符网格排布的）。
+class TerminalFontMetrics {
+  TerminalFontMetrics._();
+
+  static Size cellSize(TerminalFontConfig config, {double scale = 1.0}) {
+    final fontSize = config.fontSize * scale;
+    final painter = painting.TextPainter(
+      text: painting.TextSpan(
+        text: 'M',
+        style: painting.TextStyle(
+          fontSize: fontSize,
+          fontFamily: config.fontFamily,
+          height: 1.0,
+        ),
+      ),
+      textDirection: ui.TextDirection.ltr,
+    )..layout();
+    final width = painter.width;
+    painter.dispose();
+    if (width <= 0) {
+      // 字体尚未加载时的兜底，避免除零
+      return Size(fontSize * 0.62, fontSize * config.height);
+    }
+    return Size(width, fontSize * config.height);
+  }
+}
+
+/// 选区：行坐标与 [TerminalScreen.rowAt] 一致（负数代表历史行）。
+class TerminalSelection {
+  final int startRow;
+  final int startCol;
+  final int endRow;
+  final int endCol;
+
+  const TerminalSelection({
+    required this.startRow,
+    required this.startCol,
+    required this.endRow,
+    required this.endCol,
+  });
+}
+
+/// 终端绘制器。
+///
+/// 按「同一样式的连续字符」批量绘制文本，而不是逐字符创建 TextPainter，
+/// 长输出时性能差距非常明显。
 class TerminalRenderer extends CustomPainter {
-  final TerminalBuffer buffer;
+  final TerminalScreen screen;
   final TerminalFontConfig fontConfig;
   final Color foreground;
   final Color background;
@@ -37,16 +79,16 @@ class TerminalRenderer extends CustomPainter {
   final TerminalCursorRenderStyle cursorRenderStyle;
   final bool cursorVisible;
   final bool cursorEnabled;
-  final List<int>? selection;
-  final double scrollOffset;
+  final int scrollOffset;
+  final TerminalSelection? selection;
   final double fontScale;
 
-  painting.TextStyle? _textStyleCache;
-  double? _cellWidthCache;
-  double? _cellHeightCache;
+  /// 构造时的内容版本号。必须存快照：新旧 delegate 引用同一个 screen 对象，
+  /// 直接比较 `screen.version` 永远是相等，导致内容更新后不重绘。
+  final int snapshotVersion;
 
   TerminalRenderer({
-    required this.buffer,
+    required this.screen,
     required this.fontConfig,
     required this.foreground,
     required this.background,
@@ -55,247 +97,246 @@ class TerminalRenderer extends CustomPainter {
     this.cursorRenderStyle = TerminalCursorRenderStyle.block,
     this.cursorVisible = true,
     this.cursorEnabled = true,
+    this.scrollOffset = 0,
     this.selection,
-    this.scrollOffset = 0.0,
     this.fontScale = 1.0,
-  });
+  }) : snapshotVersion = screen.version;
 
   @override
   void paint(ui.Canvas canvas, ui.Size size) {
-    if (buffer.visibleCols <= 0 || buffer.visibleRows <= 0) return;
+    canvas.drawRect(Offset.zero & size, Paint()..color = background);
 
-    _ensureTextStyle(size);
+    final cell = TerminalFontMetrics.cellSize(fontConfig, scale: fontScale);
+    final cellWidth = cell.width;
+    final cellHeight = cell.height;
+    if (cellWidth <= 0 || cellHeight <= 0) return;
 
-    canvas.drawRect(
-      Rect.fromLTWH(0, 0, size.width, size.height),
-      Paint()..color = background,
-    );
+    canvas.save();
+    canvas.clipRect(Offset.zero & size);
 
-    final cellWidth = _cellWidthCache ?? 10.0;
-    final cellHeight = _cellHeightCache ?? 20.0;
-    final cols = buffer.visibleCols;
-    final rows = buffer.visibleRows;
-
-    final startRow = (scrollOffset / cellHeight).floor().clamp(0, rows - 1);
-    final endRow = ((scrollOffset + size.height) / cellHeight)
-        .ceil()
-        .clamp(0, rows);
-
-    for (var row = startRow; row < endRow; row++) {
-      final terminalRow = buffer.getLine(row);
-      if (terminalRow == null) continue;
-
-      final y = row * cellHeight - scrollOffset;
-      if (y + cellHeight < 0 || y > size.height) continue;
-
-      _drawSelectionBackground(canvas, row, y, cellWidth, cellHeight, size);
-
-      var col = 0;
-      while (col < cols) {
-        final codePoint = terminalRow.getChar(col);
-        final style = terminalRow.getStyle(col);
-
-        if (TextStyle.isWideCharRight(style)) {
-          col++;
-          continue;
-        }
-
-        if (codePoint == 0x20 &&
-            !TextStyle.isReverse(style) &&
-            !TextStyle.isBold(style) &&
-            !TextStyle.isUnderline(style)) {
-          col++;
-          continue;
-        }
-
-        final x = col * cellWidth;
-        final width = WcWidth.wcwidth(codePoint);
-        final drawWidth = width > 0 ? width * cellWidth : cellWidth;
-
-        _drawChar(canvas, codePoint, style, x, y, drawWidth, cellHeight);
-
-        col += width;
-      }
+    final rows = screen.rows;
+    for (var viewRow = -scrollOffset; viewRow < rows; viewRow++) {
+      final y = (viewRow + scrollOffset) * cellHeight;
+      if (y >= size.height) break;
+      if (y + cellHeight <= 0) continue;
+      final row = screen.rowAt(viewRow);
+      if (row == null) continue;
+      _paintSelection(canvas, viewRow, y, cellWidth, cellHeight);
+      _paintRow(canvas, row, y, cellWidth, cellHeight);
     }
 
-    if (cursorEnabled && cursorVisible) {
-      _drawCursor(canvas, cellWidth, cellHeight, size);
+    if (cursorEnabled && cursorVisible && scrollOffset == 0) {
+      _paintCursor(canvas, cellWidth, cellHeight, size);
     }
+
+    canvas.restore();
   }
 
-  void _ensureTextStyle(ui.Size size) {
-    if (_textStyleCache != null) return;
-    _textStyleCache = painting.TextStyle(
-      fontSize: fontConfig.fontSize * fontScale,
-      fontFamily: fontConfig.fontFamily,
-      color: foreground,
-      height: fontConfig.height,
-    );
-    final textPainter = painting.TextPainter(
-      text: TextSpan(text: 'W', style: _textStyleCache),
-      textDirection: ui.TextDirection.ltr,
-    );
-    textPainter.layout();
-    final computedWidth = textPainter.width > 0 ? textPainter.width : 10.0;
-    final computedHeight = textPainter.height > 0 ? textPainter.height : 20.0;
-    _cellWidthCache = computedWidth * 1.1;
-    _cellHeightCache = computedHeight * 1.2;
-  }
-
-  void _drawChar(
+  void _paintRow(
     ui.Canvas canvas,
-    int codePoint,
-    int style,
-    double x,
+    TerminalRow row,
+    double y,
+    double cellWidth,
+    double cellHeight,
+  ) {
+    final cols = row.columns;
+    var col = 0;
+    while (col < cols) {
+      final attrs = row.getAttrs(col);
+      if (CellAttr.has(attrs, CellAttr.wideTail)) {
+        col++;
+        continue;
+      }
+      final fg = row.getFg(col);
+      final bg = row.getBg(col);
+      final codePoint = row.getChar(col);
+      final width = WcWidth.wcwidth(codePoint);
+      if (width <= 0) {
+        col++;
+        continue;
+      }
+      if (width == 2) {
+        _paintRun(
+          canvas,
+          String.fromCharCode(codePoint),
+          col,
+          y,
+          2 * cellWidth,
+          cellHeight,
+          fg,
+          bg,
+          attrs,
+          cellWidth,
+        );
+        col += 2;
+        continue;
+      }
+
+      // 聚合样式相同的连续单宽字符
+      final buffer = StringBuffer();
+      var end = col;
+      while (end < cols) {
+        final otherAttrs = row.getAttrs(end);
+        if (CellAttr.has(otherAttrs, CellAttr.wideTail)) break;
+        if (row.getFg(end) != fg || row.getBg(end) != bg) break;
+        if (otherAttrs != attrs) break;
+        final other = row.getChar(end);
+        if (WcWidth.wcwidth(other) != 1) break;
+        buffer.writeCharCode(other);
+        end++;
+      }
+      if (end == col) {
+        col++;
+        continue;
+      }
+      _paintRun(
+        canvas,
+        buffer.toString(),
+        col,
+        y,
+        (end - col) * cellWidth,
+        cellHeight,
+        fg,
+        bg,
+        attrs,
+        cellWidth,
+      );
+      col = end;
+    }
+  }
+
+  void _paintRun(
+    ui.Canvas canvas,
+    String text,
+    int col,
     double y,
     double width,
     double height,
+    int fg,
+    int bg,
+    int attrs,
+    double cellWidth,
   ) {
-    final char = String.fromCharCode(codePoint);
+    if (text.isEmpty) return;
+    final x = col * cellWidth;
 
-    final foreColor = TerminalColors.resolveForeground(
-      style,
-      foreground.value,
-      background.value,
-    );
-    final backColor = TerminalColors.resolveBackground(
-      style,
-      foreground.value,
-      background.value,
-    );
-
-    Color drawFore = Color(foreColor);
-    Color drawBack = Color(backColor);
-    if (TextStyle.isReverse(style)) {
-      drawFore = Color(backColor);
-      drawBack = Color(foreColor);
+    var fore = fg == kDefaultColor ? foreground : Color(0xFF000000 | fg);
+    var back = bg == kDefaultColor ? background : Color(0xFF000000 | bg);
+    if (CellAttr.has(attrs, CellAttr.reverse)) {
+      final tmp = fore;
+      fore = back;
+      back = tmp;
+    }
+    if (CellAttr.has(attrs, CellAttr.hidden)) {
+      fore = back;
+    }
+    if (CellAttr.has(attrs, CellAttr.faint)) {
+      fore = fore.withValues(alpha: 0.6);
     }
 
-    if (TextStyle.isConceal(style)) {
+    if (back != background) {
       canvas.drawRect(
         Rect.fromLTWH(x, y, width, height),
-        Paint()..color = drawBack,
-      );
-      return;
-    }
-
-    final backIndex = TextStyle.decodeBackColor(style);
-    if (backIndex != TextStyle.COLOR_INDEX_BACKGROUND ||
-        TextStyle.isBackgroundTrueColor(style)) {
-      canvas.drawRect(
-        Rect.fromLTWH(x, y, width, height),
-        Paint()..color = drawBack,
+        Paint()..color = back,
       );
     }
 
-    final textSpan = TextSpan(
-      text: char,
-      style: painting.TextStyle(
-        fontSize: (fontConfig.fontSize * fontScale).clamp(8, 72),
-        fontFamily: fontConfig.fontFamily,
-        color: drawFore,
-        fontWeight: TextStyle.isBold(style)
-            ? FontWeight.bold
-            : FontWeight.normal,
-        decoration: TextStyle.isUnderline(style)
-            ? TextDecoration.underline
-            : TextDecoration.none,
-        decorationColor: drawFore,
-        height: fontConfig.height,
-      ),
-    );
+    final hasVisibleText = text.trim().isNotEmpty ||
+        CellAttr.has(attrs, CellAttr.underline) ||
+        CellAttr.has(attrs, CellAttr.strike);
+    if (!hasVisibleText) return;
 
-    final textPainter = painting.TextPainter(
-      text: textSpan,
-      textDirection: ui.TextDirection.ltr,
-    );
-    textPainter.layout(minWidth: width, maxWidth: width);
+    if (text.trim().isNotEmpty) {
+      final painter = painting.TextPainter(
+        text: painting.TextSpan(
+          text: text,
+          style: painting.TextStyle(
+            fontSize: fontConfig.fontSize * fontScale,
+            fontFamily: fontConfig.fontFamily,
+            color: fore,
+            height: fontConfig.height,
+            fontWeight: CellAttr.has(attrs, CellAttr.bold)
+                ? FontWeight.bold
+                : FontWeight.normal,
+            fontStyle: CellAttr.has(attrs, CellAttr.italic)
+                ? FontStyle.italic
+                : FontStyle.normal,
+            decoration: CellAttr.has(attrs, CellAttr.underline)
+                ? TextDecoration.underline
+                : TextDecoration.none,
+            decorationColor: fore,
+          ),
+        ),
+        textDirection: ui.TextDirection.ltr,
+        maxLines: 1,
+      )..layout();
+      painter.paint(canvas, Offset(x, y + (height - painter.height) / 2));
+      painter.dispose();
+    }
 
-    final textX = x + (width - textPainter.width) / 2;
-    final textY = y + (height - textPainter.height) / 2 +
-        textPainter.height * 0.75;
-
-    textPainter.paint(canvas, Offset(textX, textY));
-
-    if (TextStyle.isStrikethrough(style)) {
+    if (CellAttr.has(attrs, CellAttr.strike)) {
       canvas.drawLine(
         Offset(x, y + height / 2),
         Offset(x + width, y + height / 2),
         Paint()
-          ..color = drawFore
-          ..strokeWidth = 1.0,
+          ..color = fore
+          ..strokeWidth = 1,
       );
     }
   }
 
-  void _drawSelectionBackground(
+  void _paintSelection(
     ui.Canvas canvas,
-    int row,
+    int viewRow,
     double y,
     double cellWidth,
     double cellHeight,
-    ui.Size size,
   ) {
-    if (selection == null || selection!.length < 4) return;
+    final sel = selection;
+    if (sel == null) return;
+    final startRow = sel.startRow;
+    final endRow = sel.endRow;
+    if (viewRow < startRow || viewRow > endRow) return;
 
-    final selX1 = selection![0];
-    final selY1 = selection![1];
-    final selX2 = selection![2];
-    final selY2 = selection![3];
-
-    if (row < selY1 || row > selY2) return;
-
-    final startCol = row == selY1 ? selX1 : 0;
-    final endCol = row == selY2 ? selX2 + 1 : buffer.visibleCols;
-
-    if (endCol <= startCol) return;
-
-    final x = startCol * cellWidth;
-    final w = (endCol - startCol) * cellWidth;
+    var from = viewRow == startRow ? sel.startCol : 0;
+    var to = viewRow == endRow ? sel.endCol + 1 : screen.columns;
+    if (to <= from) return;
+    if (from < 0) from = 0;
+    if (to > screen.columns) to = screen.columns;
 
     canvas.drawRect(
-      Rect.fromLTWH(x, y, w, cellHeight),
+      Rect.fromLTWH(from * cellWidth, y, (to - from) * cellWidth, cellHeight),
       Paint()..color = selectionColor,
     );
   }
 
-  void _drawCursor(
+  void _paintCursor(
     ui.Canvas canvas,
     double cellWidth,
     double cellHeight,
     ui.Size size,
   ) {
-    final cx = buffer.cursorX;
-    final cy = buffer.cursorY;
-
-    if (cx < 0 || cx >= buffer.visibleCols || cy < 0 || cy >= buffer.visibleRows) {
-      return;
-    }
-
-    final x = cx * cellWidth;
-    final y = cy * cellHeight - scrollOffset;
-
-    if (y + cellHeight < 0 || y > size.height) return;
+    final x = screen.cursorX * cellWidth;
+    final y = screen.cursorY * cellHeight;
+    if (x >= size.width || y >= size.height) return;
 
     switch (cursorRenderStyle) {
       case TerminalCursorRenderStyle.block:
         canvas.drawRect(
           Rect.fromLTWH(x, y, cellWidth, cellHeight),
-          Paint()..color = cursorColor,
+          Paint()..color = cursorColor.withValues(alpha: 0.75),
         );
         break;
       case TerminalCursorRenderStyle.underline:
-        canvas.drawLine(
-          Offset(x, y + cellHeight - 2),
-          Offset(x + cellWidth, y + cellHeight - 2),
-          Paint()..color = cursorColor..strokeWidth = 2.0,
+        canvas.drawRect(
+          Rect.fromLTWH(x, y + cellHeight - 2, cellWidth, 2),
+          Paint()..color = cursorColor,
         );
         break;
       case TerminalCursorRenderStyle.bar:
-        canvas.drawLine(
-          Offset(x, y),
-          Offset(x, y + cellHeight),
-          Paint()..color = cursorColor..strokeWidth = 2.0,
+        canvas.drawRect(
+          Rect.fromLTWH(x, y, 2, cellHeight),
+          Paint()..color = cursorColor,
         );
         break;
     }
@@ -303,7 +344,8 @@ class TerminalRenderer extends CustomPainter {
 
   @override
   bool shouldRepaint(TerminalRenderer oldDelegate) {
-    return oldDelegate.buffer != buffer ||
+    return oldDelegate.screen != screen ||
+        oldDelegate.snapshotVersion != snapshotVersion ||
         oldDelegate.fontConfig != fontConfig ||
         oldDelegate.foreground != foreground ||
         oldDelegate.background != background ||
@@ -312,57 +354,8 @@ class TerminalRenderer extends CustomPainter {
         oldDelegate.cursorRenderStyle != cursorRenderStyle ||
         oldDelegate.cursorVisible != cursorVisible ||
         oldDelegate.cursorEnabled != cursorEnabled ||
-        oldDelegate.selection != selection ||
         oldDelegate.scrollOffset != scrollOffset ||
+        oldDelegate.selection != selection ||
         oldDelegate.fontScale != fontScale;
   }
-}
-
-/// 终端控制器：管理 TerminalEmulator 的生命周期和输入输出
-class TerminalController {
-  final TerminalEmulator emulator;
-  final TerminalBuffer buffer;
-  void Function()? _onScreenUpdated;
-
-  /// 屏幕刷新回调；同时同步给 emulator，保证所有输出都会触发重绘。
-  void Function()? get onScreenUpdated => _onScreenUpdated;
-  set onScreenUpdated(void Function()? value) {
-    _onScreenUpdated = value;
-    emulator.onScreenUpdated = value;
-  }
-
-  final void Function(List<int> bytes)? onEmulatorOutput;
-
-  TerminalController({
-    required this.emulator,
-    required this.buffer,
-    void Function()? onScreenUpdated,
-    this.onEmulatorOutput,
-  }) {
-    if (onScreenUpdated != null) {
-      this.onScreenUpdated = onScreenUpdated;
-    }
-  }
-
-  void write(List<int> bytes) {
-    emulator.append(bytes);
-  }
-
-  void writeString(String data) {
-    write(utf8.encode(data));
-  }
-
-  void feedOutput(List<int> bytes) {
-    emulator.append(bytes);
-  }
-
-  void _forwardEmulatorOutput(List<int> bytes) {
-    if (onEmulatorOutput != null) onEmulatorOutput!(bytes);
-  }
-
-  void resize(int columns, int rows) {
-    emulator.resize(columns, rows);
-  }
-
-  List<int> drainOutput() => emulator.drainOutput();
 }
