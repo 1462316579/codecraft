@@ -46,10 +46,18 @@ class VpnTcpSession(
     private var output: OutputStream? = null
 
     /** 是否已经判定这条流该交给本地代理处理（HTTP 或 TLS）。 */
+    @Volatile
     private var routed = false
 
-    /** 收到的首个业务数据还没判定完时先留着，判定后原样发给上游。 */
-    private var pendingFirstChunk: ByteArray? = null
+    /** 是否已经有一个线程在连代理，避免首包并发时重复建连。 */
+    private var connecting = false
+
+    /** 连代理期间应用继续发来的数据，连上后按顺序补发。 */
+    private val pendingPayloads = mutableListOf<ByteArray>()
+
+    /** 保护 [pendingPayloads] / [routed] / [output] 的切换，保证补发与直写不交叉。 */
+    private val writeLock = Any()
+
     private var handshakeDone = false
 
     private var lastActive = System.currentTimeMillis()
@@ -72,14 +80,29 @@ class VpnTcpSession(
         touch()
         // 序列号推进：应用发来的数据按长度递增（忽略重传去重，抓包场景足够）。
         recvSeq.set(recvSeq.get() + length)
+        // recvSeq 已经推进过，这里不能再传 ackDelta：否则 ack 会越过对方还没发的数据，
+        // 触发的挑战 ACK 会让部分设备直接卡住连接。
+        sendPacket(VpnPackets.ACK, ByteArray(0))
 
-        if (!routed) {
-            pendingFirstChunk = payload.copyOf(length)
-            // 回 ACK，避免应用等确认而停发。
-            sendPacket(VpnPackets.ACK, ByteArray(0), ackDelta = length)
-            routeUpstream(payload, length)
-            return
+        var startConnect = false
+        val queued = synchronized(writeLock) {
+            if (!routed) {
+                pendingPayloads.add(payload.copyOf(length))
+                if (!connecting) {
+                    connecting = true
+                    startConnect = true
+                }
+                true
+            } else {
+                false
+            }
         }
+        if (startConnect) {
+            // 建连是阻塞操作，不能放在 tun 读线程里：否则一条连不上的连接会把
+            // 之后所有 App 的包全部堵住。
+            Thread({ routeUpstream() }, "vpn-connect-$clientPort").start()
+        }
+        if (queued) return
 
         try {
             output?.write(payload, 0, length)
@@ -87,49 +110,70 @@ class VpnTcpSession(
         } catch (e: Exception) {
             Log.w(tag, "写上游失败: ${e.message}")
             close()
-            return
         }
-        sendPacket(VpnPackets.ACK, ByteArray(0), ackDelta = 0)
     }
 
-    private fun routeUpstream(payload: ByteArray, length: Int) {
-        val host = VpnPackets.ipToString(targetIp)
+    private fun routeUpstream() {
+        val targetHost = VpnPackets.ipToString(targetIp)
+        val first = synchronized(writeLock) { pendingPayloads.firstOrNull() }
+        if (first == null) {
+            synchronized(writeLock) { connecting = false }
+            return
+        }
         try {
             val s = Socket()
             s.tcpNoDelay = true
             s.connect(InetSocketAddress("127.0.0.1", service.proxyPort), CONNECT_TIMEOUT_MS)
-            socket = s
-            output = s.getOutputStream()
-            routed = true
+            if (closed.get()) {
+                try { s.close() } catch (_: Exception) {}
+                return
+            }
+            val out = s.getOutputStream()
 
-            if (VpnPackets.looksLikeHttpRequest(payload, length)) {
+            if (VpnPackets.looksLikeHttpRequest(first, first.size)) {
                 // 明文 HTTP：代理要 absolute-form 请求行。
-                val hostHeader = VpnPackets.hostHeaderOf(payload, length)
+                val hostHeader = VpnPackets.hostHeaderOf(first, first.size)
                 val rewritten = VpnPackets.rewriteToProxyForm(
-                    payload = payload,
-                    length = length,
+                    payload = first,
+                    length = first.size,
                     hostHeader = hostHeader,
-                    host = host,
+                    host = targetHost,
                     port = targetPort,
                 )
-                output?.write(rewritten)
-                output?.flush()
+                out.write(rewritten)
             } else {
                 // TLS 或其他：交给代理按 CONNECT + 透传处理。
-                val connect = "CONNECT $host:$targetPort HTTP/1.1\r\n" +
-                    "Host: $host:$targetPort\r\n\r\n"
-                output?.write(connect.toByteArray(Charsets.US_ASCII))
-                output?.flush()
-                // 透传首包（TLS ClientHello 等）。
-                output?.write(payload, 0, length)
-                output?.flush()
+                // 目标必须优先用 ClientHello 里的 SNI：只拿 IP 去连，代理既无法
+                // 签出应用信任的证书，很多站点也会因为缺少 SNI 直接拒绝握手。
+                val sni = VpnPackets.sniFromClientHello(first, first.size)
+                val host = if (sni.isNullOrBlank()) targetHost else sni
+                out.write(
+                    "CONNECT $host:$targetPort HTTP/1.1\r\nHost: $host:$targetPort\r\n\r\n"
+                        .toByteArray(Charsets.US_ASCII),
+                )
+                out.write(first)
             }
-            pendingFirstChunk = null
+
+            synchronized(writeLock) {
+                socket = s
+                output = out
+                // 建连期间应用又发的数据按序补发，保证字节流不乱序。
+                for (i in 1 until pendingPayloads.size) {
+                    out.write(pendingPayloads[i])
+                }
+                pendingPayloads.clear()
+                routed = true
+            }
+            out.flush()
 
             // 起读取线程，把上游数据封包回应用。
             Thread({ pumpUpstream(s.inputStream) }, "vpn-up-$clientPort").start()
         } catch (e: Exception) {
             Log.w(tag, "连接代理失败: ${e.message}")
+            synchronized(writeLock) {
+                connecting = false
+                pendingPayloads.clear()
+            }
             // 回 RST 让应用立刻失败重试，而不是一直等待。
             interrupt()
         }
@@ -178,10 +222,8 @@ class VpnTcpSession(
 
     /**
      * 构造并写出一个回给应用的包。
-     *
-     * @param ackDelta 相对当前 recvSeq 的额外确认量（用于「刚收到这么多字节」的即时确认）。
      */
-    private fun sendPacket(flags: Int, payload: ByteArray, ackDelta: Int = 0) {
+    private fun sendPacket(flags: Int, payload: ByteArray) {
         if (!handshakeDone && flags and VpnPackets.SYN == 0) return
         val seq = sendSeq.get()
         val packet = VpnPackets.buildTcp(
@@ -190,7 +232,7 @@ class VpnTcpSession(
             dstIp = clientIp,
             dstPort = clientPort,
             seq = seq,
-            ack = recvSeq.get() + ackDelta,
+            ack = recvSeq.get(),
             flags = flags,
             payload = payload,
         )

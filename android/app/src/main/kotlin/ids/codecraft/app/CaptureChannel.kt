@@ -25,6 +25,7 @@ class CaptureChannel(private val context: Context) : MethodChannel.MethodCallHan
             "startVpn" -> startVpn(call.argument<Int>("proxyPort") ?: 8888, result)
             "stopVpn" -> stopVpn(result)
             "isVpnRunning" -> isVpnRunning(result)
+            "vpnLastError" -> result.success(ProxyVpnService.lastError)
             else -> result.notImplemented()
         }
     }
@@ -46,8 +47,18 @@ class CaptureChannel(private val context: Context) : MethodChannel.MethodCallHan
     }
 
     private fun startVpn(proxyPort: Int, result: MethodChannel.Result) {
-        ProxyVpnService.start(context, proxyPort)
-        result.success(true)
+        try {
+            ProxyVpnService.start(context, proxyPort)
+        } catch (_: Exception) {
+            result.success(false)
+            return
+        }
+        // startForegroundService 只是投递启动请求，真正的 establish() 在 Service 里执行。
+        // 立即返回 true 会让界面显示「运行中」但实际上一条流量都没接管，所以等一下
+        // 再回报真实状态（授权被回收 / establish 失败都能第一时间暴露）。
+        android.os.Handler(android.os.Looper.getMainLooper()).postDelayed({
+            result.success(ProxyVpnService.isRunning)
+        }, 900)
     }
 
     private fun stopVpn(result: MethodChannel.Result) {

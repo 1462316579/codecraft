@@ -6,6 +6,9 @@ import android.app.NotificationManager
 import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
+import android.content.pm.ServiceInfo
+import android.net.ConnectivityManager
+import android.net.NetworkCapabilities
 import android.net.VpnService
 import android.os.Build
 import android.os.ParcelFileDescriptor
@@ -47,6 +50,11 @@ class ProxyVpnService : VpnService() {
         var isRunning = false
             private set
 
+        /** 启动失败原因（授权被回收、establish 失败等），供 Dart 侧提示用户。 */
+        @Volatile
+        var lastError: String? = null
+            private set
+
         fun prepare(context: Context): Intent? = VpnService.prepare(context)
 
         fun start(context: Context, proxyPort: Int) {
@@ -80,16 +88,6 @@ class ProxyVpnService : VpnService() {
 
     private var running = false
 
-    /**
-     * 与 manifest 的 foregroundServiceType 一致；不传类型在 Android 14+ 会直接抛异常。
-     */
-    private val foregroundServiceType =
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.UPSIDE_DOWN_CAKE) {
-            android.content.pm.ServiceInfo.FOREGROUND_SERVICE_TYPE_DATA_SYNC
-        } else {
-            0
-        }
-
     /** 127.0.0.1 的网络字节序整数：识别「发往本地代理的回包」。 */
     private val loopbackAsInt = 0x7F000001
 
@@ -108,19 +106,25 @@ class ProxyVpnService : VpnService() {
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
         if (intent?.action == ACTION_STOP) {
             stopVpn()
+            // stopVpn 在未运行时直接返回，这里兜底把 Service 本身停掉，
+            // 否则一次「停止」调用会把服务实例留在后台。
+            stopSelf()
             return START_NOT_STICKY
         }
         proxyPort = intent?.getIntExtra(EXTRA_PROXY_PORT, 8888) ?: 8888
         startVpn()
-        return START_STICKY
+        // 进程被杀后不能自动重启：此时 Dart 代理已不存在，重启只会把流量黑洞掉。
+        return START_NOT_STICKY
     }
 
     private fun startVpn() {
         if (running) return
+        lastError = null
 
         // 授权可能在上次请求后才生效，也可能被系统回收；以 prepare() 为准。
         if (prepare(this) != null) {
             Log.w(TAG, "VPN not authorized, skip start")
+            lastError = "VPN 授权失效，请重新授权"
             isRunning = false
             return
         }
@@ -131,9 +135,22 @@ class ProxyVpnService : VpnService() {
             .addAddress(VPN_ADDRESS, VPN_PREFIX_LENGTH)
             // 关键：接管全部 IPv4 流量，才能真正抓到所有 App。
             .addRoute("0.0.0.0", 0)
-            .addDnsServer("8.8.8.8")
-            .addDnsServer("1.1.1.1")
             .setBlocking(true)
+
+        // 关键：把本应用排除在 VPN 之外。
+        // 代理的上游连接（Dart 侧 Socket.connect）来自本进程，若不排除就会被自己的
+        // tun 再抓一次，形成「代理连代理」的死循环，所有请求都卡住。
+        try {
+            builder.addDisallowedApplication(packageName)
+        } catch (_: Exception) {
+        }
+
+        // DNS 必须用当前网络真能到达的服务器。
+        // 旧配置固定 8.8.8.8/1.1.1.1：境内大部分网络不可达，VPN 一启动全设备解析失败，
+        // 表现为「开始抓包后什么都抓不到」，还会把用户网络弄断。
+        val dnsServers = upstreamDnsServers()
+        dnsServers.forEach { builder.addDnsServer(it) }
+        Log.i(TAG, "VPN DNS servers: $dnsServers")
 
         // Android 10+ 同时把系统代理指到本地代理：有些应用只认系统代理，
             // 这样能减少不必要的用户态转发开销。
@@ -148,12 +165,14 @@ class ProxyVpnService : VpnService() {
 
         vpnInterface = try {
             builder.establish()
-        } catch (e: SecurityException) {
-            Log.e(TAG, "VPN establish denied: ${e.message}")
+        } catch (e: Exception) {
+            Log.e(TAG, "VPN establish failed: ${e.message}")
+            lastError = "创建 VPN 接口失败: ${e.message}"
             null
         }
         if (vpnInterface == null) {
             Log.e(TAG, "VPN establish failed")
+            if (lastError == null) lastError = "创建 VPN 接口失败"
             isRunning = false
             stopSelf()
             return
@@ -164,11 +183,60 @@ class ProxyVpnService : VpnService() {
 
         running = true
         isRunning = true
-        startForeground(NOTIFICATION_ID, buildNotification(), foregroundServiceType)
+        try {
+            startForegroundCompat()
+        } catch (e: Exception) {
+            // Android 14+ 前台服务类型不匹配会抛异常；不处理会直接崩掉整个进程。
+            Log.e(TAG, "startForeground failed: ${e.message}")
+            lastError = "前台服务启动失败: ${e.message}"
+            running = false
+            isRunning = false
+            stopSelf()
+            return
+        }
         Log.i(TAG, "VPN started, proxyPort=$proxyPort")
 
         Thread({ runVpnLoop() }, "vpn-packet-loop").start()
         Thread({ reapLoop() }, "vpn-reaper").start()
+    }
+
+    /**
+     * 取底层网络（非本 VPN）的 DNS；拿不到时退回国内可达的公共 DNS。
+     * 这里返回的是 IPv4 地址（tun 只接管 IPv4）。
+     */
+    private fun upstreamDnsServers(): List<String> {
+        val result = mutableListOf<String>()
+        try {
+            val cm = getSystemService(ConnectivityManager::class.java)
+            val network = cm?.activeNetwork
+            val capabilities = network?.let { cm.getNetworkCapabilities(it) }
+            val isCurrentVpn =
+                capabilities?.hasTransport(NetworkCapabilities.TRANSPORT_VPN) == true
+            if (network != null && !isCurrentVpn) {
+                cm.getLinkProperties(network)?.dnsServers?.forEach { address ->
+                    val ip = address.hostAddress ?: return@forEach
+                    if (ip.contains(':')) return@forEach
+                    result.add(ip)
+                }
+            }
+        } catch (e: Exception) {
+            Log.w(TAG, "read DNS servers failed: ${e.message}")
+        }
+        if (result.isEmpty()) {
+            result.add("223.5.5.5")
+            result.add("119.29.29.29")
+        }
+        return result.distinct().take(2)
+    }
+
+    /** startForeground 的三参重载是 API 29 才有的，低版本必须走两参版本。 */
+    private fun startForegroundCompat() {
+        val notification = buildNotification()
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+            startForeground(NOTIFICATION_ID, notification, ServiceInfo.FOREGROUND_SERVICE_TYPE_DATA_SYNC)
+        } else {
+            startForeground(NOTIFICATION_ID, notification)
+        }
     }
 
     private fun stopVpn() {
@@ -263,6 +331,10 @@ class ProxyVpnService : VpnService() {
             )
             sessions[key] = session
             session.onSyn()
+            if (!firstSessionLogged) {
+                firstSessionLogged = true
+                Log.i(TAG, "first TCP session: ${VpnPackets.ipToString(tcp.dstIp)}:${tcp.dstPort}")
+            }
             return
         }
 
@@ -278,11 +350,18 @@ class ProxyVpnService : VpnService() {
         }
     }
 
+    @Volatile
+    private var firstSessionLogged = false
+
     /**
-     * UDP：DNS 直接透传。
+     * UDP：只透传 DNS（53）。
      *
      * 不自己做 DNS 应答，因为解析失败会让所有 App 都连不上网；
      * 用 protect() 保护的上游 socket 转发出去再写回 tun。
+     *
+     * 其余 UDP（QUIC、游戏直连等）直接丢弃：一条连接一次性的 socket 无法承载
+     * 后续数据包，透传反而是「半通」状态；丢掉能让支持 QUIC 的 App 立刻回退到
+     * TCP，才能在抓包里看到它的请求。
      */
     private fun handleUdp(buf: ByteArray, ihl: Int, totalLen: Int) {
         if (totalLen < ihl + 8) return
@@ -290,6 +369,7 @@ class ProxyVpnService : VpnService() {
         val dstIp = readInt(buf, 16)
         val srcPort = ((buf[ihl].toInt() and 0xFF) shl 8) or (buf[ihl + 1].toInt() and 0xFF)
         val dstPort = ((buf[ihl + 2].toInt() and 0xFF) shl 8) or (buf[ihl + 3].toInt() and 0xFF)
+        if (dstPort != 53) return
         val udpLen = ((buf[ihl + 4].toInt() and 0xFF) shl 8) or (buf[ihl + 5].toInt() and 0xFF)
         val payloadOffset = ihl + 8
         val payloadLen = minOf(totalLen, ihl + udpLen) - payloadOffset
@@ -388,6 +468,13 @@ class ProxyVpnService : VpnService() {
             channel.description = "CodeCraft 抓包 VPN 服务"
             getSystemService(NotificationManager::class.java).createNotificationChannel(channel)
         }
+    }
+
+    override fun onRevoke() {
+        // 用户在其他地方撤销了 VPN 授权，或别的 VPN 抢占了接口：必须干净退出，
+        // 否则会话表与 tun 句柄会残留。
+        stopVpn()
+        super.onRevoke()
     }
 
     override fun onDestroy() {

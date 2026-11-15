@@ -63,10 +63,13 @@ class CaptureManager extends ChangeNotifier {
         // 已授权，启动 VPN
         final vpnOk = await CaptureChannel.startVpn(actualPort);
         if (!vpnOk) {
+          final reason = await CaptureChannel.vpnLastError();
           await server.stop();
           _state = _state.copyWith(
             running: false,
-            error: () => 'Failed to start VPN service',
+            error: () => reason == null || reason.isEmpty
+                ? 'VPN 启动失败，请检查系统的 VPN 授权后重试'
+                : 'VPN 启动失败：$reason',
           );
           notifyListeners();
           return _state;
@@ -96,13 +99,14 @@ class CaptureManager extends ChangeNotifier {
   }
 
   CaptureState status() {
+    // 注意：这里会被 build 直接调用，不能 notifyListeners（会触发
+    // setState() called during build，界面表现就是列表一直不刷新）。
     _state = _state.copyWith(
       running: server.running,
       port: server.port,
       flowCount: store.count,
       caReady: ca.ready,
     );
-    notifyListeners();
     return _state;
   }
 

@@ -72,6 +72,8 @@ class CaptureProxyServer {
       await _close(client);
     } finally {
       _sockets.remove(client);
+      // 统一收尾：不关的话 VpnTcpSession 等不到 EOF，应用会一直挂着这条连接。
+      await _close(client);
     }
   }
 
@@ -210,6 +212,9 @@ class CaptureProxyServer {
 
       // client 剩下的字节全部转给 bridgeClient,由它喂给 SecureSocket。
       conn.forwardTo(bridgeClient);
+      // 反向也必须打通:SecureSocket 写的 ServerHello/证书/响应都落在 bridgeClient
+      // 的接收缓冲里,没人搬回 client 的话握手会永远停在这里(表现就是 HTTPS 全挂)。
+      final pump = _pumpBytes(bridgeClient, client);
 
       SecureSocket secureClient;
       try {
@@ -229,6 +234,8 @@ class CaptureProxyServer {
       _sockets.add(secureClient);
       await _mitmOne(secureClient, host: host, targetPort: targetPort);
       _sockets.remove(secureClient);
+      // 等反向搬运把最后一段响应写完再收尾,否则会截断响应体。
+      await pump.timeout(const Duration(seconds: 5), onTimeout: () {});
       try { bridgeClient.destroy(); } catch (_) {}
     } catch (e) {
       store.update(CaptureFlow(
@@ -328,6 +335,20 @@ class CaptureProxyServer {
     _sockets.remove(s);
     try { await s.flush(); } catch (_) {}
     try { await s.close(); } catch (_) { try { s.destroy(); } catch (_) {} }
+  }
+
+  /// 把 [from] 收到的字节原样写给 [to]；任一端断开就关闭另一端。
+  Future<void> _pumpBytes(Socket from, Socket to) async {
+    try {
+      await for (final chunk in from) {
+        to.add(chunk);
+        await to.flush();
+      }
+    } catch (_) {
+    } finally {
+      try { await to.close(); } catch (_) { try { to.destroy(); } catch (_) {} }
+      try { from.destroy(); } catch (_) {}
+    }
   }
 
   _ParsedResp _parseHttpResponse(Uint8List data) {

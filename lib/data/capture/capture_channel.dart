@@ -74,4 +74,14 @@ class CaptureChannel {
       return false;
     }
   }
+
+  /// 最近一次 VPN 启动失败的原因（供界面直接展示）。
+  static Future<String?> vpnLastError() async {
+    if (!Platform.isAndroid) return null;
+    try {
+      return await _channel.invokeMethod<String>('vpnLastError');
+    } catch (_) {
+      return null;
+    }
+  }
 }
