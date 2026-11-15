@@ -804,25 +804,30 @@ class _ModelRow extends StatelessWidget {
             ),
             if (onTest != null) ...[
               const SizedBox(width: Spacing.xs),
+              // 与「编辑供应商」模型行保持一致:文字「测试」按钮 + 固定 56x36 占位,
+              // 而不是只有图标的烧瓶,避免两处交互看起来不是同一个功能。
               SizedBox(
-                width: 44,
-                height: 32,
+                width: 56,
+                height: 36,
                 child: testing
                     ? const Center(
                         child: SizedBox(
-                          width: 14,
-                          height: 14,
+                          width: 16,
+                          height: 16,
                           child: CircularProgressIndicator(strokeWidth: 2),
                         ),
                       )
-                    : IconButton(
-                        padding: EdgeInsets.zero,
-                        constraints: const BoxConstraints(),
-                        iconSize: 18,
-                        tooltip: l10n.providerTestModel,
+                    : TextButton(
+                        style: TextButton.styleFrom(
+                          padding: EdgeInsets.zero,
+                          minimumSize: Size.zero,
+                          tapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                        ),
                         onPressed: onTest,
-                        icon: Icon(Iconfont.flaskConical,
-                            color: context.semantic.subtleText),
+                        child: Text(
+                          l10n.providerTestModel,
+                          style: theme.textTheme.labelMedium,
+                        ),
                       ),
               ),
             ] else if (selected) ...[
