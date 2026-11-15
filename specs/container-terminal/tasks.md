@@ -38,6 +38,6 @@
 ## [x] T7 AI 命令走容器
 - `pty_command_engine.dart` 使用 `buildContainerSpec`；`isReady()/notReadyHint()` 反映容器状态。
 
-## [ ] T8 提交与验证
+## [x] T8 提交与验证
 - `flutter analyze`；`flutter test test/terminal_render_test.dart`；提交并推送，等待 GitHub Actions；产物 `app-release-apk`。
 - 交付真机验证步骤：设置 → 容器与镜像 → 下载 Alpine → 终端执行 `uname -a` / `apk add curl`。
