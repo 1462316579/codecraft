@@ -179,7 +179,7 @@ class TerminalTabsNotifier extends Notifier<TerminalTabsState> {
         final seq = String.fromCharCodes([
           0x1B, 0x5B, 0x3C, // ESC [ <
         ]) + '$cb ; $x ; ${isPress ? 'M' : 'm'}';
-        pty.write(utf8.encode(seq));
+        pty.write(Uint8List.fromList(utf8.encode(seq)));
       },
     ));
     final controller = TerminalController(
@@ -200,12 +200,14 @@ class TerminalTabsNotifier extends Notifier<TerminalTabsState> {
     );
     tab.running = true;
 
+    // 启动横幅：确认当前构建与 shell 路径（纯文本，不依赖转义序列，
+    // 便于区分「渲染问题」和「shell 启动失败」）。
+    controller.writeString('[Termux r3] $shell\r\n');
+
     // 进程退出时提示，避免终端停在空白界面无任何反馈
     pty.exitCode.then((code) {
       tab.running = false;
-      controller.writeString(
-        '\r\n\x1b[33m[进程已退出: $code]\x1b[0m\r\n',
-      );
+      controller.writeString('\r\n[会话已退出，退出码: $code]\r\n');
       state = state.copyWith();
     });
 
