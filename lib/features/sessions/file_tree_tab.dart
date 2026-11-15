@@ -71,7 +71,7 @@ class _Node {
   final bool ignored;
 }
 
-class _FileTreeTabState extends ConsumerState<FileTreeTab> {
+class _FileTreeTabState extends ConsumerState<FileTreeTab> with WidgetsBindingObserver {
   final _expanded = <String>{};
   final _children = <String, List<DirEntry>>{};
   final _dirErrors = <String>{};
@@ -91,6 +91,27 @@ class _FileTreeTabState extends ConsumerState<FileTreeTab> {
 
   /// 树根的显示名(工作区名,如 `workspace` 或 `AI小说`)。
   String _workspaceLabel = 'workspace';
+
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addObserver(this);
+  }
+
+  @override
+  void dispose() {
+    WidgetsBinding.instance.removeObserver(this);
+    super.dispose();
+  }
+
+  @override
+  void didChangeAppLifecycleState(AppLifecycleState state) {
+    // 从系统「所有文件访问权限」设置页返回后自动重读,不必用户再手动刷新。
+    final root = _loadedRoot;
+    if (state == AppLifecycleState.resumed && root != null && _externalNoAccess) {
+      _refresh(root);
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -337,9 +358,18 @@ class _FileTreeTabState extends ConsumerState<FileTreeTab> {
       // 工作区目录可能尚未创建(历史项目或创建时 IO 失败):先补建再列举,
       // 否则 Directory.list 会直接抛 PathNotFoundException。
       await _ensureRoot(root);
+      final external = _isExternalWorkspace(root);
+      // 外部目录可能「列得出目录、读不到文件」,这里顺带把权限状态反馈给界面。
+      final noAccess = external && !await ExternalStorage.hasAccess();
+      if (!mounted) return;
+      if (noAccess != _externalNoAccess) {
+        setState(() => _externalNoAccess = noAccess);
+        // 权限从无到有:让旧布局迁移再试一次(没有权限时迁移只能白跑)。
+        if (!noAccess) _legacyMigrated = false;
+      }
       // 旧写作布局(工作区根直接是「AI小说」)遗留的章节/资料搬进当前小说目录,
       // 否则文件树只看新目录,旧内容永远看不到。每个工作区只尝试一次。
-      if (!_legacyMigrated && _isExternalWorkspace(root)) {
+      if (!_legacyMigrated && external && !noAccess) {
         _legacyMigrated = true;
         try {
           await NovelScaffold.migrateLegacyLayout(p.dirname(root), p.basename(root));
@@ -347,13 +377,6 @@ class _FileTreeTabState extends ConsumerState<FileTreeTab> {
           // 迁移是尽力而为:失败不影响后面的正常列目录。
         }
         if (!mounted) return;
-      }
-      // 外部目录可能「列得出目录、读不到文件」,这里顺带把权限状态反馈给界面。
-      final noAccess =
-          _isExternalWorkspace(root) && !await ExternalStorage.hasAccess();
-      if (!mounted) return;
-      if (noAccess != _externalNoAccess) {
-        setState(() => _externalNoAccess = noAccess);
       }
       _ignorePatterns = await _loadGitignore(root).timeout(
         const Duration(seconds: 8),
