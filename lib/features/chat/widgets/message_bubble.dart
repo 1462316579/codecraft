@@ -1223,14 +1223,14 @@ Future<void> _handleChatLink(BuildContext context, String? href) async {
     } catch (_) {
       // workspaces 尚未就绪时,至少保留当前工作区根作为兜底候选。
     }
-    // 写作项目:明确加入 AI小説/<项目名> 作为候选根,不依赖
+    // 写作项目:明确加入 AI小说/<小说名> 作为候选根,不依赖
     // currentWorkspaceProvider 可能因 workspacesProvider 尚未就绪而回退到沙盒。
     final project = container.read(currentProjectProvider);
     if (project != null && project.kind == ProjectKind.writing) {
       try {
         final externalRoot = p.join(await ExternalStorage.primaryRoot(), writingWorkspaceName);
-        final writingProjectDir = p.join(externalRoot, project.name);
-        if (!roots.contains(writingProjectDir)) roots.add(writingProjectDir);
+        final writingProjectDirPath = writingProjectDir(externalRoot, project.name);
+        if (!roots.contains(writingProjectDirPath)) roots.add(writingProjectDirPath);
       } catch (_) {
         // 外部存储不可访问时跳过,继续尝试其它根。
       }

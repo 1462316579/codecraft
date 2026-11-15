@@ -8,6 +8,7 @@ import '../agent/tools/workspace.dart';
 import '../app/current_project.dart';
 import 'container/external_storage.dart';
 import 'execution_target.dart';
+import 'novel_project.dart';
 
 /// 工作区来源:容器内沙盒、手机外部存储、GitHub Codespaces。
 enum WorkspaceKind { internal, external, codespaces }
@@ -42,10 +43,10 @@ class WorkspacesState {
 /// 当前工作区:按项目类型与执行环境派生,不保存「当前选中哪个」这类可变状态。
 ///
 /// 项目决定模式、模式与执行环境共同决定目录:
-/// - 编程 + 本地容器: 容器根/<项目名>(按项目隔离,不再共享)
-/// - 编程 + Codespaces: 容器根/<Codespace 名>
-/// - 写作: 外部存储 /storage/emulated/0/AI小说
-/// - 逆向: 容器根/apk-<项目 id>
+/// - 编程 + 本地容器: 容器根/`<项目名>`(按项目隔离,不再共享)
+/// - 编程 + Codespaces: 容器根/`<Codespace 名>`
+/// - 写作: 外部存储 `/storage/emulated/0/AI小说/<小说名>`
+/// - 逆向: 容器根/`apk-<项目 id>`
 /// - 无当前项目: 容器根目录
 final currentWorkspaceProvider = Provider<Workspace>((ref) {
   final project = ref.watch(currentProjectProvider);
@@ -57,11 +58,11 @@ final currentWorkspaceProvider = Provider<Workspace>((ref) {
     case ProjectKind.reverse:
       return Workspace(apkWorkspaceDir(ref.watch(workspaceProvider).rootPath, project.id));
     case ProjectKind.writing:
-      // 写作直接使用外部存储的 AI小说 目录,不再拼接项目名。
+      // 每部小说一个目录:外部存储 AI小说/<小说名>。
       final workspaces = ref.watch(workspacesProvider).valueOrNull?.workspaces;
       final external = workspaces?.where((w) => w.isExternal).firstOrNull;
       if (external != null) {
-        return Workspace(external.path);
+        return Workspace(writingProjectDir(external.path, project.name));
       }
       return Workspace(ref.watch(workspaceProvider).rootPath);
     case ProjectKind.coding:
@@ -95,8 +96,8 @@ final currentWorkspaceInfoProvider = Provider<WorkspaceInfo?>((ref) {
       final external = workspaces?.where((w) => w.isExternal).firstOrNull;
       if (external != null) {
         info = WorkspaceInfo(
-          name: writingWorkspaceName,
-          path: external.path,
+          name: project.name,
+          path: writingProjectDir(external.path, project.name),
           kind: WorkspaceKind.external,
           projectId: project.id,
         );
@@ -124,6 +125,10 @@ final currentWorkspaceInfoProvider = Provider<WorkspaceInfo?>((ref) {
 /// 逆向项目的工作区目录:按项目 id 隔离,直接位于容器根目录下,不加 workspace 前缀。
 String apkWorkspaceDir(String sandboxRoot, String projectId) =>
     p.join(sandboxRoot, 'apk-$projectId');
+
+/// 写作项目的工作区目录:外部存储的 AI小说 根下按小说名隔离。
+String writingProjectDir(String externalRoot, String title) =>
+    p.join(externalRoot, NovelScaffold.dirName(title));
 
 /// 工作区列表(供文件树等 UI 列举可用的工作区根目录)。
 ///

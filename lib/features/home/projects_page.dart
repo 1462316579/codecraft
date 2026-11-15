@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:io';
 import 'dart:typed_data';
 import 'dart:ui';
 
@@ -12,6 +13,7 @@ import '../../agent/models/chat_session.dart';
 import '../../agent/models/project.dart';
 import '../../agent/projects_controller.dart';
 import '../../agent/sessions_controller.dart';
+import '../../agent/tools/workspace.dart';
 import '../../app/shell.dart';
 import '../../core/theme/semantic_colors.dart';
 import '../../core/theme/tokens.dart';
@@ -19,6 +21,7 @@ import '../../core/util/ids.dart';
 import '../../data/container/external_storage.dart';
 import '../../data/installed_apps.dart';
 import '../../data/novel_project.dart';
+import '../../data/workspaces.dart';
 import 'installed_apps_page.dart';
 import 'novel_create_sheet.dart';
 import '../../l10n/app_localizations.dart';
@@ -195,7 +198,7 @@ class ProjectsPage extends ConsumerWidget {
     // 先确保小说目录脚手架存在(角色关联/小说资料/小说章节),再建项目。
     try {
       final root = await ExternalStorage.primaryRoot();
-      final writingRoot = p.join(root, 'AI小说');
+      final writingRoot = p.join(root, writingWorkspaceName);
       await NovelScaffold.create(writingRoot, spec.title);
     } catch (_) {
       // 目录创建失败不阻断项目创建;用户可在文件页或设置中授权后重试。
@@ -262,10 +265,55 @@ class ProjectsPage extends ConsumerWidget {
           mode: mode,
           projectId: project.id,
         );
+    // 编程项目按项目名隔离工作区:先建好目录,否则文件页一打开就报目录不存在。
+    if (kind == ProjectKind.coding) {
+      try {
+        final root = ref.read(workspaceProvider).rootPath;
+        await Directory(p.join(root, project.name)).create(recursive: true);
+      } catch (_) {
+        // 建目录失败不阻断项目创建;文件页读取时会再补建一次。
+      }
+    }
     if (!context.mounted) return;
     onOpenProject(project.copyWith());
     // 新项目的首条会话直接进入,避免用户再点一次。
     ref.read(selectedSessionProvider.notifier).state = session.id;
+  }
+
+  /// 项目重命名后同步移动工作区目录,避免项目仍指向旧目录导致文件「消失」。
+  Future<void> _syncWorkspaceDir(
+    WidgetRef ref,
+    Project project,
+    String oldName,
+    String newName,
+  ) async {
+    // 逆向项目的工作区按项目 id 命名,与项目名无关。
+    if (project.kind == ProjectKind.reverse) return;
+    try {
+      final String base;
+      if (project.kind == ProjectKind.writing) {
+        final workspaces = await ref.read(workspacesProvider.future);
+        final external = workspaces.workspaces.where((w) => w.isExternal).firstOrNull;
+        if (external == null) return;
+        base = external.path;
+      } else {
+        base = ref.read(workspaceProvider).rootPath;
+      }
+      final from = project.kind == ProjectKind.writing
+          ? writingProjectDir(base, oldName)
+          : p.join(base, oldName);
+      final to = project.kind == ProjectKind.writing
+          ? writingProjectDir(base, newName)
+          : p.join(base, newName);
+      if (from == to) return;
+      final source = Directory(from);
+      if (!await source.exists()) return;
+      // 目标已存在(同名项目)时不覆盖,保留原目录。
+      if (await Directory(to).exists()) return;
+      await source.rename(to);
+    } catch (_) {
+      // 移动失败不影响重命名本身;文件页会按新名称补建目录。
+    }
   }
 
   /// 长按项目:重命名 / 删除。
@@ -310,7 +358,10 @@ class ProjectsPage extends ConsumerWidget {
         ),
       );
       if (name == null || name.trim().isEmpty) return;
-      await ref.read(projectsProvider.notifier).rename(project.id, name.trim());
+      final oldName = project.name;
+      final newName = name.trim();
+      await ref.read(projectsProvider.notifier).rename(project.id, newName);
+      await _syncWorkspaceDir(ref, project, oldName, newName);
       return;
     }
     if (action == 'delete') {

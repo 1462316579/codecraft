@@ -23,7 +23,7 @@ import '../../data/execution_target.dart';
 import '../../l10n/app_localizations.dart';
 import 'file_type_icon.dart';
 
-/// 文件树只有一个根:当前工作区(编程 = workspace,写作 = AI小说目录)。
+/// 文件树只有一个根:当前工作区(编程 = 项目目录,写作 = AI小说/<小说名>)。
 
 /// 侧边栏「文件」Tab:
 /// 只展示**当前工作区**一棵树(开发模式 → workspace,写作模式 → AI 写作目录),
@@ -323,6 +323,9 @@ class _FileTreeTabState extends ConsumerState<FileTreeTab> {
       });
     }
     try {
+      // 工作区目录可能尚未创建(历史项目或创建时 IO 失败):先补建再列举,
+      // 否则 Directory.list 会直接抛 PathNotFoundException。
+      await _ensureRoot(root);
       _ignorePatterns = await _loadGitignore(root).timeout(
         const Duration(seconds: 8),
         onTimeout: () => const [],
@@ -351,6 +354,16 @@ class _FileTreeTabState extends ConsumerState<FileTreeTab> {
       _refreshing = false;
       if (mounted) setState(() => _loading = false);
     }
+  }
+
+  /// 确保工作区根目录存在(缺失时补建)。
+  ///
+  /// 权限不足、远端不可用等情况静默跳过,交给随后的读取报错与授权提示处理。
+  Future<void> _ensureRoot(String root) async {
+    try {
+      final files = await ref.read(workspaceFilesProvider.future);
+      await files.createDir(root);
+    } catch (_) {}
   }
 
   /// 读工作区根 `.gitignore`(只处理根级,不处理嵌套);读不到返回空。
