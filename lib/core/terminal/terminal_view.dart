@@ -78,15 +78,9 @@ class _TerminalViewState extends State<TerminalView> {
       focusNode: _focusNode,
       autofocus: widget.autofocus,
       onKey: _onKeyEvent,
-      child: Listener(
-        onPointerScroll: (event) {
-          setState(() {
-            _scrollOffset = (_scrollOffset - event.scrollDelta.dy).clamp(0.0, double.infinity);
-          });
-        },
-        child: GestureDetector(
-          onTapDown: (_) => _focusNode.requestFocus(),
-          child: RepaintBoundary(
+      child: GestureDetector(
+        onTapDown: (_) => _focusNode.requestFocus(),
+        child: RepaintBoundary(
           child: CustomPaint(
             size: Size.infinite,
             painter: TerminalRenderer(
@@ -189,22 +183,10 @@ class _TerminalViewState extends State<TerminalView> {
       return KeyEventResult.handled;
     }
     // F1-F12
-    const fKeys = [
-      LogicalKeyboardKey.keyF1,
-      LogicalKeyboardKey.keyF2,
-      LogicalKeyboardKey.keyF3,
-      LogicalKeyboardKey.keyF4,
-      LogicalKeyboardKey.keyF5,
-      LogicalKeyboardKey.keyF6,
-      LogicalKeyboardKey.keyF7,
-      LogicalKeyboardKey.keyF8,
-      LogicalKeyboardKey.keyF9,
-      LogicalKeyboardKey.keyF10,
-      LogicalKeyboardKey.keyF11,
-      LogicalKeyboardKey.keyF12,
-    ];
-    for (var i = 0; i < fKeys.length; i++) {
-      if (logicalKey == fKeys[i]) {
+    for (var i = 1; i <= 12; i++) {
+      final keyName = 'keyF$i';
+      final key = LogicalKeyboardKey.byDebugName(keyName);
+      if (logicalKey == key) {
         sendToPty([0x1B, 0x5B, 0x31, 0x30 + (i ~/ 10), 0x30 + (i % 10), 0x7E]);
         return KeyEventResult.handled;
       }
