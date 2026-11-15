@@ -161,6 +161,12 @@ final routerProvider = Provider<GoRouter>((ref) {
           GoRoute(
             path: 'container',
             builder: (context, state) => const ContainerPage(),
+            routes: [
+              GoRoute(
+                path: 'download',
+                builder: (context, state) => const ContainerDownloadPage(),
+              ),
+            ],
           ),
           GoRoute(
             path: 'theme',

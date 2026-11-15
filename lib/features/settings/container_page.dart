@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 
 import '../../core/icons/iconfont.dart';
 import '../../core/theme/semantic_colors.dart';
@@ -8,9 +9,7 @@ import '../../core/ui/settings_group.dart';
 import '../../data/container/container_launcher.dart';
 import '../../data/container/container_manager.dart';
 
-/// 容器与镜像页：PRoot 运行环境状态、镜像下载安装、已安装容器管理。
-///
-/// 终端与 AI 命令都跑在默认容器里，所以这里既是「安装入口」也是「修复入口」。
+/// 容器与镜像页：只展示已安装容器，镜像目录放在独立的下载页。
 class ContainerPage extends ConsumerStatefulWidget {
   const ContainerPage({super.key});
 
@@ -43,6 +42,11 @@ class _ContainerPageState extends ConsumerState<ContainerPage> {
         scrolledUnderElevation: 0,
         actions: [
           IconButton(
+            tooltip: '下载容器',
+            icon: const Icon(Iconfont.download, size: 22),
+            onPressed: () => context.push('/settings/container/download'),
+          ),
+          IconButton(
             tooltip: '刷新',
             icon: const Icon(Iconfont.refreshCw, size: 22),
             onPressed: state.busy ? null : notifier.refresh,
@@ -56,79 +60,33 @@ class _ContainerPageState extends ConsumerState<ContainerPage> {
             begin: Alignment.topLeft,
             end: Alignment.bottomRight,
             colors: theme.brightness == Brightness.light
-                ? const [Color(0xFFEDE9FE), Color(0xFFDBEAFE), Color(0xFFFCE7F3)]
-                : const [Color(0xFF1E1B4B), Color(0xFF1E3A8A), Color(0xFF4C1D95)],
+                ? const [
+                    Color(0xFFEDE9FE),
+                    Color(0xFFDBEAFE),
+                    Color(0xFFFCE7F3)
+                  ]
+                : const [
+                    Color(0xFF1E1B4B),
+                    Color(0xFF1E3A8A),
+                    Color(0xFF4C1D95)
+                  ],
           ),
         ),
-        child: ListView(
-          padding: EdgeInsets.fromLTRB(
-            Spacing.lg,
-            MediaQuery.of(context).padding.top + kToolbarHeight + Spacing.sm,
-            Spacing.lg,
-            Spacing.xl + 60,
-          ),
-          children: [
-            _HintCard(
-              text: '终端与 AI 命令都在默认容器里执行。'
-                  '镜像为官方 aarch64 rootfs，解压后由 PRoot 提供隔离的文件系统。',
-            ),
-            if (state.busy) ...[
-              const SizedBox(height: Spacing.md),
-              _ProgressCard(
-                label: state.busyStage ?? '正在安装…',
-                progress: state.busyProgress,
-              ),
-            ],
-            if (state.error != null) ...[
-              const SizedBox(height: Spacing.md),
-              _ErrorCard(
-                message: state.error!,
-                onDismiss: notifier.clearError,
-              ),
-            ],
-            const SettingsGroupHeader(text: '运行环境'),
-            SettingsGroup(
-              children: [
-                SettingsRow(
-                  icon: Iconfont.cpu,
-                  title: 'PRoot 运行环境',
-                  subtitle: state.runtimeInstalled
-                      ? '已就绪（内置资产，离线安装）'
-                      : (state.runtimeStage.isEmpty
-                          ? '未安装 · 首次使用终端时自动安装'
-                          : state.runtimeStage),
-                  trailing: state.runtimeInstalled
-                      ? Icon(Iconfont.checkCircle,
-                          size: 20, color: theme.colorScheme.primary)
-                      : FilledButton.tonal(
-                          onPressed: state.busy
-                              ? null
-                              : () => notifier.ensureRuntime(),
-                          child: const Text('安装'),
-                        ),
+        child: state.containers.isEmpty
+            ? const _EmptyContainers()
+            : ListView(
+                padding: EdgeInsets.fromLTRB(
+                  Spacing.lg,
+                  MediaQuery.of(context).padding.top +
+                      kToolbarHeight +
+                      Spacing.sm,
+                  Spacing.lg,
+                  Spacing.xl + 60,
                 ),
-              ],
-            ),
-            const SettingsGroupHeader(text: '可用镜像'),
-            SettingsGroup(
-              children: [
-                for (var i = 0; i < kContainerImages.length; i++) ...[
-                  if (i > 0) const SettingsDivider(indent: SettingsRow.textIndent),
-                  _buildImageRow(context, state, notifier, kContainerImages[i]),
-                ],
-              ],
-            ),
-            const SettingsGroupHeader(text: '已安装容器'),
-            SettingsGroup(
-              children: state.containers.isEmpty
-                  ? [
-                      SettingsRow(
-                        icon: Iconfont.box,
-                        title: '暂无容器',
-                        subtitle: '首次启动会自动下载 Ubuntu 26.04，也可从上方手动下载',
-                      ),
-                    ]
-                  : [
+                children: [
+                  const SettingsGroupHeader(text: '已安装容器'),
+                  SettingsGroup(
+                    children: [
                       for (var i = 0; i < state.containers.length; i++) ...[
                         if (i > 0)
                           const SettingsDivider(indent: SettingsRow.textIndent),
@@ -140,41 +98,13 @@ class _ContainerPageState extends ConsumerState<ContainerPage> {
                         ),
                       ],
                     ],
-            ),
-            const _FootNote(
-              text: '删除容器会同时删除容器内安装的软件包；工作区文件不受影响。',
-            ),
-          ],
-        ),
+                  ),
+                  const _FootNote(
+                    text: '删除容器会同时删除容器内安装的软件包；工作区文件不受影响。',
+                  ),
+                ],
+              ),
       ),
-    );
-  }
-
-  Widget _buildImageRow(
-    BuildContext context,
-    ContainerState state,
-    ContainerNotifier notifier,
-    ContainerImage image,
-  ) {
-    final installing = state.busyImageId == image.id;
-    final installedCount =
-        state.containers.where((c) => c.imageId == image.id).length;
-
-    return SettingsRow(
-      icon: Iconfont.download,
-      title: image.name,
-      subtitle: installedCount > 0
-          ? '${image.description} · ${image.sizeLabel} · 已安装 $installedCount 个'
-          : '${image.description} · ${image.sizeLabel}',
-      trailing: installing
-          ? Text(
-              '${(state.busyProgress * 100).toStringAsFixed(0)}%',
-              style: Theme.of(context).textTheme.labelLarge,
-            )
-          : FilledButton.tonal(
-              onPressed: state.busy ? null : () => notifier.install(image),
-              child: const Text('下载'),
-            ),
     );
   }
 
@@ -198,9 +128,8 @@ class _ContainerPageState extends ConsumerState<ContainerPage> {
         children: [
           if (!isDefault)
             TextButton(
-              onPressed: state.busy
-                  ? null
-                  : () => notifier.setDefault(container.id),
+              onPressed:
+                  state.busy ? null : () => notifier.setDefault(container.id),
               child: const Text('设为默认'),
             ),
           IconButton(
@@ -240,6 +169,180 @@ class _ContainerPageState extends ConsumerState<ContainerPage> {
     if (confirmed == true) {
       await notifier.remove(container.id);
     }
+  }
+}
+
+/// 容器下载页：只负责运行环境安装和镜像目录，不与已安装容器混排。
+class ContainerDownloadPage extends ConsumerWidget {
+  const ContainerDownloadPage({super.key});
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final state = ref.watch(containerProvider);
+    final notifier = ref.read(containerProvider.notifier);
+    final theme = Theme.of(context);
+
+    return Scaffold(
+      extendBodyBehindAppBar: true,
+      appBar: AppBar(
+        title: const Text('容器下载'),
+        backgroundColor: Colors.transparent,
+        surfaceTintColor: Colors.transparent,
+        elevation: 0,
+        scrolledUnderElevation: 0,
+      ),
+      body: Container(
+        constraints: const BoxConstraints.expand(),
+        decoration: BoxDecoration(
+          gradient: LinearGradient(
+            begin: Alignment.topLeft,
+            end: Alignment.bottomRight,
+            colors: theme.brightness == Brightness.light
+                ? const [
+                    Color(0xFFEDE9FE),
+                    Color(0xFFDBEAFE),
+                    Color(0xFFFCE7F3)
+                  ]
+                : const [
+                    Color(0xFF1E1B4B),
+                    Color(0xFF1E3A8A),
+                    Color(0xFF4C1D95)
+                  ],
+          ),
+        ),
+        child: ListView(
+          padding: EdgeInsets.fromLTRB(
+            Spacing.lg,
+            MediaQuery.of(context).padding.top + kToolbarHeight + Spacing.sm,
+            Spacing.lg,
+            Spacing.xl + 60,
+          ),
+          children: [
+            const _HintCard(
+              text: '选择需要的镜像下载。镜像为官方 aarch64 rootfs，'
+                  '解压后由 PRoot 提供隔离的文件系统。',
+            ),
+            if (state.busy) ...[
+              const SizedBox(height: Spacing.md),
+              _ProgressCard(
+                label: state.busyStage ?? '正在安装…',
+                progress: state.busyProgress,
+              ),
+            ],
+            if (state.error != null) ...[
+              const SizedBox(height: Spacing.md),
+              _ErrorCard(
+                message: state.error!,
+                onDismiss: notifier.clearError,
+              ),
+            ],
+            const SettingsGroupHeader(text: '运行环境'),
+            SettingsGroup(
+              children: [
+                SettingsRow(
+                  icon: Iconfont.cpu,
+                  title: 'PRoot 运行环境',
+                  subtitle: state.runtimeInstalled
+                      ? '已就绪（内置资产，离线安装）'
+                      : (state.runtimeStage.isEmpty
+                          ? '未安装 · 首次使用终端时自动安装'
+                          : state.runtimeStage),
+                  trailing: state.runtimeInstalled
+                      ? Icon(
+                          Iconfont.checkCircle,
+                          size: 20,
+                          color: theme.colorScheme.primary,
+                        )
+                      : FilledButton.tonal(
+                          onPressed: state.busy
+                              ? null
+                              : () => notifier.ensureRuntime(),
+                          child: const Text('安装'),
+                        ),
+                ),
+              ],
+            ),
+            const SettingsGroupHeader(text: '可用镜像'),
+            SettingsGroup(
+              children: [
+                for (var i = 0; i < kContainerImages.length; i++) ...[
+                  if (i > 0)
+                    const SettingsDivider(indent: SettingsRow.textIndent),
+                  _buildImageRow(
+                    context,
+                    state,
+                    notifier,
+                    kContainerImages[i],
+                  ),
+                ],
+              ],
+            ),
+            const _FootNote(
+              text: '下载完成后，容器会显示在「容器与镜像」页面。',
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+Widget _buildImageRow(
+  BuildContext context,
+  ContainerState state,
+  ContainerNotifier notifier,
+  ContainerImage image,
+) {
+  final installing = state.busyImageId == image.id;
+  final installedCount =
+      state.containers.where((c) => c.imageId == image.id).length;
+
+  return SettingsRow(
+    icon: Iconfont.download,
+    title: image.name,
+    subtitle: installedCount > 0
+        ? '${image.description} · ${image.sizeLabel} · 已安装 $installedCount 个'
+        : '${image.description} · ${image.sizeLabel}',
+    trailing: installing
+        ? Text(
+            '${(state.busyProgress * 100).toStringAsFixed(0)}%',
+            style: Theme.of(context).textTheme.labelLarge,
+          )
+        : FilledButton.tonal(
+            onPressed: state.busy ? null : () => notifier.install(image),
+            child: const Text('下载'),
+          ),
+  );
+}
+
+class _EmptyContainers extends StatelessWidget {
+  const _EmptyContainers();
+
+  @override
+  Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    final color = context.semantic.subtleText;
+    return Center(
+      child: Padding(
+        padding: const EdgeInsets.all(Spacing.xl),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Icon(Iconfont.box, size: 56, color: color),
+            const SizedBox(height: Spacing.lg),
+            Text(
+              '暂无已下载容器',
+              style: theme.textTheme.titleMedium?.copyWith(color: color),
+            ),
+            const SizedBox(height: Spacing.sm),
+            Text(
+              '点击右上角下载按钮选择镜像',
+              style: theme.textTheme.bodyMedium?.copyWith(color: color),
+            ),
+          ],
+        ),
+      ),
+    );
   }
 }
 
@@ -327,7 +430,8 @@ class _ErrorCard extends StatelessWidget {
     final theme = Theme.of(context);
     final color = theme.colorScheme.error;
     return Container(
-      padding: const EdgeInsets.fromLTRB(Spacing.md, Spacing.md, Spacing.sm, Spacing.sm),
+      padding: const EdgeInsets.fromLTRB(
+          Spacing.md, Spacing.md, Spacing.sm, Spacing.sm),
       decoration: BoxDecoration(
         color: color.withValues(alpha: 0.10),
         borderRadius: BorderRadius.circular(Radii.mdLarge),
