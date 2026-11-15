@@ -55,6 +55,7 @@ flutter:
   generate: true
 
   assets:
+    - LICENSE
     - assets/logos/
     - assets/models/
     - assets/codecraft/

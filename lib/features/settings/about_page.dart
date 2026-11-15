@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import '../../core/icons/iconfont.dart';
 
 import '../../core/theme/semantic_colors.dart';
@@ -61,17 +62,59 @@ class AboutPage extends StatelessWidget {
     );
   }
 
+  /// 开源协议弹窗:展示随包分发的 GPL-3.0 全文,而不是把项目简介塞进协议里。
   Future<void> _showLicense(BuildContext context, AppLocalizations l10n) => showDialog<void>(
         context: context,
-        builder: (context) => AlertDialog(
-          title: Text(l10n.license),
-          content: Text(l10n.aboutBody),
-          actions: [
-            TextButton(
-              onPressed: () => Navigator.pop(context),
-              child: Text(l10n.confirm),
+        builder: (context) {
+          final theme = Theme.of(context);
+          return AlertDialog(
+            title: Text(l10n.license),
+            content: SizedBox(
+              width: double.maxFinite,
+              height: MediaQuery.sizeOf(context).height * 0.6,
+              child: FutureBuilder<String>(
+                future: rootBundle.loadString('LICENSE'),
+                builder: (context, snapshot) {
+                  final text = snapshot.data;
+                  if (text == null) {
+                    return const Center(
+                      child: SizedBox(
+                        width: 24,
+                        height: 24,
+                        child: CircularProgressIndicator(strokeWidth: 2),
+                      ),
+                    );
+                  }
+                  return Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(l10n.licenseBody, style: theme.textTheme.bodySmall),
+                      const SizedBox(height: Spacing.sm),
+                      Expanded(
+                        child: Scrollbar(
+                          child: SingleChildScrollView(
+                            child: SelectableText(
+                              text,
+                              style: theme.textTheme.bodySmall?.copyWith(
+                                fontFamily: 'monospace',
+                                height: 1.45,
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
+                    ],
+                  );
+                },
+              ),
             ),
-          ],
-        ),
+            actions: [
+              TextButton(
+                onPressed: () => Navigator.pop(context),
+                child: Text(l10n.confirm),
+              ),
+            ],
+          );
+        },
       );
 }
