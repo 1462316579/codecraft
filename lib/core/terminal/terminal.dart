@@ -11,4 +11,4 @@ export 'terminal_renderer.dart';
 export 'terminal_view.dart';
 
 /// 终端引擎版本标识：显示在会话抽屉底部，用于确认手机上实际安装的构建。
-const String kTerminalEngineTag = 'v3 · 2026-11-15';
+const String kTerminalEngineTag = 'v4 · 2026-11-15';

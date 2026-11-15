@@ -2,6 +2,7 @@ import 'package:flutter/material.dart' hide TextStyle;
 import 'package:flutter/painting.dart' as painting;
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 
 import '../../core/icons/iconfont.dart';
 
@@ -169,6 +170,7 @@ class _TerminalPageState extends ConsumerState<TerminalPage> {
       return _ErrorView(
         message: state.error!,
         onRetry: () => notifier.prepare(),
+        onOpenContainers: () => context.push('/settings/container'),
         foreground: fgColor,
         background: bgColor,
       );
@@ -386,6 +388,7 @@ class _SessionDrawer extends StatelessWidget {
 class _ErrorView extends StatelessWidget {
   final String message;
   final VoidCallback onRetry;
+  final VoidCallback? onOpenContainers;
   final Color foreground;
   final Color background;
   final String retryLabel;
@@ -395,6 +398,7 @@ class _ErrorView extends StatelessWidget {
     required this.onRetry,
     required this.foreground,
     required this.background,
+    this.onOpenContainers,
     this.retryLabel = '重试',
   });
 
@@ -417,6 +421,18 @@ class _ErrorView extends StatelessWidget {
               ),
               const SizedBox(height: 16),
               FilledButton(onPressed: onRetry, child: Text(retryLabel)),
+              if (onOpenContainers != null) ...[
+                const SizedBox(height: 8),
+                TextButton(
+                  onPressed: onOpenContainers,
+                  child: Text(
+                    '打开容器设置',
+                    style: painting.TextStyle(
+                      color: foreground.withValues(alpha: 0.8),
+                    ),
+                  ),
+                ),
+              ],
             ],
           ),
         ),

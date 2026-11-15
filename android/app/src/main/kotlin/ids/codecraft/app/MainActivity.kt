@@ -85,24 +85,16 @@ class MainActivity : FlutterActivity() {
                         result.error("INVALID", "path required", null)
                     }
                 }
-                // Termux bootstrap：状态查询与安装触发（安装流程见 BootstrapInstaller）。
-                "bootstrapStatus" -> result.success(
-                    mapOf(
-                        "installed" to BootstrapInstaller.isInstalled(this),
-                        "installing" to BootstrapInstaller.installing,
-                        "stage" to BootstrapInstaller.stage,
-                        "progress" to BootstrapInstaller.progress,
-                        "error" to BootstrapInstaller.lastError,
-                    )
-                )
-                "ensureBootstrap" -> BootstrapInstaller.ensureInstalledAsync(this) { ok ->
+                // PRoot 运行环境：状态查询与安装触发（安装流程见 ProotInstaller）。
+                "prootStatus" -> result.success(ProotInstaller.status(this))
+                "ensureProot" -> ProotInstaller.ensureInstalledAsync(this) { ok ->
                     runOnUiThread { result.success(ok) }
                 }
-                // 启动前自检：在真实进程里跑一次 bash，拿到 exec/动态链接失败的原始原因。
-                "terminalPreflight" -> Thread {
-                    val report = BootstrapInstaller.preflight(this)
-                    runOnUiThread { result.success(report) }
-                }.start()
+                // 容器 rootfs 解压后批量补执行位（tar 的 mode 位在 Dart 侧记录）。
+                "chmodExecutable" -> {
+                    val paths = call.argument<List<String>>("paths") ?: emptyList()
+                    result.success(ProotInstaller.chmodExecutable(paths))
+                }
                 "writeFile" -> {
                     val path = call.argument<String>("path")
                     val content = call.argument<String>("content")

@@ -1,12 +1,12 @@
 import 'dart:async';
 import 'dart:convert';
-import 'dart:io';
 
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:kyroon_pty/kyroon_pty.dart';
 
 import '../../core/terminal/terminal.dart';
+import '../container/container_launcher.dart';
 
 /// 一个终端会话标签。
 class TerminalTab {
@@ -147,25 +147,35 @@ class TerminalTabsNotifier extends Notifier<TerminalTabsState> {
 
   Future<void> newTab() async {
     if (state.creating) return;
-    state = state.copyWith(creating: true, error: () => null);
+    state = state.copyWith(
+      creating: true,
+      error: () => null,
+      stage: () => '正在准备容器…',
+    );
 
     try {
-      final shell = await TermuxBootstrap.ensure(
+      final spec = await ContainerLauncher.build(
         onStage: (stage) => state = state.copyWith(stage: () => stage),
       );
-      state = state.copyWith(stage: () => '正在启动 bash…');
-      await _openTab(shell);
+      state = state.copyWith(stage: () => '正在启动 ${spec.containerName}…');
+      _openTab(spec);
+    } on ContainerMissingException catch (e) {
+      state = state.copyWith(
+        creating: false,
+        stage: () => null,
+        error: () => e.message,
+      );
     } catch (e) {
       state = state.copyWith(
         creating: false,
         stage: () => null,
         error: () => _describeError(e),
       );
-      rethrow;
     }
   }
 
-  Future<void> _openTab(String shell) async {
+  /// 在 PRoot 容器里开一个交互式登录 shell。
+  void _openTab(ContainerLaunchSpec spec) {
     final controller = TerminalController(
       columns: 80,
       rows: 24,
@@ -174,94 +184,42 @@ class TerminalTabsNotifier extends Notifier<TerminalTabsState> {
       onBell: () {},
     );
 
-    final preflight = TermuxBootstrap.lastPreflight;
-    final specs = _launchSpecs(shell, preflight);
-
     final id = '${++_seq}';
     final tab = TerminalTab(
       id: id,
-      title: specs.first.label,
+      title: spec.containerName,
       controller: controller,
     );
 
-    controller.writeString('CodeCraft Terminal · ${specs.first.label}\r\n');
-    if (preflight != null && !preflight.ok) {
-      controller.writeString('\x1b[33m[Termux 环境自检未通过]\x1b[0m\r\n');
-      if (preflight.detail.isNotEmpty) {
-        controller.writeString('${preflight.detail}\r\n');
-      }
-      controller.writeString(
-        '\x1b[2m先降级到可用的 shell，修正环境后重开标签即可恢复 Termux。\x1b[0m\r\n\r\n',
-      );
-    } else if (preflight != null && !preflight.loginOk) {
-      controller.writeString('\x1b[33m[登录 shell 自检未通过，改用无 profile 的 bash]\x1b[0m\r\n');
-      if (preflight.loginDetail.isNotEmpty) {
-        controller.writeString('\x1b[2m${preflight.loginDetail}\x1b[0m\r\n');
-      }
-      controller.writeString('\r\n');
-    }
+    controller.writeString('CodeCraft Terminal · ${spec.containerName} (PRoot)\r\n');
 
-    void startAttempt(int index) {
-      if (index >= specs.length) return;
-      final spec = specs[index];
-      final Pty pty;
-      try {
-        pty = Pty.start(
-          spec.path,
-          arguments: spec.arguments,
-          rows: 24,
-          columns: 80,
-          environment: spec.termux
-              ? TermuxBootstrap.environment
-              : TermuxBootstrap.systemEnvironment,
-          workingDirectory: TermuxBootstrap.home,
-        );
-      } catch (e) {
-        controller.writeString('\x1b[31m无法启动 ${spec.label}：$e\x1b[0m\r\n');
-        startAttempt(index + 1);
-        return;
-      }
+    try {
+      final pty = Pty.start(
+        spec.executable,
+        arguments: spec.loginArguments,
+        rows: 24,
+        columns: 80,
+        environment: spec.environment,
+        workingDirectory: spec.workingDirectory,
+      );
 
       controller.onResponse = (data) {
         pty.write(Uint8List.fromList(utf8.encode(data)));
       };
       tab.attach(pty);
-      tab.title = spec.label;
-      state = state.copyWith();
 
-      final startedAt = DateTime.now();
-      pty.exitCode.then((code) async {
+      pty.exitCode.then((code) {
         tab.running = false;
-        final elapsed = DateTime.now().difference(startedAt);
-        // 立刻退出（1.5s 内）或非零退出都视为启动失败：
-        // 前者覆盖 profile 直接退出，后者覆盖 exec/动态链接失败。
-        final quickFailure =
-            elapsed < const Duration(milliseconds: 1500) || code != 0;
-        final hasNext = index + 1 < specs.length;
-
-        if (quickFailure && hasNext && !tab.mirror) {
-          controller.writeString(
-            '\r\n\x1b[31m[${spec.label} 退出码 $code，耗时 ${elapsed.inMilliseconds}ms]\x1b[0m\r\n',
-          );
-          if (spec.termux) {
-            final detail = await TermuxBootstrap.preflight(force: true);
-            if (detail.detail.isNotEmpty) {
-              controller.writeString('\x1b[33m${detail.detail}\x1b[0m\r\n');
-            }
-          }
-          controller.writeString(
-            '\x1b[2m改用 ${specs[index + 1].label} 继续。\x1b[0m\r\n\r\n',
-          );
-          startAttempt(index + 1);
-          return;
-        }
-
-        controller.writeString('\r\n\x1b[2m[会话已退出，退出码: $code]\x1b[0m\r\n');
+        controller.writeString('\r\n\x1b[2m[容器已退出，退出码: $code]\x1b[0m\r\n');
         state = state.copyWith();
       });
+    } catch (e) {
+      tab.running = false;
+      controller.writeString('\x1b[31m无法启动容器：$e\x1b[0m\r\n');
+      controller.writeString(
+        '\x1b[2m请到 设置 → 容器与镜像 检查 PRoot 运行环境。\x1b[0m\r\n',
+      );
     }
-
-    startAttempt(0);
 
     state = state.copyWith(
       tabs: [...state.tabs, tab],
@@ -270,29 +228,6 @@ class TerminalTabsNotifier extends Notifier<TerminalTabsState> {
       stage: () => null,
       error: () => null,
     );
-  }
-
-  /// 启动顺序，和 Termux 一致：先在完整的 Termux 环境里起登录 shell，
-  /// 失败就退到不带 profile 的 bash，最后退到系统 sh，保证终端一定可用。
-  List<_LaunchSpec> _launchSpecs(String shell, TerminalPreflightResult? preflight) {
-    final specs = <_LaunchSpec>[];
-    if (preflight == null || preflight.ok) {
-      if (preflight == null || preflight.loginOk) {
-        specs.add(_LaunchSpec(shell, const ['-l'], termux: true, label: 'bash -l'));
-      }
-      specs.add(
-        _LaunchSpec(
-          shell,
-          const ['--noprofile', '--norc', '-i'],
-          termux: true,
-          label: 'bash (no profile)',
-        ),
-      );
-    }
-    specs.add(
-      const _LaunchSpec('/system/bin/sh', [], termux: false, label: 'sh（系统兜底）'),
-    );
-    return specs;
   }
 
   void _updateTitle(String title) {
@@ -384,186 +319,5 @@ class TerminalTabsNotifier extends Notifier<TerminalTabsState> {
     if (exitCode != null && exitCode != 0) {
       tab.controller.writeString('\x1b[31m[exit $exitCode]\x1b[0m\r\n');
     }
-  }
-}
-
-/// 预检结果：用来判断 Termux 环境是否可以真正 exec。
-class TerminalPreflightResult {
-  final bool ok;
-  final int? exitCode;
-  final String output;
-  final String detail;
-
-  /// 登录 shell（`bash -l`，会走 profile）是否也能跑通。
-  final bool loginOk;
-  final String loginDetail;
-
-  const TerminalPreflightResult({
-    required this.ok,
-    this.exitCode,
-    this.output = '',
-    this.detail = '',
-    this.loginOk = true,
-    this.loginDetail = '',
-  });
-
-  String get summary {
-    if (ok) return '';
-    return '预检失败：$detail';
-  }
-}
-
-/// 一次启动尝试：可执行文件 + 参数 + 是否使用 Termux 环境。
-class _LaunchSpec {
-  final String path;
-  final List<String> arguments;
-  final bool termux;
-  final String label;
-
-  const _LaunchSpec(
-    this.path,
-    this.arguments, {
-    required this.termux,
-    required this.label,
-  });
-}
-
-/// Termux 运行环境：负责安装 bootstrap、构造环境变量、启动前自检。
-class TermuxBootstrap {
-  TermuxBootstrap._();
-
-  static const MethodChannel _channel =
-      MethodChannel('ids.codecraft.app/native_paths');
-
-  static String? _prefix;
-  static String? _home;
-  static String? _bash;
-  static bool _ready = false;
-
-  static TerminalPreflightResult? lastPreflight;
-
-  static String? get prefix => _prefix;
-  static String? get home => _home;
-  static String? get bashPath => _bash;
-
-  static Map<String, String> get environment {
-    final prefix = _prefix ?? '/data/data/ids.codecraft.app/files/usr';
-    final home = _home ?? '/data/data/ids.codecraft.app/files/home';
-    return {
-      'PREFIX': prefix,
-      'HOME': home,
-      'TMPDIR': '$prefix/tmp',
-      'SHELL': '$prefix/bin/bash',
-      'TERM': 'xterm-256color',
-      'COLORTERM': 'truecolor',
-      'LANG': 'en_US.UTF-8',
-      'LC_ALL': 'en_US.UTF-8',
-      'PATH': '$prefix/bin:$prefix/bin/applets:/system/bin:/system/xbin',
-      'LD_LIBRARY_PATH': '$prefix/lib',
-      'TERMUX_PACKAGE_MANAGER': 'apt',
-      'TERMUX_PACKAGE_ARCH': 'aarch64',
-      'TERMUX_APP_PID': '$pid',
-    };
-  }
-
-  /// 系统 shell 的最小环境（Termux 不可用时的兜底）。
-  static Map<String, String> get systemEnvironment => {
-        'TERM': 'xterm-256color',
-        'PATH': '/system/bin:/system/xbin:/sbin',
-        'HOME': _home ?? '/',
-        'TMPDIR': '/data/local/tmp',
-      };
-
-  /// 确保 bootstrap 已安装，返回 bash 的绝对路径。
-  static Future<String> ensure({void Function(String stage)? onStage}) async {
-    if (_ready && _bash != null) return _bash!;
-
-    final filesDir = await _channel.invokeMethod<String>('filesDir');
-    if (filesDir == null || filesDir.isEmpty) {
-      throw StateError('无法获取应用私有目录');
-    }
-    _prefix = '$filesDir/usr';
-    _home = '$filesDir/home';
-    _bash = '$_prefix/bin/bash';
-
-    await Directory(_home!).create(recursive: true);
-    await Directory('$_prefix/tmp').create(recursive: true);
-
-    var status = await _status();
-    if (status['installed'] != true) {
-      onStage?.call('正在安装 Termux 环境（约 100MB，仅首次）…');
-      _triggerInstall();
-      var finished = false;
-      for (var i = 0; i < 1200; i++) {
-        await Future<void>.delayed(const Duration(milliseconds: 500));
-        status = await _status();
-        final stage = status['stage'] as String?;
-        if (stage != null && stage.isNotEmpty) onStage?.call(stage);
-        final error = status['error'] as String?;
-        if (error != null && error.isNotEmpty) {
-          throw StateError('环境安装失败：$error');
-        }
-        if (status['installed'] == true) {
-          finished = true;
-          break;
-        }
-        if (status['installing'] != true && i > 4) break;
-      }
-      if (!finished) {
-        throw StateError('Termux 环境安装未完成（可能中断），请重试');
-      }
-    }
-
-    if (!File(_bash!).existsSync()) {
-      throw StateError('未找到 $_bash，请重新安装环境');
-    }
-
-    onStage?.call('正在自检运行环境…');
-    lastPreflight = await preflight();
-    _ready = true;
-    return _bash!;
-  }
-
-  /// 在真实进程里跑一次 bash，验证动态链接与 exec 权限。
-  static Future<TerminalPreflightResult> preflight({bool force = false}) async {
-    if (!force && lastPreflight != null) return lastPreflight!;
-    try {
-      final raw =
-          await _channel.invokeMethod<Map<Object?, Object?>>('terminalPreflight');
-      if (raw == null) {
-        return const TerminalPreflightResult(ok: true);
-      }
-      final result = TerminalPreflightResult(
-        ok: raw['ok'] == true,
-        exitCode: (raw['exitCode'] as num?)?.toInt(),
-        output: (raw['output'] as String?) ?? '',
-        detail: (raw['detail'] as String?) ?? '',
-        loginOk: raw['loginOk'] != false,
-        loginDetail: (raw['loginDetail'] as String?) ?? '',
-      );
-      lastPreflight = result;
-      return result;
-    } on MissingPluginException {
-      // 旧版 APK 没有这个通道方法，跳过自检
-      return const TerminalPreflightResult(ok: true);
-    } catch (e) {
-      return TerminalPreflightResult(ok: false, detail: e.toString());
-    }
-  }
-
-  static Future<Map<Object?, Object?>> _status() async {
-    try {
-      final raw =
-          await _channel.invokeMethod<Map<Object?, Object?>>('bootstrapStatus');
-      return raw ?? const {};
-    } on MissingPluginException {
-      return {'installed': true};
-    }
-  }
-
-  static void _triggerInstall() {
-    unawaited(
-      _channel.invokeMethod<bool>('ensureBootstrap').catchError((Object _) => false),
-    );
   }
 }

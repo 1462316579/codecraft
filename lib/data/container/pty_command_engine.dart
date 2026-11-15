@@ -7,36 +7,67 @@ import 'package:kyroon_pty/kyroon_pty.dart';
 
 import 'bounded_output.dart';
 import 'command_engine.dart';
+import 'container_launcher.dart';
 
 /// 基于 kyroon_pty 的自研终端命令执行后端。
 ///
-/// 不依赖 Termux，直接在宿主环境（容器内或本地）通过 PTY 启动 shell，
-/// 适用于“终端不使用 Termux，使用自研终端”的场景。
+/// AI 的命令与终端跑在同一个默认容器里（PRoot），因此两边环境完全一致；
+/// 容器未安装时返回明确的引导文案，而不是静默失败。
 class PtyCommandEngine implements CommandEngine {
-  PtyCommandEngine({
-    this.shell = 'bash',
-    this.workdir,
-  });
+  PtyCommandEngine({this.workdir});
 
-  /// 默认 shell 可执行文件。
-  final String shell;
-
-  /// 工作目录，为 null 时使用进程默认目录。
+  /// 工作目录，为 null 时使用容器默认目录（应用文档目录）。
   final String? workdir;
 
   static const Duration defaultTimeout = Duration(seconds: 120);
   static const Duration maxTimeout = Duration(seconds: 1800);
 
-  bool _ready = true;
+  ContainerLaunchSpec? _spec;
+  Future<ContainerLaunchSpec>? _loading;
+
+  /// 解析容器启动参数（只解析一次，之后复用）。
+  Future<ContainerLaunchSpec> _resolve() {
+    final cached = _spec;
+    if (cached != null) return Future.value(cached);
+    final pending = _loading;
+    if (pending != null) return pending;
+
+    final future = ContainerLauncher.build(workdir: workdir).then(
+      (spec) {
+        _spec = spec;
+        _loading = null;
+        return spec;
+      },
+      onError: (Object error) {
+        _loading = null;
+        throw error;
+      },
+    );
+    _loading = future;
+    return future;
+  }
 
   @override
-  Future<bool> isReady() async => _ready;
+  Future<bool> isReady() async {
+    try {
+      await _resolve();
+      return true;
+    } catch (_) {
+      return false;
+    }
+  }
 
   @override
-  Future<String?> notReadyHint() async => null;
-
-  /// 标记容器/环境已就绪（由容器安装流程在安装完成后调用）。
-  void setReady() => _ready = true;
+  Future<String?> notReadyHint() async {
+    try {
+      await _resolve();
+      return null;
+    } on ContainerMissingException catch (e) {
+      return e.message;
+    } catch (e) {
+      return e.toString();
+    }
+  }
 
   @override
   Future<CommandResult> runCommandSync(
@@ -45,7 +76,22 @@ class PtyCommandEngine implements CommandEngine {
     Duration timeout = defaultTimeout,
   }) async {
     final clamped = _clamp(timeout);
-    final pty = Pty.start(shell, arguments: ['-c', command], workingDirectory: workdir);
+
+    final ContainerLaunchSpec spec;
+    try {
+      spec = await _resolve();
+    } on ContainerMissingException catch (e) {
+      return CommandResult(output: e.message, exitCode: -1);
+    } catch (e) {
+      return CommandResult(output: '无法启动容器: $e', exitCode: -1);
+    }
+
+    final pty = Pty.start(
+      spec.executable,
+      arguments: spec.commandArguments(command),
+      environment: spec.environment,
+      workingDirectory: workdir ?? spec.workingDirectory,
+    );
 
     final output = BoundedOutput();
     var timedOut = false;
@@ -99,7 +145,26 @@ class PtyCommandEngine implements CommandEngine {
     Duration timeout = defaultTimeout,
   }) async* {
     final clamped = _clamp(timeout);
-    final pty = Pty.start(shell, arguments: ['-c', command], workingDirectory: workdir);
+
+    final ContainerLaunchSpec spec;
+    try {
+      spec = await _resolve();
+    } on ContainerMissingException catch (e) {
+      yield CommandLineEvent(e.message);
+      yield const CommandExitEvent(-1);
+      return;
+    } catch (e) {
+      yield CommandLineEvent('无法启动容器: $e');
+      yield const CommandExitEvent(-1);
+      return;
+    }
+
+    final pty = Pty.start(
+      spec.executable,
+      arguments: spec.commandArguments(command),
+      environment: spec.environment,
+      workingDirectory: workdir ?? spec.workingDirectory,
+    );
 
     final controller = StreamController<Object>();
     var timedOut = false;
@@ -143,9 +208,12 @@ class PtyCommandEngine implements CommandEngine {
     int rows = 24,
     String? workdir,
   }) async {
+    final spec = await _resolve();
     final pty = Pty.start(
-      shell,
-      workingDirectory: workdir,
+      spec.executable,
+      arguments: spec.loginArguments,
+      environment: spec.environment,
+      workingDirectory: workdir ?? spec.workingDirectory,
       rows: rows,
       columns: cols,
     );

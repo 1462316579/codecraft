@@ -104,6 +104,13 @@ class SettingsPage extends ConsumerWidget {
                           subtitle: l10n.themeSubtitle,
                           onTap: () => context.push('/settings/theme'),
                         ),
+                        const SettingsDivider(indent: SettingsRow.textIndent),
+                        SettingsRow(
+                          icon: Iconfont.box,
+                          title: l10n.settingsContainer,
+                          subtitle: l10n.settingsContainerSubtitle,
+                          onTap: () => context.push('/settings/container'),
+                        ),
                       ],
                     ),
                     SettingsGroupHeader(text: l10n.settingsCategoryData),

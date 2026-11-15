@@ -17,6 +17,7 @@ import '../features/reverse/hex_editor_page.dart';
 import '../features/settings/provider_edit_page.dart';
 import '../features/settings/providers_page.dart';
 import '../features/settings/about_page.dart';
+import '../features/settings/container_page.dart';
 import '../features/settings/general_page.dart';
 import '../features/settings/log_page.dart';
 import '../features/terminal/terminal_page.dart';
@@ -156,6 +157,10 @@ final routerProvider = Provider<GoRouter>((ref) {
           GoRoute(
             path: 'general',
             builder: (context, state) => const GeneralPage(),
+          ),
+          GoRoute(
+            path: 'container',
+            builder: (context, state) => const ContainerPage(),
           ),
           GoRoute(
             path: 'theme',
