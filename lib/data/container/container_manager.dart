@@ -1,13 +1,12 @@
-import 'dart:convert';
 import 'dart:io';
 import 'dart:isolate';
-import 'dart:typed_data';
 
 import 'package:dio/dio.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:path/path.dart' as p;
 
 import 'container_launcher.dart';
+import 'tar_extractor.dart';
 
 /// 可下载的容器镜像（均为 aarch64 rootfs 压缩包）。
 class ContainerImage {
@@ -17,6 +16,7 @@ class ContainerImage {
     required this.description,
     required this.url,
     required this.sizeLabel,
+    this.bundled = false,
   });
 
   /// 镜像 id，同时作为容器 id 前缀。
@@ -25,6 +25,9 @@ class ContainerImage {
   final String description;
   final String url;
   final String sizeLabel;
+
+  /// 是否随 APK 内置（无需联网下载）。
+  final bool bundled;
 }
 
 /// 内置镜像源。全部已验证可下载（HTTP 200）。
@@ -48,10 +51,10 @@ const List<ContainerImage> kContainerImages = [
   ContainerImage(
     id: 'ubuntu-26.04',
     name: 'Ubuntu 26.04 Base',
-    description: 'glibc + apt，最新 LTS（Resolute Raccoon），推荐',
-    url:
-        'https://cdimage.ubuntu.com/ubuntu-base/releases/26.04/release/ubuntu-base-26.04.1-base-arm64.tar.gz',
-    sizeLabel: '约 35 MB',
+    description: 'glibc + apt，最新 LTS（Resolute Raccoon），已内置',
+    url: '',
+    sizeLabel: '内置',
+    bundled: true,
   ),
   ContainerImage(
     id: 'ubuntu-24.04',
@@ -147,6 +150,16 @@ class ContainerNotifier extends Notifier<ContainerState> {
       runtimeStage: status.stage,
       loading: false,
     );
+    // 首次启动（或升级到内置 Ubuntu 26.04 的版本）自动装好内置镜像，
+    // 用户打开设置就能看到已安装的容器，不需要再下载。
+    if (!await ContainerStore.bundledSeeded()) {
+      final image =
+          kContainerImages.where((item) => item.bundled).firstOrNull;
+      if (image != null && !state.busy) {
+        final info = await _installBundled(image);
+        if (info != null) await ContainerStore.markBundledSeeded();
+      }
+    }
   }
 
   /// 安装（修复）PRoot 运行环境。
@@ -167,6 +180,7 @@ class ContainerNotifier extends Notifier<ContainerState> {
   /// 下载并安装一个镜像，成功后若没有默认容器则设为默认。
   Future<ContainerInfo?> install(ContainerImage image) async {
     if (state.busy) return null;
+    if (image.bundled) return _installBundled(image);
     state = state.copyWith(
       busyImageId: () => image.id,
       busyProgress: 0,
@@ -221,7 +235,7 @@ class ContainerNotifier extends Notifier<ContainerState> {
 
       // 解压耗时且是纯 CPU/磁盘操作，放到后台 isolate，避免卡住界面。
       final execPaths = await Isolate.run(
-        () => _extractTarGz(archiveFile.path, staging.path),
+        () => extractTarGz(archiveFile.path, staging.path),
       );
 
       // 容器内没有 Android 的 DNS 配置，写一份公共 DNS，装包后才能联网。
@@ -296,6 +310,41 @@ class ContainerNotifier extends Notifier<ContainerState> {
     }
   }
 
+  /// 安装 APK 内置镜像（无需联网）。
+  Future<ContainerInfo?> _installBundled(ContainerImage image) async {
+    state = state.copyWith(
+      busyImageId: () => image.id,
+      busyProgress: 0,
+      busyStage: () => '正在安装内置 ${image.name}…',
+      error: () => null,
+    );
+    try {
+      final info = await ContainerLauncher.installBundled(
+        onStage: (stage) => state = state.copyWith(
+          busyProgress: 1,
+          busyStage: () => stage,
+        ),
+      );
+      final store = await ContainerStore.load();
+      state = state.copyWith(
+        containers: store.containers,
+        defaultId: () => store.defaultId,
+        busyImageId: () => null,
+        busyProgress: 0,
+        busyStage: () => null,
+      );
+      return info;
+    } catch (e) {
+      state = state.copyWith(
+        busyImageId: () => null,
+        busyProgress: 0,
+        busyStage: () => null,
+        error: () => _describe(e),
+      );
+      return null;
+    }
+  }
+
   /// 删除容器；若删除的是默认容器，自动回退到剩余的第一个。
   Future<void> remove(String id) async {
     final target = state.containers.where((c) => c.id == id).firstOrNull;
@@ -350,231 +399,4 @@ class ContainerNotifier extends Notifier<ContainerState> {
     }
     return e.toString();
   }
-}
-
-// ---------------------------------------------------------------- rootfs 解压
-
-/// 解压 tar.gz 到 [rootPath]，返回需要补执行位的文件路径。
-///
-/// 用 dart:io 的 gzip 解码器（原生 zlib）先把压缩包流式解成 tar，再自己单遍扫描：
-/// archive 包的纯 Dart 解压慢一个数量级，而它的惰性 tar 解码又无法在扫描时
-/// 安全取回文件内容，所以这里自己解析（保留 mode / 符号链接 / 硬链接语义）。
-Future<List<String>> _extractTarGz(String archivePath, String rootPath) async {
-  final tarPath = '$rootPath.part.tar';
-  final tarFile = File(tarPath);
-  try {
-    await File(archivePath)
-        .openRead()
-        .transform(gzip.decoder)
-        .pipe(tarFile.openWrite());
-    return _extractTar(tarPath, rootPath);
-  } finally {
-    if (tarFile.existsSync()) {
-      try {
-        tarFile.deleteSync();
-      } catch (_) {}
-    }
-  }
-}
-
-List<String> _extractTar(String tarPath, String rootPath) {
-  final raf = File(tarPath).openSync(mode: FileMode.read);
-  final total = raf.lengthSync();
-  final execPaths = <String>[];
-  final header = Uint8List(512);
-  String? pendingName;
-  String? pendingLink;
-  var offset = 0;
-
-  try {
-    while (offset + 512 <= total) {
-      raf.setPositionSync(offset);
-      final read = raf.readIntoSync(header);
-      if (read < 512) break;
-      if (_isZeroBlock(header)) break;
-
-      final name = _readString(header, 0, 100);
-      final mode = _readOctal(header, 100, 8);
-      final size = _readOctal(header, 124, 12);
-      final typeByte = header[156];
-      final type = typeByte == 0 ? '0' : String.fromCharCode(typeByte);
-      var link = _readString(header, 157, 100);
-      final prefix = _readString(header, 345, 155);
-
-      final dataOffset = offset + 512;
-      offset = dataOffset + ((size + 511) ~/ 512) * 512;
-
-      if (type == 'L') {
-        pendingName = _readText(raf, dataOffset, size);
-        continue;
-      }
-      if (type == 'K') {
-        pendingLink = _readText(raf, dataOffset, size);
-        continue;
-      }
-      if (type == 'x' || type == 'g') {
-        final record = _readText(raf, dataOffset, size);
-        final parsed = _parsePax(record);
-        if (parsed.name != null) pendingName = parsed.name;
-        if (parsed.link != null) pendingLink = parsed.link;
-        continue;
-      }
-
-      var entryName = pendingName ?? (prefix.isEmpty ? name : '$prefix/$name');
-      pendingName = null;
-      final nextLink = pendingLink;
-      if (nextLink != null) {
-        link = nextLink;
-        pendingLink = null;
-      }
-
-      final clean = _sanitizePath(entryName);
-      if (clean == null || clean.isEmpty) continue;
-      final targetPath = p.join(rootPath, clean);
-
-      switch (type) {
-        case '5': // 目录
-          Directory(targetPath).createSync(recursive: true);
-          break;
-        case '2': // 符号链接
-          _ensureParent(targetPath);
-          _recreateLink(targetPath, link);
-          break;
-        case '1': // 硬链接（Android 上同样用符号链接等价实现）
-          _ensureParent(targetPath);
-          final hardTarget = _sanitizePath(link);
-          _recreateLink(
-            targetPath,
-            hardTarget == null ? link : p.join(rootPath, hardTarget),
-          );
-          break;
-        case '3':
-        case '4':
-        case '6': // 设备节点 / FIFO，容器里用不到
-          break;
-        default: // '0' / '7'
-          final file = File(targetPath);
-          file.parent.createSync(recursive: true);
-          final sink = file.openSync(mode: FileMode.write);
-          try {
-            var remaining = size;
-            var position = dataOffset;
-            final buffer = Uint8List(64 * 1024);
-            while (remaining > 0) {
-              raf.setPositionSync(position);
-              final chunk = remaining > buffer.length ? buffer.length : remaining;
-              final n = raf.readIntoSync(buffer, 0, chunk);
-              if (n <= 0) break;
-              sink.writeFromSync(buffer, 0, n);
-              position += n;
-              remaining -= n;
-            }
-          } finally {
-            sink.closeSync();
-          }
-          if ((mode & 0x49) != 0) execPaths.add(targetPath);
-          break;
-      }
-    }
-  } finally {
-    raf.closeSync();
-  }
-  return execPaths;
-}
-
-void _ensureParent(String path) =>
-    Directory(p.dirname(path)).createSync(recursive: true);
-
-void _recreateLink(String path, String target) {
-  final link = Link(path);
-  if (link.existsSync()) link.deleteSync();
-  final file = File(path);
-  if (file.existsSync()) file.deleteSync();
-  final dir = Directory(path);
-  if (dir.existsSync()) dir.deleteSync(recursive: true);
-  link.createSync(target);
-}
-
-/// 清理 tar 里的相对/绝对路径，拒绝越界（`..`）。
-String? _sanitizePath(String raw) {
-  var path = raw.replaceAll('\\', '/');
-  while (path.startsWith('./')) {
-    path = path.substring(2);
-  }
-  if (path.isEmpty) return null;
-  if (path.startsWith('/')) path = path.substring(1);
-  final segments = <String>[];
-  for (final segment in path.split('/')) {
-    if (segment.isEmpty || segment == '.') continue;
-    if (segment == '..') {
-      if (segments.isEmpty) return null;
-      segments.removeLast();
-      continue;
-    }
-    segments.add(segment);
-  }
-  return segments.join('/');
-}
-
-bool _isZeroBlock(Uint8List block) {
-  for (final byte in block) {
-    if (byte != 0) return false;
-  }
-  return true;
-}
-
-String _readString(Uint8List buffer, int offset, int length) {
-  var end = offset;
-  final limit = offset + length;
-  while (end < limit && buffer[end] != 0) {
-    end++;
-  }
-  return utf8.decode(buffer.sublist(offset, end), allowMalformed: true);
-}
-
-int _readOctal(Uint8List buffer, int offset, int length) {
-  var value = 0;
-  var seen = false;
-  for (var i = offset; i < offset + length; i++) {
-    final byte = buffer[i];
-    if (byte == 0 || byte == 0x20) {
-      if (seen) break;
-      continue;
-    }
-    if (byte < 0x30 || byte > 0x37) break;
-    value = value * 8 + (byte - 0x30);
-    seen = true;
-  }
-  return value;
-}
-
-String _readText(RandomAccessFile raf, int offset, int size) {
-  if (size <= 0) return '';
-  raf.setPositionSync(offset);
-  final bytes = raf.readSync(size);
-  return utf8.decode(bytes, allowMalformed: true);
-}
-
-class _PaxRecord {
-  const _PaxRecord({this.name, this.link});
-
-  final String? name;
-  final String? link;
-}
-
-_PaxRecord _parsePax(String text) {
-  String? name;
-  String? link;
-  for (final line in const LineSplitter().convert(text)) {
-    final space = line.indexOf(' ');
-    if (space <= 0) continue;
-    final rest = line.substring(space + 1);
-    final eq = rest.indexOf('=');
-    if (eq <= 0) continue;
-    final key = rest.substring(0, eq);
-    final value = rest.substring(eq + 1);
-    if (key == 'path') name = value;
-    if (key == 'linkpath') link = value;
-  }
-  return _PaxRecord(name: name, link: link);
 }

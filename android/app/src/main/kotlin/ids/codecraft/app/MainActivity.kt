@@ -95,6 +95,32 @@ class MainActivity : FlutterActivity() {
                     val paths = call.argument<List<String>>("paths") ?: emptyList()
                     result.success(ProotInstaller.chmodExecutable(paths))
                 }
+                // 把 APK 内置的容器镜像（约 34MB）流式拷到应用私有目录，避免 Dart 侧整包读入内存。
+                "copyAsset" -> {
+                    val asset = call.argument<String>("asset")
+                    val target = call.argument<String>("target")
+                    if (asset.isNullOrBlank() || target.isNullOrBlank()) {
+                        result.error("INVALID", "asset and target required", null)
+                    } else {
+                        Thread {
+                            try {
+                                val file = java.io.File(target)
+                                file.parentFile?.mkdirs()
+                                assets.open(asset).use { input ->
+                                    java.io.FileOutputStream(file).use { output ->
+                                        input.copyTo(output, 65536)
+                                    }
+                                }
+                                runOnUiThread { result.success(true) }
+                            } catch (e: Exception) {
+                                Log.e("MainActivity", "拷贝内置资产失败: $asset", e)
+                                runOnUiThread {
+                                    result.error("COPY_FAILED", e.message ?: "copy failed", null)
+                                }
+                            }
+                        }.start()
+                    }
+                }
                 "writeFile" -> {
                     val path = call.argument<String>("path")
                     val content = call.argument<String>("content")

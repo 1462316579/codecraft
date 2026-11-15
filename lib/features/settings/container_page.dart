@@ -125,7 +125,7 @@ class _ContainerPageState extends ConsumerState<ContainerPage> {
                       SettingsRow(
                         icon: Iconfont.box,
                         title: '暂无容器',
-                        subtitle: '从上面的镜像列表下载一个即可开始使用终端',
+                        subtitle: '内置 Ubuntu 26.04 会自动安装，可从上方重新安装',
                       ),
                     ]
                   : [
@@ -168,12 +168,14 @@ class _ContainerPageState extends ConsumerState<ContainerPage> {
           : '${image.description} · ${image.sizeLabel}',
       trailing: installing
           ? Text(
-              '${(state.busyProgress * 100).toStringAsFixed(0)}%',
+              image.bundled
+                  ? '安装中…'
+                  : '${(state.busyProgress * 100).toStringAsFixed(0)}%',
               style: Theme.of(context).textTheme.labelLarge,
             )
           : FilledButton.tonal(
               onPressed: state.busy ? null : () => notifier.install(image),
-              child: const Text('下载'),
+              child: Text(image.bundled ? '安装' : '下载'),
             ),
     );
   }

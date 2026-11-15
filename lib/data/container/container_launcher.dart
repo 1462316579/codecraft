@@ -1,11 +1,14 @@
 import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
+import 'dart:isolate';
 
 import 'package:flutter/services.dart';
 import 'package:path/path.dart' as p;
 import 'package:path_provider/path_provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+
+import 'tar_extractor.dart';
 
 /// 容器缺失/运行环境不可用。终端与命令引擎据此给出引导文案。
 class ContainerMissingException implements Exception {
@@ -114,6 +117,17 @@ class ProotRuntime {
       );
     }
   }
+
+  /// 把 APK 内置资产流式拷贝到 [targetPath]（由 Kotlin 侧实现，避免整包读进内存）。
+  static Future<void> copyAsset(String assetPath, String targetPath) async {
+    final ok = await _channel.invokeMethod<bool>('copyAsset', {
+      'asset': assetPath,
+      'target': targetPath,
+    });
+    if (ok != true) {
+      throw const ContainerMissingException('无法读取内置容器镜像资源');
+    }
+  }
 }
 
 /// 一个已安装的容器。
@@ -172,6 +186,19 @@ class ContainerStore {
   ContainerStore._();
 
   static const String _prefsKey = 'codecraft.containers.v1';
+
+  /// 内置镜像是否已经自动安装过；用户主动删除后不再自动重装。
+  static const String _seedKey = 'codecraft.bundled.ubuntu26.v1';
+
+  static Future<bool> bundledSeeded() async {
+    final prefs = await SharedPreferences.getInstance();
+    return prefs.getBool(_seedKey) ?? false;
+  }
+
+  static Future<void> markBundledSeeded() async {
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.setBool(_seedKey, true);
+  }
 
   static Future<String> containersDir() async =>
       p.join(await ProotRuntime.filesDir(), 'containers');
@@ -287,6 +314,103 @@ class ContainerLauncher {
   static const String _guestPath =
       '/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin';
 
+  /// APK 内置的 Ubuntu 26.04 rootfs（位于 android/app/src/main/assets/container/）。
+  static const String bundledAssetPath =
+      'container/ubuntu-26.04-base-arm64.tar.gz';
+  static const String bundledId = 'ubuntu-26.04';
+  static const String bundledName = 'Ubuntu 26.04 Base';
+
+  static Future<ContainerInfo>? _bundledPending;
+
+  /// 安装 APK 内置的 Ubuntu 26.04；并发调用共享同一个安装任务。
+  static Future<ContainerInfo> installBundled({
+    void Function(String stage)? onStage,
+  }) {
+    final pending = _bundledPending;
+    if (pending != null) return pending;
+    final future = _installBundled(onStage: onStage);
+    _bundledPending = future;
+    future.whenComplete(() {
+      if (identical(_bundledPending, future)) _bundledPending = null;
+    });
+    return future;
+  }
+
+  static Future<ContainerInfo> _installBundled({
+    void Function(String stage)? onStage,
+  }) async {
+    final containersDir = await ContainerStore.containersDir();
+    final store = await ContainerStore.load();
+    final existing =
+        store.containers.where((item) => item.id == bundledId).firstOrNull;
+    if (existing != null) return existing;
+
+    final downloadDir = Directory(p.join(containersDir, '.downloads'));
+    downloadDir.createSync(recursive: true);
+    final archive = File(
+      p.join(downloadDir.path, p.basename(bundledAssetPath)),
+    );
+    if (!archive.existsSync() || archive.lengthSync() == 0) {
+      onStage?.call('正在准备内置 Ubuntu 26.04…');
+      await ProotRuntime.copyAsset(bundledAssetPath, archive.path);
+    }
+
+    onStage?.call('正在解压内置 Ubuntu 26.04…');
+    final staging = Directory(p.join(containersDir, '.staging-$bundledId'));
+    if (staging.existsSync()) staging.deleteSync(recursive: true);
+    staging.createSync(recursive: true);
+    try {
+      final execPaths = await Isolate.run(
+        () => extractTarGz(archive.path, staging.path),
+      );
+
+      final etc = Directory(p.join(staging.path, 'etc'));
+      etc.createSync(recursive: true);
+      File(p.join(etc.path, 'resolv.conf')).writeAsStringSync(
+        'nameserver 8.8.8.8\nnameserver 1.1.1.1\n',
+      );
+
+      if (FileSystemEntity.typeSync(
+            p.join(staging.path, 'bin', 'sh'),
+            followLinks: false,
+          ) ==
+          FileSystemEntityType.notFound) {
+        throw StateError('内置镜像缺少 /bin/sh，无法作为容器使用');
+      }
+
+      if (execPaths.isNotEmpty) {
+        await ProotRuntime.chmodExecutable(execPaths);
+      }
+
+      final finalDir = Directory(p.join(containersDir, bundledId));
+      if (finalDir.existsSync()) finalDir.deleteSync(recursive: true);
+      staging.renameSync(finalDir.path);
+
+      final info = ContainerInfo(
+        id: bundledId,
+        name: bundledName,
+        imageId: bundledId,
+        path: finalDir.path,
+        createdAt: DateTime.now().millisecondsSinceEpoch,
+      );
+      final latest = await ContainerStore.load();
+      final containers = [...latest.containers, info];
+      final defaultId = latest.defaultId ?? bundledId;
+      await ContainerStore.save(
+        ContainerStoreData(containers: containers, defaultId: defaultId),
+      );
+
+      try {
+        archive.deleteSync();
+      } catch (_) {}
+      return info;
+    } finally {
+      try {
+        if (staging.existsSync()) staging.deleteSync(recursive: true);
+      } catch (_) {}
+    }
+  }
+
   /// 容器是否可用（运行环境 + 默认容器都在）。
   static Future<bool> isReady() async {
     if (!await ProotRuntime.isInstalled()) return false;
@@ -312,11 +436,17 @@ class ContainerLauncher {
     }
 
     final store = await ContainerStore.load();
-    final container = store.defaultContainer;
+    var container = store.defaultContainer;
     if (container == null) {
-      throw const ContainerMissingException(
-        '尚未安装容器，请到 设置 → 容器与镜像 下载镜像',
-      );
+      // 内置 Ubuntu 26.04 随 APK 提供：首次使用直接解压安装，无需用户下载。
+      if (await ContainerStore.bundledSeeded()) {
+        throw const ContainerMissingException(
+          '尚未安装容器，请到 设置 → 容器与镜像 安装内置 Ubuntu 26.04',
+        );
+      }
+      onStage?.call('正在安装内置 Ubuntu 26.04…');
+      container = await installBundled(onStage: onStage);
+      await ContainerStore.markBundledSeeded();
     }
 
     // 工作区（应用文档目录）以相同绝对路径映射进容器：

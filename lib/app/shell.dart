@@ -9,6 +9,7 @@ import '../agent/sessions_controller.dart';
 import '../data/db/app_database.dart';
 import '../data/db/daos.dart';
 import '../data/apk_workspace.dart';
+import '../data/container/container_manager.dart';
 import '../core/log/file_logger.dart';
 import '../core/util/window_size.dart';
 import '../features/home/home_bottom_nav.dart';
@@ -67,6 +68,14 @@ class HomeShell extends ConsumerStatefulWidget {
 }
 
 class _HomeShellState extends ConsumerState<HomeShell> {
+  @override
+  void initState() {
+    super.initState();
+    // 启动即触发容器管理：首次运行时自动解压安装内置 Ubuntu 26.04，
+    // 用户打开终端/设置时无需再下载。
+    ref.read(containerProvider);
+  }
+
   @override
   Widget build(BuildContext context) {
     final tab = ref.watch(homeTabProvider);
