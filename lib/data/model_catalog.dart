@@ -129,11 +129,14 @@ class ModelCatalog {
   ModelMetadata? find(String? providerId, String? model, {List<String>? preferredProviders}) {
     if (model == null || model.trim().isEmpty) return null;
     final normalized = _stripModelsPrefix(model.trim().toLowerCase());
-    final names = [normalized, ..._vendorStrippedCandidates(normalized)];
+    final names = _withSeparatorVariants([
+      normalized,
+      ..._vendorStrippedCandidates(normalized),
+    ]);
     for (final name in names) {
       final hit = _lookup(name, providerId, preferredProviders);
       if (hit != null) return hit;
-      for (final candidate in _strippedCandidates(name).skip(1)) {
+      for (final candidate in _withSeparatorVariants(_strippedCandidates(name).skip(1))) {
         final candidateHit = _lookup(candidate, providerId, preferredProviders);
         if (candidateHit != null) return candidateHit;
       }
@@ -141,8 +144,11 @@ class ModelCatalog {
     for (final name in names) {
       final lastDash = name.lastIndexOf('-');
       if (lastDash <= name.lastIndexOf('/') + 1) continue;
-      final hit = _lookup(name.substring(0, lastDash), providerId, preferredProviders);
-      if (hit != null) return hit;
+      for (final candidate
+          in _withSeparatorVariants([name.substring(0, lastDash)])) {
+        final hit = _lookup(candidate, providerId, preferredProviders);
+        if (hit != null) return hit;
+      }
     }
     return null;
   }
@@ -219,6 +225,29 @@ List<String> preferredCatalogProviders(ProviderType type) => switch (type) {
 
 String _stripModelsPrefix(String name) =>
     name.startsWith(_modelsPrefix) ? name.substring(_modelsPrefix.length) : name;
+
+/// 把一组候选名扩展成「原样 + 分隔符变体」,并按出现顺序去重。
+List<String> _withSeparatorVariants(Iterable<String> names) {
+  final result = <String>[];
+  for (final name in names) {
+    if (name.isEmpty || result.contains(name)) continue;
+    result.add(name);
+    final variant = _separatorVariants(name);
+    if (variant != null && !result.contains(variant)) result.add(variant);
+  }
+  return result;
+}
+
+/// 版本号分隔符差异:`claude-opus-4.6`(聚合站命名)与目录里的 `claude-opus-4-5` 写法不同,
+/// 仅 `.` / `-` 不同时应视为同一模型——否则这些模型匹配不到目录,只能显示兜底标签。
+///
+/// 返回 null 表示没有另一种写法。两个方向都试:
+/// 点号转连字符(`4.6` → `4-6`),以及数字间的连字符转点号(`gpt-5-5` → `gpt-5.5`)。
+String? _separatorVariants(String name) {
+  if (name.contains('.')) return name.replaceAll('.', '-');
+  if (!RegExp(r'\d-\d').hasMatch(name)) return null;
+  return name.replaceAllMapped(RegExp(r'(\d)-(\d)'), (m) => '${m[1]}.${m[2]}');
+}
 
 /// 逐级剥离 vendor 前缀后的候选(`z-ai/glm-5.3-flash` → `glm-5.3-flash`,
 /// `@cf/zai-org/glm-5.3-flash` → `zai-org/glm-5.3-flash` → `glm-5.3-flash`)。

@@ -1,4 +1,5 @@
 import 'package:codecraft/data/model_api_service.dart';
+import 'package:codecraft/data/model_catalog.dart';
 import 'package:codecraft/data/providers/provider_config.dart';
 import 'package:flutter_test/flutter_test.dart';
 
@@ -40,5 +41,27 @@ void main() {
       isEmpty,
     );
     expect(ModelApiService.parseModelsMetadata('not json', ProviderType.openai), isEmpty);
+  });
+
+  // 聚合站多用 `claude-opus-4.6` 这种点号写法,目录里是 `claude-opus-4-6`;
+  // 只差分隔符时匹配不到目录,模型行就只剩兜底的「工具」标签。
+  test('目录匹配:版本号点号与连字符视为同一模型', () {
+    final catalog = ModelCatalog.parse('''
+{"anthropic":{"models":{"claude-opus-4-6":{
+  "id":"claude-opus-4-6","name":"Claude Opus 4.6","tool_call":true,"reasoning":true,
+  "limit":{"context":1000000,"output":128000},
+  "modalities":{"input":["text","image"],"output":["text"]}}}}}
+''');
+    final dotted = resolveModelMetadata(
+      catalog,
+      const {},
+      providerId: 'aggregator',
+      model: 'anthropic/claude-opus-4.6',
+      type: ProviderType.openai,
+    );
+    expect(dotted.supportsVision, isTrue);
+    expect(dotted.supportsReasoning, isTrue);
+    expect(dotted.contextTokens, 1000000);
+    expect(dotted.estimated, isFalse);
   });
 }

@@ -214,7 +214,9 @@ class _FetchModelsSheetState extends ConsumerState<_FetchModelsSheet> {
   /// 「服务端没声明」误判成「不支持工具」。
   Future<void> _persistFetchedMetadata(FetchModelsResult result) async {
     if (result.metadata.isEmpty) return;
-    final catalog = ref.read(modelCatalogProvider).valueOrNull ?? ModelCatalog.empty;
+    // 等目录加载完再取能力标签:目录没就绪时会把「不支持图片/思考」的默认值写进自定义
+    // 元数据,之后这些模型就只剩兜底的「工具」标签,再也匹配不上目录里的真实能力。
+    final catalog = await ref.read(modelCatalogProvider.future);
     final custom = ref.read(customModelMetadataProvider).valueOrNull ?? const {};
     final entries = <String, ModelMetadata>{};
     for (final entry in result.metadata.entries) {
