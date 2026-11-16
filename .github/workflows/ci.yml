@@ -76,7 +76,7 @@ jobs:
           DIR=build/app/outputs/flutter-apk
           # universal 构建会覆盖同名输出，先保留 arm64 包
           cp "$DIR/codecraft-release.apk" "$DIR/codecraft-arm64-release.apk"
-          flutter build apk --release --no-tree-shake-icons --target-platform android-arm64,armv7,x86_64,x86
+          flutter build apk --release --no-tree-shake-icons --target-platform android-arm,android-arm64,android-x64
           if [ -f "$DIR/app-release.apk" ]; then mv "$DIR/app-release.apk" "$DIR/codecraft-universal-release.apk"; else mv "$DIR/codecraft-release.apk" "$DIR/codecraft-universal-release.apk"; fi
           cp "$DIR/codecraft-arm64-release.apk" "$DIR/codecraft-release.apk"
           ls -la "$DIR"
