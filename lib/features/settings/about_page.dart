@@ -342,6 +342,7 @@ class _AboutPageState extends State<AboutPage> {
 
   /// 有新版本时的更新提示弹窗，点击前往 GitHub Releases 页面下载。
   Future<void> _showUpdateDialog(String latestVersion) async {
+    final l10n = AppLocalizations.of(context);
     await showDialog<void>(
       context: context,
       builder: (context) {
