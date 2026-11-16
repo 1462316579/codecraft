@@ -97,6 +97,9 @@ class _AboutPageState extends State<AboutPage> {
           _latestVersion = displayVersion;
           _updateAvailable = _isNewer(version, _version);
         });
+        if (_updateAvailable && mounted) {
+          _showUpdateDialog(displayVersion);
+        }
       } else if (!mounted) {
         return;
       } else {
@@ -330,6 +333,35 @@ class _AboutPageState extends State<AboutPage> {
                 Navigator.pop(context);
               },
               child: const Text('保存'),
+            ),
+          ],
+        );
+      },
+    );
+  }
+
+  /// 有新版本时的更新提示弹窗，点击前往 GitHub Releases 页面下载。
+  Future<void> _showUpdateDialog(String latestVersion) async {
+    await showDialog<void>(
+      context: context,
+      builder: (context) {
+        return AlertDialog(
+          title: Text(l10n.aboutUpdateAvailable),
+          content: Text(
+            '${l10n.aboutUpdateDesc}: $latestVersion',
+            style: Theme.of(context).textTheme.bodyMedium,
+          ),
+          actions: [
+            TextButton(
+              onPressed: () => Navigator.pop(context),
+              child: Text(l10n.aboutUpdateLater),
+            ),
+            TextButton(
+              onPressed: () async {
+                Navigator.pop(context);
+                await _openReleasePage();
+              },
+              child: Text(l10n.aboutUpdateGo),
             ),
           ],
         );

@@ -4522,4 +4522,16 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get cloudBackup => 'Cloud Backup';
+
+  @override
+  String get aboutUpdateAvailable => 'New version available';
+
+  @override
+  String get aboutUpdateDesc => 'New version available';
+
+  @override
+  String get aboutUpdateLater => 'Later';
+
+  @override
+  String get aboutUpdateGo => 'Go to download';
 }

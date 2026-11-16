@@ -8304,6 +8304,30 @@ abstract class AppLocalizations {
   /// In zh, this message translates to:
   /// **'网络备份'**
   String get cloudBackup;
+
+  /// No description provided for @aboutUpdateAvailable.
+  ///
+  /// In zh, this message translates to:
+  /// **'发现新版本'**
+  String get aboutUpdateAvailable;
+
+  /// No description provided for @aboutUpdateDesc.
+  ///
+  /// In zh, this message translates to:
+  /// **'发现新版本'**
+  String get aboutUpdateDesc;
+
+  /// No description provided for @aboutUpdateLater.
+  ///
+  /// In zh, this message translates to:
+  /// **'稍后'**
+  String get aboutUpdateLater;
+
+  /// No description provided for @aboutUpdateGo.
+  ///
+  /// In zh, this message translates to:
+  /// **'前往下载'**
+  String get aboutUpdateGo;
 }
 
 class _AppLocalizationsDelegate

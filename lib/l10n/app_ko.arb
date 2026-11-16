@@ -2284,5 +2284,9 @@
   "importBackup": "백업 가져오기",
   "importBackupDesc": "백업 파일에서 데이터 복원",
   "localBackup": "로컬 백업",
-  "cloudBackup": "클라우드 백업"
+  "cloudBackup": "클라우드 백업",
+  "aboutUpdateAvailable": "새 버전 사용 가능",
+  "aboutUpdateDesc": "새 버전 사용 가능",
+  "aboutUpdateLater": "나중에",
+  "aboutUpdateGo": "다운로드 페이지로"
 }

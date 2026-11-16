@@ -4405,4 +4405,16 @@ class AppLocalizationsJa extends AppLocalizations {
 
   @override
   String get cloudBackup => 'クラウドバックアップ';
+
+  @override
+  String get aboutUpdateAvailable => '新しいバージョンが利用可能';
+
+  @override
+  String get aboutUpdateDesc => '新しいバージョンが利用可能';
+
+  @override
+  String get aboutUpdateLater => '後で';
+
+  @override
+  String get aboutUpdateGo => 'ダウンロードへ';
 }

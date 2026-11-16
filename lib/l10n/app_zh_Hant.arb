@@ -2284,5 +2284,9 @@
   "importBackup": "导入备份",
   "importBackupDesc": "從备份文件还原數据",
   "localBackup": "本地备份",
-  "cloudBackup": "網絡备份"
+  "cloudBackup": "網絡备份",
+  "aboutUpdateAvailable": "發現新版本",
+  "aboutUpdateDesc": "發現新版本",
+  "aboutUpdateLater": "稍後",
+  "aboutUpdateGo": "前往下載"
 }

@@ -2228,5 +2228,9 @@
   "importBackup": "Import Backup",
   "importBackupDesc": "Restore data from backup file",
   "localBackup": "Local Backup",
-  "cloudBackup": "Cloud Backup"
+  "cloudBackup": "Cloud Backup",
+  "aboutUpdateAvailable": "New version available",
+  "aboutUpdateDesc": "New version available",
+  "aboutUpdateLater": "Later",
+  "aboutUpdateGo": "Go to download"
 }

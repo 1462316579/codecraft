@@ -4398,4 +4398,16 @@ class AppLocalizationsKo extends AppLocalizations {
 
   @override
   String get cloudBackup => '클라우드 백업';
+
+  @override
+  String get aboutUpdateAvailable => '새 버전 사용 가능';
+
+  @override
+  String get aboutUpdateDesc => '새 버전 사용 가능';
+
+  @override
+  String get aboutUpdateLater => '나중에';
+
+  @override
+  String get aboutUpdateGo => '다운로드 페이지로';
 }

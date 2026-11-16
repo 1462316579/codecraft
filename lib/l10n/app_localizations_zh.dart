@@ -4394,6 +4394,18 @@ class AppLocalizationsZh extends AppLocalizations {
 
   @override
   String get cloudBackup => '网络备份';
+
+  @override
+  String get aboutUpdateAvailable => '发现新版本';
+
+  @override
+  String get aboutUpdateDesc => '发现新版本';
+
+  @override
+  String get aboutUpdateLater => '稍后';
+
+  @override
+  String get aboutUpdateGo => '前往下载';
 }
 
 /// The translations for Chinese, using the Han script (`zh_Hant`).
@@ -8786,4 +8798,16 @@ class AppLocalizationsZhHant extends AppLocalizationsZh {
 
   @override
   String get cloudBackup => '網絡备份';
+
+  @override
+  String get aboutUpdateAvailable => '發現新版本';
+
+  @override
+  String get aboutUpdateDesc => '發現新版本';
+
+  @override
+  String get aboutUpdateLater => '稍後';
+
+  @override
+  String get aboutUpdateGo => '前往下載';
 }
