@@ -77,12 +77,21 @@ class _AboutPageState extends State<AboutPage> {
 
   Future<void> _checkUpdate() async {
     setState(() => _checking = true);
+
+    // 显示查询中对话框，给用户明确反馈
+    final checkingL10n = AppLocalizations.of(context);
+    _showCheckingDialog(checkingL10n);
+
     try {
       final client = HttpClient()
         ..connectionTimeout = const Duration(seconds: 10);
       final request = await client.getUrl(Uri.parse(
           '$_githubApi/repos/$_githubRepo/releases/latest'));
       final response = await request.close();
+
+      // 查询完成，关闭查询中对话框
+      if (mounted) Navigator.pop(context);
+
       if (response.statusCode == 200) {
         final body = await response.transform(utf8.decoder).join();
         final data = jsonDecode(body) as Map<String, dynamic>;
@@ -108,11 +117,31 @@ class _AboutPageState extends State<AboutPage> {
         setState(() => _updateAvailable = false);
       }
     } catch (_) {
+      if (mounted) Navigator.pop(context); // 关闭查询中对话框
       if (!mounted) return;
       setState(() => _updateAvailable = false);
     } finally {
       if (mounted) setState(() => _checking = false);
     }
+  }
+
+  /// 查询更新中对话框:给用户明确的正在查询反馈，禁止点击外部关闭。
+  void _showCheckingDialog(AppLocalizations l10n) {
+    showDialog<void>(
+      context: context,
+      barrierDismissible: false,
+      builder: (context) {
+        return AlertDialog(
+          title: Text(l10n.aboutCheckingUpdate),
+          content: const SizedBox(
+            height: 60,
+            child: Center(
+              child: CircularProgressIndicator(strokeWidth: 2),
+            ),
+          ),
+        );
+      },
+    );
   }
 
   bool _isNewer(String newVer, String curVer) {
