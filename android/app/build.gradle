@@ -50,6 +50,8 @@ android {
         targetSdk = 28
         versionCode = flutter.versionCode
         versionName = flutter.versionName
+        // minSdk < 21 时启用 core library desugaring 必须开启 multidex。
+        multiDexEnabled true
     }
 
     signingConfigs {
@@ -115,4 +117,6 @@ dependencies {
     implementation("io.github.rosemoe:editor:0.23.7")
     implementation("io.github.rosemoe:language-textmate:0.23.7")
     coreLibraryDesugaring("com.android.tools:desugar_jdk_libs:2.1.5")
+    // minSdk < 21 的 multidex 运行时支持
+    implementation("androidx.multidex:multidex:2.0.1")
 }
