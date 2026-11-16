@@ -169,7 +169,7 @@ class _AboutPageState extends State<AboutPage> {
                 icon: Iconfont.info,
                 title: l10n.version,
                 subtitle: _checking ? '检查中…' : _getVersionText(),
-                onTap: _checking ? null : _checkUpdate,
+                onTap: _checking ? null : () async => await _checkUpdate(),
               ),
               const SettingsDivider(indent: SettingsRow.textIndent),
               SettingsRow(
@@ -190,7 +190,7 @@ class _AboutPageState extends State<AboutPage> {
                     (_mirrorOptions[_mirrorType].subtitle.isNotEmpty
                         ? ' ${_mirrorOptions[_mirrorType].subtitle}'
                         : ''),
-                onTap: () => _showMirrorDialog(context, l10n),
+                onTap: () async => await _showMirrorDialog(context, l10n),
               ),
               const SettingsDivider(indent: SettingsRow.textIndent),
               SettingsRow(
