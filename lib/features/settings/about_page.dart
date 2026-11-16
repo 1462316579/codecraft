@@ -176,7 +176,7 @@ class _AboutPageState extends State<AboutPage> {
                 icon: Iconfont.info,
                 title: l10n.version,
                 subtitle: _checking ? l10n.aboutCheckingUpdate : _getVersionText(l10n),
-                onTap: _checking ? null : () async => await _checkUpdate(),
+                onTap: () async => await _checkUpdate(),
               ),
               const SettingsDivider(indent: SettingsRow.textIndent),
               SettingsRow(
