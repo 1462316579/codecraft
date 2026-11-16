@@ -218,6 +218,7 @@ class _BackupRestorePageState extends State<BackupRestorePage> {
   }
 
   Future<void> _showExportDialog() async {
+    final l10n = AppLocalizations.of(context);
     final passwordController = TextEditingController();
     await showDialog<void>(
       context: context,
@@ -275,7 +276,7 @@ class _BackupRestorePageState extends State<BackupRestorePage> {
       final fileName = 'backup_${DateTime.now().millisecondsSinceEpoch}.ccbak';
       final file = File(p.join(backupDir.path, fileName));
       final data = _buildBackupData();
-      await file.writeAsString(data);
+      await file.writeAsString(jsonEncode(data));
       if (!mounted) return;
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(content: Text('备份已导出: $fileName')),
