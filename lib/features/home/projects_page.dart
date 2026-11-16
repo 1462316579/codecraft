@@ -129,7 +129,7 @@ class _ProjectsPageState extends ConsumerState<ProjectsPage> {
     );
   }
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
+  Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context);
     final projectsAsync = ref.watch(projectsProvider);
     final theme = Theme.of(context);
@@ -194,7 +194,7 @@ class _ProjectsPageState extends ConsumerState<ProjectsPage> {
                       ),
                       child: _GlassProjectRow(
                         project: project,
-                        onTap: () => onOpenProject(project),
+                        onTap: () => widget.onOpenProject(project),
                         onLongPress: () => _showActions(context, ref, project),
                       ),
                     );
@@ -315,7 +315,7 @@ class _ProjectsPageState extends ConsumerState<ProjectsPage> {
         .where((project) => project.kind == ProjectKind.writing && project.name == title)
         .firstOrNull;
     if (existing != null) {
-      onOpenProject(existing);
+      widget.onOpenProject(existing);
       return;
     }
 
@@ -342,7 +342,7 @@ class _ProjectsPageState extends ConsumerState<ProjectsPage> {
           ].join('\n');
     // 异步发送,不阻塞打开聊天页;失败时用户仍可在输入框看到文本(由 controller 兜底)。
     unawaited(ref.read(chatControllerProvider(session.id).notifier).send(brief));
-    onOpenProject(project.copyWith());
+    widget.onOpenProject(project.copyWith());
     ref.read(selectedSessionProvider.notifier).state = session.id;
   }
 
