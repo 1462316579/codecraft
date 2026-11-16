@@ -57,7 +57,12 @@ class ProxyVpnService : VpnService() {
 
         fun prepare(context: Context): Intent? = VpnService.prepare(context)
 
-        fun start(context: Context, proxyPort: Int) {
+        private var startCallback: ((Boolean) -> Unit)? = null
+        private var startSequence = 0
+
+        fun start(context: Context, proxyPort: Int, onStarted: (Boolean) -> Unit): Int {
+            val requestId = ++startSequence
+            startCallback = onStarted
             val i = Intent(context, ProxyVpnService::class.java).apply {
                 action = ACTION_START
                 putExtra(EXTRA_PROXY_PORT, proxyPort)
@@ -67,6 +72,19 @@ class ProxyVpnService : VpnService() {
             } else {
                 context.startService(i)
             }
+            return requestId
+        }
+
+        /** 只在 establish 与包读取线程真正就绪后回报，不再用固定延迟猜测启动状态。 */
+        internal fun completeStart(started: Boolean) {
+            val callback = startCallback ?: return
+            startCallback = null
+            callback(started)
+        }
+
+        /** 旧请求的超时不能取消后一次启动。 */
+        internal fun timeoutStart(requestId: Int) {
+            if (requestId == startSequence) completeStart(false)
         }
 
         fun stop(context: Context) {
@@ -83,6 +101,7 @@ class ProxyVpnService : VpnService() {
             } catch (_: Exception) {
             }
             isRunning = false
+            completeStart(false)
         }
     }
 
@@ -125,7 +144,10 @@ class ProxyVpnService : VpnService() {
     }
 
     private fun startVpn() {
-        if (running) return
+        if (running) {
+            completeStart(true)
+            return
+        }
         lastError = null
 
         // 授权可能在上次请求后才生效，也可能被系统回收；以 prepare() 为准。
@@ -133,6 +155,7 @@ class ProxyVpnService : VpnService() {
             Log.w(TAG, "VPN not authorized, skip start")
             lastError = "VPN 授权失效，请重新授权"
             isRunning = false
+            completeStart(false)
             return
         }
 
@@ -160,7 +183,7 @@ class ProxyVpnService : VpnService() {
         Log.i(TAG, "VPN DNS servers: $dnsServers")
 
         // Android 10+ 同时把系统代理指到本地代理：有些应用只认系统代理，
-            // 这样能减少不必要的用户态转发开销。
+        // 这样能减少不必要的用户态转发开销。
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
             try {
                 builder.setHttpProxy(
@@ -182,6 +205,7 @@ class ProxyVpnService : VpnService() {
             if (lastError == null) lastError = "创建 VPN 接口失败"
             isRunning = false
             stopSelf()
+            completeStart(false)
             return
         }
 
@@ -199,12 +223,14 @@ class ProxyVpnService : VpnService() {
             running = false
             isRunning = false
             stopSelf()
+            completeStart(false)
             return
         }
-        Log.i(TAG, "VPN started, proxyPort=$proxyPort")
 
         Thread({ runVpnLoop() }, "vpn-packet-loop").start()
         Thread({ reapLoop() }, "vpn-reaper").start()
+        Log.i(TAG, "VPN started, proxyPort=$proxyPort")
+        completeStart(true)
     }
 
     /**

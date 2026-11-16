@@ -14,7 +14,10 @@ import 'capture_channel.dart';
 class CaptureManager extends ChangeNotifier {
   CaptureManager() : ca = CaptureCertificateAuthority() {
     store = CaptureStore();
-    server = CaptureProxyServer(ca: ca, store: store, onChanged: notifyListeners);
+    server =
+        CaptureProxyServer(ca: ca, store: store, onChanged: notifyListeners);
+    // 进入抓包页就预热,把首次密钥准备移到用户点击「开始」之前。
+    unawaited(ca.warmUp());
   }
 
   final CaptureCertificateAuthority ca;
@@ -86,7 +89,8 @@ class CaptureManager extends ChangeNotifier {
         return;
       }
       if (perm != 'granted') {
-        await _fail('${perm == 'denied' ? 'VPN permission denied' : 'VPN permission required'}');
+        await _fail(
+            '${perm == 'denied' ? 'VPN permission denied' : 'VPN permission required'}');
         return;
       }
       final vpnOk = await CaptureChannel.startVpn(port);
@@ -190,7 +194,8 @@ class CaptureManager extends ChangeNotifier {
       map[entry.key] = CaptureHostSummary(
         host: entry.key,
         count: entry.value,
-        lastAt: DateTime.now(), // Note: we don't track lastAt per host incrementally
+        lastAt: DateTime
+            .now(), // Note: we don't track lastAt per host incrementally
       );
     }
     final list = map.values.toList()
@@ -198,13 +203,21 @@ class CaptureManager extends ChangeNotifier {
     return list;
   }
 
-  Future<String> export({required String rootPath, String format = 'har', bool includeBodies = true}) async {
+  Future<String> export(
+      {required String rootPath,
+      String format = 'har',
+      bool includeBodies = true}) async {
     final dir = Directory(p.join(rootPath, '.codecraft', 'captures'));
     if (!await dir.exists()) await dir.create(recursive: true);
     final ts = DateTime.now().toIso8601String().replaceAll(':', '-');
-    final file = File(p.join(dir.path, 'capture-$ts.${format == 'json' ? 'json' : 'har'}'));
+    final file = File(
+        p.join(dir.path, 'capture-$ts.${format == 'json' ? 'json' : 'har'}'));
     final content = format == 'json'
-        ? () { final l = store.flows.toList(); l.sort((a,b)=>a.startedAt.compareTo(b.startedAt)); return CaptureFlow.encodeList(l, includeBodies: includeBodies); }()
+        ? () {
+            final l = store.flows.toList();
+            l.sort((a, b) => a.startedAt.compareTo(b.startedAt));
+            return CaptureFlow.encodeList(l, includeBodies: includeBodies);
+          }()
         : store.exportHar(includeBodies: includeBodies);
     await file.writeAsString(content);
     return file.path;
