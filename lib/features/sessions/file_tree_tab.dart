@@ -19,7 +19,6 @@ import '../../data/editor_target.dart';
 import '../reverse/reverse_routes.dart';
 import '../../data/workbench.dart';
 import '../../data/workspaces.dart';
-import '../../data/execution_target.dart';
 import '../../data/novel_project.dart';
 import '../../l10n/app_localizations.dart';
 import 'file_type_icon.dart';
@@ -79,7 +78,6 @@ class _FileTreeTabState extends ConsumerState<FileTreeTab> with WidgetsBindingOb
   _Clipboard? _clipboard;
   String? _expandingPath;
   String? _loadedRoot;
-  Object? _loadedTarget;
   bool _loading = false;
   bool _refreshing = false;
   String? _error;
@@ -130,26 +128,16 @@ class _FileTreeTabState extends ConsumerState<FileTreeTab> with WidgetsBindingOb
       }
       _workspaceLabel = 'APK';
     } else {
-      final target = ref.watch(executionTargetProvider);
-      if (target is CodespaceExecutionTarget) {
-        _workspaceLabel = target.label.isEmpty ? target.name : target.label;
-      } else {
-        _workspaceLabel = ref.watch(currentWorkspaceInfoProvider)?.name ?? 'workspace';
-      }
+      _workspaceLabel = ref.watch(currentWorkspaceInfoProvider)?.name ?? 'workspace';
     }
     final root = ref.watch(currentWorkspaceProvider).rootPath;
-    final target = ref.watch(executionTargetProvider);
-    final targetChanged = _loadedTarget != target;
     final rootChanged = _loadedRoot != root;
-    if (targetChanged || rootChanged) {
-      // 根目录或执行环境换了,旧的展开状态与缓存都不再属于当前树,必须清空。
-      _loadedTarget = target;
+    if (rootChanged) {
+      // 根目录换了,旧的展开状态与缓存都不再属于当前树,必须清空。
       _expanded.clear();
       _children.clear();
       _dirErrors.clear();
       _legacyMigrated = false;
-    }
-    if (rootChanged || targetChanged) {
       _loadedRoot = root;
       WidgetsBinding.instance.addPostFrameCallback((_) {
         if (mounted) _refresh(root);
@@ -298,7 +286,7 @@ class _FileTreeTabState extends ConsumerState<FileTreeTab> with WidgetsBindingOb
   /// 扁平化可见节点:工作区根一行,已展开的目录插入其子项。
   List<_Node> _buildTree(String root) {
     final nodes = <_Node>[];
-    // 根节点始终展开,避免远程(Codespace)首次加载后子文件不可见。
+    // 根节点始终展开,首次加载后子文件即时可见。
     const expanded = true;
     nodes.add(_Node(
       path: root,
@@ -387,7 +375,7 @@ class _FileTreeTabState extends ConsumerState<FileTreeTab> with WidgetsBindingOb
         onTimeout: () {
           if (mounted) {
             setState(() => _error =
-                '加载超时，请重试（连接 Codespace 时首次列目录可能较慢；可在 Codespaces 页断开后重新连接）');
+                '加载超时，请重试');
           }
         },
       );

@@ -7,7 +7,6 @@ import '../../core/theme/tokens.dart';
 import '../../core/ui/floating_tab_bar.dart';
 import '../../core/util/window_size.dart';
 import '../../data/editor_target.dart';
-import '../../data/execution_target.dart';
 import '../../data/git_controller.dart';
 import '../../data/workbench.dart';
 import '../../l10n/app_localizations.dart';
@@ -338,33 +337,26 @@ class _NotARepoState extends StatelessWidget {
   }
 }
 
-class _ExecutionEnvSubtitle extends ConsumerWidget {
+class _ExecutionEnvSubtitle extends StatelessWidget {
+  const _ExecutionEnvSubtitle();
+
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    final l10n = AppLocalizations.of(context);
-    final target = ref.watch(executionTargetProvider);
+  Widget build(BuildContext context) {
     final theme = Theme.of(context);
-    final text = switch (target) {
-      CodespaceExecutionTarget(:final name, :final repository) =>
-        l10n.gitExecutionTargetCodespace(
-          repository.trim().isEmpty ? name : '$repository · $name',
-        ),
-      _ => '本地执行环境',
-    };
     return Padding(
       padding: const EdgeInsets.only(top: 1),
       child: Row(
         mainAxisSize: MainAxisSize.min,
         children: [
           Icon(
-            target.isRemote ? Iconfont.cloud : Iconfont.hardDrive,
+            Iconfont.hardDrive,
             size: 12,
             color: theme.colorScheme.primary,
           ),
           const SizedBox(width: 4),
           Flexible(
             child: Text(
-              text,
+              '本地执行环境',
               maxLines: 1,
               overflow: TextOverflow.ellipsis,
               style: theme.textTheme.labelSmall?.copyWith(

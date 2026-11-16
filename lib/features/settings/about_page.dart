@@ -15,6 +15,24 @@ import '../../l10n/app_localizations.dart';
 const String _githubRepo = '1462316579/codecraft';
 const String _githubApi = 'https://api.github.com';
 const String _autoCheckKey = 'about_auto_check_updates';
+const String _mirrorKey = 'about_mirror_url';
+const String _mirrorTypeKey = 'about_mirror_type';
+
+/// 镜像源类型：0=gh-proxy CDN(默认), 1=gh-proxy 优选节点, 2=直连 GitHub
+class _MirrorOption {
+  final int type;
+  final String title;
+  final String subtitle;
+  final String url; // 空表示直连 GitHub
+
+  const _MirrorOption(this.type, this.title, this.subtitle, this.url);
+}
+
+const List<_MirrorOption> _mirrorOptions = [
+  _MirrorOption(0, 'gh-proxy CDN', '（默认）', 'https://cdn.gh-proxy.com/'),
+  _MirrorOption(1, 'gh-proxy 优选节点', '', 'https://ghproxy.com/'),
+  _MirrorOption(2, '直连 GitHub', '', ''),
+];
 
 /// 关于页(版本、更新与反馈)，液态柔光玻璃风格，与设置页保持一致。
 class AboutPage extends StatefulWidget {
@@ -31,6 +49,8 @@ class _AboutPageState extends State<AboutPage> {
   bool _updateAvailable = false;
   bool _checking = false;
   bool _autoCheck = true;
+  int _mirrorType = 0;
+  String _mirrorUrl = '';
 
   @override
   void initState() {
@@ -48,6 +68,10 @@ class _AboutPageState extends State<AboutPage> {
     final prefs = await SharedPreferences.getInstance();
     if (!mounted) return;
     setState(() => _autoCheck = prefs.getBool(_autoCheckKey) ?? true);
+    setState(() {
+      _mirrorType = prefs.getInt(_mirrorTypeKey) ?? 0;
+      _mirrorUrl = prefs.getString(_mirrorKey) ?? '';
+    });
     if (_autoCheck) await _checkUpdate();
   }
 
@@ -160,17 +184,13 @@ class _AboutPageState extends State<AboutPage> {
               ),
               const SettingsDivider(indent: SettingsRow.textIndent),
               SettingsRow(
-                icon: Iconfont.gitBranch,
-                title: l10n.aboutUpdateChannel,
-                subtitle: l10n.aboutStableChannel,
-                onTap: () {},
-              ),
-              const SettingsDivider(indent: SettingsRow.textIndent),
-              SettingsRow(
                 icon: Iconfont.download,
                 title: l10n.aboutDownloadMirror,
-                subtitle: l10n.aboutMirrorUrl,
-                onTap: () {},
+                subtitle: _mirrorOptions[_mirrorType].title +
+                    (_mirrorOptions[_mirrorType].subtitle.isNotEmpty
+                        ? ' ${_mirrorOptions[_mirrorType].subtitle}'
+                        : ''),
+                onTap: () => _showMirrorDialog(context, l10n),
               ),
               const SettingsDivider(indent: SettingsRow.textIndent),
               SettingsRow(
@@ -183,18 +203,6 @@ class _AboutPageState extends State<AboutPage> {
                 icon: Iconfont.fileText,
                 title: l10n.license,
                 onTap: () => _showLicense(context, l10n),
-              ),
-              const SettingsDivider(indent: SettingsRow.textIndent),
-              SettingsRow(
-                icon: Iconfont.fileText,
-                title: l10n.aboutUserAgreement,
-                onTap: () {},
-              ),
-              const SettingsDivider(indent: SettingsRow.textIndent),
-              SettingsRow(
-                icon: Iconfont.shield,
-                title: l10n.aboutPrivacyPolicy,
-                onTap: () {},
               ),
             ],
           ),
@@ -250,4 +258,82 @@ class _AboutPageState extends State<AboutPage> {
           );
         },
       );
+
+  /// 下载镜像源弹窗:选择镜像源并可自定义 URL。
+  Future<void> _showMirrorDialog(BuildContext context, AppLocalizations l10n) async {
+    int selected = _mirrorType;
+    final controller = TextEditingController(text: _mirrorUrl);
+
+    await showDialog<void>(
+      context: context,
+      builder: (context) {
+        return AlertDialog(
+          title: const Text('下载镜像源'),
+          content: Column(
+            mainAxisSize: MainAxisSize.min,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              const Text(
+                '加速更新包下载；留空表示直连 GitHub',
+                style: TextStyle(fontSize: 13, color: Colors.grey),
+              ),
+              const SizedBox(height: 16),
+              ..._mirrorOptions.map((opt) {
+                return ListTile(
+                  leading: Radio<int>(
+                    value: opt.type,
+                    groupValue: selected,
+                    onChanged: (v) => setState(() => selected = v!),
+                  ),
+                  title: Text(opt.title +
+                      (opt.subtitle.isNotEmpty ? ' ${opt.subtitle}' : '')),
+                  onTap: () => setState(() => selected = opt.type),
+                );
+              }),
+              if (selected == 0 || selected == 1) ...[
+                const SizedBox(height: 12),
+                TextField(
+                  controller: controller,
+                  decoration: const InputDecoration(
+                    labelText: '自定义镜像 URL',
+                    border: OutlineInputBorder(),
+                  ),
+                ),
+              ],
+            ],
+          ),
+          actions: [
+            TextButton(
+              onPressed: () => Navigator.pop(context),
+              child: const Text('取消'),
+            ),
+            TextButton(
+              onPressed: () {
+                setState(() {
+                  _mirrorType = 0;
+                  _mirrorUrl = '';
+                });
+                Navigator.pop(context);
+              },
+              child: const Text('恢复默认'),
+            ),
+            TextButton(
+              onPressed: () async {
+                final prefs = await SharedPreferences.getInstance();
+                await prefs.setInt(_mirrorTypeKey, selected);
+                await prefs.setString(_mirrorKey, selected == 2 ? '' : controller.text.trim());
+                if (!mounted) return;
+                setState(() {
+                  _mirrorType = selected;
+                  _mirrorUrl = selected == 2 ? '' : controller.text.trim();
+                });
+                Navigator.pop(context);
+              },
+              child: const Text('保存'),
+            ),
+          ],
+        );
+      },
+    );
+  }
 }

@@ -38,7 +38,7 @@ detect_pmgr
 list_installed() {
     echo ""
     echo "已安装运行时："
-    for c in "node:Node.js" "python3:Python 3" "java:Java" "go:Go" "rustc:Rust" "php:PHP" "git:Git" "rg:ripgrep" "gh:GitHub CLI"; do
+    for c in "node:Node.js" "python3:Python 3" "java:Java" "go:Go" "rustc:Rust" "php:PHP" "git:Git" "rg:ripgrep"; do
         cmd=${c%%:*}
         name=${c#*:}
         if command -v "$cmd" >/dev/null 2>&1; then
@@ -162,7 +162,7 @@ ${C_CYAN}/_/   \_\___\____\___/|____/|_____|${C_RESET}
 ${C_YELLOW}══════════════════════════════════════════════${C_RESET}
 ${C_BOLD}  容器初始化 · 选择安装方式${C_RESET}
 ${C_YELLOW}══════════════════════════════════════════════${C_RESET}
-  ${C_GREEN}1. 自动安装依赖${C_RESET}（推荐：仅运行 Codespaces 所需，基础工具 + gh CLI）
+  ${C_GREEN}1. 自动安装依赖${C_RESET}（推荐：基础工具）
   ${C_GREEN}2. 环境安装${C_RESET}（按场景选择运行环境）
   ${C_BOLD}3. 手动安装${C_RESET}（不再提示）
   ${C_DIM}4. 退出${C_RESET}
@@ -183,7 +183,7 @@ EOF
             echo "  · 安装耗时较长，建议开启「后台保活」并将 App 保持在前台"
             echo "  · 安装过程中请勿切走或锁屏，否则进程可能被系统杀死导致安装中断"
             echo ""
-            install_scenario codespaces
+            install_scenario base
             rc=$?
             case "$rc" in
                 0)
@@ -223,7 +223,6 @@ EOF
             echo "${C_YELLOW}手动安装提示${C_RESET}："
             echo "  · ripgrep（rg）是必装工具，缺失会影响使用体验"
             echo "  · git 是可视化版本管理操作的基础"
-            echo "  · gh（GitHub CLI）是连接 Codespaces 的必需项"
             echo "  · MCP 工具依赖 python3 / nodejs 等运行时"
             echo ""
             printf "确认选择手动安装，不再提示吗？[y/N]: "

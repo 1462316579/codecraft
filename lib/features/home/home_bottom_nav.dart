@@ -7,10 +7,10 @@ import '../../../core/theme/semantic_colors.dart';
 import '../../../core/theme/tokens.dart';
 import '../../../l10n/app_localizations.dart';
 
-/// 底部导航的两个页签。
+/// 底部导航的页签。
 enum HomeTab { projects, settings }
 
-/// 底部导航栏:项目 / 设置。
+/// 底部导航栏:项目 / 音乐 / 设置。
 ///
 /// 选中态用实心图标 + 主色,未选中用线性图标 + 次要文字色(对齐上游 HomeBottomBar
 /// 的 outlined/filled 图标切换)。窄屏与宽屏都显示。
@@ -70,7 +70,7 @@ class HomeBottomNav extends StatelessWidget {
                       selected: current == HomeTab.projects,
                       onTap: () => onSelect(HomeTab.projects),
                     ),
-                    const SizedBox(width: 46),
+                    const SizedBox(width: 30),
                     _NavItem(
                       icon: Iconfont.settings,
                       label: l10n.settings,

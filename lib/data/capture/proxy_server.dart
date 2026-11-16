@@ -219,6 +219,21 @@ class CaptureProxyServer {
     ));
     _changed();
     try {
+      // CA 未就绪时 HTTPS 无法 MITM,拒绝 CONNECT 而不是返回 200 后再报 TLS 握手失败,
+      // 否则列表里会塞满大量「已建立却随即报错」的无效 CONNECT 记录。
+      if (!ca.ready) {
+        client.add(utf8.encode('HTTP/1.1 502 Bad Gateway\r\nContent-Length: 0\r\nConnection: close\r\n\r\n'));
+        await client.flush();
+        _update(CaptureFlow(
+          id: id, startedAt: started, endedAt: DateTime.now(), method: 'CONNECT',
+          url: '$host:$targetPort', host: host, path: '/', scheme: 'https', tls: true,
+          error: 'CA 证书未就绪，请先生成并信任根 CA 证书，再抓取 HTTPS 流量。',
+        ));
+        _changed();
+        try { client.destroy(); } catch (_) {}
+        return;
+      }
+
       client.add(utf8.encode('HTTP/1.1 200 Connection Established\r\n\r\n'));
       await client.flush();
 

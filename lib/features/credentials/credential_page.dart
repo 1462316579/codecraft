@@ -1,10 +1,7 @@
-import 'dart:convert';
-
 import 'package:flutter/material.dart';
 import '../../core/icons/iconfont.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import '../../data/execution_target.dart';
 import '../../data/workspaces.dart';
 
 import '../../core/theme/semantic_colors.dart';
@@ -220,7 +217,6 @@ class _IdentityTabState extends ConsumerState<_IdentityTab> {
     final theme = Theme.of(context);
     final identityAsync = ref.watch(gitIdentityProvider);
     final identity = identityAsync.valueOrNull;
-    final target = ref.watch(executionTargetProvider);
 
     if (identity != null) {
       final key = '${identity.name}\t${identity.email}\t${identity.repoUrl}';
@@ -236,16 +232,6 @@ class _IdentityTabState extends ConsumerState<_IdentityTab> {
       padding: const EdgeInsets.fromLTRB(Spacing.lg, Spacing.sm, Spacing.lg, 70),
       children: [
         SettingsGroupHeader(text: l10n.gitIdentityTitle),
-        if (target is CodespaceExecutionTarget)
-          Padding(
-            padding: const EdgeInsets.only(bottom: Spacing.xs),
-            child: Text(
-              l10n.gitIdentityCodespace(target.name),
-              style: theme.textTheme.labelSmall?.copyWith(
-                color: context.semantic.subtleText,
-              ),
-            ),
-          ),
         if (identity?.globalName != null && identity!.globalName!.isNotEmpty)
           Padding(
             padding: const EdgeInsets.only(bottom: Spacing.xs),
@@ -661,24 +647,9 @@ class GitIdentityView {
 final gitIdentityProvider = FutureProvider<GitIdentityView>((ref) async {
   final git = ref.watch(containerGitProvider);
   final workspace = ref.watch(currentWorkspaceProvider).rootPath;
-  final target = ref.watch(executionTargetProvider);
   try {
     final identity = await git.identity(workspace);
     final repoUrl = await git.getRepoUrl(workspace);
-    // 连接 GitHub Codespace 时,优先展示远端已配置的提交署名;若远端未配置,
-    // 回退到 GitHub 当前登录账号的署名,让 Git 页面始终展示 Codespace 连接的身份。
-    if (target is CodespaceExecutionTarget &&
-        identity.name.isEmpty &&
-        identity.email.isEmpty) {
-      final account = await _githubAccountIdentity(git, workspace);
-      if (account != null) {
-        return GitIdentityView(
-          name: (account['name'] as String?) ?? '',
-          email: (account['email'] as String?) ?? '',
-          repoUrl: repoUrl,
-        );
-      }
-    }
     return GitIdentityView(
       name: identity.name,
       email: identity.email,
@@ -689,21 +660,3 @@ final gitIdentityProvider = FutureProvider<GitIdentityView>((ref) async {
     return const GitIdentityView(name: '', email: '', repoUrl: '');
   }
 });
-
-/// 通过 `gh api user` 读取 GitHub 当前登录账号的姓名与邮箱;失败返回 null。
-Future<Map<String, dynamic>?> _githubAccountIdentity(
-  ContainerGit git,
-  String workspace,
-) async {
-  try {
-    final result = await git.runShell(
-      workspace,
-      "gh api user --json name,email -q '{name,email}'",
-    );
-    if (result.exitCode != 0) return null;
-    final decoded = jsonDecode(result.output) as Map<String, dynamic>?;
-    return decoded;
-  } catch (_) {
-    return null;
-  }
-}

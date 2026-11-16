@@ -369,7 +369,7 @@ class _SessionsDrawerState extends ConsumerState<SessionsDrawer> {
               },
             ),
           ),
-          // 抓包:应用逆向与编程项目可用。浏览器/Codespaces 仅编程项目。
+          // 抓包:应用逆向与编程项目可用。浏览器仅编程项目。
           if (ref.watch(currentAgentModeProvider) == AgentMode.build)
             Builder(builder: (context) {
               final kind = ref.watch(currentProjectProvider)?.kind;
@@ -396,12 +396,6 @@ class _SessionsDrawerState extends ConsumerState<SessionsDrawer> {
                           WorkbenchPaneKind.browser,
                           isWideLayout(context),
                         ),
-                      ),
-                      const SettingsDivider(),
-                      SettingsRow(
-                        icon: Iconfont.cloud,
-                        title: l10n.codespacesTitle,
-                        onTap: () => context.push('/codespaces'),
                       ),
                     ],
                   ],

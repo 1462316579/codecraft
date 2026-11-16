@@ -838,16 +838,6 @@ class _CloneRepoDialogState extends State<CloneRepoDialog> {
             ),
           ),
           const SizedBox(height: Spacing.md),
-          SizedBox(
-            width: double.infinity,
-            height: 44,
-            child: OutlinedButton(
-              onPressed: () async {
-                await showTokenLoginSheet(context);
-              },
-              child: Text(l10n.credentialAdd),
-            ),
-          ),
         ],
       ),
       actions: [

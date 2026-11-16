@@ -5,7 +5,6 @@ import '../agent/models/project.dart';
 import '../agent/models/skill.dart';
 import '../features/browser/browser_page.dart';
 import '../features/capture/capture_page.dart';
-import '../features/codespaces/codespaces_page.dart';
 import '../features/credentials/credential_page.dart';
 import '../features/editor/editor_page.dart';
 import '../features/editor/editor_settings_page.dart';
@@ -17,6 +16,7 @@ import '../features/reverse/hex_editor_page.dart';
 import '../features/settings/provider_edit_page.dart';
 import '../features/settings/providers_page.dart';
 import '../features/settings/about_page.dart';
+import '../features/settings/backup_restore_page.dart';
 import '../features/settings/container_page.dart';
 import '../features/settings/general_page.dart';
 import '../features/settings/log_page.dart';
@@ -57,10 +57,6 @@ final routerProvider = Provider<GoRouter>((ref) {
       GoRoute(
         path: '/credentials',
         builder: (context, state) => const CredentialPage(),
-      ),
-      GoRoute(
-        path: '/codespaces',
-        builder: (context, state) => const CodespacesPage(),
       ),
       GoRoute(
         path: '/editor/settings',
@@ -175,6 +171,10 @@ final routerProvider = Provider<GoRouter>((ref) {
           GoRoute(
             path: 'about',
             builder: (context, state) => const AboutPage(),
+          ),
+          GoRoute(
+            path: 'backup-restore',
+            builder: (context, state) => const BackupRestorePage(),
           ),
           GoRoute(
             path: 'prompts',

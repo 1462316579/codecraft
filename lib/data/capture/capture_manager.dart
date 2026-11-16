@@ -43,14 +43,13 @@ class CaptureManager extends ChangeNotifier {
     try {
       store.maxFlows = maxFlows;
 
-      // 不阻塞在 CA 初始化上:首次要现场生成 2048 位 RSA(已在后台 isolate 里跑)。
-      unawaited(ca.warmUp().then((_) {
-        if (_disposed || generation != _generation) return;
-        if (ca.ready) {
-          _state = _state.copyWith(caReady: true);
-          notifyListeners();
-        }
-      }));
+      // 确保 CA 已就绪再启动代理,避免首个 HTTPS 请求现场生成密钥导致卡顿。
+      // warmUp() 在构造函数中已调用,重复调用会快速返回已就绪的 Future。
+      await ca.warmUp();
+      if (_disposed || generation != _generation) {
+        await server.stop();
+        return _state;
+      }
 
       // 代理监听成功即视为已开始抓包:先把状态抛给 UI,VPN 授权/启动在后面继续。
       // 否则要等系统 VPN 授权弹框与 startForegroundService 全部完成才能把

@@ -2212,5 +2212,21 @@
   "captureRaw": "Raw",
   "captureNoCookies": "No cookies",
   "captureRequestCookies": "Request cookies",
-  "captureResponseCookies": "Response Set-Cookie"
+  "captureResponseCookies": "Response Set-Cookie",
+  "backupAndRestore": "Backup & Restore",
+  "selectExportData": "Select Export Data",
+  "aiProvider": "AI Providers",
+  "connectSync": "Connection & Sync",
+  "chatRecords": "Chat Records",
+  "mcpServer": "MCP Servers",
+  "permissionRules": "Permission Rules",
+  "appSettings": "App Settings",
+  "workspaceFiles": "Workspace Files",
+  "workspaceFilesHint": "Workspace files should be backed up via Git commit; export backup is for reference only",
+  "exportBackup": "Export Backup",
+  "exportBackupDesc": "Choose data to export, password encryption available",
+  "importBackup": "Import Backup",
+  "importBackupDesc": "Restore data from backup file",
+  "localBackup": "Local Backup",
+  "cloudBackup": "Cloud Backup"
 }

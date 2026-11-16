@@ -5,8 +5,7 @@ import '../../data/workspace_files.dart';
 import 'tool.dart';
 import 'workspace.dart';
 
-/// 文件后端取用方式:本地与 Codespace 目标共用同一套工具逻辑,
-/// 由 [workspaceFilesProvider] 按当前执行环境给出实现。
+/// 文件后端取用方式:由 [workspaceFilesProvider] 给出当前工作区的实现。
 typedef FilesSupplier = Future<WorkspaceFiles> Function();
 
 /// 单次 readFile 的行数上限(对齐上游:end_line 跨度最多 2000 行)。

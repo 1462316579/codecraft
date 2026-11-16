@@ -161,7 +161,7 @@ class _Entry {
   final DateTime modified;
 }
 
-/// `search`:在工作区内搜索文本内容(原生实现;本地逐行匹配,Codespace 走远端 grep)。
+/// `search`:在工作区内搜索文本内容(原生逐行匹配)。
 class SearchTool extends AgentTool {
   SearchTool(this.workspace, this.files);
 

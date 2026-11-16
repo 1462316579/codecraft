@@ -20,7 +20,7 @@ import 'file_version_registry.dart';
 import '../core/log/ai_logger.dart';
 import '../core/log/file_logger.dart';
 import '../core/log/log_store.dart';
-import '../data/execution_target.dart';
+import '../data/container/container_engine_provider.dart';
 import '../data/workspace_files.dart';
 import '../data/mcp/mcp_config.dart';
 import '../data/mcp/mcp_manager.dart';
@@ -187,7 +187,7 @@ class ChatController extends StateNotifier<ChatViewState> {
     final workspace = _ref.read(currentWorkspaceProvider);
     final mcpManager = _ref.read(mcpManagerProvider.notifier);
     mcpManager.reconnectUnconnectedAsync();
-    // 文件工具跟随执行环境:本地容器走宿主 File API,Codespace 走远端命令。
+    // 文件工具走宿主 File API:本地容器的工作区是 bind 挂载,宿主路径与容器内一致。
     Future<WorkspaceFiles> files() => _ref.read(workspaceFilesProvider.future);
     // 写作项目的工作区是外部目录,容器里看不到,也不该起容器:不给命令工具。
     final projectKind = _ref.read(currentProjectProvider)?.kind;
@@ -204,7 +204,7 @@ class ChatController extends StateNotifier<ChatViewState> {
       if (!writing)
         // 命令同时镜像到终端标签:用户在终端页能看到 AI 实际跑了什么、输出了什么。
         BashTool(
-          engine: () => _ref.read(executionEngineProvider.future),
+          engine: () async => _ref.read(containerEngineProvider),
           workdir: workspace.rootPath,
           onStart: (command) => _ref
               .read(terminalTabsProvider.notifier)

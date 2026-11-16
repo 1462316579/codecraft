@@ -29,7 +29,7 @@ codecraft/
 │   ├── core/                # 核心 UI、主题、终端、日志、工具类
 │   ├── data/                # 数据层：数据库、存储、容器、抓包、Git、MCP、设置等
 │   ├── features/            # 功能页面：首页、聊天、编辑器、Git、抓包、浏览器、逆向、设置
-│   └── l10n/                # 多语言资源（中/英文）
+│   └── l10n/                # 多语言资源（中/英文/繁体/日/韩）
 ├── assets/                  # 静态资源：字体、图标、技能、提示词、内置工具等
 ├── .github/workflows/ci.yml # CI：构建 APK 并发布到 GitHub Releases
 ├── pubspec.yaml             # Flutter 依赖配置

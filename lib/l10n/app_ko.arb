@@ -1,0 +1,2288 @@
+{
+  "@@locale": "ko",
+  "appName": "CodeCraft",
+  "tabSessions": "세션",
+  "tabSettings": "설정",
+  "newSession": "새로 만들기세션",
+  "send": "发送",
+  "stop": "중지",
+  "reverseTabClasses": "类",
+  "reverseTabStrings": "字符串池",
+  "reverseTabResources": "资源",
+  "reverseTabHex": "十六进制",
+  "reverseSearchClassHint": "검색类名",
+  "reverseSearchStringHint": "검색字符串",
+  "reverseSearchResourceHint": "검색资源名、유형或 0x 번호",
+  "reverseNoMatch": "没有匹配개",
+  "reverseEmptyFile": "파일为空",
+  "reverseLoadFailed": "열기실패",
+  "reverseParseFailed": "解析실패,这个파일可能被加固或已损坏",
+  "reverseEditString": "修改字符串",
+  "reverseEqualLengthHint": "只能等长替换:新내용编码后的字节数必须与原字符串一致,否则파일内偏移会전체错位",
+  "reverseEditByte": "修改字节",
+  "reverseEditByteHint": "输入两位十六进制,例如 0a、ff",
+  "reverseInvalidByte": "请输入 00-ff 之间的十六进制字节",
+  "reverseJumpToOffset": "跳转到偏移",
+  "reverseOffsetInvalid": "偏移없음效,请输入十六进制",
+  "reverseSuperclass": "父类",
+  "reverseInterfaces": "接口",
+  "reverseAccessFlags": "修饰符",
+  "reverseFields": "字段",
+  "reverseMethods": "方法",
+  "reverseAbstractMethod": "없음方法体",
+  "reverseSmaliHint": "以上为 smali 反汇编结果;offset 是该指令在方法体内的字节偏移",
+  "reverseOpenAsHex": "以十六进制열기",
+  "reverseMethodCount": "{count} 个方法",
+  "@reverseMethodCount": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "reverseFieldCount": "{count} 个字段",
+  "@reverseFieldCount": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "reverseHexByteCount": "共 {count} 字节",
+  "@reverseHexByteCount": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "cancel": "취소",
+  "confirm": "확인",
+  "save": "저장",
+  "delete": "삭제",
+  "rename": "重命名",
+  "copy": "복사",
+  "copied": "已복사",
+  "retry": "재시도",
+  "pin": "置顶",
+  "unpin": "취소置顶",
+  "search": "검색",
+  "searchSessions": "검색세션",
+  "noSessions": "暂없음세션",
+  "noMessages": "시작新的对话吧",
+  "chatInputPlaceholder": "输入消息,与 AI 对话…",
+  "reasoningTitle": "思考过程",
+  "untitled": "未命名",
+  "pinned": "已置顶",
+  "settings": "설정",
+  "providers": "AI 제공자",
+  "providersSubtitle": "모델、接口与密钥",
+  "appearance": "外观",
+  "themeMode": "主题模式",
+  "themeModeSystem": "跟随系统",
+  "themeModeLight": "浅色",
+  "themeModeDark": "深色",
+  "language": "语言",
+  "languageSystem": "跟随系统",
+  "about": "关于",
+  "version": "版本",
+  "license": "开源프로토콜",
+  "licenseBody": "本프로젝트是 jieapi/Codecraft 的 Flutter 复刻,按 GPL-3.0 프로토콜开源。",
+  "addProvider": "添加供应商",
+  "providerName": "이름",
+  "providerType": "프로토콜",
+  "baseUrl": "Base URL",
+  "apiKey": "API Key",
+  "defaultModel": "默认모델",
+  "modelList": "모델列表",
+  "model": "모델",
+  "mode": "模式",
+  "reasoningEffort": "사고 강도",
+  "reasoningEffortNone": "不思考",
+  "reasoningEffortMinimal": "매우 낮음",
+  "reasoningEffortLow": "낮음",
+  "reasoningEffortMedium": "중간",
+  "reasoningEffortHigh": "높음",
+  "reasoningEffortXHigh": "매우 높음",
+  "reasoningEffortMax": "最높음",
+  "deleteProviderConfirm": "삭제하시겠습니까?该供应商?",
+  "deleteSessionConfirm": "삭제하시겠습니까?该세션?",
+  "emptyProviders": "还没有供应商,点右上角 + 添加",
+  "emptyModels": "还没有모델",
+  "modelInputHint": "输入모델 ID 后回车添加",
+  "errorGeneric": "出错了",
+  "retrying": "正在재시도",
+  "emptyMessage": "消息내용为空",
+  "enabled": "활성화됨",
+  "disabled": "비활성화됨",
+  "providerModelsCountTag": "{count} 个모델",
+  "@providerModelsCountTag": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "inputTokens": "输入",
+  "outputTokens": "输出",
+  "emptyChatHint": "선택一个세션시작对话",
+  "errorNoProvider": "미설정사용 가능的供应商,请先在설정중간添加",
+  "errorNoModel": "请为该供应商선택모델",
+  "errorEmptyResponse": "모델返回了空白내용",
+  "thinking": "思考중간…",
+  "modelListTitle": "선택모델",
+  "providerListTitle": "선택供应商",
+  "customProvider": "사용자 정의",
+  "addFromPreset": "从预设添加",
+  "useFullUrlHint": "baseUrl 已是完整端点",
+  "aboutBody": "Codecraft Flutter 是 jieapi/Codecraft 的 Flutter 复刻(Phase 1:核心对话闭环)。",
+  "chatPlaceholder": "有什么可以帮你的?",
+  "chatInputHint": "描述你的需求,我来帮你编写、修改或解释代码",
+  "openSidebar": "열기侧边栏",
+  "noModelSelected": "未선택모델",
+  "sessionGroupPinned": "置顶",
+  "sessionGroupToday": "今일",
+  "sessionGroupYesterday": "昨일",
+  "sessionGroupLast7Days": "7일内",
+  "sessionGroupLast30Days": "30일内",
+  "sessionGroupMonthFormat": "yyyy年M月",
+  "chatThinkingRunningTime": "正在思考(소요 시간 {seconds} 秒)",
+  "@chatThinkingRunningTime": {
+    "placeholders": {
+      "seconds": {
+        "type": "String"
+      }
+    }
+  },
+  "chatThinkingDoneTime": "思考완료(소요 시간 {seconds} 秒)",
+  "@chatThinkingDoneTime": {
+    "placeholders": {
+      "seconds": {
+        "type": "String"
+      }
+    }
+  },
+  "chatThinkingDone": "思考완료",
+  "chatQueueHint": "AI 正在처리 중,点右侧方块可중지",
+  "chatStatusGenerating": "正在生成",
+  "chatStatusThinking": "正在思考",
+  "chatStatusCallingTool": "正在调用工具",
+  "chatStatusRunningCommand": "正在명령 실행",
+  "chatStatusEditingFile": "正在编辑파일",
+  "chatStatusReadingFile": "正在读取파일",
+  "chatStatusViewingImage": "正在查看图片",
+  "chatStatusSearchingWeb": "正在联网검색",
+  "chatStatusBrowsingWeb": "正在작업浏览器",
+  "chatStatusAskingUser": "正在询问用户",
+  "chatStatusGeneratingImage": "正在生成图片",
+  "chatStatusUpdatingTodo": "正在整理待办",
+  "chatStatusStartingSubagent": "正在시작서브 에이전트",
+  "chatCompressingContext": "正在压缩上下文",
+  "chatContextCompressed": "上下文已压缩",
+  "chatCompactionSummary": "接手요약",
+  "chatStatusReadingMemory": "正在读取记忆",
+  "chatToolRunning": "工具执行중간",
+  "chatToolSucceeded": "工具执行成功",
+  "chatToolFailed": "工具执行실패",
+  "chatEffortNone": "不思考",
+  "chatEffortMinimal": "매우 낮음",
+  "chatEffortLow": "낮음",
+  "chatEffortMedium": "중간",
+  "chatEffortHigh": "높음",
+  "chatEffortXHigh": "매우 높음",
+  "chatEffortMax": "最높음",
+  "searchModels": "검색모델",
+  "chatAddAttachment": "添加附件",
+  "chatUploadFile": "上传파일",
+  "chatUploadImage": "上传图片",
+  "chatTakePhoto": "拍照",
+  "attachmentPrefix": "附件:",
+  "attachmentMax": "最多可同时发送 {count} 个附件",
+  "@attachmentMax": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "attachmentUploaded": "已上传 {count} 个附件",
+  "@attachmentUploaded": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "attachmentUploadedPartial": "已上传 {count} 个附件,部分附件未加入",
+  "@attachmentUploadedPartial": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "attachmentUploading": "正在上传 {count} 个파일…",
+  "@attachmentUploading": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "attachmentImageTooLarge": "图片超过 {size},请压缩后재시도",
+  "@attachmentImageTooLarge": {
+    "placeholders": {
+      "size": {
+        "type": "String"
+      }
+    }
+  },
+  "attachmentUnsupportedImageType": "없음法识别图片유형,仅支持 jpg/png/gif/webp",
+  "attachmentReadFileFailed": "없음法读取所选파일",
+  "attachmentUploadFailed": "上传실패",
+  "removeAttachment": "移除附件",
+  "imagePreview": "图片预览",
+  "imageLoadFailed": "图片불러오기실패,파일可能已被移动或삭제",
+  "close": "닫기",
+  "fileFallback": "파일",
+  "skillsTitle": "Skill 管理",
+  "skillsSubtitle": "浏览、가져오기与管理写作技能",
+  "skillsNew": "새로 만들기技能",
+  "skillsImport": "가져오기 Markdown",
+  "skillsScopeTitle": "선택범위",
+  "skillsScopeGlobal": "",
+  "skillsScopeProject": "프로젝트技能",
+  "skillsScopeGlobalHint": "~/.codecraft/skills,跨프로젝트共享",
+  "skillsScopeProjectHint": "~/workspace/.codecraft/skills,随현재작업 영역",
+  "skillsProjectGroup": "현재 프로젝트({name})",
+  "@skillsProjectGroup": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "skillsNoProjectSkills": "현재 프로젝트还没有技能",
+  "skillsNoGlobalSkills": "还没有전역技能",
+  "skillsEmpty": "还没有技能",
+  "skillsEmptyHint": "技能是写给 AI 的专개작업설명;가져오기 SKILL.md 或手动새로 만들기一个吧。",
+  "skillsName": "이름",
+  "skillsDescription": "描述",
+  "skillsDescriptionHint": "何时使用这个技能(会进系统팁)",
+  "skillsInstructions": "指令正文",
+  "skillsInstructionsHint": "技能要执行的步骤,Markdown 书写",
+  "skillsImported": "已가져오기技能「{name}」",
+  "@skillsImported": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "skillsDeleteTitle": "삭제技能",
+  "skillsDeleteConfirm": "삭제하시겠습니까?技能「{name}」(含其디렉토리与脚本)?",
+  "@skillsDeleteConfirm": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "skillsErrorInvalidName": "技能名없음效:不能为空、超长或含 / \\ : * ? \" < > |",
+  "skillsErrorEmptyInstructions": "指令正文不能为空",
+  "skillsErrorNameConflict": "同범위已有名为「{name}」的技能",
+  "@skillsErrorNameConflict": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "skillsErrorNoSkill": "파일里没有可识别的技能",
+  "skillsErrorIoFailed": "读写技能파일실패",
+  "providerAdd": "添加供应商",
+  "providerEdit": "编辑供应商",
+  "providerEditModel": "编辑모델",
+  "providerConfig": "구성",
+  "providerSectionBasic": "기본 정보",
+  "providerSectionType": "上游格式",
+  "providerSectionOptions": "옵션",
+  "providerFullUrl": "完整 URL",
+  "providerFullUrlDesc": "Base URL 即完整요청地址,不自动拼接默认경로",
+  "providerHeadersTitle": "사용자 정의요청 헤더",
+  "providerHeadersDesc": "完全覆盖该供应商요청的同名默认头",
+  "providerHeadersAdd": "添加요청 헤더",
+  "providerHeadersManage": "管理",
+  "providerHeadersCount": "설정됨 {count} 个요청 헤더",
+  "@providerHeadersCount": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "providerShowApiKey": "显示密钥",
+  "providerHideApiKey": "隐藏密钥",
+  "providerAddModel": "添加모델",
+  "providerNoModels": "暂없음모델",
+  "providerNoModelsHint": "点击右上方按钮添加모델",
+  "providerModelCurrent": "현재",
+  "providerModelsCount": "모델({count})",
+  "@providerModelsCount": {
+    "placeholders": {
+      "count": {
+        "type": "String"
+      }
+    }
+  },
+  "providerModelsSelect": "다중 선택",
+  "providerModelsSelectedCount": "선택됨 {count} 개",
+  "@providerModelsSelectedCount": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "providerModelsSelectAll": "모두 선택",
+  "providerModelsDeselectAll": "전체 선택 취소",
+  "providerModelsBatchTest": "测试",
+  "providerModelsBatchDelete": "삭제",
+  "providerModelsBatchDeleteTitle": "삭제모델",
+  "providerModelsBatchDeleteConfirm": "선택한 항목을 삭제하시겠습니까? {count} 个모델吗?",
+  "@providerModelsBatchDeleteConfirm": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "providerFetchModels": "拉取모델",
+  "providerAddAllModels": "전체添加",
+  "providerAddAllModelsTitle": "添加전체모델",
+  "providerAddAllModelsConfirm": "확인将拉取到的 {count} 个모델전체添加至현재제공자?",
+  "@providerAddAllModelsConfirm": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "providerFilterModelsHint": "输入모델이름筛选",
+  "providerNoMatchingModels": "没有匹配的모델",
+  "providerModelAdded": "已添加모델「{name}」",
+  "@providerModelAdded": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "providerModelName": "모델이름",
+  "providerModelAlreadyAdded": "该모델已添加",
+  "providerFetchHttpError": "HTTP {code} · {latency}ms",
+  "@providerFetchHttpError": {
+    "placeholders": {
+      "code": {
+        "type": "int"
+      },
+      "latency": {
+        "type": "int"
+      }
+    }
+  },
+  "providerFetchMissingFields": "응답缺少列表字段",
+  "providerFetchFailed": "拉取모델실패",
+  "providerApiKeyRequired": "请先填写 API Key",
+  "providerTestModel": "测试",
+  "providerModelContext": "上下文窗口 (tokens)",
+  "providerModelContextInput": "输入上限 (tokens)",
+  "providerModelContextOutput": "输出上限 (tokens)",
+  "providerModelWindowInvalid": "请输入有效的正整数,或留空使用自动识别值",
+  "providerModelSectionPrice": "价格",
+  "providerModelPriceInput": "输入价格 (USD/1M tokens)",
+  "providerModelPriceOutput": "输出价格 (USD/1M tokens)",
+  "providerModelPriceCacheRead": "缓存读价格 (USD/1M tokens)",
+  "providerModelPriceCacheWrite": "缓存写价格 (USD/1M tokens)",
+  "providerModelCapabilities": "能力",
+  "providerModelCapVision": "图片输入",
+  "providerModelCapImageOutput": "图片输出",
+  "providerModelCapTools": "工具调用",
+  "providerModelCapReasoning": "思考",
+  "providerModelSectionReasoning": "思考档位",
+  "providerModelReasoningHint": "只勾选该모델真实支持的档位;전체不勾则由기본 제공能力表自动判断",
+  "providerModelReasoningCanDisable": "可以닫기思考",
+  "providerTestRequestUrl": "요청地址",
+  "providerTestRequestHeaders": "요청 헤더",
+  "providerTestRequestBody": "요청 본문",
+  "providerTestResponse": "응답",
+  "providerTestError": "오류상세",
+  "providerMultiKeyTitle": "多 Key 模式",
+  "providerMultiKeySubtitle": "同一供应商下配多个 Key,密钥사용 불가时自动切换并重发",
+  "providerMultiKeyManage": "多 Key 管理",
+  "providerMultiKeySummary": "{count} 个 · {strategy}",
+  "@providerMultiKeySummary": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      },
+      "strategy": {
+        "type": "String"
+      }
+    }
+  },
+  "providerMultiKeyList": "Key 列表",
+  "providerMultiKeyItem": "密钥 #{index}",
+  "@providerMultiKeyItem": {
+    "placeholders": {
+      "index": {
+        "type": "int"
+      }
+    }
+  },
+  "providerMultiKeyEmpty": "点此添加第一个 Key",
+  "providerMultiKeyAdd": "添加 Key",
+  "providerMultiKeyWeight": "调度权重",
+  "providerMultiKeyWeightHint": "默认 1 · ≤ 0 时不参与 · 최대 1,000,000",
+  "providerMultiKeyStrategy": "取用策略",
+  "providerMultiKeyStrategySequential": "顺序",
+  "providerMultiKeyStrategySequentialDesc": "始终用靠前的 Key,실패达阈值才切下一个",
+  "providerMultiKeyStrategyRoundRobin": "轮询",
+  "providerMultiKeyStrategyRoundRobinDesc": "新세션轮流起步以摊平额度;同一세션内不换 Key,保持缓存命중간",
+  "providerMultiKeyStatusCodes": "自动切换상태 코드",
+  "providerMultiKeyStatusCodesHint": "逗号分隔,留空使用默认 401,402,403,429",
+  "providerMultiKeyCooldown": "冷却时长",
+  "providerMultiKeyCooldownDesc": "被切走的 Key 隔多久重新纳入候选",
+  "workspaceOpen": "작업 영역",
+  "workspaceLocal": "로컬작업 영역",
+  "workspaceLocalSubtitle": "应用数据디렉토리",
+  "allow": "允许",
+  "deny": "拒绝",
+  "tabFiles": "파일",
+  "newFile": "새로 만들기파일",
+  "newFolder": "새로 만들기폴더",
+  "create": "만들기",
+  "deleteFileConfirm": "삭제하시겠습니까?该파일?",
+  "deleteFolderConfirm": "삭제하시겠습니까?该폴더(含내용)?",
+  "refresh": "새로고침",
+  "workspaceNew": "새로 만들기",
+  "workspaceEmptyHint": "还没有작업 영역,点右上角「새로 만들기」",
+  "workspaceNameExists": "同名작업 영역已存在",
+  "workspaceDelete": "삭제작업 영역",
+  "workspaceDeleteConfirm": "삭제하시겠습니까?작업 영역「{name}」(含其중간전체파일)?",
+  "@workspaceDeleteConfirm": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "todoDashboardTitle": "任务待办",
+  "todoDashboardProgress": "{completed}/{total} 완료",
+  "@todoDashboardProgress": {
+    "placeholders": {
+      "completed": {
+        "type": "int"
+      },
+      "total": {
+        "type": "int"
+      }
+    }
+  },
+  "todoDashboardAllDone": "전체완료",
+  "todoInProgress": "진행 중",
+  "todoCompleted": "완료",
+  "gitTitle": "Git",
+  "gitRefresh": "새로고침",
+  "gitTabStatus": "상태",
+  "browserTitle": "浏览器",
+  "browserAddressHint": "输入网址或검색",
+  "browserBack": "后退",
+  "browserForward": "前进",
+  "browserReload": "새로고침",
+  "browserNotReady": "浏览器준비 안 됨,请在地址栏输入网址시작浏览",
+  "browserNewTab": "새로 만들기태그页",
+  "browserCloseTab": "닫기태그页",
+  "browserTabDefaultTitle": "新태그页",
+  "browserTabsCount": "태그页 ({count})",
+  "@browserTabsCount": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "browserEmptyHint": "在上方地址栏输入网址시작浏览",
+  "browserTabsManage": "태그页管理",
+  "browserEmptyClickHint": "点击上方输入网址시작浏览",
+  "browserNightModeOn": "닫기夜间模式",
+  "browserNightModeOff": "활성화夜间模式",
+  "browserDevtools": "开发者工具",
+  "browserDialogAlertTitle": "网页팁",
+  "browserDialogConfirmTitle": "网页确认",
+  "browserDialogPromptTitle": "网页输入",
+  "browserMenu": "더보기설정",
+  "browserMenuTitle": "浏览器설정与工具",
+  "browserMenuGeneralSection": "页面与工具",
+  "browserNightModeTitle": "夜间模式",
+  "browserNightModeDesc": "降낮음页面亮度并활성화深色偏好",
+  "browserDevtoolsTitle": "开发者工具",
+  "browserDevtoolsDesc": "활성화移动端 Eruda 디버그控制台",
+  "browserUaSection": "浏览器标识 (User-Agent)",
+  "browserUaDesc": "模拟不同设备与环境访问网页",
+  "browserUaDefault": "系统默认",
+  "browserUaDefaultDesc": "현재设备原生 WebView 标识",
+  "browserUaAndroidPhone": "安卓手机",
+  "browserUaAndroidPhoneDesc": "Chrome Mobile (Android)",
+  "browserUaAndroidTablet": "安卓平板",
+  "browserUaAndroidTabletDesc": "Chrome Tablet (Android)",
+  "browserUaDesktopPc": "桌面电脑",
+  "browserUaDesktopPcDesc": "Chrome Desktop (Windows PC)",
+  "browserUaIphone": "苹果 iPhone",
+  "browserUaIphoneDesc": "Mobile Safari (iOS)",
+  "browserUaIpad": "苹果 iPad",
+  "browserUaIpadDesc": "Tablet Safari (iPadOS)",
+  "browserUaCustom": "사용자 정의",
+  "browserUaCustomDesc": "手动指定 User-Agent 字符串",
+  "browserUaCustomDialogTitle": "사용자 정의 User-Agent",
+  "browserUaCustomInputHint": "输入完整的 User-Agent 字符串",
+  "browserUaAppliedToast": "已切换浏览器标识并새로고침页面",
+  "gitTabBranches": "브랜치",
+  "gitTabCommits": "提交",
+  "gitStatusClean": "작업 영역干净,없음改动",
+  "gitConflictedCount": "存在冲突 ({count})",
+  "@gitConflictedCount": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "gitStagedCount": "已暂存 ({count})",
+  "@gitStagedCount": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "gitModifiedCount": "已修改 ({count})",
+  "@gitModifiedCount": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "gitUntrackedCount": "未跟踪 ({count})",
+  "@gitUntrackedCount": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "gitConflictedLabel": "存在冲突",
+  "gitStagedLabel": "已暂存",
+  "gitModifiedLabel": "已修改",
+  "gitUntrackedLabel": "未跟踪",
+  "gitStage": "暂存",
+  "gitUnstage": "취소暂存",
+  "gitStageAll": "暂存전체",
+  "gitUnstageAll": "전체취소暂存",
+  "gitUnstageAllConfirm": "将취소所有파일的暂存,但不会삭제파일내용。확인继续吗?",
+  "gitActionRevertAll": "전체回退",
+  "gitRevertAllConfirm": "丢弃전체未暂存的改动({count} 个파일),복원到上次暂存或提交的내용?已暂存的내용不受影响,但丢弃的改动없음法找回。",
+  "@gitRevertAllConfirm": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "gitActionRestoreFile": "恢复파일",
+  "gitRevertConfirmWorktree": "把 {name} 복원成上次暂存或提交的내용?未暂存的改动会丢失,且없음法找回。",
+  "@gitRevertConfirmWorktree": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "gitRevertConfirmHead": "把 {name} 복원到上次提交的내용?该파일已暂存和未暂存的改动都会丢失,且없음法找回。",
+  "@gitRevertConfirmHead": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "gitRestoreFileConfirm": "恢复已삭제的 {name}?将从上次提交取回这个파일。",
+  "@gitRestoreFileConfirm": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "gitActionDeleteFile": "삭제파일",
+  "gitActionDeleteDir": "삭제디렉토리",
+  "gitMergePendingTitle": "合并待提交",
+  "gitMergePendingHint": "현재没有未解决的冲突。请确认并暂存需要保留的改动,然后提交以완료合并。",
+  "gitActionAbortMerge": "중단合并",
+  "gitAbortMergeConfirm": "확인중단현재合并吗?未解决的冲突改动将被放弃,작업 영역将복원到合并前的상태。",
+  "gitCommitChanges": "提交更改",
+  "gitCommitNeedsIdentity": "尚미설정提交署名,请在「凭据与署名」页填写用户名和邮箱",
+  "gitCommitDialogTitle": "提交更改",
+  "gitCommitMessage": "提交정보",
+  "gitCommitAmend": "追加到上次提交 (--amend)",
+  "gitCommitAiGenerate": "AI 生成",
+  "gitCommitGenerating": "正在生成…",
+  "gitActionCommit": "提交",
+  "gitTabStash": "储藏",
+  "gitStashTitle": "储藏箱",
+  "gitActionStash": "储藏改动",
+  "gitStashMessageHint": "储藏설명(선택 사항)",
+  "gitStashIncludeUntracked": "包含未跟踪파일(-u)",
+  "gitStashEmpty": "暂없음储藏기록",
+  "gitStashPop": "弹出 (Pop)",
+  "gitStashApply": "应用 (Apply)",
+  "gitStashDrop": "丢弃 (Drop)",
+  "gitStashDropConfirm": "확인丢弃储藏 {index} 吗?该작업不可撤销。",
+  "@gitStashDropConfirm": {
+    "placeholders": {
+      "index": {
+        "type": "String"
+      }
+    }
+  },
+  "gitStashClear": "清空전체",
+  "gitStashClearConfirm": "확인清空所有储藏기록吗?该작업不可撤销。",
+  "gitStashCount": "储藏 ({count})",
+  "@gitStashCount": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "gitPull": "拉取",
+  "gitPush": "推送",
+  "gitPullDirtyConfirm": "현재작업 영역有未提交改动,拉取可能导致冲突。建议先提交或暂存。仍要继续拉取吗?",
+  "gitPullContinue": "继续拉取",
+  "gitNoUpstream": "미설정上游",
+  "gitTrackingBranch": "跟踪 {name}",
+  "@gitTrackingBranch": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "gitAheadCount": "待推送 {count}",
+  "@gitAheadCount": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "gitBehindCount": "待拉取 {count}",
+  "@gitBehindCount": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "gitBranchSynced": "已同步",
+  "gitDetachedHeadLabel": "detached HEAD:현재不在任何브랜치上",
+  "gitNoBranch": "(없음브랜치)",
+  "gitLoadingBranches": "正在불러오기브랜치列表…",
+  "gitNoCheckedOutBranch": "未检出브랜치",
+  "gitClean": "작업 영역干净",
+  "gitHasChanges": "작업 영역有改动",
+  "gitNotARepo": "현재작업 영역还不是 Git 저장소",
+  "gitCloningHint": "正在克隆저장소,请稍候…",
+  "gitInitDescPrimary": "可在此初始化新저장소,시작版本管理",
+  "gitInitDescSecondary": "若子디렉토리已有 Git 저장소,也可直接선택使用",
+  "gitInitRepo": "初始化新저장소",
+  "gitCloneRepo": "克隆远程저장소",
+  "gitCloneDialogTitle": "克隆 Git 저장소",
+  "gitCloneDesc": "将远程저장소克隆到현재작업 영역根디렉토리(작업 영역需为空)。若为私有저장소,可先点右上角钥匙登录 GitHub 或填入访问令牌。",
+  "gitCloneUrlLabel": "저장소地址",
+  "gitCloning": "正在克隆저장소,请稍候…",
+  "gitSwitchRepo": "切换저장소",
+  "gitPickExistingRepo": "선택已有저장소",
+  "gitRepoSelectorTitle": "선택저장소",
+  "gitRepoNotRepo": "非저장소",
+  "gitPickRepoEmpty": "현재작업 영역没有선택 사항的디렉토리",
+  "gitNoBranches": "暂없음브랜치",
+  "gitNewBranch": "새로 만들기브랜치",
+  "gitBranchName": "브랜치名",
+  "gitBaseBranch": "基准브랜치",
+  "gitCreateAndSwitch": "만들기并切换",
+  "gitDeleteBranch": "삭제브랜치",
+  "gitDeleteLocalBranchConfirm": "삭제로컬브랜치 {name}?",
+  "@gitDeleteLocalBranchConfirm": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "gitDeleteRemoteBranch": "삭제远程브랜치",
+  "gitDeleteRemoteBranchConfirm": "삭제远程브랜치 {name}?该작업不可撤销。",
+  "@gitDeleteRemoteBranchConfirm": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "gitRenameBranch": "重命名브랜치",
+  "gitRenameTo": "将 {name} 重命名为:",
+  "@gitRenameTo": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "gitNewBranchName": "新브랜치名",
+  "gitTags": "태그",
+  "gitTagName": "태그名",
+  "gitDeleteTag": "삭제태그",
+  "gitDeleteTagConfirm": "삭제로컬태그 {name}?",
+  "@gitDeleteTagConfirm": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "gitCreateTagDesc": "从현재 HEAD({hash})만들기가벼움태그",
+  "@gitCreateTagDesc": {
+    "placeholders": {
+      "hash": {
+        "type": "String"
+      }
+    }
+  },
+  "gitCheckedOut": "현재检出",
+  "gitCurrentBranch": "현재브랜치",
+  "gitRemote": "远程",
+  "commonLocal": "로컬",
+  "gitNew": "新增",
+  "gitNoCommits": "暂없음提交기록",
+  "gitCommitCount": "提交기록 ({count})",
+  "@gitCommitCount": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "gitSearchCommitsHint": "검색提交설명或作者…",
+  "gitLoadMoreCommits": "上拉불러오기更早提交",
+  "gitNoMoreCommits": "没有더보기了",
+  "gitLatestCommit": "最新提交",
+  "gitFilesChanged": "{count} 个파일改动",
+  "@gitFilesChanged": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "gitNoFilesChanged": "该提交없음파일改动",
+  "gitMergeCommit": "合并提交",
+  "gitLoadingFiles": "正在불러오기改动파일…",
+  "gitCopyShortHash": "복사短哈希",
+  "gitCopyFullHash": "복사完整哈希",
+  "gitActionCreateBranch": "만들기브랜치",
+  "gitActionCreateTag": "만들기태그",
+  "gitCreateBranchFromCommit": "基于此提交만들기브랜치",
+  "gitCreateTagAtCommit": "在此提交만들기태그",
+  "gitResetToCommit": "재설정到此提交 (Reset)",
+  "gitResetSoft": "Soft(保留작업 영역与暂存区)",
+  "gitResetMixed": "Mixed(保留작업 영역,清空暂存区)",
+  "gitResetConfirm": "확인将현재브랜치재설정到提交 {hash} 吗?",
+  "@gitResetConfirm": {
+    "placeholders": {
+      "hash": {
+        "type": "String"
+      }
+    }
+  },
+  "gitDiffBinary": "二进制파일,不显示差异",
+  "gitDiffTooLarge": "파일过大,未计算差异",
+  "gitDiffEmpty": "没有可显示的差异",
+  "gitCopyPath": "경로 복사",
+  "gitViewDiff": "查看差异",
+  "gitRevert": "回退改动",
+  "gitDeleteUntrackedConfirm": "삭제 {name}?它从未被提交过,삭제后없음法通过 Git 恢复。",
+  "gitAddToGitignore": "添加到 .gitignore",
+  "gitIgnoreFile": "忽略此파일 ({name})",
+  "@gitIgnoreFile": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "gitIgnoreDir": "忽略整个디렉토리 ({name}/)",
+  "@gitIgnoreDir": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "gitIgnoreExtension": "忽略同유형파일 (*.{ext})",
+  "@gitIgnoreExtension": {
+    "placeholders": {
+      "ext": {
+        "type": "String"
+      }
+    }
+  },
+  "gitPathCopied": "已경로 복사",
+  "gitActionFailed": "{action}실패:{error}",
+  "@gitActionFailed": {
+    "placeholders": {
+      "action": {
+        "type": "String"
+      },
+      "error": {
+        "type": "String"
+      }
+    }
+  },
+  "gitActionDone": "{action}成功",
+  "@gitActionDone": {
+    "placeholders": {
+      "action": {
+        "type": "String"
+      }
+    }
+  },
+  "gitCheckoutSuccess": "已切换到 {name}",
+  "@gitCheckoutSuccess": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "gitNoRemotePull": "미설정远程저장소,없음法拉取",
+  "gitNoRemotePush": "미설정远程저장소,없음法推送",
+  "gitPushMasterConfirmTitle": "브랜치命名建议",
+  "gitPushMasterConfirmDesc": "현재로컬브랜치为 master,GitHub 与 GitLab 推荐使用 main 作为默认主브랜치。是否将로컬브랜치重命名为 main 后再推送?",
+  "gitPushRenameToMain": "重命名为 main 并推送",
+  "gitPushKeepMaster": "保留 master 推送",
+  "gitTesting": "测试",
+  "credentialToken": "访问令牌(Token / PAT)",
+  "gitUserName": "user.name",
+  "gitUserEmail": "user.email",
+  "gitRepoUrl": "저장소地址",
+  "gitSelectBranch": "선택基准브랜치",
+  "credentialTokenLogin": "令牌登录",
+  "credentialTokenLoginDesc": "只需붙여넣기访问令牌(PAT),推送时自动匹配远端主机",
+  "credentialTokenSaved": "令牌已저장",
+  "commonShow": "显示",
+  "commonHide": "隐藏",
+  "credentialAdd": "添加凭据",
+  "settingsSubtitle": "管理 AI、外观、同步和应用数据",
+  "accountAndData": "账户与数据",
+  "themeTitle": "主题",
+  "themeSubtitle": "外观、배경与显示",
+  "aboutSubtitle": "版本、更新与反馈",
+  "aboutAutoCheck": "自动检查更新",
+  "aboutAutoCheckDesc": "열기 App 时自动检测新版本",
+  "aboutUpdateChannel": "更新通道",
+  "aboutStableChannel": "稳定版",
+  "aboutDownloadMirror": "下载镜像源",
+  "aboutMirrorUrl": "https://cdn.gh-proxy.co...",
+  "githubRepo": "GitHub 저장소",
+  "aboutUserAgreement": "用户프로토콜",
+  "aboutPrivacyPolicy": "隐私政策",
+  "mcpTitle": "MCP 서버",
+  "mcpSubtitle": "接入外部工具的 Model Context Protocol 服务",
+  "mcpAdd": "添加 MCP",
+  "mcpEdit": "编辑 MCP",
+  "mcpEmpty": "还没有구성 MCP 서버",
+  "mcpEmptyHint": "点击右上角 + 可以添加远程 HTTP 或로컬 stdio 服务器",
+  "mcpSearchPlaceholder": "검색 MCP 서버…",
+  "mcpSearchEmpty": "未找到匹配的 MCP 서버",
+  "mcpScopeLabel": "범위",
+  "mcpScopeGlobal": "전역",
+  "mcpScopeProject": "프로젝트",
+  "mcpTypeStdio": "stdio",
+  "mcpStatusDisabled": "비활성화됨",
+  "mcpStatusNotConnected": "未连接",
+  "mcpStatusConnected": "已连接",
+  "mcpStatusConnecting": "连接중간…",
+  "mcpStatusFailed": "연결 실패",
+  "mcpStatusNeedsAuth": "需要登录",
+  "mcpToolsCount": "{count} 个工具",
+  "@mcpToolsCount": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "mcpDetails": "상세",
+  "mcpBasicSettings": "기본설정",
+  "mcpEnabledLabel": "是否활성화",
+  "mcpNameLabel": "이름",
+  "mcpNameHint": "例如:fetch、github、gitlab",
+  "mcpNameInvalid": "이름只能包含字母、数字、下划线和连字符",
+  "mcpTransportType": "传输유형",
+  "mcpRemoteHttp": "远程 HTTP",
+  "mcpLocalStdio": "로컬 stdio",
+  "mcpServerUrl": "服务器地址",
+  "mcpServerUrlHint": "例如:https://api.example.com/mcp",
+  "mcpCustomHeaders": "사용자 정의요청 헤더",
+  "mcpNoCustomHeaders": "暂없음구성的사용자 정의 Header",
+  "mcpHeaderName": "요청 헤더이름",
+  "mcpHeaderNameHint": "如 Authorization",
+  "mcpHeaderValue": "요청 헤더值",
+  "mcpHeaderValueHint": "如 Bearer xxxxxx",
+  "mcpAddHeader": "添加요청 헤더",
+  "mcpCommand": "시작命令",
+  "mcpCommandHint": "例如:npx",
+  "mcpArgs": "命令参数",
+  "mcpNoArgs": "없음额外命令行参数",
+  "mcpArgValue": "参数值",
+  "mcpArgHint": "如 -y 或 @modelcontextprotocol/server-xxx",
+  "mcpAddArg": "添加参数",
+  "mcpToolsSummary": "활성화됨 {enabled} / {total} 个工具",
+  "@mcpToolsSummary": {
+    "placeholders": {
+      "enabled": {
+        "type": "int"
+      },
+      "total": {
+        "type": "int"
+      }
+    }
+  },
+  "mcpToolsSearch": "검색工具이름或描述…",
+  "mcpToolsSearchEmpty": "未找到匹配的工具",
+  "mcpToolsEnableAll": "전체활성화",
+  "mcpToolsDisableAll": "전체비활성화",
+  "mcpSaveFirstHint": "请先저장并连接服务器后查看工具列表",
+  "mcpNoToolsHint": "未检测到工具,点击右上角새로고침按钮재시도",
+  "mcpNoDescription": "없음描述",
+  "mcpAddSheetTitle": "添加 MCP 서버",
+  "mcpAddManual": "手动填写",
+  "mcpAddManualDesc": "逐个填写地址、요청 헤더或시작命令",
+  "mcpAddFromJson": "从 JSON 가져오기",
+  "mcpAddFromJsonDesc": "붙여넣기标准 mcpServers 구성批量가져오기",
+  "mcpJsonImportTitle": "从 JSON 가져오기",
+  "mcpJsonImportHint": "붙여넣기标准 mcpServers 구성:键是服务器名,值里填 url(远程 HTTP)或 command(로컬 stdio)。",
+  "mcpJsonImportAction": "가져오기",
+  "mcpJsonImportEmpty": "未解析到任何 MCP 서버",
+  "mcpSaved": "已저장",
+  "mcpRefreshTools": "새로고침工具",
+  "mcpRemoved": "已移除 MCP 서버",
+  "permissionsTitle": "工具授权",
+  "permissionsSubtitle": "规则与记忆",
+  "permCurrentProject": "현재 프로젝트:{name}",
+  "@permCurrentProject": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "permCurrentProjectNone": "현재 프로젝트(未선택)",
+  "permNoProjectRules": "本프로젝트暂없음规则",
+  "permGlobal": "전역",
+  "permNoGlobalRules": "暂없음전역规则",
+  "permEntireTool": "整个工具",
+  "permDeny": "禁止",
+  "permPromoteToGlobal": "提升为전역",
+  "permRulesShort": "对话중간选「始终실행」会在현재 프로젝트生成记忆规则",
+  "chatPermDeny": "拒绝",
+  "chatPermAlwaysAllow": "始终실행",
+  "chatPermAlwaysToolDesc": "「始终실행」将在本프로젝트记住:该工具的전체调用",
+  "chatPermAlwaysPrefix": "「始终실행」将在本프로젝트记住:",
+  "chatPermSingleUseDesc": "该调用不可记忆,仅可单次放行",
+  "commonName": "이름",
+  "commonTool": "工具",
+  "commonAdd": "添加",
+  "commonLabelWithApi": "{label}({api})",
+  "@commonLabelWithApi": {
+    "placeholders": {
+      "label": {
+        "type": "String"
+      },
+      "api": {
+        "type": "String"
+      }
+    }
+  },
+  "commonExpand": "펼치기",
+  "commonCollapse": "收起",
+  "mcpViewLogs": "查看此 MCP 로그",
+  "mcpAuthEnable": "OAuth 认证",
+  "mcpAuthDesc": "用于需要浏览器登录授权的远程 MCP 服务",
+  "mcpAuthClientId": "client_id(선택 사항)",
+  "mcpAuthClientIdHint": "预注册的客户端 ID;留空则尝试动态注册",
+  "mcpAuthServer": "授权服务器(선택 사항)",
+  "mcpAuthServerHint": "覆盖自动发现的授权服务器地址",
+  "mcpAuthAdvanced": "고급认证옵션",
+  "mcpAuthLogin": "登录 / 重新授权",
+  "mcpAuthReauthorize": "重新授权",
+  "mcpAuthLogout": "退出登录",
+  "mcpAuthCancel": "취소授权",
+  "mcpAuthInProgress": "대기浏览器授权…",
+  "mcpAuthInProgressHint": "已在系统浏览器열기登录页,授权완료后将自动返回并连接",
+  "mcpAuthSaveFirst": "저장服务器구성后,即可在此发起登录授权",
+  "mcpAuthFailed": "授权실패:{message}",
+  "@mcpAuthFailed": {
+    "placeholders": {
+      "message": {
+        "type": "String"
+      }
+    }
+  },
+  "mcpAuthStatusLabel": "授权상태",
+  "mcpAuthStatusAuthorized": "已登录",
+  "mcpAuthStatusUnauthorized": "未登录",
+  "mcpAuthStatusAuthorizing": "授权중간",
+  "mcpAuthSuccess": "授权成功,已连接",
+  "settingsReconnect": "重新连接",
+  "settingsAddMcpServer": "添加 MCP 서버",
+  "settingsContainer": "容器与镜像",
+  "settingsContainerSubtitle": "PRoot 容器、镜像与初始化",
+  "commonEdit": "编辑",
+  "commonSwitch": "切换",
+  "chatOpenTerminal": "열기터미널",
+  "terminalTitle": "터미널",
+  "terminalStartFailed": "없음法시작터미널:",
+  "@terminalStartFailed": {
+    "placeholders": {
+      "message": {
+        "type": "String"
+      }
+    }
+  },
+  "terminalRetry": "재시도",
+  "terminalNoOpenTabs": "没有열기的터미널태그",
+  "terminalNewTab": "새로 만들기태그",
+  "terminalCloseTab": "닫기태그",
+  "terminalSettingsTitle": "터미널설정",
+  "terminalThemeTitle": "配色主题",
+  "terminalThemeFollowApp": "跟随应用",
+  "terminalThemeTermiusDark": "Termius Dark",
+  "terminalThemeGithubLight": "GitHub Light",
+  "terminalThemeDracula": "Dracula",
+  "terminalThemeOneDark": "One Dark",
+  "terminalThemeMonokai": "Monokai",
+  "terminalThemeGithubDark": "GitHub Dark",
+  "terminalFontSizeTitle": "字体크기",
+  "terminalCursorStyleTitle": "光标样式",
+  "terminalCursorBlock": "方块",
+  "terminalCursorUnderline": "下划线",
+  "terminalCursorBar": "竖线",
+  "terminalFontTitle": "터미널字体",
+  "terminalFontDefault": "系统等宽",
+  "terminalFontBuiltin": "JetBrains Mono",
+  "settingsGeneral": "偏好설정",
+  "settingsGeneralModels": "모델",
+  "settingsAutoRemoveStaleModels": "拉取모델后自动移除없음效모델",
+  "settingsAutoRemoveStaleModelsDesc": "拉取成功后,移除远端已不存在的로컬모델개目",
+  "settingsGeneralSession": "세션",
+  "settingsStartupSession": "시작时세션",
+  "settingsStartupSessionNew": "新开세션",
+  "settingsStartupSessionNewDesc": "复用尚未发送过消息的空세션,否则새로 만들기",
+  "settingsStartupSessionRecent": "열기最近세션",
+  "settingsStartupSessionRecentDesc": "直接进入最近更新的세션",
+  "settingsDeleteExternalWorkspaceSessions": "삭제外部작업 영역채팅 기록",
+  "settingsDeleteExternalWorkspaceSessionsDesc": "移除外部로컬작업 영역时,一并삭제该작업 영역的채팅 기록",
+  "settingsGeneralInput": "输入",
+  "settingsEnterToSend": "回车键发送消息",
+  "settingsEnterToSendDesc": "닫기后回车换行,需点发送按钮发送",
+  "settingsCompactionThreshold": "自动压缩阈值",
+  "settingsCompactionThresholdDesc": "上下文占用达到窗口的该比例时自动压缩",
+  "settingsCompactionThresholdInputHint": "填 1-100 的整数百分比",
+  "settingsPercentValue": "{percent}%",
+  "@settingsPercentValue": {
+    "placeholders": {
+      "percent": {
+        "type": "int"
+      }
+    }
+  },
+  "settingsGeneralNetwork": "网络",
+  "settingsFirstByteTimeout": "首字节超时",
+  "settingsFirstByteTimeoutDesc": "대기首个응답块的最长时间",
+  "settingsStreamIdleTimeout": "数据块间隔超时",
+  "settingsStreamIdleTimeoutDesc": "两个응답块之间的最长대기",
+  "settingsTimeoutUnlimited": "不限制",
+  "settingsTimeoutSeconds": "{seconds} 秒",
+  "@settingsTimeoutSeconds": {
+    "placeholders": {
+      "seconds": {
+        "type": "int"
+      }
+    }
+  },
+  "settingsTimeoutInputHint": "单位秒,填 0 表示不限制",
+  "settingsMaxNetworkRetries": "재시도次数",
+  "settingsMaxNetworkRetriesDesc": "网络실패后的指数退避재시도次数",
+  "settingsRetriesCount": "{count} 次",
+  "@settingsRetriesCount": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "settingsRetriesInputHint": "填 0 表示不재시도",
+  "settingsGeneralTools": "工具",
+  "settingsSendfileMaxSize": "sendFile 单파일上限",
+  "settingsGeneralGoal": "목표(goal)",
+  "settingsGoalMaxTurns": "최대续跑轮数",
+  "settingsGoalMaxTurnsDesc": "自主循环最多续跑多少轮,达到即중지",
+  "settingsGoalMaxTokens": "token 预算",
+  "settingsGoalMaxTokensDesc": "自主循环累计消耗的输入+输出 token 上限",
+  "settingsTurnsValue": "{count} 轮",
+  "@settingsTurnsValue": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "settingsTokensValue": "{count}",
+  "@settingsTokensValue": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "settingsGoalMaxTurnsInputHint": "填大于 0 的整数轮数",
+  "settingsGoalMaxTokensInputHint": "填不小于 1000 的整数",
+  "settingsSendfileMaxSizeDesc": "单个파일크기上限,超过则整批发送실패",
+  "settingsSendfileMaxSizeInputHint": "单位 MB,填大于 0 的整数",
+  "settingsMbValue": "{mb} MB",
+  "@settingsMbValue": {
+    "placeholders": {
+      "mb": {
+        "type": "int"
+      }
+    }
+  },
+  "providerModelsAlignedRemoved": "已移除 {count} 个远端已不存在的모델",
+  "@providerModelsAlignedRemoved": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "tokenStatsTitle": "Token 统计",
+  "tokenStatsPeriodToday": "今일",
+  "tokenStatsPeriod7d": "近7일",
+  "tokenStatsPeriod30d": "近30일",
+  "tokenStatsPeriodAll": "전체",
+  "tokenStatsTotal": "总消耗",
+  "tokenStatsRequests": "요청次数",
+  "tokenStatsCost": "费用",
+  "tokenStatsCacheHitRate": "缓存命중간率",
+  "tokenStatsCacheReadWrite": "读取 {read} / 写入 {write}",
+  "@tokenStatsCacheReadWrite": {
+    "placeholders": {
+      "read": {
+        "type": "String"
+      },
+      "write": {
+        "type": "String"
+      }
+    }
+  },
+  "tokenStatsTrend": "消耗趋势",
+  "tokenStatsLegendInput": "输入",
+  "tokenStatsLegendOutput": "输出",
+  "tokenStatsLegendCached": "缓存",
+  "tokenStatsProvider": "供应商统计",
+  "tokenStatsModel": "모델统计",
+  "tokenStatsSuccessRate": "成功率 {rate}",
+  "@tokenStatsSuccessRate": {
+    "placeholders": {
+      "rate": {
+        "type": "String"
+      }
+    }
+  },
+  "tokenStatsRecentCalls": "调用기록",
+  "tokenStatsUnknown": "알 수 없음",
+  "tokenStatsNoData": "暂없음数据",
+  "tokenStatsCallsSuffix": "次调用",
+  "tokenStatsCallsSuffix2": "{count} 次调用",
+  "@tokenStatsCallsSuffix2": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "tokenStatsColModel": "모델",
+  "tokenStatsColReasoningEffort": "사고 강도",
+  "tokenStatsColProvider": "供应商",
+  "tokenStatsColInput": "输入",
+  "tokenStatsColOutput": "输出",
+  "tokenStatsColCachedRead": "缓存读取",
+  "tokenStatsColCachedWrite": "缓存写入",
+  "tokenStatsColCacheHitRate": "命중간率",
+  "tokenStatsColTtfb": "首字节",
+  "tokenStatsColDuration": "소요 시간",
+  "tokenStatsColTime": "时间",
+  "tokenStatsColStatus": "상태",
+  "tokenStatsColCost": "费用",
+  "tokenStatsPage": "第 {page} / {total} 页",
+  "@tokenStatsPage": {
+    "placeholders": {
+      "page": {
+        "type": "int"
+      },
+      "total": {
+        "type": "int"
+      }
+    }
+  },
+  "tokenStatsRetries": "재시도 {count} 次",
+  "@tokenStatsRetries": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "tokenStatsReset": "재설정",
+  "tokenStatsResetTitle": "재설정 Token 统计",
+  "tokenStatsResetConfirm": "将清空전체调用기록,此작업不可恢复。확인재설정?",
+  "tokenStatsFilterAllProviders": "전체供应商",
+  "tokenStatsFilterAllModels": "전체모델",
+  "tokenStatsFilterClear": "清除筛选",
+  "tokenStatsFilterProvider": "供应商:{name}",
+  "@tokenStatsFilterProvider": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "tokenStatsFilterModel": "모델:{name}",
+  "@tokenStatsFilterModel": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "tokenStatsProviderKeys": "{count} 个密钥",
+  "@tokenStatsProviderKeys": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "tokenStatsRequestsUnit": "次요청",
+  "tokenStatsHourSuffix": "时",
+  "tokenStatsPrevPage": "上一页",
+  "tokenStatsNextPage": "下一页",
+  "settingsCategoryData": "数据与诊断",
+  "gitActionClone": "克隆",
+  "gitActionInit": "初始化",
+  "gitActionMerge": "合并브랜치",
+  "gitActionStageAll": "전체暂存",
+  "gitCloneUrlHint": "https://github.com/user/repo.git",
+  "gitComputingDiff": "正在计算差异…",
+  "gitCreateTagTitle": "새로 만들기태그",
+  "gitCreateTrackingBranch": "从远程브랜치 {branch} 만들기로컬跟踪브랜치并切换?",
+  "@gitCreateTrackingBranch": {
+    "placeholders": {
+      "branch": {
+        "type": "String"
+      }
+    }
+  },
+  "gitCredentialsAndIdentity": "凭据与署名",
+  "gitDetachedHeadWarning": "切换到태그 {ref} 将进入 detached HEAD 상태——不处于任何브랜치上,新提交不属于任何브랜치。확인继续?",
+  "@gitDetachedHeadWarning": {
+    "placeholders": {
+      "ref": {
+        "type": "String"
+      }
+    }
+  },
+  "gitMergeConfirm": "확인将브랜치 {branch} 合并到현재브랜치({current})吗?",
+  "@gitMergeConfirm": {
+    "placeholders": {
+      "branch": {
+        "type": "String"
+      },
+      "current": {
+        "type": "String"
+      }
+    }
+  },
+  "gitMergeNoFf": "만들기合并提交(--no-ff)",
+  "gitOpenInEditor": "在编辑器중간열기",
+  "gitSwitchBranch": "切换브랜치",
+  "gitSwitchConfirm": "확인切换到 {ref}?",
+  "@gitSwitchConfirm": {
+    "placeholders": {
+      "ref": {
+        "type": "String"
+      }
+    }
+  },
+  "gitToastLoadBranchesFailed": "불러오기브랜치실패:{error}",
+  "@gitToastLoadBranchesFailed": {
+    "placeholders": {
+      "error": {
+        "type": "String"
+      }
+    }
+  },
+  "gitToastRefreshFailed": "새로고침실패:{error}",
+  "@gitToastRefreshFailed": {
+    "placeholders": {
+      "error": {
+        "type": "String"
+      }
+    }
+  },
+  "gitToastActionRefreshFailed": "{message}(새로고침실패)",
+  "@gitToastActionRefreshFailed": {
+    "placeholders": {
+      "message": {
+        "type": "String"
+      }
+    }
+  },
+  "gitToastLoadMoreFailed": "불러오기더보기실패:{error}",
+  "@gitToastLoadMoreFailed": {
+    "placeholders": {
+      "error": {
+        "type": "String"
+      }
+    }
+  },
+  "gitToastCheckoutFailed": "切换실패:{error}",
+  "@gitToastCheckoutFailed": {
+    "placeholders": {
+      "error": {
+        "type": "String"
+      }
+    }
+  },
+  "gitToastNotRepo": "该디렉토리不是 Git 저장소",
+  "gitToastSwitchRepoFailed": "切换저장소실패:{error}",
+  "@gitToastSwitchRepoFailed": {
+    "placeholders": {
+      "error": {
+        "type": "String"
+      }
+    }
+  },
+  "gitToastDiffFailed": "불러오기差异실패",
+  "gitToastNoDiffForCommit": "暂存区与작업 영역均없음差异,없음法生成提交정보",
+  "gitToastGenerateCommitFailed": "AI 生成提交정보실패,请检查모델或网络",
+  "diffBinaryFile": "二进制파일,不支持文本差异对比",
+  "diffFileTooLarge": "파일过大,已跳过差异计算",
+  "diffFileTooLargeDesc": "超过 2000 行或含超长行的파일不做行级 diff,以避免渲染与内存压力。",
+  "diffNoChanges": "없음差异",
+  "back": "返回",
+  "chatOpenGit": "열기 Git",
+  "switchLabel": "切换",
+  "credentialEdit": "编辑凭据",
+  "credentialToastSaved": "凭据已저장",
+  "credentialToastSaveFailed": "저장 실패:%1$s",
+  "@credentialToastSaveFailed": {
+    "placeholders": {
+      "param1": {
+        "type": "String"
+      }
+    }
+  },
+  "credentialToastDeleted": "凭据已삭제",
+  "credentialToastIdentitySaved": "署名与저장소地址已저장",
+  "credentialEmptyHint": "尚未添加凭据,点右上角 + 添加",
+  "credentialEmptyTitle": "暂없음 Git 자격 증명",
+  "credentialEmptyDesc": "구성凭据后,Codecraft 可在推送或拉取代码저장소时自动완료身份认证",
+  "credentialAddManual": "手动添加",
+  "gitTabIdentity": "署名",
+  "gitTabCredentials": "凭据",
+  "gitIdentityTitle": "提交署名",
+  "gitIdentityCodespace": "현재连接 GitHub Codespace {name}",
+  "@gitIdentityCodespace": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "gitRepoUrlTitle": "저장소地址",
+  "gitRemoteUrl": "remote.origin.url",
+  "gitCredentialsCount": "凭据 ({param1})",
+  "@gitCredentialsCount": {
+    "placeholders": {
+      "param1": {
+        "type": "int"
+      }
+    }
+  },
+  "codespacesTitle": "GitHub Codespaces",
+  "codespacesNetworkError": "网络오류:{error}",
+  "@codespacesNetworkError": {
+    "placeholders": {
+      "error": {
+        "type": "String"
+      }
+    }
+  },
+  "codespacesAccount": "账号",
+  "codespacesCount": "Codespaces ({count})",
+  "@codespacesCount": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "codespacesEmptyTitle": "还没有 Codespace",
+  "codespacesEmptyDesc": "在 GitHub 上만들기 Codespace 后,这里即可列出并连接",
+  "codespacesCreateOnWeb": "在 github.com 새로 만들기",
+  "codespacesRefresh": "새로고침",
+  "codespacesOpenInBrowser": "在浏览器열기",
+  "codespacesStart": "시작",
+  "codespacesStop": "중지",
+  "codespacesDelete": "삭제",
+  "codespacesDeleteConfirm": "삭제하시겠습니까? {name}?该작업不可撤销",
+  "@codespacesDeleteConfirm": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "codespacesStateAvailable": "실행 중",
+  "codespacesStateStarting": "시작중간",
+  "codespacesStateStopped": "중지됨",
+  "codespacesStateUnknown": "상태알 수 없음",
+  "codespacesLastUsed": "最近使用 {time}",
+  "@codespacesLastUsed": {
+    "placeholders": {
+      "time": {
+        "type": "String"
+      }
+    }
+  },
+  "codespacesNoRepo": "알 수 없음저장소",
+  "codespacesUncommitted": "有未提交改动",
+  "codespacesMoreActions": "더보기작업",
+  "editorLoadFailed": "없음法读取该파일",
+  "editorSaveFailed": "저장 실패",
+  "editorSaved": "已저장",
+  "editorCharacters": "角色",
+  "characterTitle": "角色管理",
+  "characterNew": "새로 만들기角色",
+  "characterEdit": "编辑角色",
+  "characterEmpty": "暂없음角色",
+  "characterSearchHint": "검색角色이름、별칭或태그",
+  "characterSearchEmpty": "未找到匹配角色",
+  "characterFieldBasic": "기본 정보",
+  "characterFieldName": "이름",
+  "characterFieldNameHint": "角色的真实이름",
+  "characterFieldAlias": "별칭/称呼",
+  "characterFieldAliasHint": "故事중간常用的称呼(如:老张、小李)",
+  "characterFieldGender": "性别",
+  "characterFieldGenderHint": "男/女/기타",
+  "characterFieldAge": "나이",
+  "characterFieldAgeHint": "数字,如 25",
+  "characterFieldBirthday": "생일",
+  "characterFieldBirthdayHint": "格式:MM-DD,如 01-15",
+  "characterFieldAppearance": "외모描写",
+  "characterFieldAppearanceHint": "身높음、体型、发色、瞳色、特征等",
+  "characterFieldPersonality": "性格",
+  "characterFieldPersonalityHint": "性格特点、동작模式、说话风格等",
+  "characterFieldBackground": "배경故事",
+  "characterFieldBackgroundHint": "成长经历、重要이벤트、家庭배경等",
+  "characterFieldGoals": "목표/소망",
+  "characterFieldGoalsHint": "角色想要达成的事、追求的东西",
+  "characterFieldFears": "두려움/약점",
+  "characterFieldFearsHint": "害怕的事、心理阴影、致命약점等",
+  "characterFieldTags": "태그",
+  "characterFieldTagsHint": "用逗号分隔,如:主角、反派、魔法师",
+  "characterScope": "범위",
+  "characterScopeProject": "현재 프로젝트",
+  "characterScopeGlobal": "전역",
+  "characterSelectedCount": "선택됨 {count} 개",
+  "@characterSelectedCount": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "editorUndo": "撤销",
+  "editorRedo": "重做",
+  "editorSearch": "검색",
+  "editorSearchHint": "查找내용",
+  "editorSearchPrev": "上一个",
+  "editorSearchNext": "下一个",
+  "editorTypeset": "自动排版",
+  "editorTypesetDone": "已排版,可撤销",
+  "editorCopy": "복사",
+  "editorCopied": "已복사到剪贴板",
+  "editorUnsavedState": "未저장",
+  "editorWordCount": "{count} 字",
+  "@editorWordCount": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "editorNoFile": "还没有열기的파일,从差异页点「在编辑器중간열기」即可",
+  "editorUnsavedTitle": "未저장的修改",
+  "editorUnsavedMessage": "현재파일有未저장的修改,是否저장?",
+  "editorSaveAndExit": "저장并退出",
+  "editorSaveAndSwitch": "저장并切换",
+  "editorDontSave": "不저장",
+  "editorMdPreview": "预览 Markdown",
+  "editorMdShowSource": "显示源码",
+  "editorIndent": "缩进",
+  "editorCursorLeft": "光标左移",
+  "editorCursorRight": "光标右移",
+  "editorSettings": "编辑器설정",
+  "editorFontSize": "字体크기",
+  "editorFontSizeValue": "{size} sp",
+  "@editorFontSizeValue": {
+    "placeholders": {
+      "size": {
+        "type": "int"
+      }
+    }
+  },
+  "editorWordWrap": "自动换行",
+  "editorShowIndentGuide": "显示缩进参考线",
+  "editorShowWhitespace": "显示空白符号",
+  "editorFileTooLarge": "파일过大({mb} MB),暂不支持열기",
+  "@editorFileTooLarge": {
+    "placeholders": {
+      "mb": {
+        "type": "int"
+      }
+    }
+  },
+  "editorBinaryUnsupported": "二进制파일,暂不支持열기",
+  "editorSaveConflictTitle": "파일已被修改",
+  "editorSaveConflictMessage": "该파일在你열기之后已被 AI 或기타程序修改。直接저장会覆盖对方的改动。",
+  "editorSaveConflictDiff": "- 磁盘현재내용",
+  "@editorSaveConflictDiff": {
+    "placeholders": {
+      "diff": {
+        "type": "String"
+      }
+    }
+  },
+  "editorSaveConflictOverwrite": "覆盖磁盘",
+  "editorSaveConflictDiscard": "放弃我的修改",
+  "editorSaveConflictCancel": "취소",
+  "editorSaveConflictDiscarded": "已放弃修改并重新载入磁盘내용",
+  "editorLineColumn": "{line}:{column}",
+  "@editorLineColumn": {
+    "placeholders": {
+      "line": {
+        "type": "int"
+      },
+      "column": {
+        "type": "int"
+      }
+    }
+  },
+  "codespacesConnect": "连接",
+  "codespacesDisconnect": "断开",
+  "codespacesGhMissing": "容器里还没有 gh(GitHub CLI)。请先在터미널명령 실행 codecraft,선택「GitHub Codespaces」场景安装依赖。",
+  "codespacesExecutionEnv": "执行环境",
+  "codespacesEnvLocal": "로컬容器",
+  "codespacesEnvCodespace": "远程 Codespace",
+  "terminalRemoteEnv": "远程环境:{name}",
+  "@terminalRemoteEnv": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "codespacesNew": "새로 만들기 Codespace",
+  "codespacesRepoTab": "저장소",
+  "codespacesRepoSearchHint": "검색저장소",
+  "codespacesBranch": "브랜치(留空用默认브랜치)",
+  "codespacesMachine": "机器规格",
+  "codespacesMachineDefault": "默认规格",
+  "codespacesCreate": "만들기",
+  "codespacesRename": "重命名",
+  "codespacesRenameTitle": "Codespace 显示名",
+  "codespacesChangeMachine": "更改머신 유형",
+  "codespacesNoMachines": "该저장소没有선택 사항머신 유형",
+  "codespacesLoadFailed": "불러오기실패",
+  "codespacesPorts": "端口",
+  "codespacesPortsEmpty": "该 Codespace 还没有转发的端口",
+  "codespacesPortVisibility": "可见性",
+  "codespacesPortPrivate": "仅自己",
+  "codespacesPortOrg": "组织内",
+  "codespacesPortPublic": "公开",
+  "codespacesPortOpen": "열기",
+  "codespacesRebuild": "重建容器",
+  "codespacesRebuildDesc": "重建会按현재 devcontainer 重新만들기容器:代码与未提交改动保留,容器内已安装的工具与실행상태会丢失。",
+  "codespacesRebuildFull": "完全重建(同时清除缓存的 Docker 镜像,更慢)",
+  "settingsLog": "로그",
+  "settingsLogSubtitle": "应用실행로그与 AI 요청로그",
+  "logFiles": "로그파일",
+  "logNoFiles": "还没有로그파일",
+  "logReadFailed": "读取로그실패:{error}",
+  "@logReadFailed": {
+    "placeholders": {
+      "error": {
+        "type": "String"
+      }
+    }
+  },
+  "logSearchHint": "검색로그",
+  "logNoMatch": "현재筛选개件下没有로그",
+  "logLevel": "로그수준",
+  "logLevelDesc": "기록낮음于该수준的로그将被忽略。开发期建议 VERBOSE(전체기록);NONE 닫기로그。",
+  "logCopied": "已복사",
+  "logMcpPrefix": "MCP 로그:{server}",
+  "@logMcpPrefix": {
+    "placeholders": {
+      "server": {
+        "type": "String"
+      }
+    }
+  },
+  "logSearchResults": "匹配 {count} 行",
+  "@logSearchResults": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "logShowLastLines": "显示最后 {shown}/{total} 行",
+  "@logShowLastLines": {
+    "placeholders": {
+      "shown": {
+        "type": "int"
+      },
+      "total": {
+        "type": "int"
+      }
+    }
+  },
+  "logShowLines": "显示 {count} 行",
+  "@logShowLines": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "logCopy": "복사",
+  "logClearFilter": "清除筛选",
+  "logCopyMenuTitle": "복사로그",
+  "logCopyLine": "복사本개로그",
+  "logCopyWithStack": "복사本개及堆栈",
+  "logCopyMessage": "복사消息내용",
+  "logFollowLatest": "实时滚动",
+  "logFileLocation": "로그파일位于 Android/data/<包名>/files/logs/。",
+  "logLevelVerbose": "자세히",
+  "logLevelDebug": "디버그",
+  "logLevelInfo": "정보",
+  "logLevelWarn": "경고",
+  "logLevelError": "오류",
+  "logLevelNone": "닫기",
+  "credentialTokenHint": "建议用带 codespace 범위的 GitHub 令牌,填一次同时供 Git 推送与 Codespaces 登录使用",
+  "credentialHostOptional": "主机(선택 사항)",
+  "credentialHostAny": "留空 = 所有主机",
+  "credentialHostHint": "只在需要给特定主机单独配令牌时才填,例如 gitlab.com",
+  "codespacesNeedCredentialTitle": "尚미설정 GitHub 자격 증명",
+  "codespacesNeedCredentialDesc": "Codespaces 使用「Git 자격 증명」里的令牌(需含 codespace 범위),不再单独填写。",
+  "codespacesGoToCredentials": "去填写 Git 자격 증명",
+  "credentialAllHosts": "所有主机",
+  "credentialUsernameAuto": "用户名自动推导",
+  "chatMentionSkill": "@ 技能",
+  "chatMentionSkillEmpty": "还没有사용 가능的技能,先在설정里가져오기或새로 만들기一个。",
+  "chatMentionSkillManage": "管理技能",
+  "chatPickFile": "# 파일",
+  "chatPickFileParent": "上一级",
+  "chatPickFileEmpty": "这个디렉토리是空的",
+  "mentionHintSkill": "继续输入可筛选技能",
+  "mentionHintFile": "继续输入可筛选파일",
+  "fileBrowserError": "读取디렉토리실패",
+  "fileBrowserRefresh": "새로고침",
+  "fileBrowserExpand": "펼치기",
+  "fileBrowserCollapse": "접기",
+  "fileBrowserNewFile": "새로 만들기파일",
+  "fileBrowserNewFolder": "새로 만들기폴더",
+  "fileBrowserNameLabel": "이름",
+  "fileBrowserDeleteFileConfirm": "삭제하시겠습니까?파일「{name}」?",
+  "@fileBrowserDeleteFileConfirm": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "fileBrowserDeleteFolderConfirm": "삭제하시겠습니까?폴더「{name}」及其전체내용?",
+  "@fileBrowserDeleteFolderConfirm": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "fileBrowserCreateFailed": "생성에 실패했습니다,可能已存在同名개或없음写入权限",
+  "fileBrowserRenameFailed": "이름 변경에 실패했습니다,可能已存在同名개",
+  "fileBrowserDeleteFailed": "삭제에 실패했습니다",
+  "fileBrowserPasteHere": "붙여넣기到此处",
+  "fileBrowserExtract": "解压",
+  "fileBrowserExtractFailed": "解压실패",
+  "fileBrowserExtractConflictTitle": "목표폴더已存在",
+  "fileBrowserExtractConflict": "同디렉토리下已有「{name}」,解压会先覆盖它的내용。",
+  "@fileBrowserExtractConflict": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "fileBrowserExtractOverwrite": "覆盖并解压",
+  "fileBrowserPasteConflictTitle": "同名파일已存在",
+  "fileBrowserPasteConflictMessage": "목표位置已存在同名프로젝트「{name}」,是否覆盖?",
+  "@fileBrowserPasteConflictMessage": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "fileBrowserClipboardCut": "已잘라내기",
+  "fileBrowserClipboardCopy": "已복사",
+  "commonCopy": "복사",
+  "commonCut": "잘라내기",
+  "commonPaste": "붙여넣기",
+  "workspacePickWritingFolder": "写作디렉토리",
+  "writingFolderNeedAccessTitle": "需要存储访问权限",
+  "writingFolderNeedAccessDesc": "读取手机里的「AI写作」디렉토리需要「所有파일访问权限」。也可以跳过,直接在下一步선택디렉토리。",
+  "writingFolderGrant": "去授权",
+  "writingFolderSet": "写作디렉토리已设为 {path}",
+  "@writingFolderSet": {
+    "placeholders": {
+      "path": {
+        "type": "String"
+      }
+    }
+  },
+  "modelAuto": "Auto Model",
+  "modelAutoDesc": "按任务自动선택最合适的모델",
+  "sessionExport": "내보내기세션",
+  "sessionExportDone": "已내보내기到 {path}",
+  "@sessionExportDone": {
+    "placeholders": {
+      "path": {
+        "type": "String"
+      }
+    }
+  },
+  "sessionExportFailed": "내보내기실패",
+  "sessionBatchSelect": "批量선택",
+  "sessionSelectedCount": "선택됨 {count} 개",
+  "@sessionSelectedCount": {
+    "placeholders": {
+      "count": {
+        "type": "String"
+      }
+    }
+  },
+  "sessionSelectAll": "모두 선택",
+  "sessionCancelSelect": "취소",
+  "sessionDeleteSelected": "삭제所选",
+  "sessionDeleteConfirm": "삭제该세션及其전체消息?",
+  "fileBrowserNeedPermission": "없음法读取该폴더,可能需要存储访问权限",
+  "checkpointRewindTitle": "回退到此处",
+  "checkpointTargetPrompt": "목표:{snippet}",
+  "@checkpointTargetPrompt": {
+    "placeholders": {
+      "snippet": {
+        "type": "String"
+      }
+    }
+  },
+  "checkpointRestoreCodeAndConversation": "복원代码与세션",
+  "checkpointRestoreCodeAndConversationDesc": "回滚작업 영역 파일,并삭제这之后的所有消息,提问会回填到输入框",
+  "checkpointRestoreConversation": "只복원세션",
+  "checkpointRestoreConversationDesc": "삭제这之后的所有消息,작업 영역 파일保持不变",
+  "checkpointRestoreCode": "只복원代码",
+  "checkpointRestoreCodeDesc": "回滚작업 영역 파일,对话기록保持不变",
+  "checkpointRewindSkipped": "{count} 个파일因存在기타改动已跳过",
+  "@checkpointRewindSkipped": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "chatMoreOptions": "더보기옵션",
+  "chatActionEdit": "编辑",
+  "chatActionDelete": "삭제",
+  "chatEditMessageTitle": "编辑消息",
+  "commonConfirm": "확인",
+  "commonCancel": "취소",
+  "commonSave": "저장",
+  "commonClose": "닫기",
+  "commonBatchDelete": "批量삭제",
+  "tabProjects": "프로젝트",
+  "projectListEmpty": "还没有프로젝트",
+  "workspaceCurrent": "현재",
+  "workspaceNameHint": "프로젝트이름",
+  "projectNew": "새로 만들기프로젝트",
+  "projectUntitled": "未命名프로젝트",
+  "projectKindCoding": "编程",
+  "projectKindCodingDesc": "在沙盒작업 영역里写代码、跑命令、改파일",
+  "projectKindWriting": "写作",
+  "projectKindWritingDesc": "在「AI写作」디렉토리里撰写与修改文稿",
+  "projectKindReverse": "应用逆向",
+  "projectKindReverseDesc": "分析 APK、패킷 캡처接口、静态逆向与디버그辅助",
+  "projectDeleteConfirm": "삭제하시겠습니까?프로젝트「{name}」?其下所有세션都会一并삭제。",
+  "@projectDeleteConfirm": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "installedAppsTitle": "선택应用",
+  "installedAppsSearch": "검색应用名或包名",
+  "installedAppsEmpty": "没有匹配的应用",
+  "storagePermissionGrant": "去授权",
+  "softwarePermissionsTitle": "软件权限",
+  "softwarePermissionsSubtitle": "点任一개由系统弹出授权,或跳到对应的系统설정页。",
+  "systemPermissionsGroup": "系统权限",
+  "permissionStorageTitle": "访问存储空间",
+  "permissionBatteryTitle": "忽略电池优化",
+  "permissionBatteryDesc": "允许后台持续실행,减少被杀",
+  "permissionAutoStartTitle": "自시작管理",
+  "permissionAutoStartDesc": "允许系统在后台自动拉起应用",
+  "permissionShizukuTitle": "Shizuku",
+  "permissionShizukuDesc": "点击前往下载安装 Shizuku",
+  "permissionAllowed": "已允许",
+  "permissionNotAllowed": "未允许",
+  "permissionInstalled": "已安装",
+  "permissionNotInstalled": "未安装",
+  "permissionAppsTitle": "应用列表",
+  "permissionAppsDesc": "读取已安装应用的이름、包名与版本",
+  "apkPathUnavailable": "拿不到这个应用的安装包경로,换一个应用再试。",
+  "apkExtractHint": "这个프로젝트显示所选 APK 里的파일。首次浏览需要先解压一次。",
+  "apkExtractAction": "解压 APK",
+  "apkExtracting": "正在解压…",
+  "apkExtractFailed": "解压실패,可能没有读取该安装包的权限。",
+  "terminalAgentTab": "AI 命令",
+  "runModeAuto": "自动模式",
+  "runModeBuild": "构建模式",
+  "runModePlan": "计划模式",
+  "runModePlanIntercept": "현재处于计划模式,禁止执行写작업",
+  "runModeBuildAuthorize": "AI 尝试执行写작업,是否允许?",
+  "runModeBuildAllow": "允许",
+  "runModeBuildDeny": "拒绝",
+  "runModeSwitchChanged": "실행模式已切换至 {mode}",
+  "commonScrollToBottom": "回到底部",
+  "subagentTitle": "서브 에이전트",
+  "subagentSubtitle": "모델档位与사용자 정의정의",
+  "subagentTierSubtitle": "为每个档位绑定제공자与모델。미설정的档位:서브 에이전트정의写死모델时用정의모델,否则상속현재세션모델",
+  "subagentTierSection": "모델档位",
+  "subagentTierLight": "가벼움",
+  "subagentTierStandard": "균형",
+  "subagentTierStrong": "강력",
+  "subagentTierLightDesc": "只读探索、批量定位、机械改名",
+  "subagentTierStandardDesc": "单파일 수정与표준修复",
+  "subagentTierStrongDesc": "跨模块重构、疑难排查与方案设计",
+  "subagentTierUnset": "미설정(상속현재세션모델)",
+  "subagentTierPick": "선택모델",
+  "subagentTierClear": "清除",
+  "subagentTierCleared": "已清除",
+  "subagentTierSaved": "已저장",
+  "subagentTierSheetTitle": "{tier} 档모델",
+  "@subagentTierSheetTitle": {
+    "placeholders": {
+      "tier": {
+        "type": "String"
+      }
+    }
+  },
+  "subagentTierSheetHint": "선택该档位使用的제공자与모델",
+  "subagentTierSheetInherit": "상속현재세션모델",
+  "subagentNoticeTitle": "서브 에이전트",
+  "subagentStateRunning": "실행 중",
+  "subagentStateCompleted": "완료",
+  "subagentStateFailed": "执行실패",
+  "subagentStateMessage": "来消息",
+  "subagentViewOutput": "查看输出",
+  "subagentOpen": "열기",
+  "subagentOutputEmpty": "暂없음输出",
+  "subagentOutputTitle": "서브 에이전트输出",
+  "promptsTitle": "팁词",
+  "promptsScenarioSection": "场景팁词",
+  "promptsSortLongPress": "长按可调整顺序",
+  "promptsEmpty": "暂없음사용 가능片段",
+  "promptsSourceProject": "프로젝트",
+  "promptsSourceGlobal": "전역",
+  "promptsSourceLocal": "로컬",
+  "promptsSourceBuiltin": "기본 제공",
+  "promptsFieldBasic": "기본 정보",
+  "promptsFieldNumber": "번호",
+  "promptsFieldNumberPlaceholder": "두 자리 숫자,如 35",
+  "promptsFieldTitle": "이름",
+  "promptsFieldTitlePlaceholder": "예: 내 보안 규칙",
+  "promptsFieldSummary": "요약(선택 사항)",
+  "promptsFieldSummaryPlaceholder": "조각 내용을 간략히 설명,프롬프트에 주입되지 않음",
+  "promptsFieldContent": "조각 내용",
+  "promptsFieldContentPlaceholder": "写모델要遵守的내용",
+  "promptsEditorNew": "새 프롬프트",
+  "promptsEditorEdit": "프롬프트 편집",
+  "promptsAddPrompt": "조각 추가",
+  "promptsResetCustom": "사용자 정의 프롬프트 재설정",
+  "promptsResetConfirm": "将삭제현재 프로젝트与전역层里的所有사용자 정의팁词,各번호回落到기본 제공팁词。이 작업은 되돌릴 수 없습니다。",
+  "promptsResetAction": "재설정",
+  "promptsHelp": "도움말",
+  "promptsDisableBuiltin": "기본 제공 프롬프트 완전히 비활성화",
+  "promptsDisableBuiltinHint": "내 조각만 유지;모든 규칙을 직접 보완해야 함,주의해서 활성화",
+  "promptsBatchDeleteTitle": "프롬프트 삭제",
+  "promptsBatchDeleteConfirm": "선택한 항목을 삭제하시겠습니까? {count} 개의 사용자 정의 프롬프트吗?해당 번호는 다음 계층의 소스로 대체됩니다。",
+  "@promptsBatchDeleteConfirm": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "promptsScope": "범위",
+  "promptsScopeProject": "현재 프로젝트",
+  "promptsScopeGlobal": "전역",
+  "promptsSelectMode": "다중 선택",
+  "promptsSelectedCount": "선택됨 {count} 개",
+  "@promptsSelectedCount": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "promptsSelectAll": "모두 선택",
+  "promptsDeselectAll": "전체 선택 취소",
+  "promptsSummary": "요약",
+  "promptsGotIt": "알겠습니다",
+  "promptsSubtitle": "사용자 정의 프롬프트 조각",
+  "novelNew": "새 소설",
+  "novelFieldName": "제목",
+  "novelFieldNameHint": "예: 수선계에서 슈퍼마켓 개점",
+  "novelFieldGender": "소설 장르",
+  "novelGenderMale": "남성향",
+  "novelGenderFemale": "여성향",
+  "novelFieldTags": "소설 태그",
+  "novelFieldTagsHint": "可다중 선택,也可以사용자 정의",
+  "novelCustomTagHint": "사용자 정의태그",
+  "novelFieldWordsPerChapter": "장당 글자 수",
+  "novelFieldWordsHint": "선택 사항档位,也可以사용자 정의",
+  "novelCreate": "만들기",
+  "novelPickExisting": "기존 소설 선택",
+  "novelOpen": "열기",
+  "novelExistingEmpty": "「AI소설」디렉토리里还没有기타小说",
+  "novelExistingEmptyHint": "把小说폴더放进 AI小说 디렉토리后,再回到这里선택",
+  "novelExistingFailed": "소설 목록 읽기 실패",
+  "novelExistingBrief": "집필 계속已有小说《{title}》,먼저 읽기「소설 자료」与已有章节,了解设定与进度后再动笔。",
+  "@novelExistingBrief": {
+    "placeholders": {
+      "title": {
+        "type": "String"
+      }
+    }
+  },
+  "novelBriefTitle": "새 소설《{title}》",
+  "@novelBriefTitle": {
+    "placeholders": {
+      "title": {
+        "type": "String"
+      }
+    }
+  },
+  "novelBriefTags": "태그:{tags}",
+  "@novelBriefTags": {
+    "placeholders": {
+      "tags": {
+        "type": "String"
+      }
+    }
+  },
+  "novelBriefWords": "장당 글자 수:{words}",
+  "@novelBriefWords": {
+    "placeholders": {
+      "words": {
+        "type": "String"
+      }
+    }
+  },
+  "novelScaffoldFailedTitle": "소설 디렉토리 생성 실패",
+  "novelScaffoldFailed": "{path} 에서 소설 디렉토리를 생성할 수 없음,请检查存储权限后재시도。",
+  "@novelScaffoldFailed": {
+    "placeholders": {
+      "path": {
+        "type": "String"
+      }
+    }
+  },
+  "agentTitle": "서브 에이전트",
+  "agentSubtitle": "사용자 정의 서브 에이전트 정의",
+  "agentListEmpty": "사용자 정의 서브 에이전트 없음",
+  "agentListEmptyHint": "点右上角 + 새로 만들기사용자 정의 서브 에이전트 정의",
+  "agentScopeProject": "현재 프로젝트",
+  "agentScopeGlobal": "전역",
+  "agentScopeProjectHint": "현재 작업 영역에만 적용",
+  "agentScopeGlobalHint": "모든 프로젝트 공유",
+  "agentNew": "새 서브 에이전트",
+  "agentEdit": "서브 에이전트 편집",
+  "agentSave": "저장",
+  "agentCancel": "취소",
+  "agentDelete": "삭제",
+  "agentDeleteTitle": "삭제서브 에이전트",
+  "agentDeleteConfirm": "삭제 {name}?此작업不可恢复。",
+  "agentImport": "가져오기",
+  "agentName": "이름",
+  "agentDescription": "용도 설명",
+  "agentDescriptionHint": "이 서브 에이전트를 선택할 시점",
+  "agentPrompt": "프롬프트 본문",
+  "agentPromptHint": "기본 시스템 프롬프트 이후에 추가할 전용 명령어",
+  "agentProvider": "제공자",
+  "agentModel": "모델",
+  "agentReasoningEffort": "사고 강도",
+  "agentMode": "기본 모드",
+  "agentTools": "도구 화이트리스트",
+  "agentToolsHint": "비워두면 모든 도구 개방",
+  "agentDisallowedTools": "도구 블랙리스트",
+  "agentInject": "규칙 조각 주입",
+  "agentInjectHint": "base/mainRules/skills/memory/projectRules 또는 none",
+  "agentEnable": "활성화",
+  "agentDisable": "비활성화",
+  "agentEnabled": "활성화됨",
+  "agentDisabled": "비활성화됨",
+  "agentErrorInvalidName": "잘못된 이름입니다",
+  "agentErrorEmptyPrompt": "프롬프트 본문을 입력하세요",
+  "agentErrorNameConflict": "이 범위에 이미 동일한 이름의 서브 에이전트가 있음",
+  "agentErrorIoFailed": "파일 쓰기 실패",
+  "agentCapabilityRead": "파일 읽기",
+  "agentCapabilityWrite": "파일 수정",
+  "agentCapabilityCommand": "명령 실행",
+  "agentBuiltin": "기본 제공",
+  "agentBuiltinHint": "첫 시작 시 배포,업그레이드 시 완전히 유지",
+  "agentSelectMode": "다중 선택",
+  "agentBatchEnable": "활성화",
+  "agentBatchDisable": "비활성화",
+  "agentBatchDelete": "삭제",
+  "agentBatchAll": "모두 선택",
+  "agentBatchCancel": "취소",
+  "agentSelectedCount": "선택됨 {count} 개",
+  "agentBatchDeleteConfirm": "{count} 개의 서브 에이전트를 삭제하시겠습니까? 이 작업은 복구할 수 없습니다。",
+  "agentBatchDeleting": "삭제 중…",
+  "agentInherit": "세션 상속",
+  "agentReasoningNone": "없음",
+  "agentReasoningMinimal": "매우 낮음",
+  "agentReasoningLow": "낮음",
+  "agentReasoningMedium": "중간",
+  "agentReasoningHigh": "높음",
+  "agentReasoningXhigh": "매우 높음",
+  "agentReasoningMax": "최대",
+  "agentModeBuild": "Build",
+  "agentModePlan": "Plan",
+  "agentModeAuto": "Auto",
+  "agentDetail": "서브 에이전트 상세",
+  "agentDetailHint": "编辑정의;이름 변경 시 정의 파일도 함께 이름 변경",
+  "promptsFieldType": "유형",
+  "promptsSaveFailed": "저장 실패",
+  "promptsNoOverrideToDelete": "이 프롬프트에 삭제 가능한 사용자 정의 덮어쓰기 없음",
+  "codespacesSearchHint": "이름으로 검색、저장소또는 분기로 검색",
+  "codespacesFilterAll": "전체",
+  "codespacesFilterRunning": "실행 중",
+  "codespacesFilterStopped": "중지됨",
+  "codespacesNoMatch": "현재 필터와 일치하는 Codespace 없음",
+  "codespacesStartAndConnect": "시작 및 연결",
+  "codespacesConnecting": "연결 중…",
+  "codespacesWaitingForStart": "Codespace 사용 가능 대기 중…",
+  "codespacesConnectError": "연결 실패：{error}",
+  "@codespacesConnectError": {
+    "placeholders": {
+      "error": {
+        "type": "String"
+      }
+    }
+  },
+  "codespacesDetails": "상세",
+  "codespacesOverview": "개요",
+  "codespacesBranchLabel": "브랜치",
+  "codespacesMachineLabel": "머신 유형",
+  "codespacesLocation": "리전",
+  "codespacesIdleTimeout": "휴식 시간 초과（분）",
+  "codespacesRetentionPeriod": "보존 기간（일）",
+  "codespacesDevcontainerPath": "Dev container 경로",
+  "codespacesCreatedAt": "생성 시간",
+  "codespacesOwner": "소유자",
+  "codespacesBillableOwner": "결제 소유자",
+  "codespacesCopySsh": "SSH 명령 복사",
+  "codespacesSshCopied": "SSH 명령 복사됨",
+  "codespacesOpenWeb": "VS Code 웹 버전에서 열기",
+  "codespacesUnpushed": "푸시되지 않은 커밋 있음",
+  "codespacesGitStatus": "Git 상태",
+  "codespacesActions": "작업",
+  "codespacesPendingOperation": "작업 실행 중",
+  "codespacesStateQueued": "대기 중",
+  "codespacesStateProvisioning": "프로비저닝 중",
+  "codespacesStateShuttingDown": "중지 중",
+  "codespacesStateFailed": "실패",
+  "codespacesStateDeleting": "삭제 중",
+  "codespacesCurrentEnv": "현재 환경",
+  "codespacesSwitchToLocal": "로컬 컨테이너로 전환",
+  "codespacesManage": "Codespaces 관리",
+  "codespacesQuickActions": "Codespaces",
+  "codespacesPortCopyUrl": "링크 복사",
+  "codespacesPortUrlCopied": "링크 복사됨",
+  "codespacesErrorInline": "{error}",
+  "@codespacesErrorInline": {
+    "placeholders": {
+      "error": {
+        "type": "String"
+      }
+    }
+  },
+  "codespacesRetry": "재시도",
+  "codespacesRegionDefault": "기본 리전",
+  "codespacesAdvanced": "고급 옵션",
+  "codespacesDevcontainerPathHint": "devcontainer.json 경로（선택 사항）",
+  "codespacesIdleTimeoutHint": "휴식 후 자동 중지까지의 분 수（선택 사항）",
+  "codespacesRetentionHint": "중지后保留일数（선택 사항）",
+  "codespacesReadinessTitle": "연결 준비 완료",
+  "codespacesReadinessCredOk": "GitHub 자격 증명：설정됨",
+  "codespacesReadinessCredMissing": "GitHub 자격 증명：미설정（需含 codespace 权限的令牌）",
+  "codespacesReadinessGhOk": "gh CLI：준비 완료",
+  "codespacesReadinessGhMissing": "gh CLI：준비 안 됨（터미널에서 codecraft 실행하여 「GitHub Codespaces」시나리오 설치）",
+  "codespacesOpenTerminal": "터미널에서 열기",
+  "codespacesOpenGit": "Git 열기 (배포/동기화)",
+  "codespacesManageCredentials": "자격 증명 관리",
+  "codespacesDeploySyncHint": "Git 푸시/풀 등 작업会作用于현재执行环境；连接 Codespace 后即在远端저장소执行部署/同步。",
+  "gitExecutionTargetCodespace": "현재 작업은 Codespace에 적용：{name}",
+  "@gitExecutionTargetCodespace": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "gitExecutionTargetLocal": "현재 작업은 로컬 컨테이너에 적용",
+  "gitDeploySyncSection": "배포 / 동기화",
+  "gitDeploySyncHintCodespace": "푸시, 풀 및 원격 작업연결된 Codespace에서 실행。",
+  "gitDeploySyncHintLocal": "푸시, 풀 및 원격 작업로컬 컨테이너에서 실행；Codespace 연결 시 원격에서 배포/동기화 가능。",
+  "gitOpenCodespaces": "Codespaces",
+  "gitOpenTerminal": "터미널",
+  "terminalCodespaceManage": "Codespaces 관리",
+  "terminalCodespaceCredentials": "Git 자격 증명",
+  "captureTitle": "패킷 캡처",
+  "captureStart": "프록시 시작",
+  "captureStop": "중지",
+  "captureRunning": "실행 중",
+  "captureStopped": "중지됨",
+  "capturePort": "프록시 포트",
+  "captureClear": "기록 비우기",
+  "captureSearchHint": "URL / 메서드 / 상태 코드 검색",
+  "captureEmpty": "패킷 캡처 기록 없음。프록시 시작 후，대상 트래픽을 프록시로 127.0.0.1:<포트>。",
+  "captureLimitHint": "仅抓取经代理的流量。HTTPS는 CA 설치 및 신뢰 필요；Android 7+ 대부분의 앱 및 인증서 고정 앱은 MITM 불가능（디버그 버전/신뢰된 인증서 시나리오에서 사용 가능）。",
+  "captureCaTitle": "CA 인증서",
+  "captureCaPath": "인증서 경로",
+  "captureCaGuide": "시스템/사용자 인증서에 설치하고 신뢰 설정（네트워크/HTTPS 캡처용）。Android 설정 경로는 기종에 따라 다름，일반적으로 「보안/암호화 및 자격 증명/인증서 설치」。설치 후 HTTP 프록시를 127.0.0.1:<포트>로 설정。",
+  "captureCopyPath": "경로 복사",
+  "captureDetail": "요청 상세",
+  "captureRequest": "요청",
+  "captureResponse": "응답",
+  "captureNotFound": "기록 없음",
+  "captureCopyUrl": "URL 복사",
+  "captureInstallCa": "인증서 설치",
+  "captureOpenSecurity": "보안 설정",
+  "captureDownloadCa": "인증서 저장",
+  "captureCaInstallFail": "직접 설치 불가 (경로 복사됨)，시스템 보안 설정에서 수동으로 인증서 설치。",
+  "captureVpnPermissionDenied": "VPN 권한 거부됨，패킷 캡처를 사용할 수 없음。VPN 권한 허용 후 다시 시도。",
+  "captureSequence": "모든 요청",
+  "captureDomains": "도메인 목록",
+  "captureDomainSubtitle": "마지막 요청: {time} · {count} 개",
+  "@captureDomainSubtitle": {
+    "placeholders": {
+      "time": {
+        "type": "String"
+      },
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "captureClearConfirm": "모든 패킷 캡처 기록을 삭제하시겠습니까?",
+  "capturePip": "PIP 모드",
+  "capturePipUnsupported": "이 기기에서 PIP 모드를 지원하지 않음",
+  "capturePipNoTraffic": "트래픽 없음",
+  "captureNoDomains": "도메인 없음",
+  "captureCopyHost": "도메인 복사",
+  "captureDeleteConfirm": "삭제该域名的전체기록？",
+  "captureSort": "정렬",
+  "captureOverview": "개요",
+  "captureCookies": "쿠키",
+  "captureProtocol": "프로토콜",
+  "captureDuration": "소요 시간",
+  "captureSize": "크기",
+  "captureRemoteAddress": "원격 주소",
+  "captureRequestTime": "요청 시간",
+  "capturePath": "경로",
+  "captureStatusCode": "상태 코드",
+  "captureRequestHeaders": "요청 헤더",
+  "captureResponseHeaders": "응답 헤더",
+  "captureRequestBody": "요청 본문",
+  "captureResponseBody": "응답 본문",
+  "captureBodyTruncated": " (내용이 잘림)",
+  "captureFormatted": "서식 지정",
+  "captureRaw": "원문",
+  "captureNoCookies": "쿠키 없음",
+  "captureRequestCookies": "요청 쿠키",
+  "captureResponseCookies": "응답 Set-Cookie",
+  "backupAndRestore": "백업 및 복원",
+  "selectExportData": "내보낼 데이터 선택",
+  "aiProvider": "AI 공급자",
+  "connectSync": "연결 및 동기화",
+  "chatRecords": "채팅 기록",
+  "mcpServer": "MCP 서버",
+  "permissionRules": "권한 규칙",
+  "appSettings": "앱 설정",
+  "workspaceFiles": "작업 영역 파일",
+  "workspaceFilesHint": "작업 영역 파일은 Git 커밋으로 백업하는 것이 좋습니다，내보낸 백업은 예비용으로만 사용",
+  "exportBackup": "백업 내보내기",
+  "exportBackupDesc": "내보낼 데이터 선택，비밀번호로 암호화 가능",
+  "importBackup": "백업 가져오기",
+  "importBackupDesc": "백업 파일에서 데이터 복원",
+  "localBackup": "로컬 백업",
+  "cloudBackup": "클라우드 백업"
+}

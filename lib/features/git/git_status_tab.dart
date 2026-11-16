@@ -2,12 +2,10 @@ import 'package:flutter/material.dart';
 import '../../core/icons/iconfont.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:go_router/go_router.dart';
 
 import '../../agent/models/git_models.dart';
 import '../../core/theme/semantic_colors.dart';
 import '../../core/theme/tokens.dart';
-import '../../data/execution_target.dart';
 import '../../data/git_controller.dart';
 import '../../l10n/app_localizations.dart';
 import 'widgets/git_common.dart';
@@ -394,9 +392,8 @@ class _GitStatusTabState extends ConsumerState<GitStatusTab> {
           ),
         ),
 
-        // 部署/同步（push/pull/remote）作用于当前执行环境。
+        // 部署/同步（push/pull/remote）在本地执行环境中执行。
         Builder(builder: (context) {
-          final target = ref.watch(executionTargetProvider);
           final theme = Theme.of(context);
           return Padding(
             padding: const EdgeInsets.only(top: Spacing.md),
@@ -406,7 +403,7 @@ class _GitStatusTabState extends ConsumerState<GitStatusTab> {
                 Row(
                   children: [
                     Icon(
-                      target.isRemote ? Iconfont.cloud : Iconfont.hardDrive,
+                      Iconfont.hardDrive,
                       size: 14,
                       color: theme.colorScheme.primary,
                     ),
@@ -420,21 +417,12 @@ class _GitStatusTabState extends ConsumerState<GitStatusTab> {
                         ),
                       ),
                     ),
-                    TextButton(
-                      onPressed: () => context.push('/codespaces'),
-                      style: TextButton.styleFrom(
-                        padding: const EdgeInsets.symmetric(horizontal: 8),
-                        minimumSize: Size.zero,
-                        tapTargetSize: MaterialTapTargetSize.shrinkWrap,
-                      ),
-                      child: Text(l10n.gitOpenCodespaces, style: theme.textTheme.labelSmall),
-                    ),
                   ],
                 ),
                 Padding(
                   padding: const EdgeInsets.only(bottom: Spacing.xs),
                   child: Text(
-                    target.isRemote ? l10n.gitDeploySyncHintCodespace : '推送、拉取与远程操作在本地执行环境中执行',
+                    '推送、拉取与远程操作在本地执行环境中执行',
                     style: theme.textTheme.bodySmall?.copyWith(
                       color: theme.colorScheme.onSurfaceVariant,
                     ),

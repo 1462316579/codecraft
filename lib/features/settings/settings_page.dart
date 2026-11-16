@@ -145,6 +145,12 @@ class SettingsPage extends ConsumerWidget {
                           subtitle: l10n.aboutSubtitle,
                           onTap: () => context.push('/settings/about'),
                         ),
+                        const SettingsDivider(indent: SettingsRow.textIndent),
+                        SettingsRow(
+                          icon: Iconfont.download,
+                          title: l10n.backupAndRestore,
+                          onTap: () => context.push('/settings/backup-restore'),
+                        ),
                       ],
                     ),
                   ],

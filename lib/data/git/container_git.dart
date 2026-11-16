@@ -5,7 +5,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:path/path.dart' as p;
 
 import '../../agent/models/git_models.dart';
-import '../execution_target.dart';
+import '../container/container_engine_provider.dart';
 import 'git_graph_builder.dart';
 import 'git_graph_models.dart';
 import 'git_runner.dart';
@@ -835,12 +835,9 @@ class ContainerGit {
       line.endsWith('\r') ? line.substring(0, line.length - 1) : line;
 }
 
-/// git 服务:懒取执行引擎(本地容器或 Codespace),供 Git 页在容器就绪前即可构建。
-///
-/// 目标是 Codespace 时每条 git 命令都会新起一次 `gh codespace ssh`,
-/// 单次操作因此比本地慢数秒——换来的是 Git 页与终端/工具操作的是同一个环境。
+/// git 服务:懒取本地容器执行引擎,供 Git 页在容器就绪前即可构建。
 final containerGitProvider = Provider<ContainerGit>(
   (ref) => ContainerGit(
-    GitRunner(() => ref.read(executionEngineProvider.future)),
+    GitRunner(() async => ref.read(containerEngineProvider)),
   ),
 );

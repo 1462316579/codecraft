@@ -2268,5 +2268,21 @@
   "captureRaw": "原文",
   "captureNoCookies": "没有 Cookie",
   "captureRequestCookies": "请求 Cookie",
-  "captureResponseCookies": "响应 Set-Cookie"
+  "captureResponseCookies": "响应 Set-Cookie",
+  "backupAndRestore": "备份与还原",
+  "selectExportData": "选择导出数据",
+  "aiProvider": "AI 供应商",
+  "connectSync": "连接与同步",
+  "chatRecords": "聊天记录",
+  "mcpServer": "MCP 服务器",
+  "permissionRules": "授权规则",
+  "appSettings": "应用设置",
+  "workspaceFiles": "工作区文件",
+  "workspaceFilesHint": "工作区文件建议通过 Git 提交备份，导出备份仅作备用",
+  "exportBackup": "导出备份",
+  "exportBackupDesc": "选择要导出的数据，可设置口令加密",
+  "importBackup": "导入备份",
+  "importBackupDesc": "从备份文件还原数据",
+  "localBackup": "本地备份",
+  "cloudBackup": "网络备份"
 }

@@ -92,12 +92,10 @@ apt_java_headless() {
 runtime_pkgs() {
     case "$PMGR:$1" in
         apk:node)    echo "nodejs npm" ;;
-        apk:gh)      echo "github-cli" ;;
         apk:python)  echo "python3 py3-pip" ;;
         apk:java)    echo "openjdk17-jdk" ;;
         apk:go)      echo "go" ;;
         apt:node)    echo "nodejs npm" ;;
-        apt:gh)      echo "gh" ;;
         apt:python)  echo "python3 python3-pip python3-venv" ;;
         apt:java)    echo "$(apt_java_headless)" ;;
         apt:go)      echo "golang-go" ;;
@@ -106,7 +104,6 @@ runtime_pkgs() {
         dnf:java|yum:java)     echo "java-17-openjdk-headless" ;;
         dnf:go|yum:go)         echo "golang" ;;
         pacman:node)   echo "nodejs npm" ;;
-        pacman:gh)     echo "github-cli" ;;
         pacman:python) echo "python python-pip" ;;
         pacman:java)   echo "jdk17-openjdk" ;;
         pacman:go)     echo "go" ;;
@@ -114,7 +111,6 @@ runtime_pkgs() {
         apk:php)       echo "php83 composer" ;;
         apt:rust)      echo "rustc cargo" ;;
         apt:php)       echo "php-cli composer" ;;
-        dnf:gh|yum:gh)     echo "gh" ;;
         dnf:rust|yum:rust) echo "rust cargo" ;;
         dnf:php)           echo "php-cli composer" ;;
         yum:php)           echo "php-cli" ;;
@@ -218,7 +214,6 @@ pkg_for() {
         go)     [ -n "$go_pkg" ] && echo "$go_pkg" || runtime_candidates go | head -1 ;;
         rust)   [ -n "$rust_pkg" ] && echo "$rust_pkg" || runtime_candidates rust | head -1 ;;
         php)    [ -n "$php_pkg" ] && echo "$php_pkg" || runtime_candidates php | head -1 ;;
-        gh)     runtime_candidates gh | head -1 ;;
     esac
 }
 
@@ -282,7 +277,6 @@ show_plan() {
                 go)     plan_line "Go" "$(runtime_install go)" "$(ver_for go)" ;;
                 rust)   plan_line "Rust" "$(runtime_install rust)" "$(ver_for rust)" ;;
                 php)    plan_line "PHP" "$(runtime_install php)" "$(ver_for php)" ;;
-                gh)     plan_line "GitHub CLI" "$(runtime_install gh)" "$(ver_for gh)" ;;
             esac
         done
     else
@@ -365,9 +359,6 @@ install_custom() {
         pick_candidate rust
         rust_pkg=$PICKED_PKG
         runtimes="$runtimes rust"
-    fi
-    if ask_yn "是否安装 GitHub CLI（Codespaces 需要）？" n; then
-        runtimes="$runtimes gh"
     fi
     if ask_yn "是否安装 PHP？" n; then
         echo "  PHP 可用主版本："
@@ -619,7 +610,7 @@ EOF
 # ── 场景框架 ──
 # 每个开发环境一个脚本，放在 lib/scenarios/ 下，定义 scenario_name_<id> 与 install_scenario_<id>；
 # SCENARIO_IDS 决定菜单顺序。android / flutter 较重，逻辑在各自文件里（共用 lib/android-sdk.sh）。
-SCENARIO_IDS="codespaces common python node android flutter java go rust php base"
+SCENARIO_IDS="common python node android flutter java go rust php base"
 
 # 载入共享工具与各场景脚本（android-sdk.sh 供 android / flutter 场景共用）
 [ -f "$CODECRAFT_LIB_DIR/android-sdk.sh" ] && . "$CODECRAFT_LIB_DIR/android-sdk.sh"

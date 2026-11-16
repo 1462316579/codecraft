@@ -89,7 +89,7 @@ class _HomeShellState extends ConsumerState<HomeShell> {
         ),
       );
     }
-    // 「项目」页签恒为项目列表;聊天是独立页面(push 进去,返回即回到列表)。
+    // 「项目」页签恒为项目列表
     // 启动一律停在项目列表——不自动跳进上次的聊天页。
     return Scaffold(
       extendBody: true,

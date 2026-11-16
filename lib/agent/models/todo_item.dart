@@ -157,8 +157,8 @@ class TodoSnapshot {
       }
       items.sort((a, b) => a.order.compareTo(b.order));
       return TodoSnapshot(
-        total: total.toInt(),
-        completed: body['completed'] is num ? (body['completed'] as num).toInt() : 0,
+        total: items.length,
+        completed: items.where((item) => item.status == TodoStatus.completed).length,
         items: items,
       );
     } catch (_) {

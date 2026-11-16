@@ -7,11 +7,10 @@ import '../agent/models/project.dart';
 import '../agent/tools/workspace.dart';
 import '../app/current_project.dart';
 import 'container/external_storage.dart';
-import 'execution_target.dart';
 import 'novel_project.dart';
 
-/// 工作区来源:容器内沙盒、手机外部存储、GitHub Codespaces。
-enum WorkspaceKind { internal, external, codespaces }
+/// 工作区来源:容器内沙盒、手机外部存储。
+enum WorkspaceKind { internal, external }
 
 /// 一个工作区:名称 + 目录路径 + 来源 + 归属项目(可选)。
 class WorkspaceInfo {
@@ -28,7 +27,6 @@ class WorkspaceInfo {
   final String? projectId;
 
   bool get isExternal => kind == WorkspaceKind.external;
-  bool get isCodespace => kind == WorkspaceKind.codespaces;
 }
 
 /// 写作模式的默认外部目录(位于主存储根下)。
@@ -42,9 +40,8 @@ class WorkspacesState {
 
 /// 当前工作区:按项目类型与执行环境派生,不保存「当前选中哪个」这类可变状态。
 ///
-/// 项目决定模式、模式与执行环境共同决定目录:
+/// 项目决定模式,模式决定目录:
 /// - 编程 + 本地容器: 容器根/`<项目名>`(按项目隔离,不再共享)
-/// - 编程 + Codespaces: 容器根/`<Codespace 名>`
 /// - 写作: 外部存储 `/storage/emulated/0/AI小说/<小说名>`
 /// - 逆向: 容器根/`apk-<项目 id>`
 /// - 无当前项目: 容器根目录
@@ -66,14 +63,8 @@ final currentWorkspaceProvider = Provider<Workspace>((ref) {
       }
       return Workspace(ref.watch(workspaceProvider).rootPath);
     case ProjectKind.coding:
-      final target = ref.watch(executionTargetProvider);
-      if (target is CodespaceExecutionTarget) {
-        // Codespace 工作区:按 Codespace 名隔离,直接位于容器根下
-        return Workspace(p.join(ref.watch(workspaceProvider).rootPath, target.name));
-      } else {
-        // 容器内按项目隔离:直接位于容器根下,不加 workspace 前缀
-        return Workspace(p.join(ref.watch(workspaceProvider).rootPath, project.name));
-      }
+      // 容器内按项目隔离:直接位于容器根下,不加 workspace 前缀
+      return Workspace(p.join(ref.watch(workspaceProvider).rootPath, project.name));
   }
 });
 
@@ -103,21 +94,12 @@ final currentWorkspaceInfoProvider = Provider<WorkspaceInfo?>((ref) {
         );
       }
     case ProjectKind.coding:
-      final target = ref.watch(executionTargetProvider);
-      if (target is CodespaceExecutionTarget) {
-        info = WorkspaceInfo(
-          name: target.label,
-          path: p.join(ref.watch(workspaceProvider).rootPath, target.name),
-          kind: WorkspaceKind.codespaces,
-        );
-      } else {
-        info = WorkspaceInfo(
-          name: project.name,
-          path: p.join(ref.watch(workspaceProvider).rootPath, project.name),
-          kind: WorkspaceKind.internal,
-          projectId: project.id,
-        );
-      }
+      info = WorkspaceInfo(
+        name: project.name,
+        path: p.join(ref.watch(workspaceProvider).rootPath, project.name),
+        kind: WorkspaceKind.internal,
+        projectId: project.id,
+      );
   }
   return info;
 });
@@ -130,11 +112,7 @@ String apkWorkspaceDir(String sandboxRoot, String projectId) =>
 String writingProjectDir(String externalRoot, String title) =>
     p.join(externalRoot, NovelScaffold.dirName(title));
 
-/// 工作区列表(供文件树等 UI 列举可用的工作区根目录)。
-///
-/// 由执行环境决定包含哪些:
-/// - 本地容器: internal + external
-/// - Codespaces: internal + external + codespaces
+/// 工作区列表(供文件树等 UI 列举可用的工作区根目录):internal + external。
 final workspacesProvider =
     AsyncNotifierProvider<WorkspacesNotifier, WorkspacesState>(WorkspacesNotifier.new);
 
@@ -143,7 +121,6 @@ class WorkspacesNotifier extends AsyncNotifier<WorkspacesState> {
 
   @override
   Future<WorkspacesState> build() async {
-    final target = ref.watch(executionTargetProvider);
     final workspaces = <WorkspaceInfo>[
       WorkspaceInfo(
         name: '容器',
@@ -168,17 +145,6 @@ class WorkspacesNotifier extends AsyncNotifier<WorkspacesState> {
         kind: WorkspaceKind.external,
       ),
     );
-
-    // Codespaces 工作区:仅连接到 Codespace 时才列出,直接位于容器根下
-    if (target is CodespaceExecutionTarget) {
-      workspaces.add(
-        WorkspaceInfo(
-          name: 'Codespaces: ${target.label}',
-          path: p.join(_internalRoot, target.name),
-          kind: WorkspaceKind.codespaces,
-        ),
-      );
-    }
 
     return WorkspacesState(workspaces: workspaces);
   }
