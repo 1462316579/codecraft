@@ -39,7 +39,7 @@ android {
                 abiFilters 'arm64-v8a'
             }
         }
-        minSdk = 14
+        minSdk = 23
         // 必须保持 28（对齐 ZeroTermux / Termux 官方）：
         // Android 10 (API 29) 起，targetSdk >= 29 的应用被 SELinux 禁止执行
         // 应用私有目录 (app_data_file) 中的文件（W^X 策略）。
@@ -50,8 +50,6 @@ android {
         targetSdk = 28
         versionCode = flutter.versionCode
         versionName = flutter.versionName
-        // minSdk < 21 时启用 core library desugaring 必须开启 multidex。
-        multiDexEnabled true
     }
 
     signingConfigs {
@@ -118,6 +116,4 @@ dependencies {
     implementation("io.github.rosemoe:editor:0.23.7")
     implementation("io.github.rosemoe:language-textmate:0.23.7")
     coreLibraryDesugaring("com.android.tools:desugar_jdk_libs:2.1.5")
-    // minSdk < 21 的 multidex 运行时支持
-    implementation("androidx.multidex:multidex:2.0.1")
 }

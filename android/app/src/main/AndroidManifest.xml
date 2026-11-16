@@ -33,7 +33,7 @@
         android:maxSdkVersion="29" />
     <application
         android:label="CodeCraft"
-        android:name="androidx.multidex.MultiDexApplication"
+        android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
         <activity
             android:name=".MainActivity"
