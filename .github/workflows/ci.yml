@@ -51,15 +51,65 @@ jobs:
           export PATH=/opt/flutter/bin:$PATH
           flutter pub get
 
-      - name: Build Android APK (release)
+      - name: Build Android APK (release, arm64)
         run: |
           export PATH=/opt/flutter/bin:$PATH
           export JAVA_HOME=$JAVA_HOME_17_X64
           flutter build apk --release --no-tree-shake-icons
 
-      - name: Upload APK artifact
+      - name: Build Android APK (release, universal)
+        if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+        run: |
+          export PATH=/opt/flutter/bin:$PATH
+          export JAVA_HOME=$JAVA_HOME_17_X64
+          flutter build apk --release --no-tree-shake-icons --target-platform android-arm64,armv7,x86_64,x86
+          mv build/app/outputs/flutter-apk/app-release.apk build/app/outputs/flutter-apk/codecraft-universal-release.apk
+
+      - name: Rename release APK
+        if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+        run: |
+          mv build/app/outputs/flutter-apk/app-release.apk build/app/outputs/flutter-apk/codecraft-release.apk
+
+      - name: Upload release APK artifact
         uses: actions/upload-artifact@v4
         with:
-          name: app-release-apk
-          path: build/app/outputs/flutter-apk/app-release.apk
+          name: codecraft-release-apk
+          path: build/app/outputs/flutter-apk/codecraft-release.apk
           retention-days: 7
+
+      - name: Upload universal APK artifact
+        if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+        uses: actions/upload-artifact@v4
+        with:
+          name: codecraft-universal-release-apk
+          path: build/app/outputs/flutter-apk/codecraft-universal-release.apk
+          retention-days: 7
+
+      - name: Create GitHub Release and upload APKs
+        if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          # 版本号取自 pubspec.yaml（如 1.0.0+1 → v1.0.0）
+          VERSION=$(grep '^version:' pubspec.yaml | sed 's/version:[[:space:]]*//' | cut -d'+' -f1)
+          TAG="v$VERSION"
+          # 获取最近提交作为更新内容（最多 10 条）
+          CHANGELOG=$(git log --oneline -10 --pretty=format:"- %s")
+          NOTES="CodeCraft $TAG 正式版
+
+## 更新内容
+$CHANGELOG"
+          # 仅在 tag 不存在时创建
+          if ! gh release view "$TAG" --repo "$GITHUB_REPOSITORY" > /dev/null 2>&1; then
+            gh release create "$TAG" \
+              --repo "$GITHUB_REPOSITORY" \
+              --title "CodeCraft $TAG" \
+              --notes "$NOTES" \
+              --draft=false \
+              --prerelease=false
+          fi
+          gh release upload "$TAG" \
+            --repo "$GITHUB_REPOSITORY" \
+            build/app/outputs/flutter-apk/codecraft-release.apk \
+            build/app/outputs/flutter-apk/codecraft-universal-release.apk \
+            --clobber

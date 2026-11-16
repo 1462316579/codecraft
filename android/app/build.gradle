@@ -29,12 +29,17 @@ android {
         applicationId = "ids.codecraft.app"
         // You can update the following values to match your application needs.
         // For more information, see: https://flutter.dev/to/review-gradle-config.
-        // 只打包 arm64:与 flutter build apk --target-platform android-arm64 一致,
+        // 默认只打包 arm64:与 flutter build apk --target-platform android-arm64 一致,
         // 也避免 AGP 为未使用的 ABI 额外配置 native 构建。
-        ndk {
-            abiFilters 'arm64-v8a'
+        // 打 universal 包时去掉 abiFilters: flutter build apk --target-platform android-arm64,armv7,x86_64,x86
+        // 或者通过 gradle 属性 -Puniversal=1 打全平台包。
+        def universal = project.hasProperty('universal') && project.property('universal') == 'true'
+        if (!universal) {
+            ndk {
+                abiFilters 'arm64-v8a'
+            }
         }
-        minSdk = 26
+        minSdk = 14
         // 必须保持 28（对齐 ZeroTermux / Termux 官方）：
         // Android 10 (API 29) 起，targetSdk >= 29 的应用被 SELinux 禁止执行
         // 应用私有目录 (app_data_file) 中的文件（W^X 策略）。
@@ -53,6 +58,10 @@ android {
             keyPassword keystoreProperties['keyPassword']
             storeFile file(keystoreProperties['storeFile'] ?: 'upload-keystore.jks')
             storePassword keystoreProperties['storePassword']
+            v1SigningEnabled true
+            v2SigningEnabled true
+            v3SigningEnabled true
+            v4SigningEnabled true
         }
     }
 
@@ -89,6 +98,14 @@ android {
 
 flutter {
     source = "../.."
+}
+
+// 自定义 APK 输出文件名：codecraft-release.apk / codecraft-debug.apk
+android.applicationVariants.all { variant ->
+    def baseName = "codecraft-${variant.buildType.name}"
+    variant.outputs.all { output ->
+        output.fileName = "${baseName}.apk"
+    }
 }
 
 dependencies {

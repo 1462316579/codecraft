@@ -3146,6 +3146,60 @@ abstract class AppLocalizations {
   /// **'版本、更新与反馈'**
   String get aboutSubtitle;
 
+  /// No description provided for @aboutAutoCheck.
+  ///
+  /// In zh, this message translates to:
+  /// **'自动检查更新'**
+  String get aboutAutoCheck;
+
+  /// No description provided for @aboutAutoCheckDesc.
+  ///
+  /// In zh, this message translates to:
+  /// **'打开 App 时自动检测新版本'**
+  String get aboutAutoCheckDesc;
+
+  /// No description provided for @aboutUpdateChannel.
+  ///
+  /// In zh, this message translates to:
+  /// **'更新通道'**
+  String get aboutUpdateChannel;
+
+  /// No description provided for @aboutStableChannel.
+  ///
+  /// In zh, this message translates to:
+  /// **'稳定版'**
+  String get aboutStableChannel;
+
+  /// No description provided for @aboutDownloadMirror.
+  ///
+  /// In zh, this message translates to:
+  /// **'下载镜像源'**
+  String get aboutDownloadMirror;
+
+  /// No description provided for @aboutMirrorUrl.
+  ///
+  /// In zh, this message translates to:
+  /// **'https://cdn.gh-proxy.co...'**
+  String get aboutMirrorUrl;
+
+  /// No description provided for @githubRepo.
+  ///
+  /// In zh, this message translates to:
+  /// **'GitHub 仓库'**
+  String get githubRepo;
+
+  /// No description provided for @aboutUserAgreement.
+  ///
+  /// In zh, this message translates to:
+  /// **'用户协议'**
+  String get aboutUserAgreement;
+
+  /// No description provided for @aboutPrivacyPolicy.
+  ///
+  /// In zh, this message translates to:
+  /// **'隐私政策'**
+  String get aboutPrivacyPolicy;
+
   /// No description provided for @mcpTitle.
   ///
   /// In zh, this message translates to:

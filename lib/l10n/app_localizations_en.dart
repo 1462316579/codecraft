@@ -1686,6 +1686,33 @@ class AppLocalizationsEn extends AppLocalizations {
   String get aboutSubtitle => 'Version, updates and feedback';
 
   @override
+  String get aboutAutoCheck => 'Auto-check updates';
+
+  @override
+  String get aboutAutoCheckDesc => 'Check for new versions on app launch';
+
+  @override
+  String get aboutUpdateChannel => 'Update channel';
+
+  @override
+  String get aboutStableChannel => 'Stable';
+
+  @override
+  String get aboutDownloadMirror => 'Download mirror';
+
+  @override
+  String get aboutMirrorUrl => 'https://cdn.gh-proxy.co...';
+
+  @override
+  String get githubRepo => 'GitHub repository';
+
+  @override
+  String get aboutUserAgreement => 'User agreement';
+
+  @override
+  String get aboutPrivacyPolicy => 'Privacy policy';
+
+  @override
   String get mcpTitle => 'MCP servers';
 
   @override

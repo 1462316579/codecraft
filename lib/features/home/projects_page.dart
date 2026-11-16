@@ -1,12 +1,16 @@
 import 'dart:async';
+import 'dart:convert';
 import 'dart:io';
 import 'dart:typed_data';
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
-import '../../core/icons/iconfont.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:package_info_plus/package_info_plus.dart';
 import 'package:path/path.dart' as p;
+import 'package:url_launcher/url_launcher.dart';
+
+import '../../core/icons/iconfont.dart';
 
 import '../../agent/chat_controller.dart';
 import '../../agent/models/chat_session.dart';
@@ -29,12 +33,101 @@ import '../../l10n/app_localizations.dart';
 /// 「项目」页签:项目列表。默认为空,右上角加号新建。
 ///
 /// 列表行布局对齐上游 AppItem:48dp 圆角图标 + 加粗标题 + 两行次要信息 + 右侧标签。
-class ProjectsPage extends ConsumerWidget {
+class ProjectsPage extends ConsumerStatefulWidget {
   const ProjectsPage({super.key, required this.onOpenProject});
 
   /// 打开项目:进入该项目的会话(由外壳切换到聊天)。
   final void Function(Project project) onOpenProject;
 
+  @override
+  ConsumerState<ProjectsPage> createState() => _ProjectsPageState();
+}
+
+class _ProjectsPageState extends ConsumerState<ProjectsPage> {
+  bool _updateChecked = false;
+
+  @override
+  void initState() {
+    super.initState();
+    // 首页进入时检查更新，有新版本弹窗提示是否更新，并展示更新内容。
+    WidgetsBinding.instance.addPostFrameCallback((_) => _checkUpdateOnLaunch());
+  }
+
+  Future<void> _checkUpdateOnLaunch() async {
+    if (_updateChecked || !mounted) return;
+    _updateChecked = true;
+    try {
+      final client = HttpClient()..connectionTimeout = const Duration(seconds: 10);
+      final request = await client.getUrl(
+        Uri.parse('https://api.github.com/repos/1462316579/codecraft/releases/latest'),
+      );
+      final response = await request.close();
+      if (response.statusCode != 200 || !mounted) return;
+      final body = await response.transform(utf8.decoder).join();
+      final data = jsonDecode(body) as Map<String, dynamic>;
+      final tag = data['tag_name'] as String? ?? '';
+      final version = tag.startsWith('v') ? tag.substring(1) : tag;
+      final releaseName = data['name'] as String? ?? '';
+      final releaseBody = data['body'] as String? ?? '';
+      final currentVersion = (await PackageInfo.fromPlatform()).version;
+      if (!mounted) return;
+      if (_isNewer(version, currentVersion)) {
+        _showUpdateDialog(version: releaseName.isNotEmpty ? releaseName : 'v$version', body: releaseBody);
+      }
+    } catch (_) {
+      // 网络失败静默忽略，不阻塞首页使用。
+    }
+  }
+
+  /// 简单语义化版本比较：new > current。
+  bool _isNewer(String newVer, String curVer) {
+    final n = _parseVersion(newVer);
+    final c = _parseVersion(curVer);
+    for (var i = 0; i < n.length; i++) {
+      final a = i < c.length ? c[i] : 0;
+      if (n[i] > a) return true;
+      if (n[i] < a) return false;
+    }
+    return false;
+  }
+
+  List<int> _parseVersion(String v) =>
+      v.split('.').map((e) => int.tryParse(e.replaceAll(RegExp(r'\D'), '')) ?? 0).toList();
+
+  void _showUpdateDialog({required String version, required String body}) {
+    showDialog<void>(
+      context: context,
+      builder: (ctx) => AlertDialog(
+        title: Text('发现新版本 $version'),
+        content: SingleChildScrollView(
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              if (body.isNotEmpty) ...[
+                Text(body),
+                const SizedBox(height: 12),
+              ],
+              Text('前往 GitHub Releases 下载更新', style: TextStyle(fontSize: 12, color: Theme.of(context).colorScheme.onSurface.withValues(alpha: 0.6))),
+            ],
+          ),
+        ),
+        actions: [
+          TextButton(onPressed: () => Navigator.pop(ctx), child: const Text('稍后')),
+          FilledButton.tonal(
+            onPressed: () async {
+              Navigator.pop(ctx);
+              final url = 'https://github.com/1462316579/codecraft/releases/latest';
+              if (await canLaunchUrl(Uri.parse(url))) {
+                await launchUrl(Uri.parse(url));
+              }
+            },
+            child: const Text('去更新'),
+          ),
+        ],
+      ),
+    );
+  }
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final l10n = AppLocalizations.of(context);
@@ -114,6 +207,7 @@ class ProjectsPage extends ConsumerWidget {
       ),
     );
   }
+
   Future<void> _pickKind(BuildContext context, WidgetRef ref) async {
     final kind = await showModalBottomSheet<ProjectKind>(
       context: context,

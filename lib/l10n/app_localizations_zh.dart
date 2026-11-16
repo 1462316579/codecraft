@@ -1649,6 +1649,33 @@ class AppLocalizationsZh extends AppLocalizations {
   String get aboutSubtitle => '版本、更新与反馈';
 
   @override
+  String get aboutAutoCheck => '自动检查更新';
+
+  @override
+  String get aboutAutoCheckDesc => '打开 App 时自动检测新版本';
+
+  @override
+  String get aboutUpdateChannel => '更新通道';
+
+  @override
+  String get aboutStableChannel => '稳定版';
+
+  @override
+  String get aboutDownloadMirror => '下载镜像源';
+
+  @override
+  String get aboutMirrorUrl => 'https://cdn.gh-proxy.co...';
+
+  @override
+  String get githubRepo => 'GitHub 仓库';
+
+  @override
+  String get aboutUserAgreement => '用户协议';
+
+  @override
+  String get aboutPrivacyPolicy => '隐私政策';
+
+  @override
   String get mcpTitle => 'MCP 服务器';
 
   @override

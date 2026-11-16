@@ -27,3 +27,6 @@ android/app/src/main/jniLibs/
 # Misc
 *.log
 *.tmp
+
+# 本地构建产物
+.ci-artifact/

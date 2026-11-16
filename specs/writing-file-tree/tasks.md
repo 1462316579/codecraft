@@ -8,4 +8,4 @@
    - 新增 `_externalNoAccess`（`ExternalStorage.hasAccess()` 检测）与顶部授权提示条（含授权按钮）。
 3. [x] 新增 `test/novel_scaffold_migration_test.dart`：迁移、跳过、覆盖空文件、幂等四个用例。
 4. [x] 校验：`flutter analyze`（改动文件无 error）、`flutter test` 全部通过。
-5. [ ] 提交并推送，`gh run watch <id> --exit-status` 等待 CI 通过。
+5. [x] 提交并推送，`gh run watch <id> --exit-status` 等待 CI 通过。
