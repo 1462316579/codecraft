@@ -56,19 +56,10 @@ jobs:
           export PATH=/opt/flutter/bin:$PATH
           export JAVA_HOME=$JAVA_HOME_17_X64
           flutter build apk --release --no-tree-shake-icons
-
-      - name: Build Android APK (release, universal)
-        if: github.event_name == 'push' && github.ref == 'refs/heads/main'
-        run: |
-          export PATH=/opt/flutter/bin:$PATH
-          export JAVA_HOME=$JAVA_HOME_17_X64
-          flutter build apk --release --no-tree-shake-icons --target-platform android-arm64,armv7,x86_64,x86
-          mv build/app/outputs/flutter-apk/app-release.apk build/app/outputs/flutter-apk/codecraft-universal-release.apk
-
-      - name: Rename release APK
-        if: github.event_name == 'push' && github.ref == 'refs/heads/main'
-        run: |
-          mv build/app/outputs/flutter-apk/app-release.apk build/app/outputs/flutter-apk/codecraft-release.apk
+          DIR=build/app/outputs/flutter-apk
+          # build.gradle 已把输出改名为 codecraft-release.apk，这里兼容默认命名
+          if [ -f "$DIR/app-release.apk" ]; then mv "$DIR/app-release.apk" "$DIR/codecraft-release.apk"; fi
+          ls -la "$DIR"
 
       - name: Upload release APK artifact
         uses: actions/upload-artifact@v4
@@ -76,6 +67,19 @@ jobs:
           name: codecraft-release-apk
           path: build/app/outputs/flutter-apk/codecraft-release.apk
           retention-days: 7
+
+      - name: Build Android APK (release, universal)
+        if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+        run: |
+          export PATH=/opt/flutter/bin:$PATH
+          export JAVA_HOME=$JAVA_HOME_17_X64
+          DIR=build/app/outputs/flutter-apk
+          # universal 构建会覆盖同名输出，先保留 arm64 包
+          cp "$DIR/codecraft-release.apk" "$DIR/codecraft-arm64-release.apk"
+          flutter build apk --release --no-tree-shake-icons --target-platform android-arm64,armv7,x86_64,x86
+          if [ -f "$DIR/app-release.apk" ]; then mv "$DIR/app-release.apk" "$DIR/codecraft-universal-release.apk"; else mv "$DIR/codecraft-release.apk" "$DIR/codecraft-universal-release.apk"; fi
+          cp "$DIR/codecraft-arm64-release.apk" "$DIR/codecraft-release.apk"
+          ls -la "$DIR"
 
       - name: Upload universal APK artifact
         if: github.event_name == 'push' && github.ref == 'refs/heads/main'
@@ -93,18 +97,22 @@ jobs:
           # 版本号取自 pubspec.yaml（如 1.0.0+1 → v1.0.0）
           VERSION=$(grep '^version:' pubspec.yaml | sed 's/version:[[:space:]]*//' | cut -d'+' -f1)
           TAG="v$VERSION"
-          # 获取最近提交作为更新内容（最多 10 条）
-          CHANGELOG=$(git log --oneline -10 --pretty=format:"- %s")
-          NOTES="CodeCraft $TAG 正式版
-
-## 更新内容
-$CHANGELOG"
+          # 生成 Release 说明：版本标题 + 最近 10 条提交
+          {
+            echo "CodeCraft $TAG 正式版"
+            echo ""
+            echo "## 更新内容"
+            echo ""
+            git log --oneline -10 --pretty=format:"- %s"
+            echo ""
+          } > release_notes.md
+          cat release_notes.md
           # 仅在 tag 不存在时创建
           if ! gh release view "$TAG" --repo "$GITHUB_REPOSITORY" > /dev/null 2>&1; then
             gh release create "$TAG" \
               --repo "$GITHUB_REPOSITORY" \
               --title "CodeCraft $TAG" \
-              --notes "$NOTES" \
+              --notes-file release_notes.md \
               --draft=false \
               --prerelease=false
           fi
