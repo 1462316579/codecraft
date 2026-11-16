@@ -3004,4 +3004,12 @@ class AppLocalizationsZhHant extends AppLocalizations {
   String get localBackup => '本地备份';
   @override
   String get cloudBackup => '網絡备份';
+  @override
+  String get aboutUpdateAvailable => '發現新版本';
+  @override
+  String get aboutUpdateDesc => '發現新版本';
+  @override
+  String get aboutUpdateLater => '稍後';
+  @override
+  String get aboutUpdateGo => '前往下載';
 }
