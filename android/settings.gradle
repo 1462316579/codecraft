@@ -13,6 +13,10 @@ pluginManagement {
         maven { url "https://maven.aliyun.com/repository/google" }
         maven { url "https://maven.aliyun.com/repository/central" }
         maven { url "https://maven.aliyun.com/repository/gradle-plugin" }
+        // 镜像不可用时的官方兜底仓库
+        google()
+        mavenCentral()
+        gradlePluginPortal()
     }
 }
 

@@ -107,7 +107,8 @@ flutter {
 android.applicationVariants.all { variant ->
     def baseName = "codecraft-${variant.buildType.name}"
     variant.outputs.all { output ->
-        output.fileName = "${baseName}.apk"
+        // AGP 9 移除了 fileName，使用 outputFileName
+        output.outputFileName = "${baseName}.apk"
     }
 }
 

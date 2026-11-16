@@ -2,6 +2,9 @@ allprojects {
     repositories {
         maven { url "https://maven.aliyun.com/repository/google" }
         maven { url "https://maven.aliyun.com/repository/central" }
+        // 镜像不可用时的官方兜底仓库
+        google()
+        mavenCentral()
     }
 }
 
