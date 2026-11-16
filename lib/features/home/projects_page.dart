@@ -394,7 +394,7 @@ class _ProjectsPageState extends ConsumerState<ProjectsPage> {
       }
     }
     if (!context.mounted) return;
-    onOpenProject(project.copyWith());
+    widget.onOpenProject(project.copyWith());
     // 新项目的首条会话直接进入,避免用户再点一次。
     ref.read(selectedSessionProvider.notifier).state = session.id;
   }
