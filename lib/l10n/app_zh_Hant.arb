@@ -2291,5 +2291,6 @@
   "aboutUpdateGo": "前往下載",
   "aboutCheckingUpdate": "正在向 GitHub 查詢最新版本…",
   "aboutAlreadyLatest": "已經是最新版本",
-  "aboutCurrentVersion": "當前版本"
+  "aboutCurrentVersion": "當前版本",
+  "aboutNewVersionFound": "發現新版本"
 }

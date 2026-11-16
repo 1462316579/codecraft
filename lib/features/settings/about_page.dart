@@ -145,8 +145,10 @@ class _AboutPageState extends State<AboutPage> {
     }
   }
 
-  String _getVersionText() {
-    if (_updateAvailable && _latestVersion.isNotEmpty) return _latestVersion;
+  String _getVersionText(AppLocalizations l10n) {
+    if (_updateAvailable && _latestVersion.isNotEmpty) {
+      return '${l10n.aboutNewVersionFound}: $_latestVersion';
+    }
     if (_buildNumber.isNotEmpty) return 'v$_version ($_buildNumber)';
     return 'v$_version';
   }
@@ -173,7 +175,7 @@ class _AboutPageState extends State<AboutPage> {
               SettingsRow(
                 icon: Iconfont.info,
                 title: l10n.version,
-                subtitle: _checking ? l10n.aboutCheckingUpdate : _getVersionText(),
+                subtitle: _checking ? l10n.aboutCheckingUpdate : _getVersionText(l10n),
                 onTap: _checking ? null : () async => await _checkUpdate(),
               ),
               const SettingsDivider(indent: SettingsRow.textIndent),

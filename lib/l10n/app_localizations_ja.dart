@@ -4426,4 +4426,7 @@ class AppLocalizationsJa extends AppLocalizations {
 
   @override
   String get aboutCurrentVersion => '現在のバージョン';
+
+  @override
+  String get aboutNewVersionFound => '新しいバージョンが見つかりました';
 }

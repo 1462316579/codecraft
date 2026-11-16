@@ -4543,4 +4543,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get aboutCurrentVersion => 'Current version';
+
+  @override
+  String get aboutNewVersionFound => 'New version found';
 }

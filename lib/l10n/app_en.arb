@@ -2235,5 +2235,6 @@
   "aboutUpdateGo": "Go to download",
   "aboutCheckingUpdate": "Checking for latest version on GitHub…",
   "aboutAlreadyLatest": "Already up to date",
-  "aboutCurrentVersion": "Current version"
+  "aboutCurrentVersion": "Current version",
+  "aboutNewVersionFound": "New version found"
 }

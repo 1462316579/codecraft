@@ -2291,5 +2291,6 @@
   "aboutUpdateGo": "다운로드 페이지로",
   "aboutCheckingUpdate": "GitHub에서 최신 버전 확인 중…",
   "aboutAlreadyLatest": "최신 버전입니다",
-  "aboutCurrentVersion": "현재 버전"
+  "aboutCurrentVersion": "현재 버전",
+  "aboutNewVersionFound": "새 버전이 발견되었습니다"
 }

@@ -8346,6 +8346,12 @@ abstract class AppLocalizations {
   /// In zh, this message translates to:
   /// **'当前版本'**
   String get aboutCurrentVersion;
+
+  /// No description provided for @aboutNewVersionFound.
+  ///
+  /// In zh, this message translates to:
+  /// **'发现新版本'**
+  String get aboutNewVersionFound;
 }
 
 class _AppLocalizationsDelegate

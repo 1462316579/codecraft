@@ -4419,4 +4419,7 @@ class AppLocalizationsKo extends AppLocalizations {
 
   @override
   String get aboutCurrentVersion => '현재 버전';
+
+  @override
+  String get aboutNewVersionFound => '새 버전이 발견되었습니다';
 }

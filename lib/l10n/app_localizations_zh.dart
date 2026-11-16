@@ -4415,6 +4415,9 @@ class AppLocalizationsZh extends AppLocalizations {
 
   @override
   String get aboutCurrentVersion => '当前版本';
+
+  @override
+  String get aboutNewVersionFound => '发现新版本';
 }
 
 /// The translations for Chinese, using the Han script (`zh_Hant`).
@@ -8828,4 +8831,7 @@ class AppLocalizationsZhHant extends AppLocalizationsZh {
 
   @override
   String get aboutCurrentVersion => '當前版本';
+
+  @override
+  String get aboutNewVersionFound => '發現新版本';
 }
