@@ -6,10 +6,9 @@ import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:intl/intl.dart' as intl;
 
 import 'app_localizations_en.dart';
-import 'app_localizations_zh.dart';
-import 'app_localizations_zh_Hant.dart';
 import 'app_localizations_ja.dart';
 import 'app_localizations_ko.dart';
+import 'app_localizations_zh.dart';
 
 // ignore_for_file: type=lint
 
@@ -98,10 +97,10 @@ abstract class AppLocalizations {
   /// A list of this localizations delegate's supported locales.
   static const List<Locale> supportedLocales = <Locale>[
     Locale('en'),
-    Locale('zh'),
-    Locale('zh', 'Hant'),
     Locale('ja'),
-    Locale('ko')
+    Locale('ko'),
+    Locale('zh'),
+    Locale.fromSubtags(languageCode: 'zh', scriptCode: 'Hant')
   ];
 
   /// No description provided for @appName.
@@ -8209,6 +8208,102 @@ abstract class AppLocalizations {
   /// In zh, this message translates to:
   /// **'响应 Set-Cookie'**
   String get captureResponseCookies;
+
+  /// No description provided for @backupAndRestore.
+  ///
+  /// In zh, this message translates to:
+  /// **'备份与还原'**
+  String get backupAndRestore;
+
+  /// No description provided for @selectExportData.
+  ///
+  /// In zh, this message translates to:
+  /// **'选择导出数据'**
+  String get selectExportData;
+
+  /// No description provided for @aiProvider.
+  ///
+  /// In zh, this message translates to:
+  /// **'AI 供应商'**
+  String get aiProvider;
+
+  /// No description provided for @connectSync.
+  ///
+  /// In zh, this message translates to:
+  /// **'连接与同步'**
+  String get connectSync;
+
+  /// No description provided for @chatRecords.
+  ///
+  /// In zh, this message translates to:
+  /// **'聊天记录'**
+  String get chatRecords;
+
+  /// No description provided for @mcpServer.
+  ///
+  /// In zh, this message translates to:
+  /// **'MCP 服务器'**
+  String get mcpServer;
+
+  /// No description provided for @permissionRules.
+  ///
+  /// In zh, this message translates to:
+  /// **'授权规则'**
+  String get permissionRules;
+
+  /// No description provided for @appSettings.
+  ///
+  /// In zh, this message translates to:
+  /// **'应用设置'**
+  String get appSettings;
+
+  /// No description provided for @workspaceFiles.
+  ///
+  /// In zh, this message translates to:
+  /// **'工作区文件'**
+  String get workspaceFiles;
+
+  /// No description provided for @workspaceFilesHint.
+  ///
+  /// In zh, this message translates to:
+  /// **'工作区文件建议通过 Git 提交备份，导出备份仅作备用'**
+  String get workspaceFilesHint;
+
+  /// No description provided for @exportBackup.
+  ///
+  /// In zh, this message translates to:
+  /// **'导出备份'**
+  String get exportBackup;
+
+  /// No description provided for @exportBackupDesc.
+  ///
+  /// In zh, this message translates to:
+  /// **'选择要导出的数据，可设置口令加密'**
+  String get exportBackupDesc;
+
+  /// No description provided for @importBackup.
+  ///
+  /// In zh, this message translates to:
+  /// **'导入备份'**
+  String get importBackup;
+
+  /// No description provided for @importBackupDesc.
+  ///
+  /// In zh, this message translates to:
+  /// **'从备份文件还原数据'**
+  String get importBackupDesc;
+
+  /// No description provided for @localBackup.
+  ///
+  /// In zh, this message translates to:
+  /// **'本地备份'**
+  String get localBackup;
+
+  /// No description provided for @cloudBackup.
+  ///
+  /// In zh, this message translates to:
+  /// **'网络备份'**
+  String get cloudBackup;
 }
 
 class _AppLocalizationsDelegate
@@ -8222,26 +8317,35 @@ class _AppLocalizationsDelegate
 
   @override
   bool isSupported(Locale locale) =>
-      <String>['en', 'zh', 'zh_Hant', 'ja', 'ko'].contains(locale.languageCode);
+      <String>['en', 'ja', 'ko', 'zh'].contains(locale.languageCode);
 
   @override
   bool shouldReload(_AppLocalizationsDelegate old) => false;
 }
 
 AppLocalizations lookupAppLocalizations(Locale locale) {
+  // Lookup logic when language+script codes are specified.
+  switch (locale.languageCode) {
+    case 'zh':
+      {
+        switch (locale.scriptCode) {
+          case 'Hant':
+            return AppLocalizationsZhHant();
+        }
+        break;
+      }
+  }
+
   // Lookup logic when only language code is specified.
   switch (locale.languageCode) {
     case 'en':
       return AppLocalizationsEn();
-    case 'zh':
-      if (locale.scriptCode == 'Hant' || locale.countryCode == 'Hant') {
-        return AppLocalizationsZhHant();
-      }
-      return AppLocalizationsZh();
     case 'ja':
       return AppLocalizationsJa();
     case 'ko':
       return AppLocalizationsKo();
+    case 'zh':
+      return AppLocalizationsZh();
   }
 
   throw FlutterError(

@@ -4472,4 +4472,54 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get captureResponseCookies => 'Response Set-Cookie';
+
+  @override
+  String get backupAndRestore => 'Backup & Restore';
+
+  @override
+  String get selectExportData => 'Select Export Data';
+
+  @override
+  String get aiProvider => 'AI Providers';
+
+  @override
+  String get connectSync => 'Connection & Sync';
+
+  @override
+  String get chatRecords => 'Chat Records';
+
+  @override
+  String get mcpServer => 'MCP Servers';
+
+  @override
+  String get permissionRules => 'Permission Rules';
+
+  @override
+  String get appSettings => 'App Settings';
+
+  @override
+  String get workspaceFiles => 'Workspace Files';
+
+  @override
+  String get workspaceFilesHint =>
+      'Workspace files should be backed up via Git commit; export backup is for reference only';
+
+  @override
+  String get exportBackup => 'Export Backup';
+
+  @override
+  String get exportBackupDesc =>
+      'Choose data to export, password encryption available';
+
+  @override
+  String get importBackup => 'Import Backup';
+
+  @override
+  String get importBackupDesc => 'Restore data from backup file';
+
+  @override
+  String get localBackup => 'Local Backup';
+
+  @override
+  String get cloudBackup => 'Cloud Backup';
 }
