@@ -8328,6 +8328,24 @@ abstract class AppLocalizations {
   /// In zh, this message translates to:
   /// **'前往下载'**
   String get aboutUpdateGo;
+
+  /// No description provided for @aboutCheckingUpdate.
+  ///
+  /// In zh, this message translates to:
+  /// **'正在向 GitHub 查询最新版本…'**
+  String get aboutCheckingUpdate;
+
+  /// No description provided for @aboutAlreadyLatest.
+  ///
+  /// In zh, this message translates to:
+  /// **'已经是最新版本'**
+  String get aboutAlreadyLatest;
+
+  /// No description provided for @aboutCurrentVersion.
+  ///
+  /// In zh, this message translates to:
+  /// **'当前版本'**
+  String get aboutCurrentVersion;
 }
 
 class _AppLocalizationsDelegate

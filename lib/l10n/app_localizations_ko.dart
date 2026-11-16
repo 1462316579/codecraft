@@ -4410,4 +4410,13 @@ class AppLocalizationsKo extends AppLocalizations {
 
   @override
   String get aboutUpdateGo => '다운로드 페이지로';
+
+  @override
+  String get aboutCheckingUpdate => 'GitHub에서 최신 버전 확인 중…';
+
+  @override
+  String get aboutAlreadyLatest => '최신 버전입니다';
+
+  @override
+  String get aboutCurrentVersion => '현재 버전';
 }

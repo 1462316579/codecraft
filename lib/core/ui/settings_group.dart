@@ -207,6 +207,8 @@ class SettingsRow extends StatelessWidget {
       opacity: enabled ? 1 : 0.5,
       child: InkWell(
         onTap: enabled ? onTap : null,
+        splashColor: Colors.transparent,
+        highlightColor: Colors.transparent,
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: Spacing.lg, vertical: 10),
           child: Row(

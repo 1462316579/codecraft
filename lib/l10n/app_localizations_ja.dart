@@ -4417,4 +4417,13 @@ class AppLocalizationsJa extends AppLocalizations {
 
   @override
   String get aboutUpdateGo => 'ダウンロードへ';
+
+  @override
+  String get aboutCheckingUpdate => 'GitHub で最新バージョンを確認中…';
+
+  @override
+  String get aboutAlreadyLatest => '最新バージョンです';
+
+  @override
+  String get aboutCurrentVersion => '現在のバージョン';
 }

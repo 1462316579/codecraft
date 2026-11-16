@@ -99,6 +99,8 @@ class _AboutPageState extends State<AboutPage> {
         });
         if (_updateAvailable && mounted) {
           _showUpdateDialog(displayVersion);
+        } else if (mounted) {
+          _showAlreadyLatestDialog();
         }
       } else if (!mounted) {
         return;
@@ -171,7 +173,7 @@ class _AboutPageState extends State<AboutPage> {
               SettingsRow(
                 icon: Iconfont.info,
                 title: l10n.version,
-                subtitle: _checking ? '检查中…' : _getVersionText(),
+                subtitle: _checking ? l10n.aboutCheckingUpdate : _getVersionText(),
                 onTap: _checking ? null : () async => await _checkUpdate(),
               ),
               const SettingsDivider(indent: SettingsRow.textIndent),
@@ -363,6 +365,29 @@ class _AboutPageState extends State<AboutPage> {
                 await _openReleasePage();
               },
               child: Text(l10n.aboutUpdateGo),
+            ),
+          ],
+        );
+      },
+    );
+  }
+
+  /// 已是最新版本的提示弹窗。
+  Future<void> _showAlreadyLatestDialog() async {
+    final l10n = AppLocalizations.of(context);
+    await showDialog<void>(
+      context: context,
+      builder: (context) {
+        return AlertDialog(
+          title: Text(l10n.aboutAlreadyLatest),
+          content: Text(
+            '${l10n.aboutCurrentVersion} v$_version, 已是 GitHub 上最新的 Release。',
+            style: Theme.of(context).textTheme.bodyMedium,
+          ),
+          actions: [
+            TextButton(
+              onPressed: () => Navigator.pop(context),
+              child: Text(l10n.confirm),
             ),
           ],
         );

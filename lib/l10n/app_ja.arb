@@ -2288,5 +2288,8 @@
   "aboutUpdateAvailable": "新しいバージョンが利用可能",
   "aboutUpdateDesc": "新しいバージョンが利用可能",
   "aboutUpdateLater": "後で",
-  "aboutUpdateGo": "ダウンロードへ"
+  "aboutUpdateGo": "ダウンロードへ",
+  "aboutCheckingUpdate": "GitHub で最新バージョンを確認中…",
+  "aboutAlreadyLatest": "最新バージョンです",
+  "aboutCurrentVersion": "現在のバージョン"
 }

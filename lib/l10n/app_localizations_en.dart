@@ -4534,4 +4534,13 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get aboutUpdateGo => 'Go to download';
+
+  @override
+  String get aboutCheckingUpdate => 'Checking for latest version on GitHub…';
+
+  @override
+  String get aboutAlreadyLatest => 'Already up to date';
+
+  @override
+  String get aboutCurrentVersion => 'Current version';
 }

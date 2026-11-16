@@ -2288,5 +2288,8 @@
   "aboutUpdateAvailable": "发现新版本",
   "aboutUpdateDesc": "发现新版本",
   "aboutUpdateLater": "稍后",
-  "aboutUpdateGo": "前往下载"
+  "aboutUpdateGo": "前往下载",
+  "aboutCheckingUpdate": "正在向 GitHub 查询最新版本…",
+  "aboutAlreadyLatest": "已经是最新版本",
+  "aboutCurrentVersion": "当前版本"
 }

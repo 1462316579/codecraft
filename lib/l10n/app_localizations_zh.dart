@@ -4406,6 +4406,15 @@ class AppLocalizationsZh extends AppLocalizations {
 
   @override
   String get aboutUpdateGo => '前往下载';
+
+  @override
+  String get aboutCheckingUpdate => '正在向 GitHub 查询最新版本…';
+
+  @override
+  String get aboutAlreadyLatest => '已经是最新版本';
+
+  @override
+  String get aboutCurrentVersion => '当前版本';
 }
 
 /// The translations for Chinese, using the Han script (`zh_Hant`).
@@ -8810,4 +8819,13 @@ class AppLocalizationsZhHant extends AppLocalizationsZh {
 
   @override
   String get aboutUpdateGo => '前往下載';
+
+  @override
+  String get aboutCheckingUpdate => '正在向 GitHub 查詢最新版本…';
+
+  @override
+  String get aboutAlreadyLatest => '已經是最新版本';
+
+  @override
+  String get aboutCurrentVersion => '當前版本';
 }

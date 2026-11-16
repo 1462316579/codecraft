@@ -2232,5 +2232,8 @@
   "aboutUpdateAvailable": "New version available",
   "aboutUpdateDesc": "New version available",
   "aboutUpdateLater": "Later",
-  "aboutUpdateGo": "Go to download"
+  "aboutUpdateGo": "Go to download",
+  "aboutCheckingUpdate": "Checking for latest version on GitHub…",
+  "aboutAlreadyLatest": "Already up to date",
+  "aboutCurrentVersion": "Current version"
 }
