@@ -84,6 +84,9 @@ class ThemePage extends ConsumerWidget {
   String _localeLabel(AppLocalizations l10n, String code) => switch (code) {
         '' => l10n.languageSystem,
         'zh' => '中文',
+        'zh_Hant' => '繁體中文',
+        'ja' => '日本語',
+        'ko' => '한국어',
         _ => 'English',
       };
 
@@ -132,6 +135,9 @@ class ThemePage extends ConsumerWidget {
             for (final entry in [
               ('', l10n.languageSystem),
               ('zh', '中文'),
+              ('zh_Hant', '繁體中文'),
+              ('ja', '日本語'),
+              ('ko', '한국어'),
               ('en', 'English'),
             ])
               RadioListTile<String>(
