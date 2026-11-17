@@ -10,7 +10,7 @@ on:
         default: 'patch'
         options:
           - patch
-  ref:
+  target_ref:
     description: '要构建的分支或 tag'
     type: string
     required: true
@@ -28,7 +28,7 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
         with:
-          ref: ${{ github.event.inputs.ref }}
+          ref: ${{ github.event.inputs.target_ref }}
           fetch-depth: 0
           token: ${{ secrets.GITHUB_TOKEN }}
 
@@ -94,7 +94,7 @@ jobs:
           git config user.email "github-actions[bot]@users.noreply.github.com"
           git add pubspec.yaml
           git commit -m "chore(release): bump version $(grep '^version:' pubspec.yaml | sed 's/version:[[:space:]]*//')" || true
-          git push origin "${{ github.event.inputs.ref }}"
+          git push origin "${{ github.event.inputs.target_ref }}"
 
       - name: Create GitHub Release and upload APKs
         env:
