@@ -91,36 +91,3 @@ jobs:
           name: codecraft-universal-release-apk
           path: build/app/outputs/flutter-apk/codecraft-universal-release.apk
           retention-days: 7
-
-      - name: Create GitHub Release and upload APKs
-        if: github.event_name == 'push' && github.ref == 'refs/heads/main'
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: |
-          # 版本号取自 pubspec.yaml（如 1.0.0+1 → v1.0.0）
-          VERSION=$(grep '^version:' pubspec.yaml | sed 's/version:[[:space:]]*//' | cut -d'+' -f1)
-          TAG="v$VERSION"
-          # 生成 Release 说明：版本标题 + 最近 10 条提交
-          {
-            echo "CodeCraft $TAG 正式版"
-            echo ""
-            echo "## 更新内容"
-            echo ""
-            git log --oneline -10 --pretty=format:"- %s"
-            echo ""
-          } > release_notes.md
-          cat release_notes.md
-          # 仅在 tag 不存在时创建
-          if ! gh release view "$TAG" --repo "$GITHUB_REPOSITORY" > /dev/null 2>&1; then
-            gh release create "$TAG" \
-              --repo "$GITHUB_REPOSITORY" \
-              --title "CodeCraft $TAG" \
-              --notes-file release_notes.md \
-              --draft=false \
-              --prerelease=false
-          fi
-          gh release upload "$TAG" \
-            --repo "$GITHUB_REPOSITORY" \
-            build/app/outputs/flutter-apk/codecraft-release.apk \
-            build/app/outputs/flutter-apk/codecraft-universal-release.apk \
-            --clobber

@@ -1,0 +1,126 @@
+name: Release
+
+on:
+  workflow_dispatch:
+    inputs:
+      version_bump:
+        description: '版本递增方式'
+        type: choice
+        required: true
+        default: 'patch'
+        options:
+          - patch
+  ref:
+    description: '要构建的分支或 tag'
+    type: string
+    required: true
+    default: 'main'
+
+jobs:
+  build-and-release:
+    name: Build Android APK & Create Release
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    permissions:
+      contents: write
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.inputs.ref }}
+          fetch-depth: 0
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Set up JDK 17
+        uses: actions/setup-java@v5
+        with:
+          distribution: 'temurin'
+          java-version: '17'
+
+      - name: Set up Flutter (latest stable)
+        run: |
+          git clone https://github.com/flutter/flutter.git -b stable --depth 1 /opt/flutter
+          /opt/flutter/bin/flutter --version
+
+      - name: Set up Android SDK
+        uses: android-actions/setup-android@v4
+        with:
+          packages: platform-tools platforms;android-36 build-tools;35.0.0
+
+      - name: Set up Android signing
+        run: |
+          mkdir -p android/app
+          echo "${{ secrets.ANDROID_KEYSTORE_BASE64 }}" | base64 -d > android/app/upload-keystore.jks
+          echo "storePassword=${{ secrets.STORE_PASSWORD }}" > android/key.properties
+          echo "keyPassword=${{ secrets.KEY_PASSWORD }}" >> android/key.properties
+          echo "keyAlias=${{ secrets.KEY_ALIAS }}" >> android/key.properties
+          echo "storeFile=upload-keystore.jks" >> android/key.properties
+
+      - name: Bump version (patch)
+        if: github.event.inputs.version_bump == 'patch'
+        run: |
+          chmod +x scripts/bump_version.sh
+          ./scripts/bump_version.sh
+
+      - name: Get Flutter dependencies
+        run: |
+          export PATH=/opt/flutter/bin:$PATH
+          flutter pub get
+
+      - name: Build Android APK (release, arm64)
+        run: |
+          export PATH=/opt/flutter/bin:$PATH
+          export JAVA_HOME=$JAVA_HOME_17_X64
+          flutter build apk --release --no-tree-shake-icons
+          DIR=build/app/outputs/flutter-apk
+          if [ -f "$DIR/app-release.apk" ]; then mv "$DIR/app-release.apk" "$DIR/codecraft-release.apk"; fi
+          ls -la "$DIR"
+
+      - name: Build Android APK (release, universal)
+        run: |
+          export PATH=/opt/flutter/bin:$PATH
+          export JAVA_HOME=$JAVA_HOME_17_X64
+          DIR=build/app/outputs/flutter-apk
+          cp "$DIR/codecraft-release.apk" "$DIR/codecraft-arm64-release.apk"
+          flutter build apk --release --no-tree-shake-icons --target-platform android-arm,android-arm64,android-x64
+          if [ -f "$DIR/app-release.apk" ]; then mv "$DIR/app-release.apk" "$DIR/codecraft-universal-release.apk"; else mv "$DIR/codecraft-release.apk" "$DIR/codecraft-universal-release.apk"; fi
+          cp "$DIR/codecraft-arm64-release.apk" "$DIR/codecraft-release.apk"
+          ls -la "$DIR"
+
+      - name: Commit version bump
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add pubspec.yaml
+          git commit -m "chore(release): bump version $(grep '^version:' pubspec.yaml | sed 's/version:[[:space:]]*//')" || true
+          git push origin "${{ github.event.inputs.ref }}"
+
+      - name: Create GitHub Release and upload APKs
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          VERSION=$(grep '^version:' pubspec.yaml | sed 's/version:[[:space:]]*//' | cut -d'+' -f1)
+          TAG="v$VERSION"
+          {
+            echo "CodeCraft $TAG 正式版"
+            echo ""
+            echo "## 更新内容"
+            echo ""
+            git log --oneline -10 --pretty=format:"- %s"
+            echo ""
+          } > release_notes.md
+          cat release_notes.md
+          if ! gh release view "$TAG" --repo "$GITHUB_REPOSITORY" > /dev/null 2>&1; then
+            gh release create "$TAG" \
+              --repo "$GITHUB_REPOSITORY" \
+              --title "CodeCraft $TAG" \
+              --notes-file release_notes.md \
+              --draft=false \
+              --prerelease=false
+          fi
+          gh release upload "$TAG" \
+            --repo "$GITHUB_REPOSITORY" \
+            build/app/outputs/flutter-apk/codecraft-release.apk \
+            build/app/outputs/flutter-apk/codecraft-universal-release.apk \
+            --clobber
