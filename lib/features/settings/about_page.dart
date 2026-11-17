@@ -72,7 +72,7 @@ class _AboutPageState extends State<AboutPage> {
       _mirrorType = prefs.getInt(_mirrorTypeKey) ?? 0;
       _mirrorUrl = prefs.getString(_mirrorKey) ?? '';
     });
-    if (_autoCheck) await _checkUpdate();
+    // 不再在进入页面时自动检查更新，仅在点击版本行时手动检查
   }
 
   Future<void> _checkUpdate() async {
