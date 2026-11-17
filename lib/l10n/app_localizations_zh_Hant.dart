@@ -3012,4 +3012,14 @@ class AppLocalizationsZhHant extends AppLocalizations {
   String get aboutUpdateLater => '稍後';
   @override
   String get aboutUpdateGo => '前往下載';
+  @override
+  String get aboutAlreadyLatest => '已經是最新版本';
+  @override
+  String get aboutCheckingUpdate => '正在向 GitHub 查詢最新版本…';
+  @override
+  String get aboutCurrentVersion => '當前版本';
+  @override
+  String get aboutNewVersionFound => '發現新版本';
+  @override
+  String get aboutUpdateFailed => '檢查更新失敗';
 }
