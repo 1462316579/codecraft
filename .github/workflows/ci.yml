@@ -99,6 +99,9 @@ jobs:
         run: |
           VERSION=$(grep '^version:' pubspec.yaml | sed 's/version:[[:space:]]*//' | cut -d'+' -f1)
           TAG="v$VERSION"
+          DIR=build/app/outputs/flutter-apk
+          echo "=== APK directory contents ==="
+          ls -la "$DIR"
           {
             echo "CodeCraft $TAG 正式版"
             echo ""
@@ -116,8 +119,21 @@ jobs:
               --draft=false \
               --prerelease=false
           fi
-          gh release upload "$TAG" \
-            --repo "$GITHUB_REPOSITORY" \
-            build/app/outputs/flutter-apk/codecraft-release.apk \
-            build/app/outputs/flutter-apk/codecraft-universal-release.apk \
-            --clobber
+          if [ -f "$DIR/codecraft-release.apk" ]; then
+            gh release upload "$TAG" \
+              --repo "$GITHUB_REPOSITORY" \
+              "$DIR/codecraft-release.apk" \
+              --clobber
+            echo "Uploaded codecraft-release.apk"
+          else
+            echo "WARNING: $DIR/codecraft-release.apk not found, skipping upload"
+          fi
+          if [ -f "$DIR/codecraft-universal-release.apk" ]; then
+            gh release upload "$TAG" \
+              --repo "$GITHUB_REPOSITORY" \
+              "$DIR/codecraft-universal-release.apk" \
+              --clobber
+            echo "Uploaded codecraft-universal-release.apk"
+          else
+            echo "WARNING: $DIR/codecraft-universal-release.apk not found, skipping upload"
+          fi
