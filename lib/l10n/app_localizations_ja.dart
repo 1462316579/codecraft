@@ -184,25 +184,25 @@ class AppLocalizationsJa extends AppLocalizations {
   String get providersSubtitle => 'モデル、接口与密钥';
 
   @override
-  String get appearance => '外观';
+  String get appearance => '外観';
 
   @override
-  String get themeMode => '主题模式';
+  String get themeMode => 'テーマモード';
 
   @override
-  String get themeModeSystem => '跟随系统';
+  String get themeModeSystem => 'システムに従う';
 
   @override
-  String get themeModeLight => '浅色';
+  String get themeModeLight => 'ライト';
 
   @override
-  String get themeModeDark => '深色';
+  String get themeModeDark => 'ダーク';
 
   @override
-  String get language => '语言';
+  String get language => '言語';
 
   @override
-  String get languageSystem => '跟随系统';
+  String get languageSystem => 'システムに従う';
 
   @override
   String get about => '关于';
@@ -1644,10 +1644,10 @@ class AppLocalizationsJa extends AppLocalizations {
   String get accountAndData => '账户与数据';
 
   @override
-  String get themeTitle => '主题';
+  String get themeTitle => 'テーマ';
 
   @override
-  String get themeSubtitle => '外观、バックグラウンド与显示';
+  String get themeSubtitle => '外観、バックグラウンドと表示';
 
   @override
   String get aboutSubtitle => '版本、更新与反馈';

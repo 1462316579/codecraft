@@ -184,25 +184,25 @@ class AppLocalizationsKo extends AppLocalizations {
   String get providersSubtitle => '모델、接口与密钥';
 
   @override
-  String get appearance => '外观';
+  String get appearance => '외관';
 
   @override
-  String get themeMode => '主题模式';
+  String get themeMode => '테마 모드';
 
   @override
-  String get themeModeSystem => '跟随系统';
+  String get themeModeSystem => '시스템에 따름';
 
   @override
-  String get themeModeLight => '浅色';
+  String get themeModeLight => '라이트';
 
   @override
-  String get themeModeDark => '深色';
+  String get themeModeDark => '다크';
 
   @override
-  String get language => '语言';
+  String get language => '언어';
 
   @override
-  String get languageSystem => '跟随系统';
+  String get languageSystem => '시스템에 따름';
 
   @override
   String get about => '关于';
@@ -1640,10 +1640,10 @@ class AppLocalizationsKo extends AppLocalizations {
   String get accountAndData => '账户与数据';
 
   @override
-  String get themeTitle => '主题';
+  String get themeTitle => '테마';
 
   @override
-  String get themeSubtitle => '外观、배경与显示';
+  String get themeSubtitle => '외관、배경과 표시';
 
   @override
   String get aboutSubtitle => '版本、更新与反馈';
