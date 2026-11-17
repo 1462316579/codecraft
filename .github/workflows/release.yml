@@ -10,11 +10,11 @@ on:
         default: 'patch'
         options:
           - patch
-  target_ref:
-    description: '要构建的分支或 tag'
-    type: string
-    required: true
-    default: 'main'
+      target_ref:
+        description: '要构建的分支或 tag'
+        type: string
+        required: true
+        default: 'main'
 
 jobs:
   build-and-release:
