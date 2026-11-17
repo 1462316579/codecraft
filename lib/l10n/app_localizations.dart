@@ -8352,6 +8352,12 @@ abstract class AppLocalizations {
   /// In zh, this message translates to:
   /// **'发现新版本'**
   String get aboutNewVersionFound;
+
+  /// No description provided for @aboutUpdateFailed.
+  ///
+  /// In zh, this message translates to:
+  /// **'检查更新失败'**
+  String get aboutUpdateFailed;
 }
 
 class _AppLocalizationsDelegate

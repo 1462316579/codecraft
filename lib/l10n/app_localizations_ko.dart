@@ -4422,4 +4422,7 @@ class AppLocalizationsKo extends AppLocalizations {
 
   @override
   String get aboutNewVersionFound => '새 버전이 발견되었습니다';
+
+  @override
+  String get aboutUpdateFailed => '업데이트 확인에 실패했습니다';
 }

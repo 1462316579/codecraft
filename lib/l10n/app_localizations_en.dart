@@ -4546,4 +4546,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get aboutNewVersionFound => 'New version found';
+
+  @override
+  String get aboutUpdateFailed => 'Failed to check for updates';
 }

@@ -2236,5 +2236,6 @@
   "aboutCheckingUpdate": "Checking for latest version on GitHub…",
   "aboutAlreadyLatest": "Already up to date",
   "aboutCurrentVersion": "Current version",
-  "aboutNewVersionFound": "New version found"
+  "aboutNewVersionFound": "New version found",
+  "aboutUpdateFailed": "Failed to check for updates"
 }

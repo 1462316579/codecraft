@@ -2292,5 +2292,6 @@
   "aboutCheckingUpdate": "GitHub で最新バージョンを確認中…",
   "aboutAlreadyLatest": "最新バージョンです",
   "aboutCurrentVersion": "現在のバージョン",
-  "aboutNewVersionFound": "新しいバージョンが見つかりました"
+  "aboutNewVersionFound": "新しいバージョンが見つかりました",
+  "aboutUpdateFailed": "アップデートの確認に失敗しました"
 }

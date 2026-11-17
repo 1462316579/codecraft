@@ -79,8 +79,8 @@ class _AboutPageState extends State<AboutPage> {
     setState(() => _checking = true);
 
     // 显示查询中对话框，给用户明确反馈
-    final checkingL10n = AppLocalizations.of(context);
-    _showCheckingDialog(checkingL10n);
+    final l10n = AppLocalizations.of(context)!;
+    _showCheckingDialog(l10n);
 
     try {
       final client = HttpClient()
@@ -114,11 +114,17 @@ class _AboutPageState extends State<AboutPage> {
       } else if (!mounted) {
         return;
       } else {
+        if (mounted) {
+          _showErrorDialog(l10n, '查询失败：HTTP ${response.statusCode}');
+        }
         setState(() => _updateAvailable = false);
       }
     } catch (_) {
       if (mounted) Navigator.pop(context); // 关闭查询中对话框
       if (!mounted) return;
+      if (mounted) {
+        _showErrorDialog(l10n, '查询失败：无法连接到 GitHub');
+      }
       setState(() => _updateAvailable = false);
     } finally {
       if (mounted) setState(() => _checking = false);
@@ -405,7 +411,7 @@ class _AboutPageState extends State<AboutPage> {
 
   /// 已是最新版本的提示弹窗。
   Future<void> _showAlreadyLatestDialog() async {
-    final l10n = AppLocalizations.of(context);
+    final l10n = AppLocalizations.of(context)!;
     await showDialog<void>(
       context: context,
       builder: (context) {
@@ -415,6 +421,25 @@ class _AboutPageState extends State<AboutPage> {
             '${l10n.aboutCurrentVersion} v$_version, 已是 GitHub 上最新的 Release。',
             style: Theme.of(context).textTheme.bodyMedium,
           ),
+          actions: [
+            TextButton(
+              onPressed: () => Navigator.pop(context),
+              child: Text(l10n.confirm),
+            ),
+          ],
+        );
+      },
+    );
+  }
+
+  /// 查询失败错误提示弹窗。
+  Future<void> _showErrorDialog(AppLocalizations l10n, String message) async {
+    await showDialog<void>(
+      context: context,
+      builder: (context) {
+        return AlertDialog(
+          title: Text(l10n.aboutUpdateFailed),
+          content: Text(message),
           actions: [
             TextButton(
               onPressed: () => Navigator.pop(context),

@@ -4429,4 +4429,7 @@ class AppLocalizationsJa extends AppLocalizations {
 
   @override
   String get aboutNewVersionFound => '新しいバージョンが見つかりました';
+
+  @override
+  String get aboutUpdateFailed => 'アップデートの確認に失敗しました';
 }
