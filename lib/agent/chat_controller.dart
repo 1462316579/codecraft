@@ -1136,7 +1136,8 @@ class ChatController extends StateNotifier<ChatViewState> {
       pendingAttachments: [...state.pendingAttachments, ...lastUser.attachments],
     );
     // 移除重试消息之后的所有消息(包括被中断的助手回复)。
-    final trimmedMessages = messages.takeWhile((m) => m.id != lastUser.id).toList()..add(lastUser);
+    final trimmedMessages =
+        messages.takeWhile((m) => m.id != lastUser!.id).toList()..add(lastUser!);
     state = state.copyWith(
       messages: trimmedMessages,
       errorCode: () => null,

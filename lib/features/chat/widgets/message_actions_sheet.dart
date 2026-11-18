@@ -38,7 +38,7 @@ Future<MessageAction?> showMessageActionsSheet(BuildContext context) {
               onTap: () => Navigator.pop(sheetContext, MessageAction.edit),
             ),
             _ActionItem(
-              icon: Iconfont.refresh,
+              icon: Iconfont.refreshCw,
               title: l10n.retry,
               onTap: () => Navigator.pop(sheetContext, MessageAction.retry),
             ),
