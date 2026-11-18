@@ -481,6 +481,8 @@ class _ChatPageState extends ConsumerState<ChatPage>
         await controller.updateMessageContent(message.id, updated);
       case MessageAction.delete:
         await controller.deleteMessage(message.id);
+      case MessageAction.retry:
+        await controller.retry();
     }
   }
 

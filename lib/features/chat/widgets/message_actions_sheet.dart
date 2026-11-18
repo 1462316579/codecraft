@@ -6,9 +6,9 @@ import '../../../core/theme/tokens.dart';
 import '../../../l10n/app_localizations.dart';
 
 /// 「更多选项」弹层的动作。复制已在气泡下方常驻,这里不再重复提供。
-enum MessageAction { edit, delete }
+enum MessageAction { edit, delete, retry }
 
-/// 消息「更多选项」弹层:编辑 / 删除。
+/// 消息「更多选项」弹层:编辑 / 删除 / 重试。
 Future<MessageAction?> showMessageActionsSheet(BuildContext context) {
   return showModalBottomSheet<MessageAction>(
     context: context,
@@ -36,6 +36,11 @@ Future<MessageAction?> showMessageActionsSheet(BuildContext context) {
               icon: Iconfont.pencil,
               title: l10n.chatActionEdit,
               onTap: () => Navigator.pop(sheetContext, MessageAction.edit),
+            ),
+            _ActionItem(
+              icon: Iconfont.refresh,
+              title: l10n.retry,
+              onTap: () => Navigator.pop(sheetContext, MessageAction.retry),
             ),
             _ActionItem(
               icon: Iconfont.trash2,

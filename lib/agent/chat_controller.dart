@@ -1118,6 +1118,37 @@ class ChatController extends StateNotifier<ChatViewState> {
     state = state.copyWith(messages: [...state.messages, message]);
   }
 
+  /// 重试上一条用户消息:重新发送最近的一条用户消息(含附件)。
+  Future<bool> retry() async {
+    if (state.streaming) return false;
+    final messages = state.messages;
+    // 从后往前找最近的一条用户消息。
+    AgentMessage? lastUser;
+    for (var i = messages.length - 1; i >= 0; i--) {
+      if (messages[i].role == MessageRole.user) {
+        lastUser = messages[i];
+        break;
+      }
+    }
+    if (lastUser == null) return false;
+    // 将该条消息的附件放入待发列表,随重试一起发送。
+    state = state.copyWith(
+      pendingAttachments: [...state.pendingAttachments, ...lastUser.attachments],
+    );
+    // 移除重试消息之后的所有消息(包括被中断的助手回复)。
+    final trimmedMessages = messages.takeWhile((m) => m.id != lastUser.id).toList()..add(lastUser);
+    state = state.copyWith(
+      messages: trimmedMessages,
+      errorCode: () => null,
+      errorDetail: () => null,
+      streaming: false,
+      streamingText: '',
+      streamingReasoning: '',
+      retry: () => null,
+    );
+    return send(lastUser.content);
+  }
+
   /// 附加一个附件(待随下一条消息发送)。
   void addAttachment(AgentAttachment attachment) {
     state = state.copyWith(pendingAttachments: [...state.pendingAttachments, attachment]);
