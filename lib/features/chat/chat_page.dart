@@ -49,7 +49,8 @@ class ChatPage extends ConsumerStatefulWidget {
   ConsumerState<ChatPage> createState() => _ChatPageState();
 }
 
-class _ChatPageState extends ConsumerState<ChatPage> {
+class _ChatPageState extends ConsumerState<ChatPage>
+    with WidgetsBindingObserver {
   final _input = TextEditingController();
   int _uploadingCount = 0;
   /// 输入栏实测高度:欢迎页用它把文案向上抬(对齐上游 inputBarReservePx)。
@@ -61,14 +62,26 @@ class _ChatPageState extends ConsumerState<ChatPage> {
   @override
   void initState() {
     super.initState();
+    WidgetsBinding.instance.addObserver(this);
     _scrollController.addListener(_onScroll);
   }
 
   @override
   void dispose() {
+    WidgetsBinding.instance.removeObserver(this);
     _scrollController.dispose();
     _input.dispose();
     super.dispose();
+  }
+
+  @override
+  void didChangeAppLifecycleState(AppLifecycleState state) {
+    super.didChangeAppLifecycleState(state);
+    if (state == AppLifecycleState.paused ||
+        state == AppLifecycleState.inactive) {
+      // 应用进入后台或不可交互状态:停止当前流式响应,避免后台继续请求并报错中断。
+      ref.read(chatControllerProvider(widget.sessionId).notifier).stop();
+    }
   }
 
   @override
