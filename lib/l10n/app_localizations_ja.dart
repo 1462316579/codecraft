@@ -4447,4 +4447,211 @@ class AppLocalizationsJa extends AppLocalizations {
 
   @override
   String get aboutUpdateFailed => 'アップデートの確認に失敗しました';
+
+  @override
+  String get storageTitle => 'ストレージ';
+
+  @override
+  String get storageRefresh => '更新';
+
+  @override
+  String get storageCategoryDetail => '使用状況';
+
+  @override
+  String get storageFootnote =>
+      '矢印付きのカテゴリーをタップすると詳細が展開されます。チャットを削除するとチャット記録が減少します。';
+
+  @override
+  String storageFreedBytes(Object size) {
+    return '解放 $size';
+  }
+
+  @override
+  String get storageAppUsage => 'アプリ使用量';
+
+  @override
+  String get storageComputing => '計算中…';
+
+  @override
+  String storageDeviceSpace(Object available, Object total) {
+    return '利用可能 $available / 合計 $total';
+  }
+
+  @override
+  String storageCleanSelect(Object size) {
+    return '選択項目をクリーンアップ · $size';
+  }
+
+  @override
+  String get storageConfirmClean => 'クリーンアップを確認';
+
+  @override
+  String storageConfirmContent(Object size) {
+    return '以下の選択項目をクリーンアップします。合計約 $size。この操作は元に戻せません。';
+  }
+
+  @override
+  String get storageConfirmDetail =>
+      'ローカルアプリキャッシュ、ログ、グローバルディレクトリ内の選択データのみをクリーンアップします。ワークスペース間の過去出力の読み取りや画像ベースの追跡問い合わせに影響する場合があります。チャット記録、ワークスペースファイル、AI 設定、リモートサーバーデータは削除されません。';
+
+  @override
+  String get storageCancel => 'キャンセル';
+
+  @override
+  String get storageClean => 'クリーンアップ';
+
+  @override
+  String get storageUsageUnavailable => '—';
+
+  @override
+  String get storageCategoryContainer => '容器';
+
+  @override
+  String get storageCategoryContainerImage => '容器镜像';
+
+  @override
+  String get storageCategoryChat => '聊天';
+
+  @override
+  String get storageCategoryWorkspaces => '工作区';
+
+  @override
+  String get storageCategoryAiConfig => 'AI 配置';
+
+  @override
+  String get storageCategoryCheckpoints => '检查点';
+
+  @override
+  String get storageCategoryLogs => '日志';
+
+  @override
+  String get storageCategoryCaches => '缓存';
+
+  @override
+  String get storageCategoryOther => '其他数据';
+
+  @override
+  String get storageCategoryApk => '应用安装包';
+
+  @override
+  String get cleanupCaches => '缓存文件';
+
+  @override
+  String get cleanupCachesDesc => '临时文件,删除后会自动重建';
+
+  @override
+  String get cleanupLogs => '运行日志';
+
+  @override
+  String get cleanupLogsDesc => '应用日志与 AI 请求日志,删除不影响功能';
+
+  @override
+  String get cleanupToolOutput => '工具输出存档';
+
+  @override
+  String get cleanupToolOutputDesc => 'AI 超长工具输出保存到磁盘的副本,删除后旧消息里的输出路径不再可读';
+
+  @override
+  String get cleanupVisionSessions => '识图会话缓存';
+
+  @override
+  String get cleanupVisionSessionsDesc => '识图追问的历史,删除后无法继续追问旧图片';
+
+  @override
+  String get containerPageTitle => 'コンテナとイメージ';
+
+  @override
+  String get containerDownloadTooltip => 'コンテナをダウンロード';
+
+  @override
+  String get containerRefreshTooltip => '更新';
+
+  @override
+  String get containerInstalledSection => 'インストール済みコンテナ';
+
+  @override
+  String get containerDefaultLabel => 'デフォルトコンテナ';
+
+  @override
+  String get containerSetDefault => 'デフォルトに設定';
+
+  @override
+  String get containerDeleteTitle => 'コンテナを削除';
+
+  @override
+  String containerDeleteContent(String name) {
+    return '「$name」を削除してもよろしいですか？コンテナ内にインストールされたソフトウェアも削除されます。';
+  }
+
+  @override
+  String get containerDownloadPageTitle => 'コンテナのダウンロード';
+
+  @override
+  String get containerDownloadHint =>
+      'ダウンロードするイメージを選択してください。イメージは公式の aarch64 rootfs で、解凍後 PRoot により隔離されたファイルシステムが提供されます。';
+
+  @override
+  String get containerInstallingStage => 'インストール中…';
+
+  @override
+  String get containerAvailableImages => '利用可能なイメージ';
+
+  @override
+  String get containerDownloadAfter => 'ダウンロード完了後、コンテナは「コンテナとイメージ」ページに表示されます。';
+
+  @override
+  String containerInstalledCount(int count) {
+    return '$count 個インストール済み';
+  }
+
+  @override
+  String get containerDownloadButton => 'ダウンロード';
+
+  @override
+  String get containerNoContainers => 'ダウンロード済みのコンテナはありません';
+
+  @override
+  String get containerNoContainersDesc => '右上のダウンロードボタンをクリックしてイメージを選択してください';
+
+  @override
+  String containerDefaultSubtitle(String size) {
+    return 'デフォルトコンテナ · $size';
+  }
+
+  @override
+  String get containerDeleteFootnote =>
+      'コンテナを削除すると、コンテナ内にインストールされたソフトウェアパッケージも同時に削除されます。ワークスペースファイルは影響を受けません。';
+
+  @override
+  String get exportSetPassword => '暗号化パスワードの設定（オプション）';
+
+  @override
+  String get exportBackupAction => 'エクスポート';
+
+  @override
+  String get importSelectBackupFile => 'バックアップファイルを選択';
+
+  @override
+  String get importLocalBackup => 'ローカルバックアップ';
+
+  @override
+  String get importLocalBackupDesc => 'アプリのドキュメントディレクトリからバックアップファイルを選択します';
+
+  @override
+  String exportSuccess(String fileName) {
+    return 'バックアップをエクスポートしました: $fileName';
+  }
+
+  @override
+  String exportFailed(String error) {
+    return 'エクスポートに失敗しました: $error';
+  }
+
+  @override
+  String get importSuccess => 'バックアップを復元しました';
+
+  @override
+  String importFailed(String error) {
+    return 'インポートに失敗しました: $error';
+  }
 }

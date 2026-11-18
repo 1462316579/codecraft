@@ -2293,5 +2293,90 @@
   "aboutAlreadyLatest": "最新バージョンです",
   "aboutCurrentVersion": "現でのバージョン",
   "aboutNewVersionFound": "新しいバージョンが見つかりました",
-  "aboutUpdateFailed": "アップデートの確認に失敗しました"
+  "aboutUpdateFailed": "アップデートの確認に失敗しました",
+  "storageTitle": "ストレージ",
+  "storageRefresh": "更新",
+  "storageCategoryDetail": "使用状況",
+  "storageFootnote": "矢印付きのカテゴリーをタップすると詳細が展開されます。チャットを削除するとチャット記録が減少します。",
+  "storageFreedBytes": "解放 {size}",
+  "storageAppUsage": "アプリ使用量",
+  "storageComputing": "計算中…",
+  "storageDeviceSpace": "利用可能 {available} / 合計 {total}",
+  "storageCleanSelect": "選択項目をクリーンアップ · {size}",
+  "storageConfirmClean": "クリーンアップを確認",
+  "storageConfirmContent": "以下の選択項目をクリーンアップします。合計約 {size}。この操作は元に戻せません。",
+  "storageConfirmDetail": "ローカルアプリキャッシュ、ログ、グローバルディレクトリ内の選択データのみをクリーンアップします。ワークスペース間の過去出力の読み取りや画像ベースの追跡問い合わせに影響する場合があります。チャット記録、ワークスペースファイル、AI 設定、リモートサーバーデータは削除されません。",
+  "storageCancel": "キャンセル",
+  "storageClean": "クリーンアップ",
+  "storageUsageUnavailable": "—",
+  "containerPageTitle": "コンテナとイメージ",
+  "containerDownloadTooltip": "コンテナをダウンロード",
+  "containerRefreshTooltip": "更新",
+  "containerInstalledSection": "インストール済みコンテナ",
+  "containerDefaultLabel": "デフォルトコンテナ",
+  "containerSetDefault": "デフォルトに設定",
+  "containerDeleteTitle": "コンテナを削除",
+  "containerDeleteContent": "「{name}」を削除してもよろしいですか？コンテナ内にインストールされたソフトウェアも削除されます。",
+  "containerDownloadPageTitle": "コンテナのダウンロード",
+  "containerDownloadHint": "ダウンロードするイメージを選択してください。イメージは公式の aarch64 rootfs で、解凍後 PRoot により隔離されたファイルシステムが提供されます。",
+  "containerInstallingStage": "インストール中…",
+  "containerAvailableImages": "利用可能なイメージ",
+  "containerDownloadAfter": "ダウンロード完了後、コンテナは「コンテナとイメージ」ページに表示されます。",
+  "containerInstalledCount": "{count} 個インストール済み",
+  "containerDownloadButton": "ダウンロード",
+  "containerNoContainers": "ダウンロード済みのコンテナはありません",
+  "containerNoContainersDesc": "右上のダウンロードボタンをクリックしてイメージを選択してください",
+  "@containerInstalledCount": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "@containerDeleteContent": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "containerDefaultSubtitle": "デフォルトコンテナ · {size}",
+  "containerDeleteFootnote": "コンテナを削除すると、コンテナ内にインストールされたソフトウェアパッケージも同時に削除されます。ワークスペースファイルは影響を受けません。",
+  "@containerDefaultSubtitle": {
+    "placeholders": {
+      "size": {
+        "type": "String"
+      }
+    }
+  },
+  "exportSetPassword": "暗号化パスワードの設定（オプション）",
+  "exportBackupAction": "エクスポート",
+  "importSelectBackupFile": "バックアップファイルを選択",
+  "importLocalBackup": "ローカルバックアップ",
+  "importLocalBackupDesc": "アプリのドキュメントディレクトリからバックアップファイルを選択します",
+  "exportSuccess": "バックアップをエクスポートしました: {fileName}",
+  "exportFailed": "エクスポートに失敗しました: {error}",
+  "importSuccess": "バックアップを復元しました",
+  "importFailed": "インポートに失敗しました: {error}",
+  "@exportSuccess": {
+    "placeholders": {
+      "fileName": {
+        "type": "String"
+      }
+    }
+  },
+  "@exportFailed": {
+    "placeholders": {
+      "error": {
+        "type": "String"
+      }
+    }
+  },
+  "@importFailed": {
+    "placeholders": {
+      "error": {
+        "type": "String"
+      }
+    }
+  }
 }

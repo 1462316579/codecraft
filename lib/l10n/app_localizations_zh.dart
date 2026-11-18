@@ -4421,6 +4421,211 @@ class AppLocalizationsZh extends AppLocalizations {
 
   @override
   String get aboutUpdateFailed => '检查更新失败';
+
+  @override
+  String get storageTitle => '存储空间';
+
+  @override
+  String get storageRefresh => '重新统计';
+
+  @override
+  String get storageCategoryDetail => '占用明细';
+
+  @override
+  String get storageFootnote => '点击带箭头的分类可展开明细。删会话可减小聊天记录。';
+
+  @override
+  String storageFreedBytes(Object size) {
+    return '已释放 $size';
+  }
+
+  @override
+  String get storageAppUsage => '应用占用';
+
+  @override
+  String get storageComputing => '统计中…';
+
+  @override
+  String storageDeviceSpace(Object available, Object total) {
+    return '设备可用 $available / 共 $total';
+  }
+
+  @override
+  String storageCleanSelect(Object size) {
+    return '清理选中项 · $size';
+  }
+
+  @override
+  String get storageConfirmClean => '确认清理';
+
+  @override
+  String storageConfirmContent(Object size) {
+    return '将清理以下选中项,共约 $size。此操作不可恢复。';
+  }
+
+  @override
+  String get storageConfirmDetail =>
+      '仅清理本机应用缓存、日志及全局目录中的所选数据,可能影响多个工作区的历史输出读取或识图追问;不会删除聊天记录、工作区文件、AI 配置或远程服务器数据。';
+
+  @override
+  String get storageCancel => '取消';
+
+  @override
+  String get storageClean => '清理';
+
+  @override
+  String get storageUsageUnavailable => '—';
+
+  @override
+  String get storageCategoryContainer => '容器';
+
+  @override
+  String get storageCategoryContainerImage => '容器镜像';
+
+  @override
+  String get storageCategoryChat => '聊天';
+
+  @override
+  String get storageCategoryWorkspaces => '工作区';
+
+  @override
+  String get storageCategoryAiConfig => 'AI 配置';
+
+  @override
+  String get storageCategoryCheckpoints => '检查点';
+
+  @override
+  String get storageCategoryLogs => '日志';
+
+  @override
+  String get storageCategoryCaches => '缓存';
+
+  @override
+  String get storageCategoryOther => '其他数据';
+
+  @override
+  String get storageCategoryApk => '应用安装包';
+
+  @override
+  String get cleanupCaches => '缓存文件';
+
+  @override
+  String get cleanupCachesDesc => '临时文件,删除后会自动重建';
+
+  @override
+  String get cleanupLogs => '运行日志';
+
+  @override
+  String get cleanupLogsDesc => '应用日志与 AI 请求日志,删除不影响功能';
+
+  @override
+  String get cleanupToolOutput => '工具输出存档';
+
+  @override
+  String get cleanupToolOutputDesc => 'AI 超长工具输出保存到磁盘的副本,删除后旧消息里的输出路径不再可读';
+
+  @override
+  String get cleanupVisionSessions => '识图会话缓存';
+
+  @override
+  String get cleanupVisionSessionsDesc => '识图追问的历史,删除后无法继续追问旧图片';
+
+  @override
+  String get containerPageTitle => '容器与镜像';
+
+  @override
+  String get containerDownloadTooltip => '下载容器';
+
+  @override
+  String get containerRefreshTooltip => '刷新';
+
+  @override
+  String get containerInstalledSection => '已安装容器';
+
+  @override
+  String get containerDefaultLabel => '默认容器';
+
+  @override
+  String get containerSetDefault => '设为默认';
+
+  @override
+  String get containerDeleteTitle => '删除容器';
+
+  @override
+  String containerDeleteContent(String name) {
+    return '确定删除「$name」吗？容器内安装的软件会一并删除。';
+  }
+
+  @override
+  String get containerDownloadPageTitle => '容器下载';
+
+  @override
+  String get containerDownloadHint =>
+      '选择需要的镜像下载。镜像为官方 aarch64 rootfs，解压后由 PRoot 提供隔离的文件系统。';
+
+  @override
+  String get containerInstallingStage => '正在安装…';
+
+  @override
+  String get containerAvailableImages => '可用镜像';
+
+  @override
+  String get containerDownloadAfter => '下载完成后，容器会显示在「容器与镜像」页面。';
+
+  @override
+  String containerInstalledCount(int count) {
+    return '已安装 $count 个';
+  }
+
+  @override
+  String get containerDownloadButton => '下载';
+
+  @override
+  String get containerNoContainers => '暂无已下载容器';
+
+  @override
+  String get containerNoContainersDesc => '点击右上角下载按钮选择镜像';
+
+  @override
+  String containerDefaultSubtitle(String size) {
+    return '默认容器 · $size';
+  }
+
+  @override
+  String get containerDeleteFootnote => '删除容器会同时删除容器内安装的软件包；工作区文件不受影响。';
+
+  @override
+  String get exportSetPassword => '设置加密口令（可选）';
+
+  @override
+  String get exportBackupAction => '导出';
+
+  @override
+  String get importSelectBackupFile => '选择备份文件';
+
+  @override
+  String get importLocalBackup => '本地备份';
+
+  @override
+  String get importLocalBackupDesc => '从应用文档目录选择备份文件';
+
+  @override
+  String exportSuccess(String fileName) {
+    return '备份已导出: $fileName';
+  }
+
+  @override
+  String exportFailed(String error) {
+    return '导出失败: $error';
+  }
+
+  @override
+  String get importSuccess => '备份已还原';
+
+  @override
+  String importFailed(String error) {
+    return '导入失败: $error';
+  }
 }
 
 /// The translations for Chinese, using the Han script (`zh_Hant`).
@@ -4434,7 +4639,7 @@ class AppLocalizationsZhHant extends AppLocalizationsZh {
   String get tabSessions => '會話';
 
   @override
-  String get tabSettings => '设置';
+  String get tabSettings => '設置';
 
   @override
   String get newSession => '新建會話';
@@ -4467,7 +4672,7 @@ class AppLocalizationsZhHant extends AppLocalizationsZh {
   String get reverseSearchResourceHint => '搜索资源名、类型或 0x 编號';
 
   @override
-  String get reverseNoMatch => '没有匹配項';
+  String get reverseNoMatch => '沒有匹配項';
 
   @override
   String get reverseEmptyFile => '文件为空';
@@ -4476,7 +4681,7 @@ class AppLocalizationsZhHant extends AppLocalizationsZh {
   String get reverseLoadFailed => '打開失败';
 
   @override
-  String get reverseParseFailed => '解析失败,这个文件可能被加固或已损坏';
+  String get reverseParseFailed => '解析失败,這個文件可能被加固或已損壞';
 
   @override
   String get reverseEditString => '修改字符串';
@@ -4489,16 +4694,16 @@ class AppLocalizationsZhHant extends AppLocalizationsZh {
   String get reverseEditByte => '修改字节';
 
   @override
-  String get reverseEditByteHint => '输入两位十六進制,例如 0a、ff';
+  String get reverseEditByteHint => '輸入两位十六進制,例如 0a、ff';
 
   @override
-  String get reverseInvalidByte => '请输入 00-ff 之間的十六進制字节';
+  String get reverseInvalidByte => '请輸入 00-ff 之間的十六進制字节';
 
   @override
   String get reverseJumpToOffset => '跳转到偏移';
 
   @override
-  String get reverseOffsetInvalid => '偏移無效,请输入十六進制';
+  String get reverseOffsetInvalid => '偏移無效,请輸入十六進制';
 
   @override
   String get reverseSuperclass => '父类';
@@ -4526,12 +4731,12 @@ class AppLocalizationsZhHant extends AppLocalizationsZh {
 
   @override
   String reverseMethodCount(int count) {
-    return '$count 个方法';
+    return '$count 個方法';
   }
 
   @override
   String reverseFieldCount(int count) {
-    return '$count 个字段';
+    return '$count 個字段';
   }
 
   @override
@@ -4576,13 +4781,13 @@ class AppLocalizationsZhHant extends AppLocalizationsZh {
   String get searchSessions => '搜索會話';
 
   @override
-  String get noSessions => '暂無會話';
+  String get noSessions => '暫無會話';
 
   @override
-  String get noMessages => '開始新的对話吧';
+  String get noMessages => '開始新的對話吧';
 
   @override
-  String get chatInputPlaceholder => '输入消息,與 AI 对話…';
+  String get chatInputPlaceholder => '輸入消息,與 AI 對話…';
 
   @override
   String get reasoningTitle => '思考過程';
@@ -4594,7 +4799,7 @@ class AppLocalizationsZhHant extends AppLocalizationsZh {
   String get pinned => '已置頂';
 
   @override
-  String get settings => '设置';
+  String get settings => '設置';
 
   @override
   String get providers => 'AI 提供商';
@@ -4694,13 +4899,13 @@ class AppLocalizationsZhHant extends AppLocalizationsZh {
   String get deleteSessionConfirm => '确定刪除该會話?';
 
   @override
-  String get emptyProviders => '还没有供应商,點右上角 + 添加';
+  String get emptyProviders => '還沒有供应商,點右上角 + 添加';
 
   @override
-  String get emptyModels => '还没有模型';
+  String get emptyModels => '還沒有模型';
 
   @override
-  String get modelInputHint => '输入模型 ID 後回车添加';
+  String get modelInputHint => '輸入模型 ID 後回车添加';
 
   @override
   String get errorGeneric => '出錯了';
@@ -4719,23 +4924,23 @@ class AppLocalizationsZhHant extends AppLocalizationsZh {
 
   @override
   String providerModelsCountTag(int count) {
-    return '$count 个模型';
+    return '$count 個模型';
   }
 
   @override
-  String get inputTokens => '输入';
+  String get inputTokens => '輸入';
 
   @override
-  String get outputTokens => '输出';
+  String get outputTokens => '輸出';
 
   @override
-  String get emptyChatHint => '選择一个會話開始对話';
+  String get emptyChatHint => '選擇一個會話開始對話';
 
   @override
-  String get errorNoProvider => '未配置可用的供应商,请先在设置中添加';
+  String get errorNoProvider => '未配置可用的供应商,请先在設置中添加';
 
   @override
-  String get errorNoModel => '请为该供应商選择模型';
+  String get errorNoModel => '请为该供应商選擇模型';
 
   @override
   String get errorEmptyResponse => '模型返回了空白內容';
@@ -4744,23 +4949,23 @@ class AppLocalizationsZhHant extends AppLocalizationsZh {
   String get thinking => '思考中…';
 
   @override
-  String get modelListTitle => '選择模型';
+  String get modelListTitle => '選擇模型';
 
   @override
-  String get providerListTitle => '選择供应商';
+  String get providerListTitle => '選擇供应商';
 
   @override
   String get customProvider => '自定義';
 
   @override
-  String get addFromPreset => '從预设添加';
+  String get addFromPreset => '從预設添加';
 
   @override
   String get useFullUrlHint => 'baseUrl 已是完整端點';
 
   @override
   String get aboutBody =>
-      'Codecraft Flutter 是 jieapi/Codecraft 的 Flutter 复刻(Phase 1:核心对話閉环)。';
+      'Codecraft Flutter 是 jieapi/Codecraft 的 Flutter 复刻(Phase 1:核心對話閉环)。';
 
   @override
   String get chatPlaceholder => '有什么可以帮你的?';
@@ -4772,7 +4977,7 @@ class AppLocalizationsZhHant extends AppLocalizationsZh {
   String get openSidebar => '打開侧边栏';
 
   @override
-  String get noModelSelected => '未選择模型';
+  String get noModelSelected => '未選擇模型';
 
   @override
   String get sessionGroupPinned => '置頂';
@@ -4794,19 +4999,19 @@ class AppLocalizationsZhHant extends AppLocalizationsZh {
 
   @override
   String chatThinkingRunningTime(String seconds) {
-    return '正在思考(耗时 $seconds 秒)';
+    return '正在思考(耗時 $seconds 秒)';
   }
 
   @override
   String chatThinkingDoneTime(String seconds) {
-    return '思考完成(耗时 $seconds 秒)';
+    return '思考完成(耗時 $seconds 秒)';
   }
 
   @override
   String get chatThinkingDone => '思考完成';
 
   @override
-  String get chatQueueHint => 'AI 正在处理中,點右侧方块可停止';
+  String get chatQueueHint => 'AI 正在处理中,點右侧方塊可停止';
 
   @override
   String get chatStatusGenerating => '正在生成';
@@ -4909,22 +5114,22 @@ class AppLocalizationsZhHant extends AppLocalizationsZh {
 
   @override
   String attachmentMax(int count) {
-    return '最多可同时髮送 $count 个附件';
+    return '最多可同時髮送 $count 個附件';
   }
 
   @override
   String attachmentUploaded(int count) {
-    return '已上传 $count 个附件';
+    return '已上传 $count 個附件';
   }
 
   @override
   String attachmentUploadedPartial(int count) {
-    return '已上传 $count 个附件,部分附件未加入';
+    return '已上传 $count 個附件,部分附件未加入';
   }
 
   @override
   String attachmentUploading(int count) {
-    return '正在上传 $count 个文件…';
+    return '正在上传 $count 個文件…';
   }
 
   @override
@@ -4960,16 +5165,16 @@ class AppLocalizationsZhHant extends AppLocalizationsZh {
   String get skillsTitle => 'Skill 管理';
 
   @override
-  String get skillsSubtitle => '浏览、导入與管理寫作技能';
+  String get skillsSubtitle => '浏览、導入與管理寫作技能';
 
   @override
   String get skillsNew => '新建技能';
 
   @override
-  String get skillsImport => '导入 Markdown';
+  String get skillsImport => '導入 Markdown';
 
   @override
-  String get skillsScopeTitle => '選择作用域';
+  String get skillsScopeTitle => '選擇作用域';
 
   @override
   String get skillsScopeGlobal => '';
@@ -4981,24 +5186,24 @@ class AppLocalizationsZhHant extends AppLocalizationsZh {
   String get skillsScopeGlobalHint => '~/.codecraft/skills,跨項目共享';
 
   @override
-  String get skillsScopeProjectHint => '~/workspace/.codecraft/skills,随当前工作區';
+  String get skillsScopeProjectHint => '~/workspace/.codecraft/skills,随當前工作區';
 
   @override
   String skillsProjectGroup(String name) {
-    return '当前項目($name)';
+    return '當前項目($name)';
   }
 
   @override
-  String get skillsNoProjectSkills => '当前項目还没有技能';
+  String get skillsNoProjectSkills => '當前項目還沒有技能';
 
   @override
-  String get skillsNoGlobalSkills => '还没有全局技能';
+  String get skillsNoGlobalSkills => '還沒有全局技能';
 
   @override
-  String get skillsEmpty => '还没有技能';
+  String get skillsEmpty => '還沒有技能';
 
   @override
-  String get skillsEmptyHint => '技能是寫给 AI 的专項操作說明;导入 SKILL.md 或手动新建一个吧。';
+  String get skillsEmptyHint => '技能是寫給 AI 的专項操作說明;導入 SKILL.md 或手动新建一個吧。';
 
   @override
   String get skillsName => '名稱';
@@ -5007,7 +5212,7 @@ class AppLocalizationsZhHant extends AppLocalizationsZh {
   String get skillsDescription => '描述';
 
   @override
-  String get skillsDescriptionHint => '何时使用这个技能(會進系统提示)';
+  String get skillsDescriptionHint => '何時使用這個技能(會進系统提示)';
 
   @override
   String get skillsInstructions => '指令正文';
@@ -5017,7 +5222,7 @@ class AppLocalizationsZhHant extends AppLocalizationsZh {
 
   @override
   String skillsImported(String name) {
-    return '已导入技能「$name」';
+    return '已導入技能「$name」';
   }
 
   @override
@@ -5040,7 +5245,7 @@ class AppLocalizationsZhHant extends AppLocalizationsZh {
   }
 
   @override
-  String get skillsErrorNoSkill => '文件裡没有可识別的技能';
+  String get skillsErrorNoSkill => '文件裡沒有可识別的技能';
 
   @override
   String get skillsErrorIoFailed => '讀寫技能文件失败';
@@ -5086,7 +5291,7 @@ class AppLocalizationsZhHant extends AppLocalizationsZh {
 
   @override
   String providerHeadersCount(int count) {
-    return '已配置 $count 个请求头';
+    return '已配置 $count 個请求头';
   }
 
   @override
@@ -5099,13 +5304,13 @@ class AppLocalizationsZhHant extends AppLocalizationsZh {
   String get providerAddModel => '添加模型';
 
   @override
-  String get providerNoModels => '暂無模型';
+  String get providerNoModels => '暫無模型';
 
   @override
   String get providerNoModelsHint => '點击右上方按钮添加模型';
 
   @override
-  String get providerModelCurrent => '当前';
+  String get providerModelCurrent => '當前';
 
   @override
   String providerModelsCount(String count) {
@@ -5137,7 +5342,7 @@ class AppLocalizationsZhHant extends AppLocalizationsZh {
 
   @override
   String providerModelsBatchDeleteConfirm(int count) {
-    return '确定刪除選中的 $count 个模型吗?';
+    return '确定刪除選中的 $count 個模型吗?';
   }
 
   @override
@@ -5151,14 +5356,14 @@ class AppLocalizationsZhHant extends AppLocalizationsZh {
 
   @override
   String providerAddAllModelsConfirm(int count) {
-    return '确定将拉取到的 $count 个模型全部添加至当前提供商?';
+    return '确定将拉取到的 $count 個模型全部添加至當前提供商?';
   }
 
   @override
-  String get providerFilterModelsHint => '输入模型名稱篩選';
+  String get providerFilterModelsHint => '輸入模型名稱篩選';
 
   @override
-  String get providerNoMatchingModels => '没有匹配的模型';
+  String get providerNoMatchingModels => '沒有匹配的模型';
 
   @override
   String providerModelAdded(String name) {
@@ -5192,22 +5397,22 @@ class AppLocalizationsZhHant extends AppLocalizationsZh {
   String get providerModelContext => '上下文窗口 (tokens)';
 
   @override
-  String get providerModelContextInput => '输入上限 (tokens)';
+  String get providerModelContextInput => '輸入上限 (tokens)';
 
   @override
-  String get providerModelContextOutput => '输出上限 (tokens)';
+  String get providerModelContextOutput => '輸出上限 (tokens)';
 
   @override
-  String get providerModelWindowInvalid => '请输入有效的正整數,或留空使用自动识別值';
+  String get providerModelWindowInvalid => '请輸入有效的正整數,或留空使用自动识別值';
 
   @override
   String get providerModelSectionPrice => '价格';
 
   @override
-  String get providerModelPriceInput => '输入价格 (USD/1M tokens)';
+  String get providerModelPriceInput => '輸入价格 (USD/1M tokens)';
 
   @override
-  String get providerModelPriceOutput => '输出价格 (USD/1M tokens)';
+  String get providerModelPriceOutput => '輸出价格 (USD/1M tokens)';
 
   @override
   String get providerModelPriceCacheRead => '缓存讀价格 (USD/1M tokens)';
@@ -5219,10 +5424,10 @@ class AppLocalizationsZhHant extends AppLocalizationsZh {
   String get providerModelCapabilities => '能力';
 
   @override
-  String get providerModelCapVision => '图片输入';
+  String get providerModelCapVision => '图片輸入';
 
   @override
-  String get providerModelCapImageOutput => '图片输出';
+  String get providerModelCapImageOutput => '图片輸出';
 
   @override
   String get providerModelCapTools => '工具調用';
@@ -5258,14 +5463,14 @@ class AppLocalizationsZhHant extends AppLocalizationsZh {
   String get providerMultiKeyTitle => '多 Key 模式';
 
   @override
-  String get providerMultiKeySubtitle => '同一供应商下配多个 Key,密鑰不可用时自动切换并重髮';
+  String get providerMultiKeySubtitle => '同一供应商下配多個 Key,密鑰不可用時自动切换並重髮';
 
   @override
   String get providerMultiKeyManage => '多 Key 管理';
 
   @override
   String providerMultiKeySummary(int count, String strategy) {
-    return '$count 个 · $strategy';
+    return '$count 個 · $strategy';
   }
 
   @override
@@ -5277,7 +5482,7 @@ class AppLocalizationsZhHant extends AppLocalizationsZh {
   }
 
   @override
-  String get providerMultiKeyEmpty => '點此添加第一个 Key';
+  String get providerMultiKeyEmpty => '點此添加第一個 Key';
 
   @override
   String get providerMultiKeyAdd => '添加 Key';
@@ -5286,7 +5491,7 @@ class AppLocalizationsZhHant extends AppLocalizationsZh {
   String get providerMultiKeyWeight => '調度权重';
 
   @override
-  String get providerMultiKeyWeightHint => '默認 1 · ≤ 0 时不参與 · 最大 1,000,000';
+  String get providerMultiKeyWeightHint => '默認 1 · ≤ 0 時不参與 · 最大 1,000,000';
 
   @override
   String get providerMultiKeyStrategy => '取用策略';
@@ -5295,7 +5500,7 @@ class AppLocalizationsZhHant extends AppLocalizationsZh {
   String get providerMultiKeyStrategySequential => '顺序';
 
   @override
-  String get providerMultiKeyStrategySequentialDesc => '始终用靠前的 Key,失败达阈值才切下一个';
+  String get providerMultiKeyStrategySequentialDesc => '始终用靠前的 Key,失败达阈值才切下一個';
 
   @override
   String get providerMultiKeyStrategyRoundRobin => '轮询';
@@ -5311,7 +5516,7 @@ class AppLocalizationsZhHant extends AppLocalizationsZh {
   String get providerMultiKeyStatusCodesHint => '逗號分隔,留空使用默認 401,402,403,429';
 
   @override
-  String get providerMultiKeyCooldown => '冷却时長';
+  String get providerMultiKeyCooldown => '冷却時長';
 
   @override
   String get providerMultiKeyCooldownDesc => '被切走的 Key 隔多久重新纳入候選';
@@ -5356,7 +5561,7 @@ class AppLocalizationsZhHant extends AppLocalizationsZh {
   String get workspaceNew => '新建';
 
   @override
-  String get workspaceEmptyHint => '还没有工作區,點右上角「新建」';
+  String get workspaceEmptyHint => '還沒有工作區,點右上角「新建」';
 
   @override
   String get workspaceNameExists => '同名工作區已存在';
@@ -5399,7 +5604,7 @@ class AppLocalizationsZhHant extends AppLocalizationsZh {
   String get browserTitle => '浏览器';
 
   @override
-  String get browserAddressHint => '输入網址或搜索';
+  String get browserAddressHint => '輸入網址或搜索';
 
   @override
   String get browserBack => '後退';
@@ -5411,7 +5616,7 @@ class AppLocalizationsZhHant extends AppLocalizationsZh {
   String get browserReload => '刷新';
 
   @override
-  String get browserNotReady => '浏览器未就绪,请在地址栏输入網址開始浏览';
+  String get browserNotReady => '浏览器未就绪,请在地址栏輸入網址開始浏览';
 
   @override
   String get browserNewTab => '新建標籤頁';
@@ -5428,13 +5633,13 @@ class AppLocalizationsZhHant extends AppLocalizationsZh {
   }
 
   @override
-  String get browserEmptyHint => '在上方地址栏输入網址開始浏览';
+  String get browserEmptyHint => '在上方地址栏輸入網址開始浏览';
 
   @override
   String get browserTabsManage => '標籤頁管理';
 
   @override
-  String get browserEmptyClickHint => '點击上方输入網址開始浏览';
+  String get browserEmptyClickHint => '點击上方輸入網址開始浏览';
 
   @override
   String get browserNightModeOn => '關閉夜間模式';
@@ -5452,13 +5657,13 @@ class AppLocalizationsZhHant extends AppLocalizationsZh {
   String get browserDialogConfirmTitle => '網頁确認';
 
   @override
-  String get browserDialogPromptTitle => '網頁输入';
+  String get browserDialogPromptTitle => '網頁輸入';
 
   @override
-  String get browserMenu => '更多设置';
+  String get browserMenu => '更多設置';
 
   @override
-  String get browserMenuTitle => '浏览器设置與工具';
+  String get browserMenuTitle => '浏览器設置與工具';
 
   @override
   String get browserMenuGeneralSection => '頁面與工具';
@@ -5467,7 +5672,7 @@ class AppLocalizationsZhHant extends AppLocalizationsZh {
   String get browserNightModeTitle => '夜間模式';
 
   @override
-  String get browserNightModeDesc => '降低頁面亮度并啟用深色偏好';
+  String get browserNightModeDesc => '降低頁面亮度並啟用深色偏好';
 
   @override
   String get browserDevtoolsTitle => '開髮者工具';
@@ -5479,13 +5684,13 @@ class AppLocalizationsZhHant extends AppLocalizationsZh {
   String get browserUaSection => '浏览器標识 (User-Agent)';
 
   @override
-  String get browserUaDesc => '模拟不同设备與环境访问網頁';
+  String get browserUaDesc => '模拟不同設备與环境访问網頁';
 
   @override
   String get browserUaDefault => '系统默認';
 
   @override
-  String get browserUaDefaultDesc => '当前设备原生 WebView 標识';
+  String get browserUaDefaultDesc => '當前設备原生 WebView 標识';
 
   @override
   String get browserUaAndroidPhone => '安卓手機';
@@ -5527,10 +5732,10 @@ class AppLocalizationsZhHant extends AppLocalizationsZh {
   String get browserUaCustomDialogTitle => '自定義 User-Agent';
 
   @override
-  String get browserUaCustomInputHint => '输入完整的 User-Agent 字符串';
+  String get browserUaCustomInputHint => '輸入完整的 User-Agent 字符串';
 
   @override
-  String get browserUaAppliedToast => '已切换浏览器標识并刷新頁面';
+  String get browserUaAppliedToast => '已切换浏览器標识並刷新頁面';
 
   @override
   String get gitTabBranches => '分支';
@@ -5539,7 +5744,7 @@ class AppLocalizationsZhHant extends AppLocalizationsZh {
   String get gitTabCommits => '提交';
 
   @override
-  String get gitStatusClean => '工作區干净,無改动';
+  String get gitStatusClean => '工作區幹净,無改动';
 
   @override
   String gitConflictedCount(int count) {
@@ -5548,7 +5753,7 @@ class AppLocalizationsZhHant extends AppLocalizationsZh {
 
   @override
   String gitStagedCount(int count) {
-    return '已暂存 ($count)';
+    return '已暫存 ($count)';
   }
 
   @override
@@ -5565,7 +5770,7 @@ class AppLocalizationsZhHant extends AppLocalizationsZh {
   String get gitConflictedLabel => '存在冲突';
 
   @override
-  String get gitStagedLabel => '已暂存';
+  String get gitStagedLabel => '已暫存';
 
   @override
   String get gitModifiedLabel => '已修改';
@@ -5574,26 +5779,26 @@ class AppLocalizationsZhHant extends AppLocalizationsZh {
   String get gitUntrackedLabel => '未跟踪';
 
   @override
-  String get gitStage => '暂存';
+  String get gitStage => '暫存';
 
   @override
-  String get gitUnstage => '取消暂存';
+  String get gitUnstage => '取消暫存';
 
   @override
-  String get gitStageAll => '暂存全部';
+  String get gitStageAll => '暫存全部';
 
   @override
-  String get gitUnstageAll => '全部取消暂存';
+  String get gitUnstageAll => '全部取消暫存';
 
   @override
-  String get gitUnstageAllConfirm => '将取消所有文件的暂存,但不會刪除文件內容。确定继续吗?';
+  String get gitUnstageAllConfirm => '将取消所有文件的暫存,但不會刪除文件內容。确定继续吗?';
 
   @override
   String get gitActionRevertAll => '全部回退';
 
   @override
   String gitRevertAllConfirm(int count) {
-    return '丢弃全部未暂存的改动($count 个文件),还原到上次暂存或提交的內容?已暂存的內容不受影响,但丢弃的改动無法找回。';
+    return '丢弃全部未暫存的改动($count 個文件),還原到上次暫存或提交的內容?已暫存的內容不受影响,但丢弃的改动無法找回。';
   }
 
   @override
@@ -5601,17 +5806,17 @@ class AppLocalizationsZhHant extends AppLocalizationsZh {
 
   @override
   String gitRevertConfirmWorktree(String name) {
-    return '把 $name 还原成上次暂存或提交的內容?未暂存的改动會丢失,且無法找回。';
+    return '把 $name 還原成上次暫存或提交的內容?未暫存的改动會丢失,且無法找回。';
   }
 
   @override
   String gitRevertConfirmHead(String name) {
-    return '把 $name 还原到上次提交的內容?该文件已暂存和未暂存的改动都會丢失,且無法找回。';
+    return '把 $name 還原到上次提交的內容?该文件已暫存和未暫存的改动都會丢失,且無法找回。';
   }
 
   @override
   String gitRestoreFileConfirm(String name) {
-    return '恢复已刪除的 $name?将從上次提交取回这个文件。';
+    return '恢复已刪除的 $name?将從上次提交取回這個文件。';
   }
 
   @override
@@ -5621,16 +5826,16 @@ class AppLocalizationsZhHant extends AppLocalizationsZh {
   String get gitActionDeleteDir => '刪除目錄';
 
   @override
-  String get gitMergePendingTitle => '合并待提交';
+  String get gitMergePendingTitle => '合並待提交';
 
   @override
-  String get gitMergePendingHint => '当前没有未解决的冲突。请确認并暂存需要保留的改动,然後提交以完成合并。';
+  String get gitMergePendingHint => '當前沒有未解决的冲突。请确認並暫存需要保留的改动,然後提交以完成合並。';
 
   @override
-  String get gitActionAbortMerge => '中止合并';
+  String get gitActionAbortMerge => '中止合並';
 
   @override
-  String get gitAbortMergeConfirm => '确定中止当前合并吗?未解决的冲突改动将被放弃,工作區将还原到合并前的状态。';
+  String get gitAbortMergeConfirm => '确定中止當前合並吗?未解决的冲突改动将被放弃,工作區将還原到合並前的状态。';
 
   @override
   String get gitCommitChanges => '提交更改';
@@ -5672,7 +5877,7 @@ class AppLocalizationsZhHant extends AppLocalizationsZh {
   String get gitStashIncludeUntracked => '包含未跟踪文件(-u)';
 
   @override
-  String get gitStashEmpty => '暂無储藏记錄';
+  String get gitStashEmpty => '暫無储藏记錄';
 
   @override
   String get gitStashPop => '弹出 (Pop)';
@@ -5706,13 +5911,13 @@ class AppLocalizationsZhHant extends AppLocalizationsZh {
   String get gitPush => '推送';
 
   @override
-  String get gitPullDirtyConfirm => '当前工作區有未提交改动,拉取可能导致冲突。建議先提交或暂存。仍要继续拉取吗?';
+  String get gitPullDirtyConfirm => '當前工作區有未提交改动,拉取可能導致冲突。建議先提交或暫存。仍要继续拉取吗?';
 
   @override
   String get gitPullContinue => '继续拉取';
 
   @override
-  String get gitNoUpstream => '未设置上游';
+  String get gitNoUpstream => '未設置上游';
 
   @override
   String gitTrackingBranch(String name) {
@@ -5733,7 +5938,7 @@ class AppLocalizationsZhHant extends AppLocalizationsZh {
   String get gitBranchSynced => '已同步';
 
   @override
-  String get gitDetachedHeadLabel => 'detached HEAD:当前不在任何分支上';
+  String get gitDetachedHeadLabel => 'detached HEAD:當前不在任何分支上';
 
   @override
   String get gitNoBranch => '(無分支)';
@@ -5745,13 +5950,13 @@ class AppLocalizationsZhHant extends AppLocalizationsZh {
   String get gitNoCheckedOutBranch => '未检出分支';
 
   @override
-  String get gitClean => '工作區干净';
+  String get gitClean => '工作區幹净';
 
   @override
   String get gitHasChanges => '工作區有改动';
 
   @override
-  String get gitNotARepo => '当前工作區还不是 Git 仓库';
+  String get gitNotARepo => '當前工作區還不是 Git 仓库';
 
   @override
   String get gitCloningHint => '正在克隆仓库,请稍候…';
@@ -5760,7 +5965,7 @@ class AppLocalizationsZhHant extends AppLocalizationsZh {
   String get gitInitDescPrimary => '可在此初始化新仓库,開始版本管理';
 
   @override
-  String get gitInitDescSecondary => '若子目錄已有 Git 仓库,也可直接選择使用';
+  String get gitInitDescSecondary => '若子目錄已有 Git 仓库,也可直接選擇使用';
 
   @override
   String get gitInitRepo => '初始化新仓库';
@@ -5773,7 +5978,7 @@ class AppLocalizationsZhHant extends AppLocalizationsZh {
 
   @override
   String get gitCloneDesc =>
-      '将远程仓库克隆到当前工作區根目錄(工作區需为空)。若为私有仓库,可先點右上角鑰匙登錄 GitHub 或填入访问令牌。';
+      '将远程仓库克隆到當前工作區根目錄(工作區需为空)。若为私有仓库,可先點右上角鑰匙登錄 GitHub 或填入访问令牌。';
 
   @override
   String get gitCloneUrlLabel => '仓库地址';
@@ -5785,19 +5990,19 @@ class AppLocalizationsZhHant extends AppLocalizationsZh {
   String get gitSwitchRepo => '切换仓库';
 
   @override
-  String get gitPickExistingRepo => '選择已有仓库';
+  String get gitPickExistingRepo => '選擇已有仓库';
 
   @override
-  String get gitRepoSelectorTitle => '選择仓库';
+  String get gitRepoSelectorTitle => '選擇仓库';
 
   @override
   String get gitRepoNotRepo => '非仓库';
 
   @override
-  String get gitPickRepoEmpty => '当前工作區没有可選的目錄';
+  String get gitPickRepoEmpty => '當前工作區沒有可選的目錄';
 
   @override
-  String get gitNoBranches => '暂無分支';
+  String get gitNoBranches => '暫無分支';
 
   @override
   String get gitNewBranch => '新建分支';
@@ -5809,7 +6014,7 @@ class AppLocalizationsZhHant extends AppLocalizationsZh {
   String get gitBaseBranch => '基准分支';
 
   @override
-  String get gitCreateAndSwitch => '创建并切换';
+  String get gitCreateAndSwitch => '创建並切换';
 
   @override
   String get gitDeleteBranch => '刪除分支';
@@ -5854,14 +6059,14 @@ class AppLocalizationsZhHant extends AppLocalizationsZh {
 
   @override
   String gitCreateTagDesc(String hash) {
-    return '從当前 HEAD($hash)创建轻量標籤';
+    return '從當前 HEAD($hash)创建轻量標籤';
   }
 
   @override
-  String get gitCheckedOut => '当前检出';
+  String get gitCheckedOut => '當前检出';
 
   @override
-  String get gitCurrentBranch => '当前分支';
+  String get gitCurrentBranch => '當前分支';
 
   @override
   String get gitRemote => '远程';
@@ -5873,7 +6078,7 @@ class AppLocalizationsZhHant extends AppLocalizationsZh {
   String get gitNew => '新增';
 
   @override
-  String get gitNoCommits => '暂無提交记錄';
+  String get gitNoCommits => '暫無提交记錄';
 
   @override
   String gitCommitCount(int count) {
@@ -5887,21 +6092,21 @@ class AppLocalizationsZhHant extends AppLocalizationsZh {
   String get gitLoadMoreCommits => '上拉加载更早提交';
 
   @override
-  String get gitNoMoreCommits => '没有更多了';
+  String get gitNoMoreCommits => '沒有更多了';
 
   @override
   String get gitLatestCommit => '最新提交';
 
   @override
   String gitFilesChanged(int count) {
-    return '$count 个文件改动';
+    return '$count 個文件改动';
   }
 
   @override
   String get gitNoFilesChanged => '该提交無文件改动';
 
   @override
-  String get gitMergeCommit => '合并提交';
+  String get gitMergeCommit => '合並提交';
 
   @override
   String get gitLoadingFiles => '正在加载改动文件…';
@@ -5928,14 +6133,14 @@ class AppLocalizationsZhHant extends AppLocalizationsZh {
   String get gitResetToCommit => '重置到此提交 (Reset)';
 
   @override
-  String get gitResetSoft => 'Soft(保留工作區與暂存區)';
+  String get gitResetSoft => 'Soft(保留工作區與暫存區)';
 
   @override
-  String get gitResetMixed => 'Mixed(保留工作區,清空暂存區)';
+  String get gitResetMixed => 'Mixed(保留工作區,清空暫存區)';
 
   @override
   String gitResetConfirm(String hash) {
-    return '确定将当前分支重置到提交 $hash 吗?';
+    return '确定将當前分支重置到提交 $hash 吗?';
   }
 
   @override
@@ -5945,7 +6150,7 @@ class AppLocalizationsZhHant extends AppLocalizationsZh {
   String get gitDiffTooLarge => '文件過大,未计算差异';
 
   @override
-  String get gitDiffEmpty => '没有可显示的差异';
+  String get gitDiffEmpty => '沒有可显示的差异';
 
   @override
   String get gitCopyPath => '复制路徑';
@@ -5971,7 +6176,7 @@ class AppLocalizationsZhHant extends AppLocalizationsZh {
 
   @override
   String gitIgnoreDir(String name) {
-    return '忽略整个目錄 ($name/)';
+    return '忽略整個目錄 ($name/)';
   }
 
   @override
@@ -6008,10 +6213,10 @@ class AppLocalizationsZhHant extends AppLocalizationsZh {
 
   @override
   String get gitPushMasterConfirmDesc =>
-      '当前本地分支为 master,GitHub 與 GitLab 推荐使用 main 作为默認主分支。是否将本地分支重命名为 main 後再推送?';
+      '當前本地分支为 master,GitHub 與 GitLab 推荐使用 main 作为默認主分支。是否将本地分支重命名为 main 後再推送?';
 
   @override
-  String get gitPushRenameToMain => '重命名为 main 并推送';
+  String get gitPushRenameToMain => '重命名为 main 並推送';
 
   @override
   String get gitPushKeepMaster => '保留 master 推送';
@@ -6032,13 +6237,13 @@ class AppLocalizationsZhHant extends AppLocalizationsZh {
   String get gitRepoUrl => '仓库地址';
 
   @override
-  String get gitSelectBranch => '選择基准分支';
+  String get gitSelectBranch => '選擇基准分支';
 
   @override
   String get credentialTokenLogin => '令牌登錄';
 
   @override
-  String get credentialTokenLoginDesc => '只需粘贴访问令牌(PAT),推送时自动匹配远端主機';
+  String get credentialTokenLoginDesc => '只需粘贴访问令牌(PAT),推送時自动匹配远端主機';
 
   @override
   String get credentialTokenSaved => '令牌已保存';
@@ -6071,7 +6276,7 @@ class AppLocalizationsZhHant extends AppLocalizationsZh {
   String get aboutAutoCheck => '自动检查更新';
 
   @override
-  String get aboutAutoCheckDesc => '打開 App 时自动检测新版本';
+  String get aboutAutoCheckDesc => '打開 App 時自动检测新版本';
 
   @override
   String get aboutUpdateChannel => '更新通道';
@@ -6107,7 +6312,7 @@ class AppLocalizationsZhHant extends AppLocalizationsZh {
   String get mcpEdit => '编辑 MCP';
 
   @override
-  String get mcpEmpty => '还没有配置 MCP 服務器';
+  String get mcpEmpty => '還沒有配置 MCP 服務器';
 
   @override
   String get mcpEmptyHint => '點击右上角 + 可以添加远程 HTTP 或本地 stdio 服務器';
@@ -6150,14 +6355,14 @@ class AppLocalizationsZhHant extends AppLocalizationsZh {
 
   @override
   String mcpToolsCount(int count) {
-    return '$count 个工具';
+    return '$count 個工具';
   }
 
   @override
   String get mcpDetails => '详情';
 
   @override
-  String get mcpBasicSettings => '基础设置';
+  String get mcpBasicSettings => '基础設置';
 
   @override
   String get mcpEnabledLabel => '是否啟用';
@@ -6172,7 +6377,7 @@ class AppLocalizationsZhHant extends AppLocalizationsZh {
   String get mcpNameInvalid => '名稱只能包含字母、數字、下划線和连字符';
 
   @override
-  String get mcpTransportType => '传输类型';
+  String get mcpTransportType => '传輸类型';
 
   @override
   String get mcpRemoteHttp => '远程 HTTP';
@@ -6190,7 +6395,7 @@ class AppLocalizationsZhHant extends AppLocalizationsZh {
   String get mcpCustomHeaders => '自定義请求头';
 
   @override
-  String get mcpNoCustomHeaders => '暂無配置的自定義 Header';
+  String get mcpNoCustomHeaders => '暫無配置的自定義 Header';
 
   @override
   String get mcpHeaderName => '请求头名稱';
@@ -6230,7 +6435,7 @@ class AppLocalizationsZhHant extends AppLocalizationsZh {
 
   @override
   String mcpToolsSummary(int enabled, int total) {
-    return '已啟用 $enabled / $total 个工具';
+    return '已啟用 $enabled / $total 個工具';
   }
 
   @override
@@ -6246,7 +6451,7 @@ class AppLocalizationsZhHant extends AppLocalizationsZh {
   String get mcpToolsDisableAll => '全部禁用';
 
   @override
-  String get mcpSaveFirstHint => '请先保存并连接服務器後查看工具列表';
+  String get mcpSaveFirstHint => '请先保存並连接服務器後查看工具列表';
 
   @override
   String get mcpNoToolsHint => '未检测到工具,點击右上角刷新按钮重試';
@@ -6261,23 +6466,23 @@ class AppLocalizationsZhHant extends AppLocalizationsZh {
   String get mcpAddManual => '手动填寫';
 
   @override
-  String get mcpAddManualDesc => '逐个填寫地址、请求头或啟动命令';
+  String get mcpAddManualDesc => '逐個填寫地址、请求头或啟动命令';
 
   @override
-  String get mcpAddFromJson => '從 JSON 导入';
+  String get mcpAddFromJson => '從 JSON 導入';
 
   @override
-  String get mcpAddFromJsonDesc => '粘贴標准 mcpServers 配置批量导入';
+  String get mcpAddFromJsonDesc => '粘贴標准 mcpServers 配置批量導入';
 
   @override
-  String get mcpJsonImportTitle => '從 JSON 导入';
+  String get mcpJsonImportTitle => '從 JSON 導入';
 
   @override
   String get mcpJsonImportHint =>
       '粘贴標准 mcpServers 配置:键是服務器名,值裡填 url(远程 HTTP)或 command(本地 stdio)。';
 
   @override
-  String get mcpJsonImportAction => '导入';
+  String get mcpJsonImportAction => '導入';
 
   @override
   String get mcpJsonImportEmpty => '未解析到任何 MCP 服務器';
@@ -6299,23 +6504,23 @@ class AppLocalizationsZhHant extends AppLocalizationsZh {
 
   @override
   String permCurrentProject(String name) {
-    return '当前項目:$name';
+    return '當前項目:$name';
   }
 
   @override
-  String get permCurrentProjectNone => '当前項目(未選择)';
+  String get permCurrentProjectNone => '當前項目(未選擇)';
 
   @override
-  String get permNoProjectRules => '本項目暂無规则';
+  String get permNoProjectRules => '本項目暫無规则';
 
   @override
   String get permGlobal => '全局';
 
   @override
-  String get permNoGlobalRules => '暂無全局规则';
+  String get permNoGlobalRules => '暫無全局规则';
 
   @override
-  String get permEntireTool => '整个工具';
+  String get permEntireTool => '整個工具';
 
   @override
   String get permDeny => '禁止';
@@ -6324,7 +6529,7 @@ class AppLocalizationsZhHant extends AppLocalizationsZh {
   String get permPromoteToGlobal => '提升为全局';
 
   @override
-  String get permRulesShort => '对話中選「始终运行」會在当前項目生成记忆规则';
+  String get permRulesShort => '對話中選「始终运行」會在當前項目生成记忆规则';
 
   @override
   String get chatPermDeny => '拒绝';
@@ -6401,7 +6606,7 @@ class AppLocalizationsZhHant extends AppLocalizationsZh {
   String get mcpAuthInProgress => '等待浏览器授权…';
 
   @override
-  String get mcpAuthInProgressHint => '已在系统浏览器打開登錄頁,授权完成後将自动返回并连接';
+  String get mcpAuthInProgressHint => '已在系统浏览器打開登錄頁,授权完成後将自动返回並连接';
 
   @override
   String get mcpAuthSaveFirst => '保存服務器配置後,即可在此髮起登錄授权';
@@ -6459,7 +6664,7 @@ class AppLocalizationsZhHant extends AppLocalizationsZh {
   String get terminalRetry => '重試';
 
   @override
-  String get terminalNoOpenTabs => '没有打開的终端標籤';
+  String get terminalNoOpenTabs => '沒有打開的终端標籤';
 
   @override
   String get terminalNewTab => '新建標籤';
@@ -6468,7 +6673,7 @@ class AppLocalizationsZhHant extends AppLocalizationsZh {
   String get terminalCloseTab => '關閉標籤';
 
   @override
-  String get terminalSettingsTitle => '终端设置';
+  String get terminalSettingsTitle => '终端設置';
 
   @override
   String get terminalThemeTitle => '配色主题';
@@ -6501,7 +6706,7 @@ class AppLocalizationsZhHant extends AppLocalizationsZh {
   String get terminalCursorStyleTitle => '光標样式';
 
   @override
-  String get terminalCursorBlock => '方块';
+  String get terminalCursorBlock => '方塊';
 
   @override
   String get terminalCursorUnderline => '下划線';
@@ -6519,7 +6724,7 @@ class AppLocalizationsZhHant extends AppLocalizationsZh {
   String get terminalFontBuiltin => 'JetBrains Mono';
 
   @override
-  String get settingsGeneral => '偏好设置';
+  String get settingsGeneral => '偏好設置';
 
   @override
   String get settingsGeneralModels => '模型';
@@ -6534,7 +6739,7 @@ class AppLocalizationsZhHant extends AppLocalizationsZh {
   String get settingsGeneralSession => '會話';
 
   @override
-  String get settingsStartupSession => '啟动时會話';
+  String get settingsStartupSession => '啟动時會話';
 
   @override
   String get settingsStartupSessionNew => '新開會話';
@@ -6553,10 +6758,10 @@ class AppLocalizationsZhHant extends AppLocalizationsZh {
 
   @override
   String get settingsDeleteExternalWorkspaceSessionsDesc =>
-      '移除外部本地工作區时,一并刪除该工作區的聊天记錄';
+      '移除外部本地工作區時,一並刪除该工作區的聊天记錄';
 
   @override
-  String get settingsGeneralInput => '输入';
+  String get settingsGeneralInput => '輸入';
 
   @override
   String get settingsEnterToSend => '回车键髮送消息';
@@ -6568,7 +6773,7 @@ class AppLocalizationsZhHant extends AppLocalizationsZh {
   String get settingsCompactionThreshold => '自动压缩阈值';
 
   @override
-  String get settingsCompactionThresholdDesc => '上下文占用达到窗口的该比例时自动压缩';
+  String get settingsCompactionThresholdDesc => '上下文占用达到窗口的该比例時自动压缩';
 
   @override
   String get settingsCompactionThresholdInputHint => '填 1-100 的整數百分比';
@@ -6582,16 +6787,16 @@ class AppLocalizationsZhHant extends AppLocalizationsZh {
   String get settingsGeneralNetwork => '網絡';
 
   @override
-  String get settingsFirstByteTimeout => '首字节超时';
+  String get settingsFirstByteTimeout => '首字节超時';
 
   @override
-  String get settingsFirstByteTimeoutDesc => '等待首个响应块的最長时間';
+  String get settingsFirstByteTimeoutDesc => '等待首個响应塊的最長時間';
 
   @override
-  String get settingsStreamIdleTimeout => '數据块間隔超时';
+  String get settingsStreamIdleTimeout => '數据塊間隔超時';
 
   @override
-  String get settingsStreamIdleTimeoutDesc => '两个响应块之間的最長等待';
+  String get settingsStreamIdleTimeoutDesc => '两個响应塊之間的最長等待';
 
   @override
   String get settingsTimeoutUnlimited => '不限制';
@@ -6637,7 +6842,7 @@ class AppLocalizationsZhHant extends AppLocalizationsZh {
   String get settingsGoalMaxTokens => 'token 预算';
 
   @override
-  String get settingsGoalMaxTokensDesc => '自主循环累计消耗的输入+输出 token 上限';
+  String get settingsGoalMaxTokensDesc => '自主循环累计消耗的輸入+輸出 token 上限';
 
   @override
   String settingsTurnsValue(int count) {
@@ -6656,7 +6861,7 @@ class AppLocalizationsZhHant extends AppLocalizationsZh {
   String get settingsGoalMaxTokensInputHint => '填不小于 1000 的整數';
 
   @override
-  String get settingsSendfileMaxSizeDesc => '单个文件大小上限,超過则整批髮送失败';
+  String get settingsSendfileMaxSizeDesc => '单個文件大小上限,超過则整批髮送失败';
 
   @override
   String get settingsSendfileMaxSizeInputHint => '单位 MB,填大于 0 的整數';
@@ -6668,7 +6873,7 @@ class AppLocalizationsZhHant extends AppLocalizationsZh {
 
   @override
   String providerModelsAlignedRemoved(int count) {
-    return '已移除 $count 个远端已不存在的模型';
+    return '已移除 $count 個远端已不存在的模型';
   }
 
   @override
@@ -6707,10 +6912,10 @@ class AppLocalizationsZhHant extends AppLocalizationsZh {
   String get tokenStatsTrend => '消耗趋势';
 
   @override
-  String get tokenStatsLegendInput => '输入';
+  String get tokenStatsLegendInput => '輸入';
 
   @override
-  String get tokenStatsLegendOutput => '输出';
+  String get tokenStatsLegendOutput => '輸出';
 
   @override
   String get tokenStatsLegendCached => '缓存';
@@ -6733,7 +6938,7 @@ class AppLocalizationsZhHant extends AppLocalizationsZh {
   String get tokenStatsUnknown => '未知';
 
   @override
-  String get tokenStatsNoData => '暂無數据';
+  String get tokenStatsNoData => '暫無數据';
 
   @override
   String get tokenStatsCallsSuffix => '次調用';
@@ -6753,10 +6958,10 @@ class AppLocalizationsZhHant extends AppLocalizationsZh {
   String get tokenStatsColProvider => '供应商';
 
   @override
-  String get tokenStatsColInput => '输入';
+  String get tokenStatsColInput => '輸入';
 
   @override
-  String get tokenStatsColOutput => '输出';
+  String get tokenStatsColOutput => '輸出';
 
   @override
   String get tokenStatsColCachedRead => '缓存讀取';
@@ -6771,10 +6976,10 @@ class AppLocalizationsZhHant extends AppLocalizationsZh {
   String get tokenStatsColTtfb => '首字节';
 
   @override
-  String get tokenStatsColDuration => '耗时';
+  String get tokenStatsColDuration => '耗時';
 
   @override
-  String get tokenStatsColTime => '时間';
+  String get tokenStatsColTime => '時間';
 
   @override
   String get tokenStatsColStatus => '状态';
@@ -6822,14 +7027,14 @@ class AppLocalizationsZhHant extends AppLocalizationsZh {
 
   @override
   String tokenStatsProviderKeys(int count) {
-    return '$count 个密鑰';
+    return '$count 個密鑰';
   }
 
   @override
   String get tokenStatsRequestsUnit => '次请求';
 
   @override
-  String get tokenStatsHourSuffix => '时';
+  String get tokenStatsHourSuffix => '時';
 
   @override
   String get tokenStatsPrevPage => '上一頁';
@@ -6847,10 +7052,10 @@ class AppLocalizationsZhHant extends AppLocalizationsZh {
   String get gitActionInit => '初始化';
 
   @override
-  String get gitActionMerge => '合并分支';
+  String get gitActionMerge => '合並分支';
 
   @override
-  String get gitActionStageAll => '全部暂存';
+  String get gitActionStageAll => '全部暫存';
 
   @override
   String get gitCloneUrlHint => 'https://github.com/user/repo.git';
@@ -6863,7 +7068,7 @@ class AppLocalizationsZhHant extends AppLocalizationsZh {
 
   @override
   String gitCreateTrackingBranch(String branch) {
-    return '從远程分支 $branch 创建本地跟踪分支并切换?';
+    return '從远程分支 $branch 创建本地跟踪分支並切换?';
   }
 
   @override
@@ -6876,11 +7081,11 @@ class AppLocalizationsZhHant extends AppLocalizationsZh {
 
   @override
   String gitMergeConfirm(String branch, String current) {
-    return '确定将分支 $branch 合并到当前分支($current)吗?';
+    return '确定将分支 $branch 合並到當前分支($current)吗?';
   }
 
   @override
-  String get gitMergeNoFf => '创建合并提交(--no-ff)';
+  String get gitMergeNoFf => '创建合並提交(--no-ff)';
 
   @override
   String get gitOpenInEditor => '在编辑器中打開';
@@ -6930,13 +7135,13 @@ class AppLocalizationsZhHant extends AppLocalizationsZh {
   String get gitToastDiffFailed => '加载差异失败';
 
   @override
-  String get gitToastNoDiffForCommit => '暂存區與工作區均無差异,無法生成提交信息';
+  String get gitToastNoDiffForCommit => '暫存區與工作區均無差异,無法生成提交信息';
 
   @override
   String get gitToastGenerateCommitFailed => 'AI 生成提交信息失败,请检查模型或網絡';
 
   @override
-  String get diffBinaryFile => '二進制文件,不支持文本差异对比';
+  String get diffBinaryFile => '二進制文件,不支持文本差异對比';
 
   @override
   String get diffFileTooLarge => '文件過大,已跳過差异计算';
@@ -6977,10 +7182,10 @@ class AppLocalizationsZhHant extends AppLocalizationsZh {
   String get credentialEmptyHint => '尚未添加凭据,點右上角 + 添加';
 
   @override
-  String get credentialEmptyTitle => '暂無 Git 凭据';
+  String get credentialEmptyTitle => '暫無 Git 凭据';
 
   @override
-  String get credentialEmptyDesc => '配置凭据後,Codecraft 可在推送或拉取代碼仓库时自动完成身份認證';
+  String get credentialEmptyDesc => '配置凭据後,Codecraft 可在推送或拉取代碼仓库時自动完成身份認證';
 
   @override
   String get credentialAddManual => '手动添加';
@@ -6996,7 +7201,7 @@ class AppLocalizationsZhHant extends AppLocalizationsZh {
 
   @override
   String gitIdentityCodespace(String name) {
-    return '当前连接 GitHub Codespace $name';
+    return '當前连接 GitHub Codespace $name';
   }
 
   @override
@@ -7027,10 +7232,10 @@ class AppLocalizationsZhHant extends AppLocalizationsZh {
   }
 
   @override
-  String get codespacesEmptyTitle => '还没有 Codespace';
+  String get codespacesEmptyTitle => '還沒有 Codespace';
 
   @override
-  String get codespacesEmptyDesc => '在 GitHub 上创建 Codespace 後,这裡即可列出并连接';
+  String get codespacesEmptyDesc => '在 GitHub 上创建 Codespace 後,這裡即可列出並连接';
 
   @override
   String get codespacesCreateOnWeb => '在 github.com 新建';
@@ -7103,7 +7308,7 @@ class AppLocalizationsZhHant extends AppLocalizationsZh {
   String get characterEdit => '编辑角色';
 
   @override
-  String get characterEmpty => '暂無角色';
+  String get characterEmpty => '暫無角色';
 
   @override
   String get characterSearchHint => '搜索角色名稱、別名或標籤';
@@ -7184,7 +7389,7 @@ class AppLocalizationsZhHant extends AppLocalizationsZh {
   String get characterScope => '作用域';
 
   @override
-  String get characterScopeProject => '当前項目';
+  String get characterScopeProject => '當前項目';
 
   @override
   String get characterScopeGlobal => '全局';
@@ -7207,10 +7412,10 @@ class AppLocalizationsZhHant extends AppLocalizationsZh {
   String get editorSearchHint => '查找內容';
 
   @override
-  String get editorSearchPrev => '上一个';
+  String get editorSearchPrev => '上一個';
 
   @override
-  String get editorSearchNext => '下一个';
+  String get editorSearchNext => '下一個';
 
   @override
   String get editorTypeset => '自动排版';
@@ -7233,19 +7438,19 @@ class AppLocalizationsZhHant extends AppLocalizationsZh {
   }
 
   @override
-  String get editorNoFile => '还没有打開的文件,從差异頁點「在编辑器中打開」即可';
+  String get editorNoFile => '還沒有打開的文件,從差异頁點「在编辑器中打開」即可';
 
   @override
   String get editorUnsavedTitle => '未保存的修改';
 
   @override
-  String get editorUnsavedMessage => '当前文件有未保存的修改,是否保存?';
+  String get editorUnsavedMessage => '當前文件有未保存的修改,是否保存?';
 
   @override
-  String get editorSaveAndExit => '保存并退出';
+  String get editorSaveAndExit => '保存並退出';
 
   @override
-  String get editorSaveAndSwitch => '保存并切换';
+  String get editorSaveAndSwitch => '保存並切换';
 
   @override
   String get editorDontSave => '不保存';
@@ -7266,7 +7471,7 @@ class AppLocalizationsZhHant extends AppLocalizationsZh {
   String get editorCursorRight => '光標右移';
 
   @override
-  String get editorSettings => '编辑器设置';
+  String get editorSettings => '编辑器設置';
 
   @override
   String get editorFontSize => '字體大小';
@@ -7287,22 +7492,22 @@ class AppLocalizationsZhHant extends AppLocalizationsZh {
 
   @override
   String editorFileTooLarge(int mb) {
-    return '文件過大($mb MB),暂不支持打開';
+    return '文件過大($mb MB),暫不支持打開';
   }
 
   @override
-  String get editorBinaryUnsupported => '二進制文件,暂不支持打開';
+  String get editorBinaryUnsupported => '二進制文件,暫不支持打開';
 
   @override
   String get editorSaveConflictTitle => '文件已被修改';
 
   @override
   String get editorSaveConflictMessage =>
-      '该文件在你打開之後已被 AI 或其他程序修改。直接保存會覆盖对方的改动。';
+      '该文件在你打開之後已被 AI 或其他程序修改。直接保存會覆盖對方的改动。';
 
   @override
   String editorSaveConflictDiff(String diff) {
-    return '- 磁盘当前內容';
+    return '- 磁盘當前內容';
   }
 
   @override
@@ -7315,7 +7520,7 @@ class AppLocalizationsZhHant extends AppLocalizationsZh {
   String get editorSaveConflictCancel => '取消';
 
   @override
-  String get editorSaveConflictDiscarded => '已放弃修改并重新载入磁盘內容';
+  String get editorSaveConflictDiscarded => '已放弃修改並重新载入磁盘內容';
 
   @override
   String editorLineColumn(int line, int column) {
@@ -7330,7 +7535,7 @@ class AppLocalizationsZhHant extends AppLocalizationsZh {
 
   @override
   String get codespacesGhMissing =>
-      '容器裡还没有 gh(GitHub CLI)。请先在终端执行命令 codecraft,選择「GitHub Codespaces」场景安装依赖。';
+      '容器裡還沒有 gh(GitHub CLI)。请先在终端执行命令 codecraft,選擇「GitHub Codespaces」场景安装依赖。';
 
   @override
   String get codespacesExecutionEnv => '执行环境';
@@ -7377,7 +7582,7 @@ class AppLocalizationsZhHant extends AppLocalizationsZh {
   String get codespacesChangeMachine => '更改機型';
 
   @override
-  String get codespacesNoMachines => '该仓库没有可選機型';
+  String get codespacesNoMachines => '该仓库沒有可選機型';
 
   @override
   String get codespacesLoadFailed => '加载失败';
@@ -7386,7 +7591,7 @@ class AppLocalizationsZhHant extends AppLocalizationsZh {
   String get codespacesPorts => '端口';
 
   @override
-  String get codespacesPortsEmpty => '该 Codespace 还没有转髮的端口';
+  String get codespacesPortsEmpty => '该 Codespace 還沒有转髮的端口';
 
   @override
   String get codespacesPortVisibility => '可见性';
@@ -7408,10 +7613,10 @@ class AppLocalizationsZhHant extends AppLocalizationsZh {
 
   @override
   String get codespacesRebuildDesc =>
-      '重建會按当前 devcontainer 重新创建容器:代碼與未提交改动保留,容器內已安装的工具與运行状态會丢失。';
+      '重建會按當前 devcontainer 重新创建容器:代碼與未提交改动保留,容器內已安装的工具與运行状态會丢失。';
 
   @override
-  String get codespacesRebuildFull => '完全重建(同时清除缓存的 Docker 镜像,更慢)';
+  String get codespacesRebuildFull => '完全重建(同時清除缓存的 Docker 镜像,更慢)';
 
   @override
   String get settingsLog => '日誌';
@@ -7423,7 +7628,7 @@ class AppLocalizationsZhHant extends AppLocalizationsZh {
   String get logFiles => '日誌文件';
 
   @override
-  String get logNoFiles => '还没有日誌文件';
+  String get logNoFiles => '還沒有日誌文件';
 
   @override
   String logReadFailed(String error) {
@@ -7434,7 +7639,7 @@ class AppLocalizationsZhHant extends AppLocalizationsZh {
   String get logSearchHint => '搜索日誌';
 
   @override
-  String get logNoMatch => '当前篩選條件下没有日誌';
+  String get logNoMatch => '當前篩選條件下沒有日誌';
 
   @override
   String get logLevel => '日誌等級';
@@ -7484,7 +7689,7 @@ class AppLocalizationsZhHant extends AppLocalizationsZh {
   String get logCopyMessage => '复制消息內容';
 
   @override
-  String get logFollowLatest => '實时滚动';
+  String get logFollowLatest => '實時滚动';
 
   @override
   String get logFileLocation => '日誌文件位于 Android/data/<包名>/files/logs/。';
@@ -7509,7 +7714,7 @@ class AppLocalizationsZhHant extends AppLocalizationsZh {
 
   @override
   String get credentialTokenHint =>
-      '建議用带 codespace 作用域的 GitHub 令牌,填一次同时供 Git 推送與 Codespaces 登錄使用';
+      '建議用带 codespace 作用域的 GitHub 令牌,填一次同時供 Git 推送與 Codespaces 登錄使用';
 
   @override
   String get credentialHostOptional => '主機(可選)';
@@ -7518,7 +7723,7 @@ class AppLocalizationsZhHant extends AppLocalizationsZh {
   String get credentialHostAny => '留空 = 所有主機';
 
   @override
-  String get credentialHostHint => '只在需要给特定主機单独配令牌时才填,例如 gitlab.com';
+  String get credentialHostHint => '只在需要給特定主機单独配令牌時才填,例如 gitlab.com';
 
   @override
   String get codespacesNeedCredentialTitle => '尚未配置 GitHub 凭据';
@@ -7534,13 +7739,13 @@ class AppLocalizationsZhHant extends AppLocalizationsZh {
   String get credentialAllHosts => '所有主機';
 
   @override
-  String get credentialUsernameAuto => '用户名自动推导';
+  String get credentialUsernameAuto => '用户名自动推導';
 
   @override
   String get chatMentionSkill => '@ 技能';
 
   @override
-  String get chatMentionSkillEmpty => '还没有可用的技能,先在设置裡导入或新建一个。';
+  String get chatMentionSkillEmpty => '還沒有可用的技能,先在設置裡導入或新建一個。';
 
   @override
   String get chatMentionSkillManage => '管理技能';
@@ -7552,13 +7757,13 @@ class AppLocalizationsZhHant extends AppLocalizationsZh {
   String get chatPickFileParent => '上一級';
 
   @override
-  String get chatPickFileEmpty => '这个目錄是空的';
+  String get chatPickFileEmpty => '這個目錄是空的';
 
   @override
-  String get mentionHintSkill => '继续输入可篩選技能';
+  String get mentionHintSkill => '继续輸入可篩選技能';
 
   @override
-  String get mentionHintFile => '继续输入可篩選文件';
+  String get mentionHintFile => '继续輸入可篩選文件';
 
   @override
   String get fileBrowserError => '讀取目錄失败';
@@ -7618,7 +7823,7 @@ class AppLocalizationsZhHant extends AppLocalizationsZh {
   }
 
   @override
-  String get fileBrowserExtractOverwrite => '覆盖并解压';
+  String get fileBrowserExtractOverwrite => '覆盖並解压';
 
   @override
   String get fileBrowserPasteConflictTitle => '同名文件已存在';
@@ -7651,35 +7856,35 @@ class AppLocalizationsZhHant extends AppLocalizationsZh {
 
   @override
   String get writingFolderNeedAccessDesc =>
-      '讀取手機裡的「AI寫作」目錄需要「所有文件访问权限」。也可以跳過,直接在下一步選择目錄。';
+      '讀取手機裡的「AI寫作」目錄需要「所有文件访问权限」。也可以跳過,直接在下一步選擇目錄。';
 
   @override
   String get writingFolderGrant => '去授权';
 
   @override
   String writingFolderSet(String path) {
-    return '寫作目錄已设为 $path';
+    return '寫作目錄已設为 $path';
   }
 
   @override
   String get modelAuto => 'Auto Model';
 
   @override
-  String get modelAutoDesc => '按任務自动選择最合适的模型';
+  String get modelAutoDesc => '按任務自动選擇最合适的模型';
 
   @override
-  String get sessionExport => '导出會話';
+  String get sessionExport => '導出會話';
 
   @override
   String sessionExportDone(String path) {
-    return '已导出到 $path';
+    return '已導出到 $path';
   }
 
   @override
-  String get sessionExportFailed => '导出失败';
+  String get sessionExportFailed => '導出失败';
 
   @override
-  String get sessionBatchSelect => '批量選择';
+  String get sessionBatchSelect => '批量選擇';
 
   @override
   String sessionSelectedCount(String count) {
@@ -7710,27 +7915,27 @@ class AppLocalizationsZhHant extends AppLocalizationsZh {
   }
 
   @override
-  String get checkpointRestoreCodeAndConversation => '还原代碼與會話';
+  String get checkpointRestoreCodeAndConversation => '還原代碼與會話';
 
   @override
   String get checkpointRestoreCodeAndConversationDesc =>
-      '回滚工作區文件,并刪除这之後的所有消息,提问會回填到输入框';
+      '回滚工作區文件,並刪除這之後的所有消息,提问會回填到輸入框';
 
   @override
-  String get checkpointRestoreConversation => '只还原會話';
+  String get checkpointRestoreConversation => '只還原會話';
 
   @override
-  String get checkpointRestoreConversationDesc => '刪除这之後的所有消息,工作區文件保持不变';
+  String get checkpointRestoreConversationDesc => '刪除這之後的所有消息,工作區文件保持不变';
 
   @override
-  String get checkpointRestoreCode => '只还原代碼';
+  String get checkpointRestoreCode => '只還原代碼';
 
   @override
-  String get checkpointRestoreCodeDesc => '回滚工作區文件,对話记錄保持不变';
+  String get checkpointRestoreCodeDesc => '回滚工作區文件,對話记錄保持不变';
 
   @override
   String checkpointRewindSkipped(int count) {
-    return '$count 个文件因存在其他改动已跳過';
+    return '$count 個文件因存在其他改动已跳過';
   }
 
   @override
@@ -7764,10 +7969,10 @@ class AppLocalizationsZhHant extends AppLocalizationsZh {
   String get tabProjects => '項目';
 
   @override
-  String get projectListEmpty => '还没有項目';
+  String get projectListEmpty => '還沒有項目';
 
   @override
-  String get workspaceCurrent => '当前';
+  String get workspaceCurrent => '當前';
 
   @override
   String get workspaceNameHint => '項目名稱';
@@ -7798,17 +8003,17 @@ class AppLocalizationsZhHant extends AppLocalizationsZh {
 
   @override
   String projectDeleteConfirm(String name) {
-    return '确定刪除項目「$name」?其下所有會話都會一并刪除。';
+    return '确定刪除項目「$name」?其下所有會話都會一並刪除。';
   }
 
   @override
-  String get installedAppsTitle => '選择应用';
+  String get installedAppsTitle => '選擇应用';
 
   @override
   String get installedAppsSearch => '搜索应用名或包名';
 
   @override
-  String get installedAppsEmpty => '没有匹配的应用';
+  String get installedAppsEmpty => '沒有匹配的应用';
 
   @override
   String get storagePermissionGrant => '去授权';
@@ -7817,7 +8022,7 @@ class AppLocalizationsZhHant extends AppLocalizationsZh {
   String get softwarePermissionsTitle => '軟件权限';
 
   @override
-  String get softwarePermissionsSubtitle => '點任一項由系统弹出授权,或跳到对应的系统设置頁。';
+  String get softwarePermissionsSubtitle => '點任一項由系统弹出授权,或跳到對应的系统設置頁。';
 
   @override
   String get systemPermissionsGroup => '系统权限';
@@ -7862,10 +8067,10 @@ class AppLocalizationsZhHant extends AppLocalizationsZh {
   String get permissionAppsDesc => '讀取已安装应用的名稱、包名與版本';
 
   @override
-  String get apkPathUnavailable => '拿不到这个应用的安装包路徑,换一个应用再試。';
+  String get apkPathUnavailable => '拿不到這個应用的安装包路徑,换一個应用再試。';
 
   @override
-  String get apkExtractHint => '这个項目显示所選 APK 裡的文件。首次浏览需要先解压一次。';
+  String get apkExtractHint => '這個項目显示所選 APK 裡的文件。首次浏览需要先解压一次。';
 
   @override
   String get apkExtractAction => '解压 APK';
@@ -7874,7 +8079,7 @@ class AppLocalizationsZhHant extends AppLocalizationsZh {
   String get apkExtracting => '正在解压…';
 
   @override
-  String get apkExtractFailed => '解压失败,可能没有讀取该安装包的权限。';
+  String get apkExtractFailed => '解压失败,可能沒有讀取该安装包的权限。';
 
   @override
   String get terminalAgentTab => 'AI 命令';
@@ -7889,7 +8094,7 @@ class AppLocalizationsZhHant extends AppLocalizationsZh {
   String get runModePlan => '计划模式';
 
   @override
-  String get runModePlanIntercept => '当前处于计划模式,禁止执行寫操作';
+  String get runModePlanIntercept => '當前处于计划模式,禁止执行寫操作';
 
   @override
   String get runModeBuildAuthorize => 'AI 尝試执行寫操作,是否允许?';
@@ -7916,7 +8121,7 @@ class AppLocalizationsZhHant extends AppLocalizationsZh {
 
   @override
   String get subagentTierSubtitle =>
-      '为每个档位绑定提供商與模型。未配置的档位:子代理定義寫死模型时用定義模型,否则继承当前會話模型';
+      '为每個档位绑定提供商與模型。未配置的档位:子代理定義寫死模型時用定義模型,否则继承當前會話模型';
 
   @override
   String get subagentTierSection => '模型档位';
@@ -7937,13 +8142,13 @@ class AppLocalizationsZhHant extends AppLocalizationsZh {
   String get subagentTierStandardDesc => '单文件修改與常规修复';
 
   @override
-  String get subagentTierStrongDesc => '跨模块重构、疑难排查與方案设计';
+  String get subagentTierStrongDesc => '跨模塊重构、疑难排查與方案設计';
 
   @override
-  String get subagentTierUnset => '未设置(继承当前會話模型)';
+  String get subagentTierUnset => '未設置(继承當前會話模型)';
 
   @override
-  String get subagentTierPick => '選择模型';
+  String get subagentTierPick => '選擇模型';
 
   @override
   String get subagentTierClear => '清除';
@@ -7960,10 +8165,10 @@ class AppLocalizationsZhHant extends AppLocalizationsZh {
   }
 
   @override
-  String get subagentTierSheetHint => '選择该档位使用的提供商與模型';
+  String get subagentTierSheetHint => '選擇该档位使用的提供商與模型';
 
   @override
-  String get subagentTierSheetInherit => '继承当前會話模型';
+  String get subagentTierSheetInherit => '继承當前會話模型';
 
   @override
   String get subagentNoticeTitle => '子代理';
@@ -7981,16 +8186,16 @@ class AppLocalizationsZhHant extends AppLocalizationsZh {
   String get subagentStateMessage => '来消息';
 
   @override
-  String get subagentViewOutput => '查看输出';
+  String get subagentViewOutput => '查看輸出';
 
   @override
   String get subagentOpen => '打開';
 
   @override
-  String get subagentOutputEmpty => '暂無输出';
+  String get subagentOutputEmpty => '暫無輸出';
 
   @override
-  String get subagentOutputTitle => '子代理输出';
+  String get subagentOutputTitle => '子代理輸出';
 
   @override
   String get promptsTitle => '提示词';
@@ -8002,7 +8207,7 @@ class AppLocalizationsZhHant extends AppLocalizationsZh {
   String get promptsSortLongPress => '長按可調整顺序';
 
   @override
-  String get promptsEmpty => '暂無可用片段';
+  String get promptsEmpty => '暫無可用片段';
 
   @override
   String get promptsSourceProject => '項目';
@@ -8057,7 +8262,7 @@ class AppLocalizationsZhHant extends AppLocalizationsZh {
 
   @override
   String get promptsResetConfirm =>
-      '将刪除当前項目與全局层裡的所有自定義提示词,各编號回落到內置提示词。此操作不可撤销。';
+      '将刪除當前項目與全局层裡的所有自定義提示词,各编號回落到內置提示词。此操作不可撤销。';
 
   @override
   String get promptsResetAction => '重置';
@@ -8076,14 +8281,14 @@ class AppLocalizationsZhHant extends AppLocalizationsZh {
 
   @override
   String promptsBatchDeleteConfirm(int count) {
-    return '确定刪除選中的 $count 條自定義提示词吗?对应编號将回落到下一层来源。';
+    return '确定刪除選中的 $count 條自定義提示词吗?對应编號将回落到下一层来源。';
   }
 
   @override
   String get promptsScope => '作用域';
 
   @override
-  String get promptsScopeProject => '当前項目';
+  String get promptsScopeProject => '當前項目';
 
   @override
   String get promptsScopeGlobal => '全局';
@@ -8148,23 +8353,23 @@ class AppLocalizationsZhHant extends AppLocalizationsZh {
   String get novelCreate => '创建';
 
   @override
-  String get novelPickExisting => '選择已有小說';
+  String get novelPickExisting => '選擇已有小說';
 
   @override
   String get novelOpen => '打開';
 
   @override
-  String get novelExistingEmpty => '「AI小說」目錄裡还没有其他小說';
+  String get novelExistingEmpty => '「AI小說」目錄裡還沒有其他小說';
 
   @override
-  String get novelExistingEmptyHint => '把小說文件夾放進 AI小說 目錄後,再回到这裡選择';
+  String get novelExistingEmptyHint => '把小說文件夾放進 AI小說 目錄後,再回到這裡選擇';
 
   @override
   String get novelExistingFailed => '讀取小說列表失败';
 
   @override
   String novelExistingBrief(String title) {
-    return '继续创作已有小說《$title》,先閱讀「小說资料」與已有章节,了解设定與進度後再动笔。';
+    return '继续创作已有小說《$title》,先閱讀「小說资料」與已有章节,了解設定與進度後再动笔。';
   }
 
   @override
@@ -8197,19 +8402,19 @@ class AppLocalizationsZhHant extends AppLocalizationsZh {
   String get agentSubtitle => '自定義子代理定義';
 
   @override
-  String get agentListEmpty => '暂無自定義子代理';
+  String get agentListEmpty => '暫無自定義子代理';
 
   @override
   String get agentListEmptyHint => '點右上角 + 新建自定義子代理定義';
 
   @override
-  String get agentScopeProject => '当前項目';
+  String get agentScopeProject => '當前項目';
 
   @override
   String get agentScopeGlobal => '全局';
 
   @override
-  String get agentScopeProjectHint => '仅对当前工作區生效';
+  String get agentScopeProjectHint => '仅對當前工作區生效';
 
   @override
   String get agentScopeGlobalHint => '所有項目共享';
@@ -8238,7 +8443,7 @@ class AppLocalizationsZhHant extends AppLocalizationsZh {
   }
 
   @override
-  String get agentImport => '导入';
+  String get agentImport => '導入';
 
   @override
   String get agentName => '名稱';
@@ -8247,7 +8452,7 @@ class AppLocalizationsZhHant extends AppLocalizationsZh {
   String get agentDescription => '用途描述';
 
   @override
-  String get agentDescriptionHint => '何时選用该子代理';
+  String get agentDescriptionHint => '何時選用该子代理';
 
   @override
   String get agentPrompt => '提示词正文';
@@ -8320,7 +8525,7 @@ class AppLocalizationsZhHant extends AppLocalizationsZh {
   String get agentBuiltin => '內置';
 
   @override
-  String get agentBuiltinHint => '首次啟动释放,升級时完整保留';
+  String get agentBuiltinHint => '首次啟动释放,升級時完整保留';
 
   @override
   String get agentSelectMode => '多選';
@@ -8347,7 +8552,7 @@ class AppLocalizationsZhHant extends AppLocalizationsZh {
 
   @override
   String agentBatchDeleteConfirm(Object count) {
-    return '刪除 $count 个子代理?此操作不可恢复。';
+    return '刪除 $count 個子代理?此操作不可恢复。';
   }
 
   @override
@@ -8399,7 +8604,7 @@ class AppLocalizationsZhHant extends AppLocalizationsZh {
   String get promptsSaveFailed => '保存失败';
 
   @override
-  String get promptsNoOverrideToDelete => '该提示词暂無可刪除的自定義覆盖';
+  String get promptsNoOverrideToDelete => '该提示词暫無可刪除的自定義覆盖';
 
   @override
   String get codespacesSearchHint => '按名稱、仓库或分支搜索';
@@ -8414,10 +8619,10 @@ class AppLocalizationsZhHant extends AppLocalizationsZh {
   String get codespacesFilterStopped => '已停止';
 
   @override
-  String get codespacesNoMatch => '没有匹配当前篩選的 Codespace';
+  String get codespacesNoMatch => '沒有匹配當前篩選的 Codespace';
 
   @override
-  String get codespacesStartAndConnect => '啟动并连接';
+  String get codespacesStartAndConnect => '啟动並连接';
 
   @override
   String get codespacesConnecting => '正在连接…';
@@ -8446,7 +8651,7 @@ class AppLocalizationsZhHant extends AppLocalizationsZh {
   String get codespacesLocation => '區域';
 
   @override
-  String get codespacesIdleTimeout => '空闲超时（分钟）';
+  String get codespacesIdleTimeout => '空闲超時（分钟）';
 
   @override
   String get codespacesRetentionPeriod => '保留期（天）';
@@ -8455,7 +8660,7 @@ class AppLocalizationsZhHant extends AppLocalizationsZh {
   String get codespacesDevcontainerPath => 'Dev container 路徑';
 
   @override
-  String get codespacesCreatedAt => '创建时間';
+  String get codespacesCreatedAt => '创建時間';
 
   @override
   String get codespacesOwner => '所有者';
@@ -8500,7 +8705,7 @@ class AppLocalizationsZhHant extends AppLocalizationsZh {
   String get codespacesStateDeleting => '正在刪除';
 
   @override
-  String get codespacesCurrentEnv => '当前环境';
+  String get codespacesCurrentEnv => '當前环境';
 
   @override
   String get codespacesSwitchToLocal => '切换到本地容器';
@@ -8568,15 +8773,15 @@ class AppLocalizationsZhHant extends AppLocalizationsZh {
 
   @override
   String get codespacesDeploySyncHint =>
-      'Git 的推送/拉取等操作會作用于当前执行环境；连接 Codespace 後即在远端仓库执行部署/同步。';
+      'Git 的推送/拉取等操作會作用于當前执行环境；连接 Codespace 後即在远端仓库执行部署/同步。';
 
   @override
   String gitExecutionTargetCodespace(String name) {
-    return '当前操作作用于 Codespace：$name';
+    return '當前操作作用于 Codespace：$name';
   }
 
   @override
-  String get gitExecutionTargetLocal => '当前操作作用于本地容器';
+  String get gitExecutionTargetLocal => '當前操作作用于本地容器';
 
   @override
   String get gitDeploySyncSection => '部署 / 同步';
@@ -8625,11 +8830,11 @@ class AppLocalizationsZhHant extends AppLocalizationsZh {
   String get captureSearchHint => '搜索 URL / method / 状态碼';
 
   @override
-  String get captureEmpty => '暂無抓包记錄。啟动代理後，将目標流量代理到 127.0.0.1:<端口>。';
+  String get captureEmpty => '暫無抓包记錄。啟动代理後，将目標流量代理到 127.0.0.1:<端口>。';
 
   @override
   String get captureLimitHint =>
-      '仅抓取經代理的流量。HTTPS 需安装并信任 CA；Android 7+ 多數应用與證書锁定应用無法 MITM（可用調試版/受信任證書场景）。';
+      '仅抓取經代理的流量。HTTPS 需安装並信任 CA；Android 7+ 多數应用與證書锁定应用無法 MITM（可用調試版/受信任證書场景）。';
 
   @override
   String get captureCaTitle => 'CA 證書';
@@ -8639,7 +8844,7 @@ class AppLocalizationsZhHant extends AppLocalizationsZh {
 
   @override
   String get captureCaGuide =>
-      '将證書安装到系统/用户證書并设为信任（用于網絡/HTTPS 抓包）。Android 设置路徑因機型不同，通常在「安全/加密與凭据/安装證書」。安装後需将 HTTP 代理设为 127.0.0.1:<端口>。';
+      '将證書安装到系统/用户證書並設为信任（用于網絡/HTTPS 抓包）。Android 設置路徑因機型不同，通常在「安全/加密與凭据/安装證書」。安装後需将 HTTP 代理設为 127.0.0.1:<端口>。';
 
   @override
   String get captureCopyPath => '复制路徑';
@@ -8663,13 +8868,13 @@ class AppLocalizationsZhHant extends AppLocalizationsZh {
   String get captureInstallCa => '安装證書';
 
   @override
-  String get captureOpenSecurity => '安全设置';
+  String get captureOpenSecurity => '安全設置';
 
   @override
   String get captureDownloadCa => '保存證書';
 
   @override
-  String get captureCaInstallFail => '無法直接安装（已复制路徑），请到系统安全设置手动安装證書。';
+  String get captureCaInstallFail => '無法直接安装（已复制路徑），请到系统安全設置手动安装證書。';
 
   @override
   String get captureVpnPermissionDenied => 'VPN 权限被拒绝，無法啟用抓包。请允许 VPN 权限後重試。';
@@ -8692,13 +8897,13 @@ class AppLocalizationsZhHant extends AppLocalizationsZh {
   String get capturePip => '小窗模式';
 
   @override
-  String get capturePipUnsupported => '当前设备不支持小窗模式';
+  String get capturePipUnsupported => '當前設备不支持小窗模式';
 
   @override
-  String get capturePipNoTraffic => '暂無流量';
+  String get capturePipNoTraffic => '暫無流量';
 
   @override
-  String get captureNoDomains => '暂無域名';
+  String get captureNoDomains => '暫無域名';
 
   @override
   String get captureCopyHost => '复制域名';
@@ -8719,7 +8924,7 @@ class AppLocalizationsZhHant extends AppLocalizationsZh {
   String get captureProtocol => '协議';
 
   @override
-  String get captureDuration => '耗时';
+  String get captureDuration => '耗時';
 
   @override
   String get captureSize => '大小';
@@ -8728,7 +8933,7 @@ class AppLocalizationsZhHant extends AppLocalizationsZh {
   String get captureRemoteAddress => '远程地址';
 
   @override
-  String get captureRequestTime => '请求时間';
+  String get captureRequestTime => '请求時間';
 
   @override
   String get capturePath => '路徑';
@@ -8758,7 +8963,7 @@ class AppLocalizationsZhHant extends AppLocalizationsZh {
   String get captureRaw => '原文';
 
   @override
-  String get captureNoCookies => '没有 Cookie';
+  String get captureNoCookies => '沒有 Cookie';
 
   @override
   String get captureRequestCookies => '请求 Cookie';
@@ -8767,10 +8972,10 @@ class AppLocalizationsZhHant extends AppLocalizationsZh {
   String get captureResponseCookies => '响应 Set-Cookie';
 
   @override
-  String get backupAndRestore => '备份與还原';
+  String get backupAndRestore => '备份與還原';
 
   @override
-  String get selectExportData => '選择导出數据';
+  String get selectExportData => '選擇導出數据';
 
   @override
   String get aiProvider => 'AI 供应商';
@@ -8788,25 +8993,25 @@ class AppLocalizationsZhHant extends AppLocalizationsZh {
   String get permissionRules => '授权规则';
 
   @override
-  String get appSettings => '应用设置';
+  String get appSettings => '应用設置';
 
   @override
   String get workspaceFiles => '工作區文件';
 
   @override
-  String get workspaceFilesHint => '工作區文件建議通過 Git 提交备份，导出备份仅作备用';
+  String get workspaceFilesHint => '工作區文件建議通過 Git 提交备份，導出备份仅作备用';
 
   @override
-  String get exportBackup => '导出备份';
+  String get exportBackup => '導出备份';
 
   @override
-  String get exportBackupDesc => '選择要导出的數据，可设置口令加密';
+  String get exportBackupDesc => '選擇要導出的數据，可設置口令加密';
 
   @override
-  String get importBackup => '导入备份';
+  String get importBackup => '導入备份';
 
   @override
-  String get importBackupDesc => '從备份文件还原數据';
+  String get importBackupDesc => '從备份文件還原數据';
 
   @override
   String get localBackup => '本地备份';
@@ -8840,4 +9045,209 @@ class AppLocalizationsZhHant extends AppLocalizationsZh {
 
   @override
   String get aboutUpdateFailed => '檢查更新失敗';
+
+  @override
+  String get storageTitle => '存儲空間';
+
+  @override
+  String get storageRefresh => '重新統計';
+
+  @override
+  String get storageCategoryDetail => '佔用明細';
+
+  @override
+  String get storageFootnote => '點擊帶箭頭的分類可展開明細。刪會話可減小聊天記錄。';
+
+  @override
+  String storageFreedBytes(Object size) {
+    return '已釋放 $size';
+  }
+
+  @override
+  String get storageAppUsage => '應用佔用';
+
+  @override
+  String get storageComputing => '統計中…';
+
+  @override
+  String storageDeviceSpace(Object available, Object total) {
+    return '設備可用 $available / 共 $total';
+  }
+
+  @override
+  String storageCleanSelect(Object size) {
+    return '清理選中項 · $size';
+  }
+
+  @override
+  String get storageConfirmClean => '確認清理';
+
+  @override
+  String storageConfirmContent(Object size) {
+    return '將清理以下選中項,共約 $size。此操作不可回復。';
+  }
+
+  @override
+  String get storageConfirmDetail =>
+      '僅清理本機應用快取、日誌及全局目錄中的所選數據,可能影響多個工作區的歷史輸出讀取或識圖追問;不會刪除聊天記錄、工作區文件、AI 配置或遠程服務器數據。';
+
+  @override
+  String get storageCancel => '取消';
+
+  @override
+  String get storageClean => '清理';
+
+  @override
+  String get storageUsageUnavailable => '—';
+
+  @override
+  String get storageCategoryContainer => '容器';
+
+  @override
+  String get storageCategoryContainerImage => '容器鏡像';
+
+  @override
+  String get storageCategoryChat => '聊天';
+
+  @override
+  String get storageCategoryWorkspaces => '工作區';
+
+  @override
+  String get storageCategoryAiConfig => 'AI 配置';
+
+  @override
+  String get storageCategoryCheckpoints => '檢查點';
+
+  @override
+  String get storageCategoryLogs => '日誌';
+
+  @override
+  String get storageCategoryCaches => '快取';
+
+  @override
+  String get storageCategoryOther => '其他數據';
+
+  @override
+  String get storageCategoryApk => '應用安裝包';
+
+  @override
+  String get cleanupCaches => '快取文件';
+
+  @override
+  String get cleanupCachesDesc => '臨時文件,刪除後會自動重建';
+
+  @override
+  String get cleanupLogs => '運行日誌';
+
+  @override
+  String get cleanupLogsDesc => '應用日誌與 AI 請求日誌,刪除不影響功能';
+
+  @override
+  String get cleanupToolOutput => '工具輸出檔案';
+
+  @override
+  String get cleanupToolOutputDesc => 'AI 超長工具輸出保存到磁盤的副本,刪除後舊消息裡的輸出路徑不再可讀';
+
+  @override
+  String get cleanupVisionSessions => '識圖會話快取';
+
+  @override
+  String get cleanupVisionSessionsDesc => '識圖追問的歷史,刪除後無法繼續追問舊圖片';
+
+  @override
+  String get containerPageTitle => '容器與鏡像';
+
+  @override
+  String get containerDownloadTooltip => '下載容器';
+
+  @override
+  String get containerRefreshTooltip => '刷新';
+
+  @override
+  String get containerInstalledSection => '已安裝容器';
+
+  @override
+  String get containerDefaultLabel => '預設容器';
+
+  @override
+  String get containerSetDefault => '設為預設';
+
+  @override
+  String get containerDeleteTitle => '刪除容器';
+
+  @override
+  String containerDeleteContent(String name) {
+    return '確定刪除「$name」嗎？容器內安裝的軟件會一併刪除。';
+  }
+
+  @override
+  String get containerDownloadPageTitle => '容器下載';
+
+  @override
+  String get containerDownloadHint =>
+      '選擇需要的鏡像下載。鏡像為官方 aarch64 rootfs，解壓後由 PRoot 提供隔離的文件系統。';
+
+  @override
+  String get containerInstallingStage => '正在安裝…';
+
+  @override
+  String get containerAvailableImages => '可用鏡像';
+
+  @override
+  String get containerDownloadAfter => '下載完成後，容器會顯示在「容器與鏡像」頁面。';
+
+  @override
+  String containerInstalledCount(int count) {
+    return '已安裝 $count 個';
+  }
+
+  @override
+  String get containerDownloadButton => '下載';
+
+  @override
+  String get containerNoContainers => '暫無已下載容器';
+
+  @override
+  String get containerNoContainersDesc => '點擊右上角下載按鈕選擇鏡像';
+
+  @override
+  String containerDefaultSubtitle(String size) {
+    return '預設容器 · $size';
+  }
+
+  @override
+  String get containerDeleteFootnote => '刪除容器會同時刪除容器內安裝的軟件包；工作區文件不受影響。';
+
+  @override
+  String get exportSetPassword => '設定加密口令（可選）';
+
+  @override
+  String get exportBackupAction => '導出';
+
+  @override
+  String get importSelectBackupFile => '選擇備份文件';
+
+  @override
+  String get importLocalBackup => '本地備份';
+
+  @override
+  String get importLocalBackupDesc => '從應用文檔目錄選擇備份文件';
+
+  @override
+  String exportSuccess(String fileName) {
+    return '備份已導出: $fileName';
+  }
+
+  @override
+  String exportFailed(String error) {
+    return '導出失敗: $error';
+  }
+
+  @override
+  String get importSuccess => '備份已還原';
+
+  @override
+  String importFailed(String error) {
+    return '導入失敗: $error';
+  }
 }

@@ -2293,5 +2293,90 @@
   "aboutAlreadyLatest": "최신 버전입니다",
   "aboutCurrentVersion": "현재 버전",
   "aboutNewVersionFound": "새 버전이 발견되었습니다",
-  "aboutUpdateFailed": "업데이트 확인에 실패했습니다"
+  "aboutUpdateFailed": "업데이트 확인에 실패했습니다",
+  "storageTitle": "저장 공간",
+  "storageRefresh": "다시 통계",
+  "storageCategoryDetail": "사용 내역",
+  "storageFootnote": "화살표가 있는 카테고리를 탭하면 세부 정보를 확장할 수 있습니다. 대화를 삭제하면 대화 기록이 줄어듭니다.",
+  "storageFreedBytes": "해제된 크기 {size}",
+  "storageAppUsage": "앱 사용량",
+  "storageComputing": "통계 중…",
+  "storageDeviceSpace": "사용 가능 {available} / 총 {total}",
+  "storageCleanSelect": "선택 항목 정리 · {size}",
+  "storageConfirmClean": "정리 확인",
+  "storageConfirmContent": "다음 선택 항목을 정리합니다. 총 약 {size}입니다. 이 작업은 되돌릴 수 없습니다.",
+  "storageConfirmDetail": "로컬 앱 캐시, 로그, 전역 디렉토리의 선택된 데이터만 정리합니다. 여러 작업 공간의 과거 출력 읽기 또는 이미지 기반 추적 문의에 영향을 줄 수 있습니다. 대화 기록, 작업 공간 파일, AI 구성, 원격 서버 데이터는 삭제되지 않습니다.",
+  "storageCancel": "취소",
+  "storageClean": "정리",
+  "storageUsageUnavailable": "—",
+  "containerPageTitle": "컨테이너 및 이미지",
+  "containerDownloadTooltip": "컨테이너 다운로드",
+  "containerRefreshTooltip": "새로고침",
+  "containerInstalledSection": "설치된 컨테이너",
+  "containerDefaultLabel": "기본 컨테이너",
+  "containerSetDefault": "기본으로 설정",
+  "containerDeleteTitle": "컨테이너 삭제",
+  "containerDeleteContent": "「{name}」을(를) 삭제하시겠습니까? 컨테이너 내에 설치된 소프트웨어도 함께 삭제됩니다.",
+  "containerDownloadPageTitle": "컨테이너 다운로드",
+  "containerDownloadHint": "다운로드할 이미지를 선택하세요. 이미지는 공식 aarch64 rootfs이며, 압축 해제 후 PRoot가 격리된 파일 시스템을 제공합니다.",
+  "containerInstallingStage": "설치 중…",
+  "containerAvailableImages": "사용 가능한 이미지",
+  "containerDownloadAfter": "다운로드 완료 후, 컨테이너는「컨테이너 및 이미지」페이지에 표시됩니다.",
+  "containerInstalledCount": "{count} 개 설치됨",
+  "containerDownloadButton": "다운로드",
+  "containerNoContainers": "다운로드된 컨테이너가 없습니다",
+  "containerNoContainersDesc": "오른쪽 상단 다운로드 버튼을 클릭하여 이미지를 선택하세요",
+  "@containerInstalledCount": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "@containerDeleteContent": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "containerDefaultSubtitle": "기본 컨테이너 · {size}",
+  "containerDeleteFootnote": "컨테이너를 삭제하면 컨테이너 내에 설치된 소프트웨어 패키지도 함께 삭제됩니다. 작업 공간 파일은 영향을 받지 않습니다.",
+  "@containerDefaultSubtitle": {
+    "placeholders": {
+      "size": {
+        "type": "String"
+      }
+    }
+  },
+  "exportSetPassword": "암호화 비밀번호 설정 (선택 사항)",
+  "exportBackupAction": "내보내기",
+  "importSelectBackupFile": "백업 파일 선택",
+  "importLocalBackup": "로컬 백업",
+  "importLocalBackupDesc": "앱 문서 디렉토리에서 백업 파일을 선택하세요",
+  "exportSuccess": "백업이 내보내졌습니다: {fileName}",
+  "exportFailed": "내보내기 실패: {error}",
+  "importSuccess": "백업이 복원되었습니다",
+  "importFailed": "가져오기 실패: {error}",
+  "@exportSuccess": {
+    "placeholders": {
+      "fileName": {
+        "type": "String"
+      }
+    }
+  },
+  "@exportFailed": {
+    "placeholders": {
+      "error": {
+        "type": "String"
+      }
+    }
+  },
+  "@importFailed": {
+    "placeholders": {
+      "error": {
+        "type": "String"
+      }
+    }
+  }
 }

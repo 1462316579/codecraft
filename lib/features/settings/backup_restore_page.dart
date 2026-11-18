@@ -174,14 +174,14 @@ class _BackupRestorePageState extends State<BackupRestorePage> {
                 icon: Iconfont.download,
                 title: l10n.exportBackup,
                 subtitle: l10n.exportBackupDesc,
-                onTap: _exporting ? null : _showExportDialog,
+                onTap: _exporting ? null : () => _showExportDialog(l10n),
               ),
               const SettingsDivider(indent: SettingsRow.textIndent),
               SettingsRow(
                 icon: Iconfont.upload,
                 title: l10n.importBackup,
                 subtitle: l10n.importBackupDesc,
-                onTap: _importing ? null : _importBackup,
+                onTap: _importing ? null : () => _importBackup(l10n),
               ),
             ],
           ),
@@ -217,8 +217,7 @@ class _BackupRestorePageState extends State<BackupRestorePage> {
     );
   }
 
-  Future<void> _showExportDialog() async {
-    final l10n = AppLocalizations.of(context);
+  Future<void> _showExportDialog(AppLocalizations l10n) async {
     final passwordController = TextEditingController();
     await showDialog<void>(
       context: context,
@@ -240,9 +239,9 @@ class _BackupRestorePageState extends State<BackupRestorePage> {
               TextField(
                 controller: passwordController,
                 obscureText: true,
-                decoration: const InputDecoration(
-                  labelText: '设置加密口令（可选）',
-                  border: OutlineInputBorder(),
+                decoration: InputDecoration(
+                  labelText: l10n.exportSetPassword,
+                  border: const OutlineInputBorder(),
                 ),
               ),
             ],
@@ -250,15 +249,15 @@ class _BackupRestorePageState extends State<BackupRestorePage> {
           actions: [
             TextButton(
               onPressed: () => Navigator.pop(context),
-              child: const Text('取消'),
+              child: Text(l10n.cancel),
             ),
             TextButton(
               onPressed: () async {
                 final password = passwordController.text.trim();
                 Navigator.pop(context);
-                await _exportBackup(password);
+                await _exportBackup(password, l10n);
               },
-              child: const Text('导出'),
+              child: Text(l10n.exportBackupAction),
             ),
           ],
         );
@@ -266,7 +265,7 @@ class _BackupRestorePageState extends State<BackupRestorePage> {
     );
   }
 
-  Future<void> _exportBackup(String password) async {
+  Future<void> _exportBackup(String password, AppLocalizations l10n) async {
     if (!mounted) return;
     setState(() => _exporting = true);
     try {
@@ -279,19 +278,19 @@ class _BackupRestorePageState extends State<BackupRestorePage> {
       await file.writeAsString(jsonEncode(data));
       if (!mounted) return;
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('备份已导出: $fileName')),
+        SnackBar(content: Text(l10n.exportSuccess(fileName))),
       );
     } catch (e) {
       if (!mounted) return;
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('导出失败: $e')),
+        SnackBar(content: Text(l10n.exportFailed(e.toString()))),
       );
     } finally {
       if (mounted) setState(() => _exporting = false);
     }
   }
 
-  Future<void> _importBackup() async {
+  Future<void> _importBackup(AppLocalizations l10n) async {
     if (!mounted) return;
     setState(() => _importing = true);
     try {
@@ -307,12 +306,7 @@ class _BackupRestorePageState extends State<BackupRestorePage> {
       await _restoreBackupData(data);
       if (!mounted) return;
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('备份已还原')),
-      );
-    } catch (e) {
-      if (!mounted) return;
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('导入失败: $e')),
+        SnackBar(content: Text(l10n.importSuccess)),
       );
     } finally {
       if (mounted) setState(() => _importing = false);
@@ -374,17 +368,18 @@ class _ImportFileDialog extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context);
     return AlertDialog(
-      title: const Text('选择备份文件'),
+      title: Text(l10n.importSelectBackupFile),
       content: SizedBox(
         width: double.maxFinite,
         height: 300,
         child: ListView(
-          children: const [
+          children: [
             ListTile(
-              leading: Icon(Icons.folder),
-              title: Text('本地备份'),
-              subtitle: Text('从应用文档目录选择备份文件'),
+              leading: const Icon(Icons.folder),
+              title: Text(l10n.importLocalBackup),
+              subtitle: Text(l10n.importLocalBackupDesc),
             ),
           ],
         ),
@@ -392,7 +387,7 @@ class _ImportFileDialog extends StatelessWidget {
       actions: [
         TextButton(
           onPressed: () => Navigator.pop(context),
-          child: const Text('取消'),
+          child: Text(l10n.cancel),
         ),
       ],
     );

@@ -8,6 +8,7 @@ import '../../core/theme/tokens.dart';
 import '../../core/ui/settings_group.dart';
 import '../../data/container/container_launcher.dart';
 import '../../data/container/container_manager.dart';
+import '../../l10n/app_localizations.dart';
 
 /// 容器与镜像页：只展示已安装容器，镜像目录放在独立的下载页。
 class ContainerPage extends ConsumerStatefulWidget {
@@ -31,23 +32,24 @@ class _ContainerPageState extends ConsumerState<ContainerPage> {
     final state = ref.watch(containerProvider);
     final notifier = ref.read(containerProvider.notifier);
     final theme = Theme.of(context);
+    final l10n = AppLocalizations.of(context);
 
     return Scaffold(
       extendBodyBehindAppBar: true,
       appBar: AppBar(
-        title: const Text('容器与镜像'),
+        title: Text(l10n.containerPageTitle),
         backgroundColor: Colors.transparent,
         surfaceTintColor: Colors.transparent,
         elevation: 0,
         scrolledUnderElevation: 0,
         actions: [
           IconButton(
-            tooltip: '下载容器',
+            tooltip: l10n.containerDownloadTooltip,
             icon: const Icon(Iconfont.download, size: 22),
             onPressed: () => context.push('/settings/container/download'),
           ),
           IconButton(
-            tooltip: '刷新',
+            tooltip: l10n.containerRefreshTooltip,
             icon: const Icon(Iconfont.refreshCw, size: 22),
             onPressed: state.busy ? null : notifier.refresh,
           ),
@@ -84,7 +86,7 @@ class _ContainerPageState extends ConsumerState<ContainerPage> {
                   Spacing.xl + 60,
                 ),
                 children: [
-                  const SettingsGroupHeader(text: '已安装容器'),
+                  SettingsGroupHeader(text: l10n.containerInstalledSection),
                   SettingsGroup(
                     children: [
                       for (var i = 0; i < state.containers.length; i++) ...[
@@ -95,12 +97,13 @@ class _ContainerPageState extends ConsumerState<ContainerPage> {
                           state,
                           notifier,
                           state.containers[i],
+                          l10n,
                         ),
                       ],
                     ],
                   ),
-                  const _FootNote(
-                    text: '删除容器会同时删除容器内安装的软件包；工作区文件不受影响。',
+                  _FootNote(
+                    text: l10n.containerDeleteFootnote,
                   ),
                 ],
               ),
@@ -113,6 +116,7 @@ class _ContainerPageState extends ConsumerState<ContainerPage> {
     ContainerState state,
     ContainerNotifier notifier,
     ContainerInfo container,
+    AppLocalizations l10n,
   ) {
     final isDefault = state.defaultId == container.id ||
         (state.defaultId == null && state.containers.first.id == container.id);
@@ -121,7 +125,7 @@ class _ContainerPageState extends ConsumerState<ContainerPage> {
       icon: Iconfont.box,
       title: container.name,
       subtitle: isDefault
-          ? '默认容器 · ${_formatBytes(container.sizeBytes)}'
+          ? l10n.containerDefaultSubtitle(_formatBytes(container.sizeBytes))
           : _formatBytes(container.sizeBytes),
       trailing: Row(
         mainAxisSize: MainAxisSize.min,
@@ -130,14 +134,14 @@ class _ContainerPageState extends ConsumerState<ContainerPage> {
             TextButton(
               onPressed:
                   state.busy ? null : () => notifier.setDefault(container.id),
-              child: const Text('设为默认'),
+              child: Text(l10n.containerSetDefault),
             ),
           IconButton(
-            tooltip: '删除',
+            tooltip: l10n.containerDeleteTitle,
             icon: const Icon(Iconfont.trash, size: 18),
             onPressed: state.busy
                 ? null
-                : () => _confirmRemove(context, notifier, container),
+                : () => _confirmRemove(context, notifier, container, l10n),
           ),
         ],
       ),
@@ -148,20 +152,21 @@ class _ContainerPageState extends ConsumerState<ContainerPage> {
     BuildContext context,
     ContainerNotifier notifier,
     ContainerInfo container,
+    AppLocalizations l10n,
   ) async {
     final confirmed = await showDialog<bool>(
       context: context,
       builder: (dialogContext) => AlertDialog(
-        title: const Text('删除容器'),
-        content: Text('确定删除「${container.name}」吗？容器内安装的软件会一并删除。'),
+        title: Text(l10n.containerDeleteTitle),
+        content: Text(l10n.containerDeleteContent(container.name)),
         actions: [
           TextButton(
             onPressed: () => Navigator.of(dialogContext).pop(false),
-            child: const Text('取消'),
+            child: Text(l10n.cancel),
           ),
           FilledButton(
             onPressed: () => Navigator.of(dialogContext).pop(true),
-            child: const Text('删除'),
+            child: Text(l10n.delete),
           ),
         ],
       ),
@@ -181,11 +186,12 @@ class ContainerDownloadPage extends ConsumerWidget {
     final state = ref.watch(containerProvider);
     final notifier = ref.read(containerProvider.notifier);
     final theme = Theme.of(context);
+    final l10n = AppLocalizations.of(context);
 
     return Scaffold(
       extendBodyBehindAppBar: true,
       appBar: AppBar(
-        title: const Text('容器下载'),
+        title: Text(l10n.containerDownloadPageTitle),
         backgroundColor: Colors.transparent,
         surfaceTintColor: Colors.transparent,
         elevation: 0,
@@ -218,14 +224,13 @@ class ContainerDownloadPage extends ConsumerWidget {
             Spacing.xl + 60,
           ),
           children: [
-            const _HintCard(
-              text: '选择需要的镜像下载。镜像为官方 aarch64 rootfs，'
-                  '解压后由 PRoot 提供隔离的文件系统。',
+            _HintCard(
+              text: l10n.containerDownloadHint,
             ),
             if (state.busy) ...[
               const SizedBox(height: Spacing.md),
               _ProgressCard(
-                label: state.busyStage ?? '正在安装…',
+                label: state.busyStage ?? l10n.containerInstallingStage,
                 progress: state.busyProgress,
               ),
             ],
@@ -236,7 +241,7 @@ class ContainerDownloadPage extends ConsumerWidget {
                 onDismiss: notifier.clearError,
               ),
             ],
-            const SettingsGroupHeader(text: '可用镜像'),
+            SettingsGroupHeader(text: l10n.containerAvailableImages),
             SettingsGroup(
               children: [
                 for (var i = 0; i < kContainerImages.length; i++) ...[
@@ -247,12 +252,13 @@ class ContainerDownloadPage extends ConsumerWidget {
                     state,
                     notifier,
                     kContainerImages[i],
+                    l10n,
                   ),
                 ],
               ],
             ),
-            const _FootNote(
-              text: '下载完成后，容器会显示在「容器与镜像」页面。',
+            _FootNote(
+              text: l10n.containerDownloadAfter,
             ),
           ],
         ),
@@ -266,6 +272,7 @@ Widget _buildImageRow(
   ContainerState state,
   ContainerNotifier notifier,
   ContainerImage image,
+  AppLocalizations l10n,
 ) {
   final installing = state.busyImageId == image.id;
   final installedCount =
@@ -275,7 +282,7 @@ Widget _buildImageRow(
     icon: Iconfont.download,
     title: image.name,
     subtitle: installedCount > 0
-        ? '${image.description} · ${image.sizeLabel} · 已安装 $installedCount 个'
+        ? '${image.description} · ${image.sizeLabel} · ${installedCount} 已安装'
         : '${image.description} · ${image.sizeLabel}',
     trailing: installing
         ? Text(
@@ -284,7 +291,7 @@ Widget _buildImageRow(
           )
         : FilledButton.tonal(
             onPressed: state.busy ? null : () => notifier.install(image),
-            child: const Text('下载'),
+            child: Text(l10n.containerDownloadButton),
           ),
   );
 }
@@ -296,6 +303,7 @@ class _EmptyContainers extends StatelessWidget {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     final color = context.semantic.subtleText;
+    final l10n = AppLocalizations.of(context);
     return Center(
       child: Padding(
         padding: const EdgeInsets.all(Spacing.xl),
@@ -305,12 +313,12 @@ class _EmptyContainers extends StatelessWidget {
             Icon(Iconfont.box, size: 56, color: color),
             const SizedBox(height: Spacing.lg),
             Text(
-              '暂无已下载容器',
+              l10n.containerNoContainers,
               style: theme.textTheme.titleMedium?.copyWith(color: color),
             ),
             const SizedBox(height: Spacing.sm),
             Text(
-              '点击右上角下载按钮选择镜像',
+              l10n.containerNoContainersDesc,
               style: theme.textTheme.bodyMedium?.copyWith(color: color),
             ),
           ],

@@ -2237,5 +2237,108 @@
   "aboutAlreadyLatest": "Already up to date",
   "aboutCurrentVersion": "Current version",
   "aboutNewVersionFound": "New version found",
-  "aboutUpdateFailed": "Failed to check for updates"
+  "aboutUpdateFailed": "Failed to check for updates",
+  "storageTitle": "Storage",
+  "storageRefresh": "Refresh",
+  "storageCategoryDetail": "Usage Breakdown",
+  "storageFootnote": "Tap a category with an arrow to expand details. Deleting chats reduces chat records.",
+  "storageFreedBytes": "Freed {size}",
+  "storageAppUsage": "App Usage",
+  "storageComputing": "Computing…",
+  "storageDeviceSpace": "Available {available} of {total}",
+  "storageCleanSelect": "Clean selected · {size}",
+  "storageConfirmClean": "Confirm Clean",
+  "storageConfirmContent": "Will clean the following selected items, totaling approx. {size}. This action cannot be undone.",
+  "storageConfirmDetail": "Cleans only selected local app cache, logs, and data in global directories; may affect historical output reading or image-based follow-up across workspaces; does not delete chat records, workspace files, AI config, or remote server data.",
+  "storageCancel": "Cancel",
+  "storageClean": "Clean",
+  "storageUsageUnavailable": "—",
+  "storageCategoryContainer": "Container",
+  "storageCategoryContainerImage": "Container Image",
+  "storageCategoryChat": "Chat",
+  "storageCategoryWorkspaces": "Workspaces",
+  "storageCategoryAiConfig": "AI Config",
+  "storageCategoryCheckpoints": "Checkpoints",
+  "storageCategoryLogs": "Logs",
+  "storageCategoryCaches": "Caches",
+  "storageCategoryOther": "Other Data",
+  "storageCategoryApk": "App Installer",
+  "cleanupCaches": "Cache Files",
+  "cleanupCachesDesc": "Temporary files, automatically rebuilt after deletion",
+  "cleanupLogs": "Runtime Logs",
+  "cleanupLogsDesc": "App logs and AI request logs, deletion does not affect functionality",
+  "cleanupToolOutput": "Tool Output Archive",
+  "cleanupToolOutputDesc": "Disk copy of AI super-long tool output; deleting makes output paths in old messages unreadable",
+  "cleanupVisionSessions": "Vision Session Cache",
+  "cleanupVisionSessionsDesc": "Vision-based follow-up history; deletion prevents further follow-up on old images",
+  "containerPageTitle": "Containers & Images",
+  "containerDownloadTooltip": "Download Container",
+  "containerRefreshTooltip": "Refresh",
+  "containerInstalledSection": "Installed Containers",
+  "containerDefaultLabel": "Default Container",
+  "containerSetDefault": "Set as Default",
+  "containerDeleteTitle": "Delete Container",
+  "containerDeleteContent": "Are you sure you want to delete \"{name}\"? Software installed inside the container will also be deleted.",
+  "containerDownloadPageTitle": "Container Download",
+  "containerDownloadHint": "Select the images you need to download. Images are official aarch64 rootfs, and after extraction PRoot provides an isolated file system.",
+  "containerInstallingStage": "Installing...",
+  "containerAvailableImages": "Available Images",
+  "containerDownloadAfter": "After download is complete, the container will appear on the \"Containers & Images\" page.",
+  "containerInstalledCount": "{count} installed",
+  "containerDownloadButton": "Download",
+  "containerNoContainers": "No containers downloaded yet",
+  "containerNoContainersDesc": "Click the download button in the top right to select an image.",
+  "@containerInstalledCount": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "@containerDeleteContent": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "containerDefaultSubtitle": "Default Container · {size}",
+  "containerDeleteFootnote": "Deleting a container will also delete software packages installed inside the container; workspace files are not affected.",
+  "@containerDefaultSubtitle": {
+    "placeholders": {
+      "size": {
+        "type": "String"
+      }
+    }
+  },
+  "exportSetPassword": "Set encryption password (optional)",
+  "exportBackupAction": "Export",
+  "importSelectBackupFile": "Select backup file",
+  "importLocalBackup": "Local backup",
+  "importLocalBackupDesc": "Select backup file from app documents directory",
+  "exportSuccess": "Backup exported: {fileName}",
+  "exportFailed": "Export failed: {error}",
+  "importSuccess": "Backup restored",
+  "importFailed": "Import failed: {error}",
+  "@exportSuccess": {
+    "placeholders": {
+      "fileName": {
+        "type": "String"
+      }
+    }
+  },
+  "@exportFailed": {
+    "placeholders": {
+      "error": {
+        "type": "String"
+      }
+    }
+  },
+  "@importFailed": {
+    "placeholders": {
+      "error": {
+        "type": "String"
+      }
+    }
+  }
 }

@@ -4549,4 +4549,218 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get aboutUpdateFailed => 'Failed to check for updates';
+
+  @override
+  String get storageTitle => 'Storage';
+
+  @override
+  String get storageRefresh => 'Refresh';
+
+  @override
+  String get storageCategoryDetail => 'Usage Breakdown';
+
+  @override
+  String get storageFootnote =>
+      'Tap a category with an arrow to expand details. Deleting chats reduces chat records.';
+
+  @override
+  String storageFreedBytes(Object size) {
+    return 'Freed $size';
+  }
+
+  @override
+  String get storageAppUsage => 'App Usage';
+
+  @override
+  String get storageComputing => 'Computing…';
+
+  @override
+  String storageDeviceSpace(Object available, Object total) {
+    return 'Available $available of $total';
+  }
+
+  @override
+  String storageCleanSelect(Object size) {
+    return 'Clean selected · $size';
+  }
+
+  @override
+  String get storageConfirmClean => 'Confirm Clean';
+
+  @override
+  String storageConfirmContent(Object size) {
+    return 'Will clean the following selected items, totaling approx. $size. This action cannot be undone.';
+  }
+
+  @override
+  String get storageConfirmDetail =>
+      'Cleans only selected local app cache, logs, and data in global directories; may affect historical output reading or image-based follow-up across workspaces; does not delete chat records, workspace files, AI config, or remote server data.';
+
+  @override
+  String get storageCancel => 'Cancel';
+
+  @override
+  String get storageClean => 'Clean';
+
+  @override
+  String get storageUsageUnavailable => '—';
+
+  @override
+  String get storageCategoryContainer => 'Container';
+
+  @override
+  String get storageCategoryContainerImage => 'Container Image';
+
+  @override
+  String get storageCategoryChat => 'Chat';
+
+  @override
+  String get storageCategoryWorkspaces => 'Workspaces';
+
+  @override
+  String get storageCategoryAiConfig => 'AI Config';
+
+  @override
+  String get storageCategoryCheckpoints => 'Checkpoints';
+
+  @override
+  String get storageCategoryLogs => 'Logs';
+
+  @override
+  String get storageCategoryCaches => 'Caches';
+
+  @override
+  String get storageCategoryOther => 'Other Data';
+
+  @override
+  String get storageCategoryApk => 'App Installer';
+
+  @override
+  String get cleanupCaches => 'Cache Files';
+
+  @override
+  String get cleanupCachesDesc =>
+      'Temporary files, automatically rebuilt after deletion';
+
+  @override
+  String get cleanupLogs => 'Runtime Logs';
+
+  @override
+  String get cleanupLogsDesc =>
+      'App logs and AI request logs, deletion does not affect functionality';
+
+  @override
+  String get cleanupToolOutput => 'Tool Output Archive';
+
+  @override
+  String get cleanupToolOutputDesc =>
+      'Disk copy of AI super-long tool output; deleting makes output paths in old messages unreadable';
+
+  @override
+  String get cleanupVisionSessions => 'Vision Session Cache';
+
+  @override
+  String get cleanupVisionSessionsDesc =>
+      'Vision-based follow-up history; deletion prevents further follow-up on old images';
+
+  @override
+  String get containerPageTitle => 'Containers & Images';
+
+  @override
+  String get containerDownloadTooltip => 'Download Container';
+
+  @override
+  String get containerRefreshTooltip => 'Refresh';
+
+  @override
+  String get containerInstalledSection => 'Installed Containers';
+
+  @override
+  String get containerDefaultLabel => 'Default Container';
+
+  @override
+  String get containerSetDefault => 'Set as Default';
+
+  @override
+  String get containerDeleteTitle => 'Delete Container';
+
+  @override
+  String containerDeleteContent(String name) {
+    return 'Are you sure you want to delete \"$name\"? Software installed inside the container will also be deleted.';
+  }
+
+  @override
+  String get containerDownloadPageTitle => 'Container Download';
+
+  @override
+  String get containerDownloadHint =>
+      'Select the images you need to download. Images are official aarch64 rootfs, and after extraction PRoot provides an isolated file system.';
+
+  @override
+  String get containerInstallingStage => 'Installing...';
+
+  @override
+  String get containerAvailableImages => 'Available Images';
+
+  @override
+  String get containerDownloadAfter =>
+      'After download is complete, the container will appear on the \"Containers & Images\" page.';
+
+  @override
+  String containerInstalledCount(int count) {
+    return '$count installed';
+  }
+
+  @override
+  String get containerDownloadButton => 'Download';
+
+  @override
+  String get containerNoContainers => 'No containers downloaded yet';
+
+  @override
+  String get containerNoContainersDesc =>
+      'Click the download button in the top right to select an image.';
+
+  @override
+  String containerDefaultSubtitle(String size) {
+    return 'Default Container · $size';
+  }
+
+  @override
+  String get containerDeleteFootnote =>
+      'Deleting a container will also delete software packages installed inside the container; workspace files are not affected.';
+
+  @override
+  String get exportSetPassword => 'Set encryption password (optional)';
+
+  @override
+  String get exportBackupAction => 'Export';
+
+  @override
+  String get importSelectBackupFile => 'Select backup file';
+
+  @override
+  String get importLocalBackup => 'Local backup';
+
+  @override
+  String get importLocalBackupDesc =>
+      'Select backup file from app documents directory';
+
+  @override
+  String exportSuccess(String fileName) {
+    return 'Backup exported: $fileName';
+  }
+
+  @override
+  String exportFailed(String error) {
+    return 'Export failed: $error';
+  }
+
+  @override
+  String get importSuccess => 'Backup restored';
+
+  @override
+  String importFailed(String error) {
+    return 'Import failed: $error';
+  }
 }

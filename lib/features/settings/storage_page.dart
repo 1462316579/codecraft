@@ -3,6 +3,7 @@ import 'dart:ui';
 import 'package:flutter/material.dart';
 import '../../core/icons/iconfont.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import '../../l10n/app_localizations.dart';
 
 import '../../core/theme/semantic_colors.dart';
 import '../../core/theme/tokens.dart';
@@ -51,21 +52,22 @@ class _StoragePageState extends ConsumerState<StoragePage> {
     if (pending != null) {
       _pendingCleanup = null;
       WidgetsBinding.instance.addPostFrameCallback((_) {
-        if (mounted) _confirmClean(pending, state, controller);
+        if (mounted) _confirmClean(context, pending, state, controller);
       });
     }
 
+    final l10n = AppLocalizations.of(context);
     return Scaffold(
       extendBodyBehindAppBar: true,
       appBar: AppBar(
-        title: const Text('存储空间'),
+        title: Text(l10n.storageTitle),
         backgroundColor: Colors.transparent,
         surfaceTintColor: Colors.transparent,
         elevation: 0,
         scrolledUnderElevation: 0,
         actions: [
           IconButton(
-            tooltip: '重新统计',
+            tooltip: l10n.storageRefresh,
             icon: const Icon(Iconfont.refreshCw, size: 22),
             onPressed: state.cleaning ? null : () => controller.refresh(),
           ),
@@ -94,7 +96,7 @@ class _StoragePageState extends ConsumerState<StoragePage> {
               children: [
                 _OverviewCard(state: state),
                 const SizedBox(height: Spacing.xs),
-                const SettingsGroupHeader(text: '占用明细'),
+                SettingsGroupHeader(text: l10n.storageCategoryDetail),
                 SettingsGroup(
                   children: [
                     for (var index = 0; index < StorageCategory.values.length; index++) ...[
@@ -103,11 +105,11 @@ class _StoragePageState extends ConsumerState<StoragePage> {
                     ],
                   ],
                 ),
-                const _FootNote(
-                  text: '点击带箭头的分类可展开明细。删会话可减小聊天记录。',
+                _FootNote(
+                  text: l10n.storageFootnote,
                 ),
                 if (state.freedBytes != null)
-                  _FootNote(text: '已释放 ${formatStorageSize(state.freedBytes!)}'),
+                  _FootNote(text: l10n.storageFreedBytes(formatStorageSize(state.freedBytes!))),
               ],
             ),
             Positioned(
@@ -183,6 +185,7 @@ class _StoragePageState extends ConsumerState<StoragePage> {
     StorageUiState state,
     StorageController controller,
   ) {
+    final l10n = AppLocalizations.of(context);
     return Padding(
       padding: const EdgeInsets.all(Spacing.lg),
       child: SizedBox(
@@ -209,40 +212,43 @@ class _StoragePageState extends ConsumerState<StoragePage> {
                   height: 16,
                   child: CircularProgressIndicator(strokeWidth: 2),
                 )
-              : Text('清理选中项 · ${formatStorageSize(state.selectedBytes)}'),
+              : Text(l10n.storageCleanSelect(formatStorageSize(state.selectedBytes))),
         ),
       ),
     );
   }
 
   Future<void> _confirmClean(
+    BuildContext context,
     List<CleanupKind> kinds,
     StorageUiState state,
     StorageController controller,
   ) async {
+    final l10n = AppLocalizations.of(context);
     final total = kinds.fold(0, (sum, kind) => sum + (state.cleanableSizes[kind] ?? 0));
     final confirmed = await showDialog<bool>(
       context: context,
       builder: (dialogContext) => AlertDialog(
-        title: const Text('确认清理'),
+        title: Text(l10n.storageConfirmClean),
         content: SingleChildScrollView(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             mainAxisSize: MainAxisSize.min,
             children: [
-              Text('将清理以下选中项,共约 ${formatStorageSize(total)}。此操作不可恢复。'),
+              Text(
+                l10n.storageConfirmContent(formatStorageSize(total)),
+              ),
               const SizedBox(height: Spacing.md),
               for (final kind in kinds) ...[
-                Text(kind.label, style: const TextStyle(fontWeight: FontWeight.w500)),
+                Text(_cleanupKindLabel(kind, l10n), style: const TextStyle(fontWeight: FontWeight.w500)),
                 Text(
-                  kind.description,
+                  _cleanupKindDesc(kind, l10n),
                   style: Theme.of(dialogContext).textTheme.bodySmall,
                 ),
                 const SizedBox(height: Spacing.sm),
               ],
               Text(
-                '仅清理本机应用缓存、日志及全局目录中的所选数据,可能影响多个工作区的历史输出读取或识图追问;'
-                '不会删除聊天记录、工作区文件、AI 配置或远程服务器数据。',
+                l10n.storageConfirmDetail,
                 style: Theme.of(dialogContext).textTheme.bodySmall,
               ),
             ],
@@ -251,11 +257,11 @@ class _StoragePageState extends ConsumerState<StoragePage> {
         actions: [
           TextButton(
             onPressed: () => Navigator.of(dialogContext).pop(false),
-            child: const Text('取消'),
+            child: Text(l10n.storageCancel),
           ),
           TextButton(
             onPressed: () => Navigator.of(dialogContext).pop(true),
-            child: const Text('清理'),
+            child: Text(l10n.storageClean),
           ),
         ],
       ),
@@ -272,6 +278,7 @@ class _OverviewCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final subtle = context.semantic.subtleText;
+    final l10n = AppLocalizations.of(context);
     return ClipRRect(
       borderRadius: BorderRadius.circular(Radii.lg),
       child: BackdropFilter(
@@ -288,7 +295,7 @@ class _OverviewCard extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            '应用占用',
+            l10n.storageAppUsage,
             style: Theme.of(context)
                 .textTheme
                 .labelLarge
@@ -313,7 +320,7 @@ class _OverviewCard extends StatelessWidget {
                 ),
                 const SizedBox(width: Spacing.xs),
                 Text(
-                  '统计中…',
+                  l10n.storageComputing,
                   style: Theme.of(context).textTheme.bodySmall?.copyWith(color: subtle),
                 ),
               ],
@@ -323,7 +330,7 @@ class _OverviewCard extends StatelessWidget {
           _StackedBar(entries: state.entries),
           const SizedBox(height: Spacing.sm),
           Text(
-            '设备可用 ${formatStorageSize(state.deviceSpace.availableBytes)} / 共 ${formatStorageSize(state.deviceSpace.totalBytes)}',
+            l10n.storageDeviceSpace(formatStorageSize(state.deviceSpace.availableBytes), formatStorageSize(state.deviceSpace.totalBytes)),
             style: Theme.of(context).textTheme.bodySmall?.copyWith(color: subtle),
           ),
         ],
@@ -367,6 +374,42 @@ class _StackedBar extends StatelessWidget {
   }
 }
 
+/// 分类标签的本地化映射。
+String _categoryLabel(StorageCategory category, AppLocalizations l10n) {
+  return switch (category) {
+    StorageCategory.container => l10n.storageCategoryContainer,
+    StorageCategory.containerImage => l10n.storageCategoryContainerImage,
+    StorageCategory.chat => l10n.storageCategoryChat,
+    StorageCategory.workspaces => l10n.storageCategoryWorkspaces,
+    StorageCategory.aiConfig => l10n.storageCategoryAiConfig,
+    StorageCategory.checkpoints => l10n.storageCategoryCheckpoints,
+    StorageCategory.logs => l10n.storageCategoryLogs,
+    StorageCategory.caches => l10n.storageCategoryCaches,
+    StorageCategory.other => l10n.storageCategoryOther,
+    StorageCategory.apk => l10n.storageCategoryApk,
+  };
+}
+
+/// CleanupKind 标签的本地化映射。
+String _cleanupKindLabel(CleanupKind kind, AppLocalizations l10n) {
+  return switch (kind) {
+    CleanupKind.caches => l10n.cleanupCaches,
+    CleanupKind.logs => l10n.cleanupLogs,
+    CleanupKind.toolOutput => l10n.cleanupToolOutput,
+    CleanupKind.visionSessions => l10n.cleanupVisionSessions,
+  };
+}
+
+/// CleanupKind 描述的本地化映射。
+String _cleanupKindDesc(CleanupKind kind, AppLocalizations l10n) {
+  return switch (kind) {
+    CleanupKind.caches => l10n.cleanupCachesDesc,
+    CleanupKind.logs => l10n.cleanupLogsDesc,
+    CleanupKind.toolOutput => l10n.cleanupToolOutputDesc,
+    CleanupKind.visionSessions => l10n.cleanupVisionSessionsDesc,
+  };
+}
+
 class _CategoryRow extends StatelessWidget {
   const _CategoryRow({
     required this.category,
@@ -393,6 +436,7 @@ class _CategoryRow extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final subtle = context.semantic.subtleText;
+    final l10n = AppLocalizations.of(context);
     final content = Container(
       constraints: const BoxConstraints(minHeight: 56),
       padding: const EdgeInsets.symmetric(horizontal: Spacing.lg, vertical: Spacing.xs),
@@ -412,7 +456,7 @@ class _CategoryRow extends StatelessWidget {
               children: [
                 Flexible(
                   child: Text(
-                    category.label,
+                    _categoryLabel(category, l10n),
                     style: Theme.of(context).textTheme.bodyLarge,
                     overflow: TextOverflow.ellipsis,
                   ),
@@ -468,6 +512,7 @@ class _DetailRow extends StatelessWidget {
   Widget build(BuildContext context) {
     final subtle = context.semantic.subtleText;
     final kind = cleanupKind;
+    final l10n = AppLocalizations.of(context);
     return Padding(
       padding: EdgeInsets.only(
         left: Spacing.lg + _detailIndent + (detail.indent ? Spacing.lg : 0),
@@ -484,7 +529,7 @@ class _DetailRow extends StatelessWidget {
               children: [
                 Expanded(
                   child: Text(
-                    kind?.label ?? detail.label,
+                    kind == null ? detail.label : _cleanupKindLabel(kind, l10n),
                     style: Theme.of(context)
                         .textTheme
                         .bodyMedium
@@ -541,3 +586,5 @@ class _FootNote extends StatelessWidget {
     );
   }
 }
+
+

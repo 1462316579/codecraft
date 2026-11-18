@@ -2293,5 +2293,108 @@
   "aboutAlreadyLatest": "已經是最新版本",
   "aboutCurrentVersion": "當前版本",
   "aboutNewVersionFound": "發現新版本",
-  "aboutUpdateFailed": "檢查更新失敗"
+  "aboutUpdateFailed": "檢查更新失敗",
+  "storageTitle": "存儲空間",
+  "storageRefresh": "重新統計",
+  "storageCategoryDetail": "佔用明細",
+  "storageFootnote": "點擊帶箭頭的分類可展開明細。刪會話可減小聊天記錄。",
+  "storageFreedBytes": "已釋放 {size}",
+  "storageAppUsage": "應用佔用",
+  "storageComputing": "統計中…",
+  "storageDeviceSpace": "設備可用 {available} / 共 {total}",
+  "storageCleanSelect": "清理選中項 · {size}",
+  "storageConfirmClean": "確認清理",
+  "storageConfirmContent": "將清理以下選中項,共約 {size}。此操作不可回復。",
+  "storageConfirmDetail": "僅清理本機應用快取、日誌及全局目錄中的所選數據,可能影響多個工作區的歷史輸出讀取或識圖追問;不會刪除聊天記錄、工作區文件、AI 配置或遠程服務器數據。",
+  "storageCancel": "取消",
+  "storageClean": "清理",
+  "storageUsageUnavailable": "—",
+  "storageCategoryContainer": "容器",
+  "storageCategoryContainerImage": "容器鏡像",
+  "storageCategoryChat": "聊天",
+  "storageCategoryWorkspaces": "工作區",
+  "storageCategoryAiConfig": "AI 配置",
+  "storageCategoryCheckpoints": "檢查點",
+  "storageCategoryLogs": "日誌",
+  "storageCategoryCaches": "快取",
+  "storageCategoryOther": "其他數據",
+  "storageCategoryApk": "應用安裝包",
+  "cleanupCaches": "快取文件",
+  "cleanupCachesDesc": "臨時文件,刪除後會自動重建",
+  "cleanupLogs": "運行日誌",
+  "cleanupLogsDesc": "應用日誌與 AI 請求日誌,刪除不影響功能",
+  "cleanupToolOutput": "工具輸出檔案",
+  "cleanupToolOutputDesc": "AI 超長工具輸出保存到磁盤的副本,刪除後舊消息裡的輸出路徑不再可讀",
+  "cleanupVisionSessions": "識圖會話快取",
+  "cleanupVisionSessionsDesc": "識圖追問的歷史,刪除後無法繼續追問舊圖片",
+  "containerPageTitle": "容器與鏡像",
+  "containerDownloadTooltip": "下載容器",
+  "containerRefreshTooltip": "刷新",
+  "containerInstalledSection": "已安裝容器",
+  "containerDefaultLabel": "預設容器",
+  "containerSetDefault": "設為預設",
+  "containerDeleteTitle": "刪除容器",
+  "containerDeleteContent": "確定刪除「{name}」嗎？容器內安裝的軟件會一併刪除。",
+  "containerDownloadPageTitle": "容器下載",
+  "containerDownloadHint": "選擇需要的鏡像下載。鏡像為官方 aarch64 rootfs，解壓後由 PRoot 提供隔離的文件系統。",
+  "containerInstallingStage": "正在安裝…",
+  "containerAvailableImages": "可用鏡像",
+  "containerDownloadAfter": "下載完成後，容器會顯示在「容器與鏡像」頁面。",
+  "containerInstalledCount": "已安裝 {count} 個",
+  "containerDownloadButton": "下載",
+  "containerNoContainers": "暫無已下載容器",
+  "containerNoContainersDesc": "點擊右上角下載按鈕選擇鏡像",
+  "@containerInstalledCount": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "@containerDeleteContent": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "containerDefaultSubtitle": "預設容器 · {size}",
+  "containerDeleteFootnote": "刪除容器會同時刪除容器內安裝的軟件包；工作區文件不受影響。",
+  "@containerDefaultSubtitle": {
+    "placeholders": {
+      "size": {
+        "type": "String"
+      }
+    }
+  },
+  "exportSetPassword": "設定加密口令（可選）",
+  "exportBackupAction": "導出",
+  "importSelectBackupFile": "選擇備份文件",
+  "importLocalBackup": "本地備份",
+  "importLocalBackupDesc": "從應用文檔目錄選擇備份文件",
+  "exportSuccess": "備份已導出: {fileName}",
+  "exportFailed": "導出失敗: {error}",
+  "importSuccess": "備份已還原",
+  "importFailed": "導入失敗: {error}",
+  "@exportSuccess": {
+    "placeholders": {
+      "fileName": {
+        "type": "String"
+      }
+    }
+  },
+  "@exportFailed": {
+    "placeholders": {
+      "error": {
+        "type": "String"
+      }
+    }
+  },
+  "@importFailed": {
+    "placeholders": {
+      "error": {
+        "type": "String"
+      }
+    }
+  }
 }

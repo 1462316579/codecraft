@@ -8358,6 +8358,372 @@ abstract class AppLocalizations {
   /// In zh, this message translates to:
   /// **'检查更新失败'**
   String get aboutUpdateFailed;
+
+  /// No description provided for @storageTitle.
+  ///
+  /// In zh, this message translates to:
+  /// **'存储空间'**
+  String get storageTitle;
+
+  /// No description provided for @storageRefresh.
+  ///
+  /// In zh, this message translates to:
+  /// **'重新统计'**
+  String get storageRefresh;
+
+  /// No description provided for @storageCategoryDetail.
+  ///
+  /// In zh, this message translates to:
+  /// **'占用明细'**
+  String get storageCategoryDetail;
+
+  /// No description provided for @storageFootnote.
+  ///
+  /// In zh, this message translates to:
+  /// **'点击带箭头的分类可展开明细。删会话可减小聊天记录。'**
+  String get storageFootnote;
+
+  /// No description provided for @storageFreedBytes.
+  ///
+  /// In zh, this message translates to:
+  /// **'已释放 {size}'**
+  String storageFreedBytes(Object size);
+
+  /// No description provided for @storageAppUsage.
+  ///
+  /// In zh, this message translates to:
+  /// **'应用占用'**
+  String get storageAppUsage;
+
+  /// No description provided for @storageComputing.
+  ///
+  /// In zh, this message translates to:
+  /// **'统计中…'**
+  String get storageComputing;
+
+  /// No description provided for @storageDeviceSpace.
+  ///
+  /// In zh, this message translates to:
+  /// **'设备可用 {available} / 共 {total}'**
+  String storageDeviceSpace(Object available, Object total);
+
+  /// No description provided for @storageCleanSelect.
+  ///
+  /// In zh, this message translates to:
+  /// **'清理选中项 · {size}'**
+  String storageCleanSelect(Object size);
+
+  /// No description provided for @storageConfirmClean.
+  ///
+  /// In zh, this message translates to:
+  /// **'确认清理'**
+  String get storageConfirmClean;
+
+  /// No description provided for @storageConfirmContent.
+  ///
+  /// In zh, this message translates to:
+  /// **'将清理以下选中项,共约 {size}。此操作不可恢复。'**
+  String storageConfirmContent(Object size);
+
+  /// No description provided for @storageConfirmDetail.
+  ///
+  /// In zh, this message translates to:
+  /// **'仅清理本机应用缓存、日志及全局目录中的所选数据,可能影响多个工作区的历史输出读取或识图追问;不会删除聊天记录、工作区文件、AI 配置或远程服务器数据。'**
+  String get storageConfirmDetail;
+
+  /// No description provided for @storageCancel.
+  ///
+  /// In zh, this message translates to:
+  /// **'取消'**
+  String get storageCancel;
+
+  /// No description provided for @storageClean.
+  ///
+  /// In zh, this message translates to:
+  /// **'清理'**
+  String get storageClean;
+
+  /// No description provided for @storageUsageUnavailable.
+  ///
+  /// In zh, this message translates to:
+  /// **'—'**
+  String get storageUsageUnavailable;
+
+  /// No description provided for @storageCategoryContainer.
+  ///
+  /// In zh, this message translates to:
+  /// **'容器'**
+  String get storageCategoryContainer;
+
+  /// No description provided for @storageCategoryContainerImage.
+  ///
+  /// In zh, this message translates to:
+  /// **'容器镜像'**
+  String get storageCategoryContainerImage;
+
+  /// No description provided for @storageCategoryChat.
+  ///
+  /// In zh, this message translates to:
+  /// **'聊天'**
+  String get storageCategoryChat;
+
+  /// No description provided for @storageCategoryWorkspaces.
+  ///
+  /// In zh, this message translates to:
+  /// **'工作区'**
+  String get storageCategoryWorkspaces;
+
+  /// No description provided for @storageCategoryAiConfig.
+  ///
+  /// In zh, this message translates to:
+  /// **'AI 配置'**
+  String get storageCategoryAiConfig;
+
+  /// No description provided for @storageCategoryCheckpoints.
+  ///
+  /// In zh, this message translates to:
+  /// **'检查点'**
+  String get storageCategoryCheckpoints;
+
+  /// No description provided for @storageCategoryLogs.
+  ///
+  /// In zh, this message translates to:
+  /// **'日志'**
+  String get storageCategoryLogs;
+
+  /// No description provided for @storageCategoryCaches.
+  ///
+  /// In zh, this message translates to:
+  /// **'缓存'**
+  String get storageCategoryCaches;
+
+  /// No description provided for @storageCategoryOther.
+  ///
+  /// In zh, this message translates to:
+  /// **'其他数据'**
+  String get storageCategoryOther;
+
+  /// No description provided for @storageCategoryApk.
+  ///
+  /// In zh, this message translates to:
+  /// **'应用安装包'**
+  String get storageCategoryApk;
+
+  /// No description provided for @cleanupCaches.
+  ///
+  /// In zh, this message translates to:
+  /// **'缓存文件'**
+  String get cleanupCaches;
+
+  /// No description provided for @cleanupCachesDesc.
+  ///
+  /// In zh, this message translates to:
+  /// **'临时文件,删除后会自动重建'**
+  String get cleanupCachesDesc;
+
+  /// No description provided for @cleanupLogs.
+  ///
+  /// In zh, this message translates to:
+  /// **'运行日志'**
+  String get cleanupLogs;
+
+  /// No description provided for @cleanupLogsDesc.
+  ///
+  /// In zh, this message translates to:
+  /// **'应用日志与 AI 请求日志,删除不影响功能'**
+  String get cleanupLogsDesc;
+
+  /// No description provided for @cleanupToolOutput.
+  ///
+  /// In zh, this message translates to:
+  /// **'工具输出存档'**
+  String get cleanupToolOutput;
+
+  /// No description provided for @cleanupToolOutputDesc.
+  ///
+  /// In zh, this message translates to:
+  /// **'AI 超长工具输出保存到磁盘的副本,删除后旧消息里的输出路径不再可读'**
+  String get cleanupToolOutputDesc;
+
+  /// No description provided for @cleanupVisionSessions.
+  ///
+  /// In zh, this message translates to:
+  /// **'识图会话缓存'**
+  String get cleanupVisionSessions;
+
+  /// No description provided for @cleanupVisionSessionsDesc.
+  ///
+  /// In zh, this message translates to:
+  /// **'识图追问的历史,删除后无法继续追问旧图片'**
+  String get cleanupVisionSessionsDesc;
+
+  /// No description provided for @containerPageTitle.
+  ///
+  /// In zh, this message translates to:
+  /// **'容器与镜像'**
+  String get containerPageTitle;
+
+  /// No description provided for @containerDownloadTooltip.
+  ///
+  /// In zh, this message translates to:
+  /// **'下载容器'**
+  String get containerDownloadTooltip;
+
+  /// No description provided for @containerRefreshTooltip.
+  ///
+  /// In zh, this message translates to:
+  /// **'刷新'**
+  String get containerRefreshTooltip;
+
+  /// No description provided for @containerInstalledSection.
+  ///
+  /// In zh, this message translates to:
+  /// **'已安装容器'**
+  String get containerInstalledSection;
+
+  /// No description provided for @containerDefaultLabel.
+  ///
+  /// In zh, this message translates to:
+  /// **'默认容器'**
+  String get containerDefaultLabel;
+
+  /// No description provided for @containerSetDefault.
+  ///
+  /// In zh, this message translates to:
+  /// **'设为默认'**
+  String get containerSetDefault;
+
+  /// No description provided for @containerDeleteTitle.
+  ///
+  /// In zh, this message translates to:
+  /// **'删除容器'**
+  String get containerDeleteTitle;
+
+  /// No description provided for @containerDeleteContent.
+  ///
+  /// In zh, this message translates to:
+  /// **'确定删除「{name}」吗？容器内安装的软件会一并删除。'**
+  String containerDeleteContent(String name);
+
+  /// No description provided for @containerDownloadPageTitle.
+  ///
+  /// In zh, this message translates to:
+  /// **'容器下载'**
+  String get containerDownloadPageTitle;
+
+  /// No description provided for @containerDownloadHint.
+  ///
+  /// In zh, this message translates to:
+  /// **'选择需要的镜像下载。镜像为官方 aarch64 rootfs，解压后由 PRoot 提供隔离的文件系统。'**
+  String get containerDownloadHint;
+
+  /// No description provided for @containerInstallingStage.
+  ///
+  /// In zh, this message translates to:
+  /// **'正在安装…'**
+  String get containerInstallingStage;
+
+  /// No description provided for @containerAvailableImages.
+  ///
+  /// In zh, this message translates to:
+  /// **'可用镜像'**
+  String get containerAvailableImages;
+
+  /// No description provided for @containerDownloadAfter.
+  ///
+  /// In zh, this message translates to:
+  /// **'下载完成后，容器会显示在「容器与镜像」页面。'**
+  String get containerDownloadAfter;
+
+  /// No description provided for @containerInstalledCount.
+  ///
+  /// In zh, this message translates to:
+  /// **'已安装 {count} 个'**
+  String containerInstalledCount(int count);
+
+  /// No description provided for @containerDownloadButton.
+  ///
+  /// In zh, this message translates to:
+  /// **'下载'**
+  String get containerDownloadButton;
+
+  /// No description provided for @containerNoContainers.
+  ///
+  /// In zh, this message translates to:
+  /// **'暂无已下载容器'**
+  String get containerNoContainers;
+
+  /// No description provided for @containerNoContainersDesc.
+  ///
+  /// In zh, this message translates to:
+  /// **'点击右上角下载按钮选择镜像'**
+  String get containerNoContainersDesc;
+
+  /// No description provided for @containerDefaultSubtitle.
+  ///
+  /// In zh, this message translates to:
+  /// **'默认容器 · {size}'**
+  String containerDefaultSubtitle(String size);
+
+  /// No description provided for @containerDeleteFootnote.
+  ///
+  /// In zh, this message translates to:
+  /// **'删除容器会同时删除容器内安装的软件包；工作区文件不受影响。'**
+  String get containerDeleteFootnote;
+
+  /// No description provided for @exportSetPassword.
+  ///
+  /// In zh, this message translates to:
+  /// **'设置加密口令（可选）'**
+  String get exportSetPassword;
+
+  /// No description provided for @exportBackupAction.
+  ///
+  /// In zh, this message translates to:
+  /// **'导出'**
+  String get exportBackupAction;
+
+  /// No description provided for @importSelectBackupFile.
+  ///
+  /// In zh, this message translates to:
+  /// **'选择备份文件'**
+  String get importSelectBackupFile;
+
+  /// No description provided for @importLocalBackup.
+  ///
+  /// In zh, this message translates to:
+  /// **'本地备份'**
+  String get importLocalBackup;
+
+  /// No description provided for @importLocalBackupDesc.
+  ///
+  /// In zh, this message translates to:
+  /// **'从应用文档目录选择备份文件'**
+  String get importLocalBackupDesc;
+
+  /// No description provided for @exportSuccess.
+  ///
+  /// In zh, this message translates to:
+  /// **'备份已导出: {fileName}'**
+  String exportSuccess(String fileName);
+
+  /// No description provided for @exportFailed.
+  ///
+  /// In zh, this message translates to:
+  /// **'导出失败: {error}'**
+  String exportFailed(String error);
+
+  /// No description provided for @importSuccess.
+  ///
+  /// In zh, this message translates to:
+  /// **'备份已还原'**
+  String get importSuccess;
+
+  /// No description provided for @importFailed.
+  ///
+  /// In zh, this message translates to:
+  /// **'导入失败: {error}'**
+  String importFailed(String error);
 }
 
 class _AppLocalizationsDelegate
