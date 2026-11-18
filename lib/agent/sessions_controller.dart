@@ -4,7 +4,6 @@ import 'checkpoint_manager.dart';
 import '../core/util/ids.dart';
 import '../data/db/app_database.dart';
 import '../data/db/daos.dart';
-import 'models/auto_model.dart';
 import 'models/chat_session.dart';
 
 final sessionsProvider =
@@ -29,15 +28,13 @@ class SessionsNotifier extends AsyncNotifier<List<ChatSession>> {
     String? projectId,
   }) async {
     final now = nowMs();
-    // 新建会话默认用 Auto Model:不写死供应商/模型,由路由按任务挑选。
-    // 没有任何可用供应商时也留 Auto(此时发消息会提示配置供应商)。
     final session = ChatSession(
       id: newId(),
       title: '',
       createdAt: now,
       updatedAt: now,
       providerId: null,
-      model: autoModelSentinel,
+      model: '',
       mode: mode,
       projectId: projectId,
     );

@@ -42,7 +42,6 @@ import 'models/agent_message.dart';
 import 'models/agent_ui_state.dart';
 import '../data/model_catalog.dart';
 import '../data/model_metadata_store.dart';
-import 'models/auto_model.dart';
 import 'models/chat_session.dart';
 import 'permissions/tool_permission_engine.dart';
 import 'prompts.dart';
@@ -263,51 +262,6 @@ class ChatController extends StateNotifier<ChatViewState> {
     }
   }
 
-  /// Auto Model 路由:在所有可用供应商的模型里挑一个;挑不到就回退到 [fallback] 的默认模型。
-  ///
-  /// 元数据来自自定义模型元数据(用户可在模型元数据页配置);缺失时按「不支持视觉/工具、
-  /// 窗口未知」处理——这类模型只会在没有更好选择时才被选中,不会误判成万金油。
-  Future<(ProviderConfig, String)?> _routeAutoModel(
-    List<ProviderConfig> providers, {
-    required AutoModelRequest request,
-    required ProviderConfig fallback,
-  }) async {
-    try {
-      final custom = await _ref.read(customModelMetadataProvider.future);
-      final catalog = await _ref.read(modelCatalogProvider.future);
-      final candidates = <AutoModelCandidate>[];
-      for (final provider in providers) {
-        final models = {
-          if (provider.effectiveModel.trim().isNotEmpty) provider.effectiveModel,
-          ...provider.models,
-        };
-        for (final model in models) {
-          candidates.add(AutoModelCandidate(
-            providerId: provider.id,
-            model: model,
-            // 自定义优先,其次内置 models.dev 目录(含能力与价格)。
-            metadata: resolveModelMetadata(
-                  catalog,
-                  custom,
-                  providerId: provider.id,
-                  model: model,
-                  type: provider.type,
-                ),
-          ));
-        }
-      }
-      final picked = AutoModelRouter.pick(candidates, request);
-      if (picked == null) return null;
-      for (final provider in providers) {
-        if (provider.id == picked.providerId) return (provider, picked.model);
-      }
-      return null;
-    } catch (_) {
-      // 路由失败不影响正常对话:回退到 fallback 的默认模型。
-      return null;
-    }
-  }
-
   /// 粗略估算输入 token:中文按 1 字 ≈ 1 token、其余按 4 字符 ≈ 1 token。
   static int _approxInputTokens(List<AgentMessage> messages, String pending) {
     var chars = pending.length;
@@ -343,23 +297,6 @@ class ChatController extends StateNotifier<ChatViewState> {
             ? session.model!
             : provider.effectiveModel)
         .trim();
-    // Auto Model:会话没指定具体模型时,按本轮任务特征挑一个(可能换供应商)。
-    if (isAutoModel(session.model)) {
-      final routed = await _routeAutoModel(
-        providers,
-        request: AutoModelRequest(
-          hasImages: attachments.any((attachment) => attachment.isImage),
-          needsTools: true,
-          wantsReasoning: session.reasoningEffort != ReasoningEffort.none,
-          approxInputTokens: _approxInputTokens(state.messages, trimmed),
-        ),
-        fallback: provider,
-      );
-      if (routed != null) {
-        provider = routed.$1;
-        model = routed.$2;
-      }
-    }
     if (model.isEmpty) {
       state = state.copyWith(errorCode: () => ChatErrorCode.noModel);
       return false;
@@ -1359,22 +1296,6 @@ class ChatController extends StateNotifier<ChatViewState> {
               ? session.model!
               : provider.effectiveModel)
           .trim();
-      if (isAutoModel(session.model)) {
-        final routed = await _routeAutoModel(
-          providers,
-          request: const AutoModelRequest(
-            hasImages: false,
-            needsTools: false,
-            wantsReasoning: false,
-            approxInputTokens: 0,
-          ),
-          fallback: provider,
-        );
-        if (routed != null) {
-          provider = routed.$1;
-          model = routed.$2;
-        }
-      }
       if (model.isEmpty) return;
 
       final rotator = _ref.read(keyRotatorProvider);

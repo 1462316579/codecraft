@@ -15,7 +15,6 @@ import '../../../data/settings/general_settings.dart';
 import '../../../agent/models/skill.dart';
 import '../../../data/skills.dart';
 import '../../../core/ui/provider_logo.dart';
-import '../../../agent/models/auto_model.dart';
 import '../../../data/providers/provider_config.dart';
 import '../../../data/providers/provider_store.dart';
 import '../../../data/model_metadata_store.dart';
@@ -533,7 +532,6 @@ class _ChatComposerState extends ConsumerState<ChatComposer> {
     final session = widget.session;
     if (session == null) return '';
     final model = session.model?.trim() ?? '';
-    if (isAutoModel(model)) return '';
     if (model.isNotEmpty) return model;
     // 同上:watch 以便供应商数据就绪后按钮能立即显示模型 logo。
     for (final provider in ref.watch(providersProvider).valueOrNull ?? const <ProviderConfig>[]) {

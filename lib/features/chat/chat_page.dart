@@ -9,7 +9,6 @@ import 'package:image_picker/image_picker.dart';
 import '../../agent/chat_controller.dart';
 import '../../agent/models/agent_message.dart';
 import '../../agent/models/agent_ui_state.dart';
-import '../../agent/models/auto_model.dart';
 import '../../agent/models/chat_session.dart';
 import '../../agent/sessions_controller.dart';
 import '../../app/shell.dart';
@@ -532,11 +531,6 @@ class _ChatPageState extends ConsumerState<ChatPage> {
       ),
     );
     if (selected == null) return;
-    // Auto:清掉指定的供应商/模型,由路由按任务决定(providerId 传空串以走 copyWith 的清空语义)。
-    if (isAutoModel(selected.$2)) {
-      await _updateSession(session, providerId: '', model: autoModelSentinel);
-      return;
-    }
     await _updateSession(session, providerId: selected.$1, model: selected.$2);
   }
 }
@@ -640,7 +634,7 @@ class _ModelPickerSheetState extends ConsumerState<_ModelPickerSheet> {
     // 扁平化成「按需构建」的条目:一个供应商几百个模型时,原来整块
     // SettingsGroup(children: [...]) 会在弹层打开的瞬间全部 build 一遍,
     // 造成明显卡顿;改成 ListView.builder 后只构建可视区域内的行。
-    final items = <_PickerItem>[const _AutoItem()];
+    final items = <_PickerItem>[];
     for (final (provider, models) in groups) {
       final expanded = query.isNotEmpty || !_collapsed.contains(provider.id);
       items.add(_HeaderItem(provider, models.length, expanded));
@@ -688,24 +682,6 @@ class _ModelPickerSheetState extends ConsumerState<_ModelPickerSheet> {
                 itemCount: items.length,
                 itemBuilder: (context, index) {
                   final item = items[index];
-                  if (item is _AutoItem) {
-                    // Auto Model 单独成卡(与上游「默认模型」区块同款样式)。
-                    return SettingsGroup(
-                      children: [
-                        _ModelRow(
-                          model: l10n.modelAuto,
-                          subtitle: l10n.modelAutoDesc,
-                          selected: isAutoModel(widget.currentModel),
-                          leading: Icon(
-                            Iconfont.sparkles,
-                            size: 20,
-                            color: theme.colorScheme.primary,
-                          ),
-                          onTap: () => Navigator.pop(context, (null, autoModelSentinel)),
-                        ),
-                      ],
-                    );
-                  }
                   if (item is _HeaderItem) {
                     return Padding(
                       padding: const EdgeInsets.only(top: Spacing.sm),
@@ -764,10 +740,6 @@ class _ModelPickerSheetState extends ConsumerState<_ModelPickerSheet> {
 /// 模型选择弹层的扁平条目:Auto / 分组头 / 模型行 / 空态。
 sealed class _PickerItem {
   const _PickerItem();
-}
-
-class _AutoItem extends _PickerItem {
-  const _AutoItem();
 }
 
 class _HeaderItem extends _PickerItem {
