@@ -21,103 +21,104 @@ class AppLocalizationsKo extends AppLocalizations {
   String get newSession => '새로 만들기세션';
 
   @override
-  String get send => '发送';
+  String get send => '전송';
 
   @override
   String get stop => '중지';
 
   @override
-  String get reverseTabClasses => '类';
+  String get reverseTabClasses => '클래스';
 
   @override
-  String get reverseTabStrings => '字符串池';
+  String get reverseTabStrings => '문자열 풀';
 
   @override
-  String get reverseTabResources => '资源';
+  String get reverseTabResources => '자원';
 
   @override
-  String get reverseTabHex => '十六进制';
+  String get reverseTabHex => '16진수';
 
   @override
-  String get reverseSearchClassHint => '검색类名';
+  String get reverseSearchClassHint => '클래스명 검색';
 
   @override
-  String get reverseSearchStringHint => '검색字符串';
+  String get reverseSearchStringHint => '문자열 검색';
 
   @override
-  String get reverseSearchResourceHint => '검색资源名、유형或 0x 번호';
+  String get reverseSearchResourceHint => '검색자원이름、유형또는 0x 번호';
 
   @override
-  String get reverseNoMatch => '没有匹配개';
+  String get reverseNoMatch => '일치하는 항목 없음';
 
   @override
-  String get reverseEmptyFile => '파일为空';
+  String get reverseEmptyFile => '파일 비어 있음';
 
   @override
   String get reverseLoadFailed => '열기실패';
 
   @override
-  String get reverseParseFailed => '解析실패,这个파일可能被加固或已损坏';
+  String get reverseParseFailed => '해석실패,이파일난독화되거나됨손상';
 
   @override
-  String get reverseEditString => '修改字符串';
+  String get reverseEditString => '문자열 수정';
 
   @override
   String get reverseEqualLengthHint =>
-      '只能等长替换:新내용编码后的字节数必须与原字符串一致,否则파일内偏移会전체错位';
+      '같은 길이만 가능바꾸기:새내용인코딩후바이트 수는 원래 문자열과 일치해야 함,그렇지 않으면파일내 오프셋은전체오프셋';
 
   @override
-  String get reverseEditByte => '修改字节';
+  String get reverseEditByte => '바이트 수정';
 
   @override
-  String get reverseEditByteHint => '输入两位十六进制,例如 0a、ff';
+  String get reverseEditByteHint => '입력두 자리16진수,예 0a、ff';
 
   @override
-  String get reverseInvalidByte => '请输入 00-ff 之间的十六进制字节';
+  String get reverseInvalidByte => '부탁입력 00-ff 사이16진수바이트';
 
   @override
-  String get reverseJumpToOffset => '跳转到偏移';
+  String get reverseJumpToOffset => '오프셋으로 이동';
 
   @override
-  String get reverseOffsetInvalid => '偏移없음效,请输入十六进制';
+  String get reverseOffsetInvalid => '오프셋없음효과,부탁입력16진수';
 
   @override
-  String get reverseSuperclass => '父类';
+  String get reverseSuperclass => '부모 클래스';
 
   @override
-  String get reverseInterfaces => '接口';
+  String get reverseInterfaces => '인터페이스';
 
   @override
-  String get reverseAccessFlags => '修饰符';
+  String get reverseAccessFlags => '수정자';
 
   @override
-  String get reverseFields => '字段';
+  String get reverseFields => '필드';
 
   @override
-  String get reverseMethods => '方法';
+  String get reverseMethods => '메서드';
 
   @override
-  String get reverseAbstractMethod => '없음方法体';
+  String get reverseAbstractMethod => '없음메서드본체';
 
   @override
-  String get reverseSmaliHint => '以上为 smali 反汇编结果;offset 是该指令在方法体内的字节偏移';
+  String get reverseSmaliHint =>
+      '을상를 위해 smali 역어셈블리결과;offset 예해당 명령에메서드메서드 내 바이트 오프셋';
 
   @override
-  String get reverseOpenAsHex => '以十六进制열기';
+  String get reverseOpenAsHex => '을16진수열기';
 
   @override
   String reverseMethodCount(int count) {
-    return '$count 个方法';
+    return '$count 개메서드';
   }
 
   @override
   String reverseFieldCount(int count) {
-    return '$count 个字段';
+    return '$count 개필드';
   }
 
   @override
   String reverseHexByteCount(int count) {
-    return '共 $count 字节';
+    return '함께 $count 바이트';
   }
 
   @override
@@ -133,22 +134,22 @@ class AppLocalizationsKo extends AppLocalizations {
   String get delete => '삭제';
 
   @override
-  String get rename => '重命名';
+  String get rename => '이름 변경';
 
   @override
   String get copy => '복사';
 
   @override
-  String get copied => '已복사';
+  String get copied => '복사됨';
 
   @override
   String get retry => '재시도';
 
   @override
-  String get pin => '置顶';
+  String get pin => '고정';
 
   @override
-  String get unpin => '취소置顶';
+  String get unpin => '고정 해제';
 
   @override
   String get search => '검색';
@@ -157,22 +158,22 @@ class AppLocalizationsKo extends AppLocalizations {
   String get searchSessions => '검색세션';
 
   @override
-  String get noSessions => '暂없음세션';
+  String get noSessions => '세션 없음';
 
   @override
-  String get noMessages => '시작新的对话吧';
+  String get noMessages => '시작새대화~';
 
   @override
-  String get chatInputPlaceholder => '输入消息,与 AI 对话…';
+  String get chatInputPlaceholder => '입력메시지,및 AI 대화…';
 
   @override
-  String get reasoningTitle => '思考过程';
+  String get reasoningTitle => '사고 과정';
 
   @override
-  String get untitled => '未命名';
+  String get untitled => '제목 없음';
 
   @override
-  String get pinned => '已置顶';
+  String get pinned => '고정됨';
 
   @override
   String get settings => '설정';
@@ -181,7 +182,7 @@ class AppLocalizationsKo extends AppLocalizations {
   String get providers => 'AI 제공자';
 
   @override
-  String get providersSubtitle => '모델、接口与密钥';
+  String get providersSubtitle => '모델、인터페이스및비밀번호';
 
   @override
   String get appearance => '외관';
@@ -205,20 +206,20 @@ class AppLocalizationsKo extends AppLocalizations {
   String get languageSystem => '시스템에 따름';
 
   @override
-  String get about => '关于';
+  String get about => '정보';
 
   @override
-  String get version => '版本';
+  String get version => '버전';
 
   @override
-  String get license => '开源프로토콜';
+  String get license => '오픈 소스프로토콜';
 
   @override
   String get licenseBody =>
-      '本프로젝트是 jieapi/Codecraft 的 Flutter 复刻,按 GPL-3.0 프로토콜开源。';
+      '본프로젝트예 jieapi/Codecraft  Flutter 분기본,누름 GPL-3.0 프로토콜오픈 소스。';
 
   @override
-  String get addProvider => '添加供应商';
+  String get addProvider => '제공자 추가';
 
   @override
   String get providerName => '이름';
@@ -233,22 +234,22 @@ class AppLocalizationsKo extends AppLocalizations {
   String get apiKey => 'API Key';
 
   @override
-  String get defaultModel => '默认모델';
+  String get defaultModel => '기본값모델';
 
   @override
-  String get modelList => '모델列表';
+  String get modelList => '모델목록';
 
   @override
   String get model => '모델';
 
   @override
-  String get mode => '模式';
+  String get mode => '모드';
 
   @override
   String get reasoningEffort => '사고 강도';
 
   @override
-  String get reasoningEffortNone => '不思考';
+  String get reasoningEffortNone => '사고 안 함';
 
   @override
   String get reasoningEffortMinimal => '매우 낮음';
@@ -266,31 +267,31 @@ class AppLocalizationsKo extends AppLocalizations {
   String get reasoningEffortXHigh => '매우 높음';
 
   @override
-  String get reasoningEffortMax => '最높음';
+  String get reasoningEffortMax => '최고';
 
   @override
-  String get deleteProviderConfirm => '삭제하시겠습니까?该供应商?';
+  String get deleteProviderConfirm => '삭제하시겠습니까?해당제공자?';
 
   @override
-  String get deleteSessionConfirm => '삭제하시겠습니까?该세션?';
+  String get deleteSessionConfirm => '삭제하시겠습니까?해당세션?';
 
   @override
-  String get emptyProviders => '还没有供应商,点右上角 + 添加';
+  String get emptyProviders => '아직없음제공자,클릭오른쪽 상단 + 추가';
 
   @override
-  String get emptyModels => '还没有모델';
+  String get emptyModels => '모델 없음';
 
   @override
-  String get modelInputHint => '输入모델 ID 后回车添加';
+  String get modelInputHint => '입력모델 ID 후엔터추가';
 
   @override
-  String get errorGeneric => '出错了';
+  String get errorGeneric => '오류 발생';
 
   @override
-  String get retrying => '正在재시도';
+  String get retrying => '재시도 중';
 
   @override
-  String get emptyMessage => '消息내용为空';
+  String get emptyMessage => '메시지내용를 위해빈';
 
   @override
   String get enabled => '활성화됨';
@@ -300,157 +301,157 @@ class AppLocalizationsKo extends AppLocalizations {
 
   @override
   String providerModelsCountTag(int count) {
-    return '$count 个모델';
+    return '$count 개모델';
   }
 
   @override
-  String get inputTokens => '输入';
+  String get inputTokens => '입력';
 
   @override
-  String get outputTokens => '输出';
+  String get outputTokens => '출력';
 
   @override
-  String get emptyChatHint => '선택一个세션시작对话';
+  String get emptyChatHint => '선택하나개세션시작대화';
 
   @override
-  String get errorNoProvider => '미설정사용 가능的供应商,请先在설정중간添加';
+  String get errorNoProvider => '미설정사용 가능제공자,부탁먼저에설정중간추가';
 
   @override
-  String get errorNoModel => '请为该供应商선택모델';
+  String get errorNoModel => '부탁를 위해해당제공자선택모델';
 
   @override
-  String get errorEmptyResponse => '모델返回了空白내용';
+  String get errorEmptyResponse => '모델뒤로 가기빈빈내용';
 
   @override
-  String get thinking => '思考중간…';
+  String get thinking => '사고중간…';
 
   @override
   String get modelListTitle => '선택모델';
 
   @override
-  String get providerListTitle => '선택供应商';
+  String get providerListTitle => '제공자 선택';
 
   @override
   String get customProvider => '사용자 정의';
 
   @override
-  String get addFromPreset => '从预设添加';
+  String get addFromPreset => '로부터프리셋추가';
 
   @override
-  String get useFullUrlHint => 'baseUrl 已是完整端点';
+  String get useFullUrlHint => 'baseUrl 됨예완전한 엔드포인트클릭';
 
   @override
   String get aboutBody =>
-      'Codecraft Flutter 是 jieapi/Codecraft 的 Flutter 复刻(Phase 1:核心对话闭环)。';
+      'Codecraft Flutter 예 jieapi/Codecraft  Flutter 분기본(Phase 1:핵심대화루프)。';
 
   @override
-  String get chatPlaceholder => '有什么可以帮你的?';
+  String get chatPlaceholder => '있음무엇을 도와드릴까요?';
 
   @override
-  String get chatInputHint => '描述你的需求,我来帮你编写、修改或解释代码';
+  String get chatInputHint => '설명요구사항,제가 작성해 드립니다、수정 또는 설명코드';
 
   @override
-  String get openSidebar => '열기侧边栏';
+  String get openSidebar => '사이드바 열기';
 
   @override
-  String get noModelSelected => '未선택모델';
+  String get noModelSelected => '미선택모델';
 
   @override
-  String get sessionGroupPinned => '置顶';
+  String get sessionGroupPinned => '고정';
 
   @override
-  String get sessionGroupToday => '今일';
+  String get sessionGroupToday => '오늘';
 
   @override
-  String get sessionGroupYesterday => '昨일';
+  String get sessionGroupYesterday => '어제';
 
   @override
-  String get sessionGroupLast7Days => '7일内';
+  String get sessionGroupLast7Days => '7일 이내';
 
   @override
-  String get sessionGroupLast30Days => '30일内';
+  String get sessionGroupLast30Days => '30일 이내';
 
   @override
-  String get sessionGroupMonthFormat => 'yyyy年M月';
+  String get sessionGroupMonthFormat => 'yyyy년M월';
 
   @override
   String chatThinkingRunningTime(String seconds) {
-    return '正在思考(소요 시간 $seconds 秒)';
+    return '사고 중(소요 시간 $seconds 초)';
   }
 
   @override
   String chatThinkingDoneTime(String seconds) {
-    return '思考완료(소요 시간 $seconds 秒)';
+    return '사고 완료(소요 시간 $seconds 초)';
   }
 
   @override
-  String get chatThinkingDone => '思考완료';
+  String get chatThinkingDone => '사고 완료';
 
   @override
-  String get chatQueueHint => 'AI 正在처리 중,点右侧方块可중지';
+  String get chatQueueHint => 'AI 중처리 중,클릭오른쪽측블록가능중지';
 
   @override
-  String get chatStatusGenerating => '正在生成';
+  String get chatStatusGenerating => '생성 중';
 
   @override
-  String get chatStatusThinking => '正在思考';
+  String get chatStatusThinking => '사고 중';
 
   @override
-  String get chatStatusCallingTool => '正在调用工具';
+  String get chatStatusCallingTool => '중호출도구';
 
   @override
-  String get chatStatusRunningCommand => '正在명령 실행';
+  String get chatStatusRunningCommand => '중명령 실행';
 
   @override
-  String get chatStatusEditingFile => '正在编辑파일';
+  String get chatStatusEditingFile => '중편집파일';
 
   @override
-  String get chatStatusReadingFile => '正在读取파일';
+  String get chatStatusReadingFile => '중읽기파일';
 
   @override
-  String get chatStatusViewingImage => '正在查看图片';
+  String get chatStatusViewingImage => '중보기이미지';
 
   @override
-  String get chatStatusSearchingWeb => '正在联网검색';
+  String get chatStatusSearchingWeb => '중네트워크검색';
 
   @override
-  String get chatStatusBrowsingWeb => '正在작업浏览器';
+  String get chatStatusBrowsingWeb => '중작업브라우저';
 
   @override
-  String get chatStatusAskingUser => '正在询问用户';
+  String get chatStatusAskingUser => '중사용자 질문';
 
   @override
-  String get chatStatusGeneratingImage => '正在生成图片';
+  String get chatStatusGeneratingImage => '생성 중이미지';
 
   @override
-  String get chatStatusUpdatingTodo => '正在整理待办';
+  String get chatStatusUpdatingTodo => '중할 일 정리';
 
   @override
-  String get chatStatusStartingSubagent => '正在시작서브 에이전트';
+  String get chatStatusStartingSubagent => '중시작서브 에이전트';
 
   @override
-  String get chatCompressingContext => '正在压缩上下文';
+  String get chatCompressingContext => '중압축상하파일';
 
   @override
-  String get chatContextCompressed => '上下文已压缩';
+  String get chatContextCompressed => '상하파일됨압축';
 
   @override
-  String get chatCompactionSummary => '接手요약';
+  String get chatCompactionSummary => '인수 요약';
 
   @override
-  String get chatStatusReadingMemory => '正在读取记忆';
+  String get chatStatusReadingMemory => '중기억 읽기';
 
   @override
-  String get chatToolRunning => '工具执行중간';
+  String get chatToolRunning => '도구실행중간';
 
   @override
-  String get chatToolSucceeded => '工具执行成功';
+  String get chatToolSucceeded => '도구실행성공';
 
   @override
-  String get chatToolFailed => '工具执行실패';
+  String get chatToolFailed => '도구실행실패';
 
   @override
-  String get chatEffortNone => '不思考';
+  String get chatEffortNone => '사고 안 함';
 
   @override
   String get chatEffortMinimal => '매우 낮음';
@@ -468,68 +469,69 @@ class AppLocalizationsKo extends AppLocalizations {
   String get chatEffortXHigh => '매우 높음';
 
   @override
-  String get chatEffortMax => '最높음';
+  String get chatEffortMax => '최고';
 
   @override
   String get searchModels => '검색모델';
 
   @override
-  String get chatAddAttachment => '添加附件';
+  String get chatAddAttachment => '첨부 파일 추가';
 
   @override
-  String get chatUploadFile => '上传파일';
+  String get chatUploadFile => '상전송파일';
 
   @override
-  String get chatUploadImage => '上传图片';
+  String get chatUploadImage => '이미지 업로드';
 
   @override
-  String get chatTakePhoto => '拍照';
+  String get chatTakePhoto => '사진 찍기';
 
   @override
-  String get attachmentPrefix => '附件:';
+  String get attachmentPrefix => '첨부 파일:';
 
   @override
   String attachmentMax(int count) {
-    return '最多可同时发送 $count 个附件';
+    return '최대 동시에시전송 $count 개첨부 파일';
   }
 
   @override
   String attachmentUploaded(int count) {
-    return '已上传 $count 个附件';
+    return '됨상전송 $count 개첨부 파일';
   }
 
   @override
   String attachmentUploadedPartial(int count) {
-    return '已上传 $count 个附件,部分附件未加入';
+    return '됨상전송 $count 개첨부 파일,부분첨부 파일미참여';
   }
 
   @override
   String attachmentUploading(int count) {
-    return '正在上传 $count 个파일…';
+    return '중상전송 $count 개파일…';
   }
 
   @override
   String attachmentImageTooLarge(String size) {
-    return '图片超过 $size,请压缩后재시도';
+    return '이미지 초과 $size,부탁압축후재시도';
   }
 
   @override
-  String get attachmentUnsupportedImageType => '없음法识别图片유형,仅支持 jpg/png/gif/webp';
+  String get attachmentUnsupportedImageType =>
+      '없음이미지 인식 불가유형,지원만 jpg/png/gif/webp';
 
   @override
-  String get attachmentReadFileFailed => '없음法读取所选파일';
+  String get attachmentReadFileFailed => '없음선택 항목 읽기 불가파일';
 
   @override
-  String get attachmentUploadFailed => '上传실패';
+  String get attachmentUploadFailed => '업로드 실패';
 
   @override
-  String get removeAttachment => '移除附件';
+  String get removeAttachment => '첨부 파일 제거';
 
   @override
-  String get imagePreview => '图片预览';
+  String get imagePreview => '이미지 미리보기';
 
   @override
-  String get imageLoadFailed => '图片불러오기실패,파일可能已被移动或삭제';
+  String get imageLoadFailed => '이미지불러오기실패,파일가능됨이동되거나삭제';
 
   @override
   String get close => '닫기';
@@ -538,13 +540,13 @@ class AppLocalizationsKo extends AppLocalizations {
   String get fileFallback => '파일';
 
   @override
-  String get skillsTitle => 'Skill 管理';
+  String get skillsTitle => 'Skill 관리';
 
   @override
-  String get skillsSubtitle => '浏览、가져오기与管理写作技能';
+  String get skillsSubtitle => '탐색、가져오기및관리글쓰기기술';
 
   @override
-  String get skillsNew => '새로 만들기技能';
+  String get skillsNew => '새로 만들기기술';
 
   @override
   String get skillsImport => '가져오기 Markdown';
@@ -556,13 +558,14 @@ class AppLocalizationsKo extends AppLocalizations {
   String get skillsScopeGlobal => '';
 
   @override
-  String get skillsScopeProject => '프로젝트技能';
+  String get skillsScopeProject => '프로젝트기술';
 
   @override
-  String get skillsScopeGlobalHint => '~/.codecraft/skills,跨프로젝트共享';
+  String get skillsScopeGlobalHint => '~/.codecraft/skills,간프로젝트공유';
 
   @override
-  String get skillsScopeProjectHint => '~/workspace/.codecraft/skills,随현재작업 영역';
+  String get skillsScopeProjectHint =>
+      '~/workspace/.codecraft/skills,따름현재작업 영역';
 
   @override
   String skillsProjectGroup(String name) {
@@ -570,70 +573,72 @@ class AppLocalizationsKo extends AppLocalizations {
   }
 
   @override
-  String get skillsNoProjectSkills => '현재 프로젝트还没有技能';
+  String get skillsNoProjectSkills => '현재 프로젝트아직없음기술';
 
   @override
-  String get skillsNoGlobalSkills => '还没有전역技能';
+  String get skillsNoGlobalSkills => '아직없음전역기술';
 
   @override
-  String get skillsEmpty => '还没有技能';
+  String get skillsEmpty => '아직없음기술';
 
   @override
-  String get skillsEmptyHint => '技能是写给 AI 的专개작업설명;가져오기 SKILL.md 或手动새로 만들기一个吧。';
+  String get skillsEmptyHint =>
+      '기술예쓰기에게 AI 전문개작업설명;가져오기 SKILL.md 또는수동새로 만들기하나개~。';
 
   @override
   String get skillsName => '이름';
 
   @override
-  String get skillsDescription => '描述';
+  String get skillsDescription => '설명';
 
   @override
-  String get skillsDescriptionHint => '何时使用这个技能(会进系统팁)';
+  String get skillsDescriptionHint => '어떤시사용이기술(진입시스템팁)';
 
   @override
-  String get skillsInstructions => '指令正文';
+  String get skillsInstructions => '명령 본문';
 
   @override
-  String get skillsInstructionsHint => '技能要执行的步骤,Markdown 书写';
+  String get skillsInstructionsHint => '기술이 실행할 단계,Markdown 글쓰기';
 
   @override
   String skillsImported(String name) {
-    return '已가져오기技能「$name」';
+    return '됨가져오기기술「$name」';
   }
 
   @override
-  String get skillsDeleteTitle => '삭제技能';
+  String get skillsDeleteTitle => '스킬 삭제';
 
   @override
   String skillsDeleteConfirm(String name) {
-    return '삭제하시겠습니까?技能「$name」(含其디렉토리与脚本)?';
+    return '삭제하시겠습니까?기술「$name」(포함디렉토리스크립트와)?';
   }
 
   @override
-  String get skillsErrorInvalidName => '技能名없음效:不能为空、超长或含 / \\ : * ? \" < > |';
+  String get skillsErrorInvalidName =>
+      '기술 이름없음효과:불가를 위해빈、초과 길이 또는 포함 / \\ : * ? \" < > |';
 
   @override
-  String get skillsErrorEmptyInstructions => '指令正文不能为空';
+  String get skillsErrorEmptyInstructions => '명령 본문불가를 위해빈';
 
   @override
   String skillsErrorNameConflict(String name) {
-    return '同범위已有名为「$name」的技能';
+    return '동일범위됨있음이름를 위해「$name」기술';
   }
 
   @override
-  String get skillsErrorNoSkill => '파일里没有可识别的技能';
+  String get skillsErrorNoSkill => '파일안에없음인식 가능한 기술';
 
   @override
-  String get skillsErrorIoFailed => '读写技能파일실패';
+  String get skillsErrorIoFailed => '읽기/쓰기 기술파일실패';
 
   @override
-  String get providerAdd => '添加供应商';
+  String get providerAdd => '제공자 추가';
 
   @override
-  String get providerEdit => '编辑供应商';
+  String get providerEdit => '제공자 수정';
 
   @override
-  String get providerEditModel => '编辑모델';
+  String get providerEditModel => '편집모델';
 
   @override
   String get providerConfig => '구성';
@@ -642,48 +647,48 @@ class AppLocalizationsKo extends AppLocalizations {
   String get providerSectionBasic => '기본 정보';
 
   @override
-  String get providerSectionType => '上游格式';
+  String get providerSectionType => '상류 형식';
 
   @override
   String get providerSectionOptions => '옵션';
 
   @override
-  String get providerFullUrl => '完整 URL';
+  String get providerFullUrl => '완전한 URL';
 
   @override
-  String get providerFullUrlDesc => 'Base URL 即完整요청地址,不自动拼接默认경로';
+  String get providerFullUrlDesc => 'Base URL 즉 완전한요청주소,안자동연결기본값경로';
 
   @override
   String get providerHeadersTitle => '사용자 정의요청 헤더';
 
   @override
-  String get providerHeadersDesc => '完全覆盖该供应商요청的同名默认头';
+  String get providerHeadersDesc => '해당 항목 완전히 덮어쓰기제공자요청동일 이름기본값머리';
 
   @override
-  String get providerHeadersAdd => '添加요청 헤더';
+  String get providerHeadersAdd => '추가요청 헤더';
 
   @override
-  String get providerHeadersManage => '管理';
+  String get providerHeadersManage => '관리';
 
   @override
   String providerHeadersCount(int count) {
-    return '설정됨 $count 个요청 헤더';
+    return '설정됨 $count 개요청 헤더';
   }
 
   @override
-  String get providerShowApiKey => '显示密钥';
+  String get providerShowApiKey => '비밀번호 표시';
 
   @override
-  String get providerHideApiKey => '隐藏密钥';
+  String get providerHideApiKey => '숨기기비밀번호';
 
   @override
-  String get providerAddModel => '添加모델';
+  String get providerAddModel => '모델 추가';
 
   @override
-  String get providerNoModels => '暂없음모델';
+  String get providerNoModels => '임시없음모델';
 
   @override
-  String get providerNoModelsHint => '点击右上方按钮添加모델';
+  String get providerNoModelsHint => '클릭클릭오른쪽상정사각형 버튼모델 추가';
 
   @override
   String get providerModelCurrent => '현재';
@@ -708,7 +713,7 @@ class AppLocalizationsKo extends AppLocalizations {
   String get providerModelsDeselectAll => '전체 선택 취소';
 
   @override
-  String get providerModelsBatchTest => '测试';
+  String get providerModelsBatchTest => '테스트';
 
   @override
   String get providerModelsBatchDelete => '삭제';
@@ -718,39 +723,39 @@ class AppLocalizationsKo extends AppLocalizations {
 
   @override
   String providerModelsBatchDeleteConfirm(int count) {
-    return '선택한 항목을 삭제하시겠습니까? $count 个모델吗?';
+    return '선택한 항목을 삭제하시겠습니까? $count 개모델~?';
   }
 
   @override
-  String get providerFetchModels => '拉取모델';
+  String get providerFetchModels => '모델 가져오기';
 
   @override
-  String get providerAddAllModels => '전체添加';
+  String get providerAddAllModels => '전체추가';
 
   @override
-  String get providerAddAllModelsTitle => '添加전체모델';
+  String get providerAddAllModelsTitle => '추가전체모델';
 
   @override
   String providerAddAllModelsConfirm(int count) {
-    return '확인将拉取到的 $count 个모델전체添加至현재제공자?';
+    return '확인을풀에 $count 개모델전체추가까지현재제공자?';
   }
 
   @override
-  String get providerFilterModelsHint => '输入모델이름筛选';
+  String get providerFilterModelsHint => '입력모델이름필터';
 
   @override
-  String get providerNoMatchingModels => '没有匹配的모델';
+  String get providerNoMatchingModels => '없음매칭모델';
 
   @override
   String providerModelAdded(String name) {
-    return '已添加모델「$name」';
+    return '됨모델 추가「$name」';
   }
 
   @override
   String get providerModelName => '모델이름';
 
   @override
-  String get providerModelAlreadyAdded => '该모델已添加';
+  String get providerModelAlreadyAdded => '해당모델됨추가';
 
   @override
   String providerFetchHttpError(int code, int latency) {
@@ -758,70 +763,71 @@ class AppLocalizationsKo extends AppLocalizations {
   }
 
   @override
-  String get providerFetchMissingFields => '응답缺少列表字段';
+  String get providerFetchMissingFields => '응답목록 누락필드';
 
   @override
-  String get providerFetchFailed => '拉取모델실패';
+  String get providerFetchFailed => '모델 가져오기실패';
 
   @override
-  String get providerApiKeyRequired => '请先填写 API Key';
+  String get providerApiKeyRequired => '부탁먼저 입력 API Key';
 
   @override
-  String get providerTestModel => '测试';
+  String get providerTestModel => '테스트';
 
   @override
-  String get providerModelContext => '上下文窗口 (tokens)';
+  String get providerModelContext => '상하파일 창 (tokens)';
 
   @override
-  String get providerModelContextInput => '输入上限 (tokens)';
+  String get providerModelContextInput => '입력상제한 (tokens)';
 
   @override
-  String get providerModelContextOutput => '输出上限 (tokens)';
+  String get providerModelContextOutput => '출력상제한 (tokens)';
 
   @override
-  String get providerModelWindowInvalid => '请输入有效的正整数,或留空使用自动识别值';
+  String get providerModelWindowInvalid => '부탁입력유효양의 정수,또는 비움빈사용자동인식 값';
 
   @override
-  String get providerModelSectionPrice => '价格';
+  String get providerModelSectionPrice => '가격';
 
   @override
-  String get providerModelPriceInput => '输入价格 (USD/1M tokens)';
+  String get providerModelPriceInput => '입력가격 (USD/1M tokens)';
 
   @override
-  String get providerModelPriceOutput => '输出价格 (USD/1M tokens)';
+  String get providerModelPriceOutput => '출력가격 (USD/1M tokens)';
 
   @override
-  String get providerModelPriceCacheRead => '缓存读价格 (USD/1M tokens)';
+  String get providerModelPriceCacheRead => '캐시읽기가격 (USD/1M tokens)';
 
   @override
-  String get providerModelPriceCacheWrite => '缓存写价格 (USD/1M tokens)';
+  String get providerModelPriceCacheWrite => '캐시쓰기가격 (USD/1M tokens)';
 
   @override
-  String get providerModelCapabilities => '能力';
+  String get providerModelCapabilities => '능력';
 
   @override
-  String get providerModelCapVision => '图片输入';
+  String get providerModelCapVision => '이미지 입력';
 
   @override
-  String get providerModelCapImageOutput => '图片输出';
+  String get providerModelCapImageOutput => '이미지 출력';
 
   @override
-  String get providerModelCapTools => '工具调用';
+  String get providerModelCapTools => '도구호출';
 
   @override
-  String get providerModelCapReasoning => '思考';
+  String get providerModelCapReasoning => '사고';
 
   @override
-  String get providerModelSectionReasoning => '思考档位';
+  String get providerModelSectionReasoning => '사고 단계';
 
   @override
-  String get providerModelReasoningHint => '只勾选该모델真实支持的档位;전체不勾则由기본 제공能力表自动判断';
+  String get providerModelReasoningHint =>
+      '해당 항목만 선택모델실제 지원 단계;전체선택 안 함그렇다면에 의해기본 제공능력 목록자동판단';
 
   @override
-  String get providerModelReasoningCanDisable => '可以닫기思考';
+  String get providerModelReasoningCanDisable => '가능닫기사고';
 
   @override
-  String get providerTestRequestUrl => '요청地址';
+  String get providerTestRequestUrl => '요청주소';
 
   @override
   String get providerTestRequestHeaders => '요청 헤더';
@@ -836,66 +842,69 @@ class AppLocalizationsKo extends AppLocalizations {
   String get providerTestError => '오류상세';
 
   @override
-  String get providerMultiKeyTitle => '多 Key 模式';
+  String get providerMultiKeyTitle => '여러 Key 모드';
 
   @override
-  String get providerMultiKeySubtitle => '同一供应商下配多个 Key,密钥사용 불가时自动切换并重发';
+  String get providerMultiKeySubtitle =>
+      '동일제공자하여러 개 구성개 Key,비밀번호사용 불가시자동전환및 재전송';
 
   @override
-  String get providerMultiKeyManage => '多 Key 管理';
+  String get providerMultiKeyManage => '여러 Key 관리';
 
   @override
   String providerMultiKeySummary(int count, String strategy) {
-    return '$count 个 · $strategy';
+    return '$count 개 · $strategy';
   }
 
   @override
-  String get providerMultiKeyList => 'Key 列表';
+  String get providerMultiKeyList => 'Key 목록';
 
   @override
   String providerMultiKeyItem(int index) {
-    return '密钥 #$index';
+    return '비밀번호 #$index';
   }
 
   @override
-  String get providerMultiKeyEmpty => '点此添加第一个 Key';
+  String get providerMultiKeyEmpty => '클릭이추가첫 번째개 Key';
 
   @override
-  String get providerMultiKeyAdd => '添加 Key';
+  String get providerMultiKeyAdd => '추가 Key';
 
   @override
-  String get providerMultiKeyWeight => '调度权重';
+  String get providerMultiKeyWeight => '스케줄 가중치';
 
   @override
-  String get providerMultiKeyWeightHint => '默认 1 · ≤ 0 时不参与 · 최대 1,000,000';
+  String get providerMultiKeyWeightHint => '기본값 1 · ≤ 0 시참여 안 함 · 최대 1,000,000';
 
   @override
-  String get providerMultiKeyStrategy => '取用策略';
+  String get providerMultiKeyStrategy => '사용 전략';
 
   @override
-  String get providerMultiKeyStrategySequential => '顺序';
+  String get providerMultiKeyStrategySequential => '순서';
 
   @override
-  String get providerMultiKeyStrategySequentialDesc => '始终用靠前的 Key,실패达阈值才切下一个';
+  String get providerMultiKeyStrategySequentialDesc =>
+      '항상 먼저 사용전 Key,실패임계치 도달 시 전환다음';
 
   @override
-  String get providerMultiKeyStrategyRoundRobin => '轮询';
+  String get providerMultiKeyStrategyRoundRobin => '라운드 로빈';
 
   @override
   String get providerMultiKeyStrategyRoundRobinDesc =>
-      '新세션轮流起步以摊平额度;同一세션内不换 Key,保持缓存命중간';
+      '새세션바퀴쿼터 균등 분배를 위해 순환 시작;동일세션내부 변경 안 함 Key,유지캐시명령중간';
 
   @override
-  String get providerMultiKeyStatusCodes => '自动切换상태 코드';
+  String get providerMultiKeyStatusCodes => '자동전환상태 코드';
 
   @override
-  String get providerMultiKeyStatusCodesHint => '逗号分隔,留空使用默认 401,402,403,429';
+  String get providerMultiKeyStatusCodesHint =>
+      '콤마 구분,비움빈사용기본값 401,402,403,429';
 
   @override
-  String get providerMultiKeyCooldown => '冷却时长';
+  String get providerMultiKeyCooldown => '냉각시길고';
 
   @override
-  String get providerMultiKeyCooldownDesc => '被切走的 Key 隔多久重新纳入候选';
+  String get providerMultiKeyCooldownDesc => '전환됨 Key 얼마 후 다시 후보에 포함';
 
   @override
   String get workspaceOpen => '작업 영역';
@@ -904,13 +913,13 @@ class AppLocalizationsKo extends AppLocalizations {
   String get workspaceLocal => '로컬작업 영역';
 
   @override
-  String get workspaceLocalSubtitle => '应用数据디렉토리';
+  String get workspaceLocalSubtitle => '앱데이터디렉토리';
 
   @override
-  String get allow => '允许';
+  String get allow => '허용';
 
   @override
-  String get deny => '拒绝';
+  String get deny => '거부';
 
   @override
   String get tabFiles => '파일';
@@ -925,10 +934,10 @@ class AppLocalizationsKo extends AppLocalizations {
   String get create => '만들기';
 
   @override
-  String get deleteFileConfirm => '삭제하시겠습니까?该파일?';
+  String get deleteFileConfirm => '삭제하시겠습니까?해당파일?';
 
   @override
-  String get deleteFolderConfirm => '삭제하시겠습니까?该폴더(含내용)?';
+  String get deleteFolderConfirm => '삭제하시겠습니까?해당폴더(포함내용)?';
 
   @override
   String get refresh => '새로고침';
@@ -937,21 +946,21 @@ class AppLocalizationsKo extends AppLocalizations {
   String get workspaceNew => '새로 만들기';
 
   @override
-  String get workspaceEmptyHint => '还没有작업 영역,点右上角「새로 만들기」';
+  String get workspaceEmptyHint => '아직없음작업 영역,클릭오른쪽 상단「새로 만들기」';
 
   @override
-  String get workspaceNameExists => '同名작업 영역已存在';
+  String get workspaceNameExists => '동일 이름작업 영역됨저장에';
 
   @override
   String get workspaceDelete => '삭제작업 영역';
 
   @override
   String workspaceDeleteConfirm(String name) {
-    return '삭제하시겠습니까?작업 영역「$name」(含其중간전체파일)?';
+    return '삭제하시겠습니까?작업 영역「$name」(포함중간전체파일)?';
   }
 
   @override
-  String get todoDashboardTitle => '任务待办';
+  String get todoDashboardTitle => '할 일 관리';
 
   @override
   String todoDashboardProgress(int completed, int total) {
@@ -977,123 +986,123 @@ class AppLocalizationsKo extends AppLocalizations {
   String get gitTabStatus => '상태';
 
   @override
-  String get browserTitle => '浏览器';
+  String get browserTitle => '브라우저';
 
   @override
-  String get browserAddressHint => '输入网址或검색';
+  String get browserAddressHint => '입력URL 또는검색';
 
   @override
-  String get browserBack => '后退';
+  String get browserBack => '뒤로';
 
   @override
-  String get browserForward => '前进';
+  String get browserForward => '앞으로';
 
   @override
   String get browserReload => '새로고침';
 
   @override
-  String get browserNotReady => '浏览器준비 안 됨,请在地址栏输入网址시작浏览';
+  String get browserNotReady => '브라우저준비 안 됨,부탁에주소열입력URL시작탐색';
 
   @override
-  String get browserNewTab => '새로 만들기태그页';
+  String get browserNewTab => '새로 만들기태그페이지';
 
   @override
-  String get browserCloseTab => '닫기태그页';
+  String get browserCloseTab => '태그 페이지 닫기';
 
   @override
-  String get browserTabDefaultTitle => '新태그页';
+  String get browserTabDefaultTitle => '새태그페이지';
 
   @override
   String browserTabsCount(int count) {
-    return '태그页 ($count)';
+    return '태그페이지 ($count)';
   }
 
   @override
-  String get browserEmptyHint => '在上方地址栏输入网址시작浏览';
+  String get browserEmptyHint => '에상방주소열입력URL시작탐색';
 
   @override
-  String get browserTabsManage => '태그页管理';
+  String get browserTabsManage => '태그 페이지 관리';
 
   @override
-  String get browserEmptyClickHint => '点击上方输入网址시작浏览';
+  String get browserEmptyClickHint => '클릭클릭상방입력URL시작탐색';
 
   @override
-  String get browserNightModeOn => '닫기夜间模式';
+  String get browserNightModeOn => '닫기야간모드';
 
   @override
-  String get browserNightModeOff => '활성화夜间模式';
+  String get browserNightModeOff => '활성화야간모드';
 
   @override
-  String get browserDevtools => '开发者工具';
+  String get browserDevtools => '개발자 도구';
 
   @override
-  String get browserDialogAlertTitle => '网页팁';
+  String get browserDialogAlertTitle => '웹 팁';
 
   @override
-  String get browserDialogConfirmTitle => '网页确认';
+  String get browserDialogConfirmTitle => '네트워크페이지확인';
 
   @override
-  String get browserDialogPromptTitle => '网页输入';
+  String get browserDialogPromptTitle => '네트워크페이지입력';
 
   @override
   String get browserMenu => '더보기설정';
 
   @override
-  String get browserMenuTitle => '浏览器설정与工具';
+  String get browserMenuTitle => '브라우저설정및도구';
 
   @override
-  String get browserMenuGeneralSection => '页面与工具';
+  String get browserMenuGeneralSection => '페이지 및 도구';
 
   @override
-  String get browserNightModeTitle => '夜间模式';
+  String get browserNightModeTitle => '야간모드';
 
   @override
-  String get browserNightModeDesc => '降낮음页面亮度并활성화深色偏好';
+  String get browserNightModeDesc => '낮춤낮음페이지화면 밝기 및활성화다크선호도';
 
   @override
-  String get browserDevtoolsTitle => '开发者工具';
+  String get browserDevtoolsTitle => '개발자 도구';
 
   @override
-  String get browserDevtoolsDesc => '활성화移动端 Eruda 디버그控制台';
+  String get browserDevtoolsDesc => '활성화모바일 Eruda 디버그콘솔';
 
   @override
-  String get browserUaSection => '浏览器标识 (User-Agent)';
+  String get browserUaSection => '브라우저식별자 (User-Agent)';
 
   @override
-  String get browserUaDesc => '模拟不同设备与环境访问网页';
+  String get browserUaDesc => '다양한 시뮬레이션장치환경에서 네트워크 접속페이지';
 
   @override
-  String get browserUaDefault => '系统默认';
+  String get browserUaDefault => '시스템기본값';
 
   @override
-  String get browserUaDefaultDesc => '현재设备原生 WebView 标识';
+  String get browserUaDefaultDesc => '현재장치원래 WebView 식별자';
 
   @override
-  String get browserUaAndroidPhone => '安卓手机';
+  String get browserUaAndroidPhone => '안드로이드 스마트폰';
 
   @override
   String get browserUaAndroidPhoneDesc => 'Chrome Mobile (Android)';
 
   @override
-  String get browserUaAndroidTablet => '安卓平板';
+  String get browserUaAndroidTablet => '안드로이드 태블릿';
 
   @override
   String get browserUaAndroidTabletDesc => 'Chrome Tablet (Android)';
 
   @override
-  String get browserUaDesktopPc => '桌面电脑';
+  String get browserUaDesktopPc => '데스크톱 PC';
 
   @override
   String get browserUaDesktopPcDesc => 'Chrome Desktop (Windows PC)';
 
   @override
-  String get browserUaIphone => '苹果 iPhone';
+  String get browserUaIphone => '애플 iPhone';
 
   @override
   String get browserUaIphoneDesc => 'Mobile Safari (iOS)';
 
   @override
-  String get browserUaIpad => '苹果 iPad';
+  String get browserUaIpad => '애플 iPad';
 
   @override
   String get browserUaIpadDesc => 'Tablet Safari (iPadOS)';
@@ -1102,97 +1111,97 @@ class AppLocalizationsKo extends AppLocalizations {
   String get browserUaCustom => '사용자 정의';
 
   @override
-  String get browserUaCustomDesc => '手动指定 User-Agent 字符串';
+  String get browserUaCustomDesc => '수동지정 User-Agent 문자열';
 
   @override
   String get browserUaCustomDialogTitle => '사용자 정의 User-Agent';
 
   @override
-  String get browserUaCustomInputHint => '输入完整的 User-Agent 字符串';
+  String get browserUaCustomInputHint => '입력완전한 User-Agent 문자열';
 
   @override
-  String get browserUaAppliedToast => '已切换浏览器标识并새로고침页面';
+  String get browserUaAppliedToast => '됨전환브라우저표시 및새로고침페이지면';
 
   @override
   String get gitTabBranches => '브랜치';
 
   @override
-  String get gitTabCommits => '提交';
+  String get gitTabCommits => '커밋';
 
   @override
-  String get gitStatusClean => '작업 영역干净,없음改动';
+  String get gitStatusClean => '작업 영역깨끗함,없음변경';
 
   @override
   String gitConflictedCount(int count) {
-    return '存在冲突 ($count)';
+    return '저장에충돌 ($count)';
   }
 
   @override
   String gitStagedCount(int count) {
-    return '已暂存 ($count)';
+    return '스테이징됨 ($count)';
   }
 
   @override
   String gitModifiedCount(int count) {
-    return '已修改 ($count)';
+    return '수정됨 ($count)';
   }
 
   @override
   String gitUntrackedCount(int count) {
-    return '未跟踪 ($count)';
+    return '추적 안 됨 ($count)';
   }
 
   @override
-  String get gitConflictedLabel => '存在冲突';
+  String get gitConflictedLabel => '저장에충돌';
 
   @override
-  String get gitStagedLabel => '已暂存';
+  String get gitStagedLabel => '스테이징됨';
 
   @override
-  String get gitModifiedLabel => '已修改';
+  String get gitModifiedLabel => '수정됨';
 
   @override
-  String get gitUntrackedLabel => '未跟踪';
+  String get gitUntrackedLabel => '추적 안 됨';
 
   @override
-  String get gitStage => '暂存';
+  String get gitStage => '스테이징';
 
   @override
-  String get gitUnstage => '취소暂存';
+  String get gitUnstage => '취소스테이징';
 
   @override
-  String get gitStageAll => '暂存전체';
+  String get gitStageAll => '스테이징전체';
 
   @override
-  String get gitUnstageAll => '전체취소暂存';
+  String get gitUnstageAll => '전체취소스테이징';
 
   @override
-  String get gitUnstageAllConfirm => '将취소所有파일的暂存,但不会삭제파일내용。확인继续吗?';
+  String get gitUnstageAllConfirm => '을취소장소있음파일스테이징,하지만 안 함삭제파일내용。확인계속할까요?';
 
   @override
-  String get gitActionRevertAll => '전체回退';
+  String get gitActionRevertAll => '전체롤백';
 
   @override
   String gitRevertAllConfirm(int count) {
-    return '丢弃전체未暂存的改动($count 个파일),복원到上次暂存或提交的내용?已暂存的내용不受影响,但丢弃的改动없음法找回。';
+    return '폐기전체미스테이징변경($count 개파일),복원에상회스테이징또는커밋내용?스테이징됨내용영향 없음,하지만 변경 사항 폐기없음복구 불가。';
   }
 
   @override
-  String get gitActionRestoreFile => '恢复파일';
+  String get gitActionRestoreFile => '복원파일';
 
   @override
   String gitRevertConfirmWorktree(String name) {
-    return '把 $name 복원成上次暂存或提交的내용?未暂存的改动会丢失,且없음法找回。';
+    return '를 $name 복원만들기상회스테이징또는커밋내용?미스테이징변경손실됨,및없음복구 불가。';
   }
 
   @override
   String gitRevertConfirmHead(String name) {
-    return '把 $name 복원到上次提交的내용?该파일已暂存和未暂存的改动都会丢失,且없음法找回。';
+    return '를 $name 복원에상회커밋내용?해당파일스테이징됨및 미스테이징변경모두손실됨,및없음복구 불가。';
   }
 
   @override
   String gitRestoreFileConfirm(String name) {
-    return '恢复已삭제的 $name?将从上次提交取回这个파일。';
+    return '복원됨삭제 $name?을로부터상회커밋복구이파일。';
   }
 
   @override
@@ -1202,195 +1211,197 @@ class AppLocalizationsKo extends AppLocalizations {
   String get gitActionDeleteDir => '삭제디렉토리';
 
   @override
-  String get gitMergePendingTitle => '合并待提交';
+  String get gitMergePendingTitle => '병합 대기 중';
 
   @override
-  String get gitMergePendingHint => '현재没有未解决的冲突。请确认并暂存需要保留的改动,然后提交以완료合并。';
+  String get gitMergePendingHint => '현재없음미해결 충돌。부탁확인및스테이징보존할 변경 사항,그다음커밋을완료병합。';
 
   @override
-  String get gitActionAbortMerge => '중단合并';
+  String get gitActionAbortMerge => '중단병합';
 
   @override
-  String get gitAbortMergeConfirm => '확인중단현재合并吗?未解决的冲突改动将被放弃,작업 영역将복원到合并前的상태。';
+  String get gitAbortMergeConfirm =>
+      '확인중단현재병합할까요?미해결 충돌 변경 사항을폐기됨,작업 영역을복원에병합전상태。';
 
   @override
-  String get gitCommitChanges => '提交更改';
+  String get gitCommitChanges => '커밋변경';
 
   @override
-  String get gitCommitNeedsIdentity => '尚미설정提交署名,请在「凭据与署名」页填写用户名和邮箱';
+  String get gitCommitNeedsIdentity => '아직미설정커밋서명,부탁에「자격 증명및서명」페이지입력사용자명및이메일';
 
   @override
-  String get gitCommitDialogTitle => '提交更改';
+  String get gitCommitDialogTitle => '커밋변경';
 
   @override
-  String get gitCommitMessage => '提交정보';
+  String get gitCommitMessage => '커밋정보';
 
   @override
-  String get gitCommitAmend => '追加到上次提交 (--amend)';
+  String get gitCommitAmend => '추가에상회커밋 (--amend)';
 
   @override
-  String get gitCommitAiGenerate => 'AI 生成';
+  String get gitCommitAiGenerate => 'AI 생성';
 
   @override
-  String get gitCommitGenerating => '正在生成…';
+  String get gitCommitGenerating => '생성 중…';
 
   @override
-  String get gitActionCommit => '提交';
+  String get gitActionCommit => '커밋';
 
   @override
-  String get gitTabStash => '储藏';
+  String get gitTabStash => '스태시';
 
   @override
-  String get gitStashTitle => '储藏箱';
+  String get gitStashTitle => '스태시 상자';
 
   @override
-  String get gitActionStash => '储藏改动';
+  String get gitActionStash => '스태시변경';
 
   @override
-  String get gitStashMessageHint => '储藏설명(선택 사항)';
+  String get gitStashMessageHint => '스태시설명(선택 사항)';
 
   @override
-  String get gitStashIncludeUntracked => '包含未跟踪파일(-u)';
+  String get gitStashIncludeUntracked => '포함추적 안 됨파일(-u)';
 
   @override
-  String get gitStashEmpty => '暂없음储藏기록';
+  String get gitStashEmpty => '임시없음스태시기록';
 
   @override
-  String get gitStashPop => '弹出 (Pop)';
+  String get gitStashPop => '팝업 (Pop)';
 
   @override
-  String get gitStashApply => '应用 (Apply)';
+  String get gitStashApply => '앱 (Apply)';
 
   @override
-  String get gitStashDrop => '丢弃 (Drop)';
+  String get gitStashDrop => '폐기 (Drop)';
 
   @override
   String gitStashDropConfirm(String index) {
-    return '확인丢弃储藏 $index 吗?该작업不可撤销。';
+    return '확인폐기스태시 $index ~?해당작업되돌릴 수 없음。';
   }
 
   @override
-  String get gitStashClear => '清空전체';
+  String get gitStashClear => '청소빈전체';
 
   @override
-  String get gitStashClearConfirm => '확인清空所有储藏기록吗?该작업不可撤销。';
+  String get gitStashClearConfirm => '확인청소빈장소있음스태시기록~?해당작업되돌릴 수 없음。';
 
   @override
   String gitStashCount(int count) {
-    return '储藏 ($count)';
+    return '스태시 ($count)';
   }
 
   @override
-  String get gitPull => '拉取';
+  String get gitPull => '풀';
 
   @override
-  String get gitPush => '推送';
+  String get gitPush => '푸시';
 
   @override
-  String get gitPullDirtyConfirm => '현재작업 영역有未提交改动,拉取可能导致冲突。建议先提交或暂存。仍要继续拉取吗?';
+  String get gitPullDirtyConfirm =>
+      '현재작업 영역있음미커밋변경,풀충돌 유발 가능。먼저 권장커밋또는스테이징。계속 진행풀~?';
 
   @override
-  String get gitPullContinue => '继续拉取';
+  String get gitPullContinue => '계속풀';
 
   @override
-  String get gitNoUpstream => '미설정上游';
+  String get gitNoUpstream => '상류 미설정';
 
   @override
   String gitTrackingBranch(String name) {
-    return '跟踪 $name';
+    return '추적 $name';
   }
 
   @override
   String gitAheadCount(int count) {
-    return '待推送 $count';
+    return '대기푸시 $count';
   }
 
   @override
   String gitBehindCount(int count) {
-    return '待拉取 $count';
+    return '대기풀 $count';
   }
 
   @override
-  String get gitBranchSynced => '已同步';
+  String get gitBranchSynced => '동기화됨';
 
   @override
-  String get gitDetachedHeadLabel => 'detached HEAD:현재不在任何브랜치上';
+  String get gitDetachedHeadLabel => 'detached HEAD:현재안에어떤브랜치상';
 
   @override
   String get gitNoBranch => '(없음브랜치)';
 
   @override
-  String get gitLoadingBranches => '正在불러오기브랜치列表…';
+  String get gitLoadingBranches => '중불러오기브랜치목록…';
 
   @override
-  String get gitNoCheckedOutBranch => '未检出브랜치';
+  String get gitNoCheckedOutBranch => '체크아웃 안 됨브랜치';
 
   @override
-  String get gitClean => '작업 영역干净';
+  String get gitClean => '작업 영역깨끗함';
 
   @override
-  String get gitHasChanges => '작업 영역有改动';
+  String get gitHasChanges => '작업 영역있음변경';
 
   @override
-  String get gitNotARepo => '현재작업 영역还不是 Git 저장소';
+  String get gitNotARepo => '현재작업 영역아직예 Git 저장소';
 
   @override
-  String get gitCloningHint => '正在克隆저장소,请稍候…';
+  String get gitCloningHint => '중클론저장소,부탁잠시 기다려 주세요…';
 
   @override
-  String get gitInitDescPrimary => '可在此初始化新저장소,시작版本管理';
+  String get gitInitDescPrimary => '가능에새 초기화저장소,시작버전관리';
 
   @override
-  String get gitInitDescSecondary => '若子디렉토리已有 Git 저장소,也可直接선택使用';
+  String get gitInitDescSecondary => '만약디렉토리됨있음 Git 저장소,또는 직접선택사용';
 
   @override
-  String get gitInitRepo => '初始化新저장소';
+  String get gitInitRepo => '새 초기화저장소';
 
   @override
-  String get gitCloneRepo => '克隆远程저장소';
+  String get gitCloneRepo => '클론원격저장소';
 
   @override
-  String get gitCloneDialogTitle => '克隆 Git 저장소';
+  String get gitCloneDialogTitle => '클론 Git 저장소';
 
   @override
   String get gitCloneDesc =>
-      '将远程저장소克隆到현재작업 영역根디렉토리(작업 영역需为空)。若为私有저장소,可先点右上角钥匙登录 GitHub 或填入访问令牌。';
+      '을원격저장소클론에현재작업 영역근원디렉토리(작업 영역필요를 위해빈)。만약를 위해개인있음저장소,먼저 가능클릭오른쪽 상단키로그인 GitHub 또는 접근 토큰 입력。';
 
   @override
-  String get gitCloneUrlLabel => '저장소地址';
+  String get gitCloneUrlLabel => '저장소주소';
 
   @override
-  String get gitCloning => '正在克隆저장소,请稍候…';
+  String get gitCloning => '중클론저장소,부탁잠시 기다려 주세요…';
 
   @override
-  String get gitSwitchRepo => '切换저장소';
+  String get gitSwitchRepo => '저장소 전환';
 
   @override
-  String get gitPickExistingRepo => '선택已有저장소';
+  String get gitPickExistingRepo => '선택됨있음저장소';
 
   @override
   String get gitRepoSelectorTitle => '선택저장소';
 
   @override
-  String get gitRepoNotRepo => '非저장소';
+  String get gitRepoNotRepo => '아니저장소';
 
   @override
-  String get gitPickRepoEmpty => '현재작업 영역没有선택 사항的디렉토리';
+  String get gitPickRepoEmpty => '현재작업 영역없음선택 사항디렉토리';
 
   @override
-  String get gitNoBranches => '暂없음브랜치';
+  String get gitNoBranches => '임시없음브랜치';
 
   @override
   String get gitNewBranch => '새로 만들기브랜치';
 
   @override
-  String get gitBranchName => '브랜치名';
+  String get gitBranchName => '브랜치이름';
 
   @override
-  String get gitBaseBranch => '基准브랜치';
+  String get gitBaseBranch => '기준브랜치';
 
   @override
-  String get gitCreateAndSwitch => '만들기并切换';
+  String get gitCreateAndSwitch => '만들기및전환';
 
   @override
   String get gitDeleteBranch => '삭제브랜치';
@@ -1401,29 +1412,29 @@ class AppLocalizationsKo extends AppLocalizations {
   }
 
   @override
-  String get gitDeleteRemoteBranch => '삭제远程브랜치';
+  String get gitDeleteRemoteBranch => '삭제원격브랜치';
 
   @override
   String gitDeleteRemoteBranchConfirm(String name) {
-    return '삭제远程브랜치 $name?该작업不可撤销。';
+    return '삭제원격브랜치 $name?해당작업되돌릴 수 없음。';
   }
 
   @override
-  String get gitRenameBranch => '重命名브랜치';
+  String get gitRenameBranch => '이름 변경브랜치';
 
   @override
   String gitRenameTo(String name) {
-    return '将 $name 重命名为:';
+    return '을 $name 이름 변경를 위해:';
   }
 
   @override
-  String get gitNewBranchName => '新브랜치名';
+  String get gitNewBranchName => '새브랜치이름';
 
   @override
   String get gitTags => '태그';
 
   @override
-  String get gitTagName => '태그名';
+  String get gitTagName => '태그이름';
 
   @override
   String get gitDeleteTag => '삭제태그';
@@ -1435,63 +1446,63 @@ class AppLocalizationsKo extends AppLocalizations {
 
   @override
   String gitCreateTagDesc(String hash) {
-    return '从현재 HEAD($hash)만들기가벼움태그';
+    return '로부터현재 HEAD($hash)만들기가벼움태그';
   }
 
   @override
-  String get gitCheckedOut => '현재检出';
+  String get gitCheckedOut => '현재체크아웃';
 
   @override
   String get gitCurrentBranch => '현재브랜치';
 
   @override
-  String get gitRemote => '远程';
+  String get gitRemote => '원격';
 
   @override
   String get commonLocal => '로컬';
 
   @override
-  String get gitNew => '新增';
+  String get gitNew => '추가';
 
   @override
-  String get gitNoCommits => '暂없음提交기록';
+  String get gitNoCommits => '임시없음커밋기록';
 
   @override
   String gitCommitCount(int count) {
-    return '提交기록 ($count)';
+    return '커밋기록 ($count)';
   }
 
   @override
-  String get gitSearchCommitsHint => '검색提交설명或作者…';
+  String get gitSearchCommitsHint => '검색커밋설명또는 작성자…';
 
   @override
-  String get gitLoadMoreCommits => '上拉불러오기更早提交';
+  String get gitLoadMoreCommits => '상끌기불러오기더 이른커밋';
 
   @override
-  String get gitNoMoreCommits => '没有더보기了';
+  String get gitNoMoreCommits => '없음더보기';
 
   @override
-  String get gitLatestCommit => '最新提交';
+  String get gitLatestCommit => '최신커밋';
 
   @override
   String gitFilesChanged(int count) {
-    return '$count 个파일改动';
+    return '$count 개파일변경';
   }
 
   @override
-  String get gitNoFilesChanged => '该提交없음파일改动';
+  String get gitNoFilesChanged => '해당커밋없음파일변경';
 
   @override
-  String get gitMergeCommit => '合并提交';
+  String get gitMergeCommit => '병합커밋';
 
   @override
-  String get gitLoadingFiles => '正在불러오기改动파일…';
+  String get gitLoadingFiles => '중불러오기변경파일…';
 
   @override
-  String get gitCopyShortHash => '복사短哈希';
+  String get gitCopyShortHash => '복사단축 해시';
 
   @override
-  String get gitCopyFullHash => '복사完整哈希';
+  String get gitCopyFullHash => '복사완전한 해시';
 
   @override
   String get gitActionCreateBranch => '만들기브랜치';
@@ -1500,68 +1511,68 @@ class AppLocalizationsKo extends AppLocalizations {
   String get gitActionCreateTag => '만들기태그';
 
   @override
-  String get gitCreateBranchFromCommit => '基于此提交만들기브랜치';
+  String get gitCreateBranchFromCommit => '기본에이커밋만들기브랜치';
 
   @override
-  String get gitCreateTagAtCommit => '在此提交만들기태그';
+  String get gitCreateTagAtCommit => '에이커밋만들기태그';
 
   @override
-  String get gitResetToCommit => '재설정到此提交 (Reset)';
+  String get gitResetToCommit => '재설정에이커밋 (Reset)';
 
   @override
-  String get gitResetSoft => 'Soft(保留작업 영역与暂存区)';
+  String get gitResetSoft => 'Soft(보존작업 영역및스테이징구역)';
 
   @override
-  String get gitResetMixed => 'Mixed(保留작업 영역,清空暂存区)';
+  String get gitResetMixed => 'Mixed(보존작업 영역,청소빈스테이징구역)';
 
   @override
   String gitResetConfirm(String hash) {
-    return '확인将현재브랜치재설정到提交 $hash 吗?';
+    return '확인을현재브랜치재설정에커밋 $hash ~?';
   }
 
   @override
-  String get gitDiffBinary => '二进制파일,不显示差异';
+  String get gitDiffBinary => '2진수파일,안표시차이';
 
   @override
-  String get gitDiffTooLarge => '파일过大,未计算差异';
+  String get gitDiffTooLarge => '파일과다,차이 계산 안 됨';
 
   @override
-  String get gitDiffEmpty => '没有可显示的差异';
+  String get gitDiffEmpty => '없음가능표시차이';
 
   @override
   String get gitCopyPath => '경로 복사';
 
   @override
-  String get gitViewDiff => '查看差异';
+  String get gitViewDiff => '보기차이';
 
   @override
-  String get gitRevert => '回退改动';
+  String get gitRevert => '변경 사항 롤백';
 
   @override
   String gitDeleteUntrackedConfirm(Object name) {
-    return '삭제 $name?它从未被提交过,삭제后없음法通过 Git 恢复。';
+    return '삭제 $name?그것로부터아직커밋지남,삭제후없음통과 불가 Git 복원。';
   }
 
   @override
-  String get gitAddToGitignore => '添加到 .gitignore';
+  String get gitAddToGitignore => '추가에 .gitignore';
 
   @override
   String gitIgnoreFile(String name) {
-    return '忽略此파일 ($name)';
+    return '이 항목 무시파일 ($name)';
   }
 
   @override
   String gitIgnoreDir(String name) {
-    return '忽略整个디렉토리 ($name/)';
+    return '전체 무시개디렉토리 ($name/)';
   }
 
   @override
   String gitIgnoreExtension(String ext) {
-    return '忽略同유형파일 (*.$ext)';
+    return '동일 무시유형파일 (*.$ext)';
   }
 
   @override
-  String get gitPathCopied => '已경로 복사';
+  String get gitPathCopied => '됨경로 복사';
 
   @override
   String gitActionFailed(String action, String error) {
@@ -1570,38 +1581,38 @@ class AppLocalizationsKo extends AppLocalizations {
 
   @override
   String gitActionDone(String action) {
-    return '$action成功';
+    return '$action성공';
   }
 
   @override
   String gitCheckoutSuccess(String name) {
-    return '已切换到 $name';
+    return '됨전환에 $name';
   }
 
   @override
-  String get gitNoRemotePull => '미설정远程저장소,없음法拉取';
+  String get gitNoRemotePull => '미설정원격저장소,없음방법풀';
 
   @override
-  String get gitNoRemotePush => '미설정远程저장소,없음法推送';
+  String get gitNoRemotePush => '미설정원격저장소,없음방법푸시';
 
   @override
-  String get gitPushMasterConfirmTitle => '브랜치命名建议';
+  String get gitPushMasterConfirmTitle => '브랜치이름 지정 제안';
 
   @override
   String get gitPushMasterConfirmDesc =>
-      '현재로컬브랜치为 master,GitHub 与 GitLab 推荐使用 main 作为默认主브랜치。是否将로컬브랜치重命名为 main 后再推送?';
+      '현재로컬브랜치를 위해 master,GitHub 및 GitLab 사용 권장 main 작업를 위해기본값주요브랜치。확인을로컬브랜치이름 변경를 위해 main 후다시푸시?';
 
   @override
-  String get gitPushRenameToMain => '重命名为 main 并推送';
+  String get gitPushRenameToMain => '이름 변경를 위해 main 및푸시';
 
   @override
-  String get gitPushKeepMaster => '保留 master 推送';
+  String get gitPushKeepMaster => '보존 master 푸시';
 
   @override
-  String get gitTesting => '测试';
+  String get gitTesting => '테스트';
 
   @override
-  String get credentialToken => '访问令牌(Token / PAT)';
+  String get credentialToken => '접근 토큰(Token / PAT)';
 
   @override
   String get gitUserName => 'user.name';
@@ -1610,34 +1621,34 @@ class AppLocalizationsKo extends AppLocalizations {
   String get gitUserEmail => 'user.email';
 
   @override
-  String get gitRepoUrl => '저장소地址';
+  String get gitRepoUrl => '저장소주소';
 
   @override
-  String get gitSelectBranch => '선택基准브랜치';
+  String get gitSelectBranch => '선택기준브랜치';
 
   @override
-  String get credentialTokenLogin => '令牌登录';
+  String get credentialTokenLogin => '토큰로그인';
 
   @override
-  String get credentialTokenLoginDesc => '只需붙여넣기访问令牌(PAT),推送时自动匹配远端主机';
+  String get credentialTokenLoginDesc => '단지붙여넣기접근 토큰(PAT),푸시시자동원격 호스트 매칭';
 
   @override
-  String get credentialTokenSaved => '令牌已저장';
+  String get credentialTokenSaved => '토큰저장됨';
 
   @override
-  String get commonShow => '显示';
+  String get commonShow => '표시';
 
   @override
-  String get commonHide => '隐藏';
+  String get commonHide => '숨기기';
 
   @override
-  String get credentialAdd => '添加凭据';
+  String get credentialAdd => '추가자격 증명';
 
   @override
-  String get settingsSubtitle => '管理 AI、外观、同步和应用数据';
+  String get settingsSubtitle => '관리 AI、모양、동기화및앱데이터';
 
   @override
-  String get accountAndData => '账户与数据';
+  String get accountAndData => '계정 및데이터';
 
   @override
   String get themeTitle => '테마';
@@ -1646,22 +1657,22 @@ class AppLocalizationsKo extends AppLocalizations {
   String get themeSubtitle => '외관、배경과 표시';
 
   @override
-  String get aboutSubtitle => '版本、更新与反馈';
+  String get aboutSubtitle => '버전、업데이트및 피드백';
 
   @override
-  String get aboutAutoCheck => '自动检查更新';
+  String get aboutAutoCheck => '자동확인업데이트';
 
   @override
-  String get aboutAutoCheckDesc => '열기 App 时自动检测新版本';
+  String get aboutAutoCheckDesc => '열기 App 시자동새 항목 감지버전';
 
   @override
-  String get aboutUpdateChannel => '更新通道';
+  String get aboutUpdateChannel => '업데이트채널';
 
   @override
-  String get aboutStableChannel => '稳定版';
+  String get aboutStableChannel => '안정 버전';
 
   @override
-  String get aboutDownloadMirror => '下载镜像源';
+  String get aboutDownloadMirror => '하이미지 소스 로드';
 
   @override
   String get aboutMirrorUrl => 'https://cdn.gh-proxy.co...';
@@ -1670,34 +1681,34 @@ class AppLocalizationsKo extends AppLocalizations {
   String get githubRepo => 'GitHub 저장소';
 
   @override
-  String get aboutUserAgreement => '用户프로토콜';
+  String get aboutUserAgreement => '사용자프로토콜';
 
   @override
-  String get aboutPrivacyPolicy => '隐私政策';
+  String get aboutPrivacyPolicy => '개인정보 보호정책';
 
   @override
   String get mcpTitle => 'MCP 서버';
 
   @override
-  String get mcpSubtitle => '接入外部工具的 Model Context Protocol 服务';
+  String get mcpSubtitle => '외부 접근도구 Model Context Protocol 서비스';
 
   @override
-  String get mcpAdd => '添加 MCP';
+  String get mcpAdd => '추가 MCP';
 
   @override
-  String get mcpEdit => '编辑 MCP';
+  String get mcpEdit => '편집 MCP';
 
   @override
-  String get mcpEmpty => '还没有구성 MCP 서버';
+  String get mcpEmpty => '아직없음구성 MCP 서버';
 
   @override
-  String get mcpEmptyHint => '点击右上角 + 可以添加远程 HTTP 或로컬 stdio 服务器';
+  String get mcpEmptyHint => '클릭클릭오른쪽 상단 + 가능추가원격 HTTP 또는로컬 stdio 서버';
 
   @override
   String get mcpSearchPlaceholder => '검색 MCP 서버…';
 
   @override
-  String get mcpSearchEmpty => '未找到匹配的 MCP 서버';
+  String get mcpSearchEmpty => '찾을 수 없음에매칭 MCP 서버';
 
   @override
   String get mcpScopeLabel => '범위';
@@ -1715,23 +1726,23 @@ class AppLocalizationsKo extends AppLocalizations {
   String get mcpStatusDisabled => '비활성화됨';
 
   @override
-  String get mcpStatusNotConnected => '未连接';
+  String get mcpStatusNotConnected => '연결 안 됨';
 
   @override
-  String get mcpStatusConnected => '已连接';
+  String get mcpStatusConnected => '연결됨';
 
   @override
-  String get mcpStatusConnecting => '连接중간…';
+  String get mcpStatusConnecting => '연결중간…';
 
   @override
   String get mcpStatusFailed => '연결 실패';
 
   @override
-  String get mcpStatusNeedsAuth => '需要登录';
+  String get mcpStatusNeedsAuth => '필요로그인';
 
   @override
   String mcpToolsCount(int count) {
-    return '$count 个工具';
+    return '$count 개도구';
   }
 
   @override
@@ -1741,84 +1752,84 @@ class AppLocalizationsKo extends AppLocalizations {
   String get mcpBasicSettings => '기본설정';
 
   @override
-  String get mcpEnabledLabel => '是否활성화';
+  String get mcpEnabledLabel => '확인활성화';
 
   @override
   String get mcpNameLabel => '이름';
 
   @override
-  String get mcpNameHint => '例如:fetch、github、gitlab';
+  String get mcpNameHint => '예:fetch、github、gitlab';
 
   @override
-  String get mcpNameInvalid => '이름只能包含字母、数字、下划线和连字符';
+  String get mcpNameInvalid => '이름문자만 포함 가능、숫자、밑줄및 하이픈';
 
   @override
-  String get mcpTransportType => '传输유형';
+  String get mcpTransportType => '전송유형';
 
   @override
-  String get mcpRemoteHttp => '远程 HTTP';
+  String get mcpRemoteHttp => '원격 HTTP';
 
   @override
   String get mcpLocalStdio => '로컬 stdio';
 
   @override
-  String get mcpServerUrl => '服务器地址';
+  String get mcpServerUrl => '서버주소';
 
   @override
-  String get mcpServerUrlHint => '例如:https://api.example.com/mcp';
+  String get mcpServerUrlHint => '예:https://api.example.com/mcp';
 
   @override
   String get mcpCustomHeaders => '사용자 정의요청 헤더';
 
   @override
-  String get mcpNoCustomHeaders => '暂없음구성的사용자 정의 Header';
+  String get mcpNoCustomHeaders => '임시없음구성사용자 정의 Header';
 
   @override
   String get mcpHeaderName => '요청 헤더이름';
 
   @override
-  String get mcpHeaderNameHint => '如 Authorization';
+  String get mcpHeaderNameHint => '예 Authorization';
 
   @override
-  String get mcpHeaderValue => '요청 헤더值';
+  String get mcpHeaderValue => '요청 헤더값';
 
   @override
-  String get mcpHeaderValueHint => '如 Bearer xxxxxx';
+  String get mcpHeaderValueHint => '예 Bearer xxxxxx';
 
   @override
-  String get mcpAddHeader => '添加요청 헤더';
+  String get mcpAddHeader => '추가요청 헤더';
 
   @override
-  String get mcpCommand => '시작命令';
+  String get mcpCommand => '시작명령';
 
   @override
-  String get mcpCommandHint => '例如:npx';
+  String get mcpCommandHint => '예:npx';
 
   @override
-  String get mcpArgs => '命令参数';
+  String get mcpArgs => '명령 매개변수';
 
   @override
-  String get mcpNoArgs => '없음额外命令行参数';
+  String get mcpNoArgs => '없음추가 명령줄 매개변수';
 
   @override
-  String get mcpArgValue => '参数值';
+  String get mcpArgValue => '매개변수 값';
 
   @override
-  String get mcpArgHint => '如 -y 或 @modelcontextprotocol/server-xxx';
+  String get mcpArgHint => '예 -y 또는 @modelcontextprotocol/server-xxx';
 
   @override
-  String get mcpAddArg => '添加参数';
+  String get mcpAddArg => '추가매개변수';
 
   @override
   String mcpToolsSummary(int enabled, int total) {
-    return '활성화됨 $enabled / $total 个工具';
+    return '활성화됨 $enabled / $total 개도구';
   }
 
   @override
-  String get mcpToolsSearch => '검색工具이름或描述…';
+  String get mcpToolsSearch => '검색도구이름또는설명…';
 
   @override
-  String get mcpToolsSearchEmpty => '未找到匹配的工具';
+  String get mcpToolsSearchEmpty => '찾을 수 없음에매칭도구';
 
   @override
   String get mcpToolsEnableAll => '전체활성화';
@@ -1827,56 +1838,56 @@ class AppLocalizationsKo extends AppLocalizations {
   String get mcpToolsDisableAll => '전체비활성화';
 
   @override
-  String get mcpSaveFirstHint => '请先저장并连接服务器后查看工具列表';
+  String get mcpSaveFirstHint => '부탁먼저저장및연결서버후보기도구목록';
 
   @override
-  String get mcpNoToolsHint => '未检测到工具,点击右上角새로고침按钮재시도';
+  String get mcpNoToolsHint => '감지 안 됨에도구,클릭클릭오른쪽 상단새로고침버튼재시도';
 
   @override
-  String get mcpNoDescription => '없음描述';
+  String get mcpNoDescription => '없음설명';
 
   @override
-  String get mcpAddSheetTitle => '添加 MCP 서버';
+  String get mcpAddSheetTitle => '추가 MCP 서버';
 
   @override
-  String get mcpAddManual => '手动填写';
+  String get mcpAddManual => '수동입력';
 
   @override
-  String get mcpAddManualDesc => '逐个填写地址、요청 헤더或시작命令';
+  String get mcpAddManualDesc => '점진적개입력주소、요청 헤더또는시작명령';
 
   @override
-  String get mcpAddFromJson => '从 JSON 가져오기';
+  String get mcpAddFromJson => '로부터 JSON 가져오기';
 
   @override
-  String get mcpAddFromJsonDesc => '붙여넣기标准 mcpServers 구성批量가져오기';
+  String get mcpAddFromJsonDesc => '붙여넣기표준 mcpServers 구성일괄가져오기';
 
   @override
-  String get mcpJsonImportTitle => '从 JSON 가져오기';
+  String get mcpJsonImportTitle => '로부터 JSON 가져오기';
 
   @override
   String get mcpJsonImportHint =>
-      '붙여넣기标准 mcpServers 구성:键是服务器名,值里填 url(远程 HTTP)或 command(로컬 stdio)。';
+      '붙여넣기표준 mcpServers 구성:키예서버 이름,값 안에 입력 url(원격 HTTP)또는 command(로컬 stdio)。';
 
   @override
   String get mcpJsonImportAction => '가져오기';
 
   @override
-  String get mcpJsonImportEmpty => '未解析到任何 MCP 서버';
+  String get mcpJsonImportEmpty => '미해석에어떤 MCP 서버';
 
   @override
-  String get mcpSaved => '已저장';
+  String get mcpSaved => '저장됨';
 
   @override
-  String get mcpRefreshTools => '새로고침工具';
+  String get mcpRefreshTools => '새로고침도구';
 
   @override
-  String get mcpRemoved => '已移除 MCP 서버';
+  String get mcpRemoved => '됨제거 MCP 서버';
 
   @override
-  String get permissionsTitle => '工具授权';
+  String get permissionsTitle => '도구인증';
 
   @override
-  String get permissionsSubtitle => '规则与记忆';
+  String get permissionsSubtitle => '규칙그렇다면및 기억';
 
   @override
   String permCurrentProject(String name) {
@@ -1884,52 +1895,52 @@ class AppLocalizationsKo extends AppLocalizations {
   }
 
   @override
-  String get permCurrentProjectNone => '현재 프로젝트(未선택)';
+  String get permCurrentProjectNone => '현재 프로젝트(미선택)';
 
   @override
-  String get permNoProjectRules => '本프로젝트暂없음规则';
+  String get permNoProjectRules => '본프로젝트임시없음규칙그렇다면';
 
   @override
   String get permGlobal => '전역';
 
   @override
-  String get permNoGlobalRules => '暂없음전역规则';
+  String get permNoGlobalRules => '임시없음전역규칙그렇다면';
 
   @override
-  String get permEntireTool => '整个工具';
+  String get permEntireTool => '정리개도구';
 
   @override
-  String get permDeny => '禁止';
+  String get permDeny => '금지';
 
   @override
-  String get permPromoteToGlobal => '提升为전역';
+  String get permPromoteToGlobal => '향상를 위해전역';
 
   @override
-  String get permRulesShort => '对话중간选「始终실행」会在현재 프로젝트生成记忆规则';
+  String get permRulesShort => '대화중간선택「항상실행」모임에현재 프로젝트기억 규칙 생성그렇다면';
 
   @override
-  String get chatPermDeny => '拒绝';
+  String get chatPermDeny => '거부';
 
   @override
-  String get chatPermAlwaysAllow => '始终실행';
+  String get chatPermAlwaysAllow => '항상실행';
 
   @override
-  String get chatPermAlwaysToolDesc => '「始终실행」将在本프로젝트记住:该工具的전체调用';
+  String get chatPermAlwaysToolDesc => '「항상실행」을에본프로젝트기억:해당도구전체호출';
 
   @override
-  String get chatPermAlwaysPrefix => '「始终실행」将在本프로젝트记住:';
+  String get chatPermAlwaysPrefix => '「항상실행」을에본프로젝트기억:';
 
   @override
-  String get chatPermSingleUseDesc => '该调用不可记忆,仅可单次放行';
+  String get chatPermSingleUseDesc => '해당호출기억 불가,한 번만 허용';
 
   @override
   String get commonName => '이름';
 
   @override
-  String get commonTool => '工具';
+  String get commonTool => '도구';
 
   @override
-  String get commonAdd => '添加';
+  String get commonAdd => '추가';
 
   @override
   String commonLabelWithApi(String label, String api) {
@@ -1940,90 +1951,90 @@ class AppLocalizationsKo extends AppLocalizations {
   String get commonExpand => '펼치기';
 
   @override
-  String get commonCollapse => '收起';
+  String get commonCollapse => '접기';
 
   @override
-  String get mcpViewLogs => '查看此 MCP 로그';
+  String get mcpViewLogs => '보기이 MCP 로그';
 
   @override
-  String get mcpAuthEnable => 'OAuth 认证';
+  String get mcpAuthEnable => 'OAuth 인증';
 
   @override
-  String get mcpAuthDesc => '用于需要浏览器登录授权的远程 MCP 服务';
+  String get mcpAuthDesc => '사용에필요브라우저로그인인증원격 MCP 서비스';
 
   @override
   String get mcpAuthClientId => 'client_id(선택 사항)';
 
   @override
-  String get mcpAuthClientIdHint => '预注册的客户端 ID;留空则尝试动态注册';
+  String get mcpAuthClientIdHint => '사전 등록된 클라이언트 ID;비움빈그렇다면동적 등록 시도';
 
   @override
-  String get mcpAuthServer => '授权服务器(선택 사항)';
+  String get mcpAuthServer => '인증서버(선택 사항)';
 
   @override
-  String get mcpAuthServerHint => '覆盖自动发现的授权服务器地址';
+  String get mcpAuthServerHint => '덮어쓰기자동발견인증서버주소';
 
   @override
-  String get mcpAuthAdvanced => '고급认证옵션';
+  String get mcpAuthAdvanced => '고급인증옵션';
 
   @override
-  String get mcpAuthLogin => '登录 / 重新授权';
+  String get mcpAuthLogin => '로그인 / 다시인증';
 
   @override
-  String get mcpAuthReauthorize => '重新授权';
+  String get mcpAuthReauthorize => '다시인증';
 
   @override
-  String get mcpAuthLogout => '退出登录';
+  String get mcpAuthLogout => '로그아웃로그인';
 
   @override
-  String get mcpAuthCancel => '취소授权';
+  String get mcpAuthCancel => '취소인증';
 
   @override
-  String get mcpAuthInProgress => '대기浏览器授权…';
+  String get mcpAuthInProgress => '대기브라우저인증…';
 
   @override
-  String get mcpAuthInProgressHint => '已在系统浏览器열기登录页,授权완료后将自动返回并连接';
+  String get mcpAuthInProgressHint => '됨에시스템브라우저열기로그인페이지,인증완료후을자동뒤로 가기및연결';
 
   @override
-  String get mcpAuthSaveFirst => '저장服务器구성后,即可在此发起登录授权';
+  String get mcpAuthSaveFirst => '저장서버구성후,그로 충분에여기서 시작로그인인증';
 
   @override
   String mcpAuthFailed(String message) {
-    return '授权실패:$message';
+    return '인증실패:$message';
   }
 
   @override
-  String get mcpAuthStatusLabel => '授权상태';
+  String get mcpAuthStatusLabel => '인증상태';
 
   @override
-  String get mcpAuthStatusAuthorized => '已登录';
+  String get mcpAuthStatusAuthorized => '로그인됨';
 
   @override
-  String get mcpAuthStatusUnauthorized => '未登录';
+  String get mcpAuthStatusUnauthorized => '로그인 안 됨';
 
   @override
-  String get mcpAuthStatusAuthorizing => '授权중간';
+  String get mcpAuthStatusAuthorizing => '인증중간';
 
   @override
-  String get mcpAuthSuccess => '授权成功,已连接';
+  String get mcpAuthSuccess => '인증성공,연결됨';
 
   @override
-  String get settingsReconnect => '重新连接';
+  String get settingsReconnect => '다시연결';
 
   @override
-  String get settingsAddMcpServer => '添加 MCP 서버';
+  String get settingsAddMcpServer => '추가 MCP 서버';
 
   @override
-  String get settingsContainer => '容器与镜像';
+  String get settingsContainer => '컨테이너 및 이미지';
 
   @override
-  String get settingsContainerSubtitle => 'PRoot 容器、镜像与初始化';
+  String get settingsContainerSubtitle => 'PRoot 컨테이너、이미지 및 초기화';
 
   @override
-  String get commonEdit => '编辑';
+  String get commonEdit => '수정';
 
   @override
-  String get commonSwitch => '切换';
+  String get commonSwitch => '전환';
 
   @override
   String get chatOpenTerminal => '열기터미널';
@@ -2033,14 +2044,14 @@ class AppLocalizationsKo extends AppLocalizations {
 
   @override
   String terminalStartFailed(String message) {
-    return '없음法시작터미널:';
+    return '없음방법시작터미널:';
   }
 
   @override
   String get terminalRetry => '재시도';
 
   @override
-  String get terminalNoOpenTabs => '没有열기的터미널태그';
+  String get terminalNoOpenTabs => '없음열기터미널태그';
 
   @override
   String get terminalNewTab => '새로 만들기태그';
@@ -2052,10 +2063,10 @@ class AppLocalizationsKo extends AppLocalizations {
   String get terminalSettingsTitle => '터미널설정';
 
   @override
-  String get terminalThemeTitle => '配色主题';
+  String get terminalThemeTitle => '색상 구성테마';
 
   @override
-  String get terminalThemeFollowApp => '跟随应用';
+  String get terminalThemeFollowApp => '따르기앱';
 
   @override
   String get terminalThemeTermiusDark => 'Termius Dark';
@@ -2076,83 +2087,83 @@ class AppLocalizationsKo extends AppLocalizations {
   String get terminalThemeGithubDark => 'GitHub Dark';
 
   @override
-  String get terminalFontSizeTitle => '字体크기';
+  String get terminalFontSizeTitle => '글꼴크기';
 
   @override
-  String get terminalCursorStyleTitle => '光标样式';
+  String get terminalCursorStyleTitle => '커서 스타일';
 
   @override
-  String get terminalCursorBlock => '方块';
+  String get terminalCursorBlock => '블록';
 
   @override
-  String get terminalCursorUnderline => '下划线';
+  String get terminalCursorUnderline => '밑줄';
 
   @override
-  String get terminalCursorBar => '竖线';
+  String get terminalCursorBar => '세로선';
 
   @override
-  String get terminalFontTitle => '터미널字体';
+  String get terminalFontTitle => '터미널글꼴';
 
   @override
-  String get terminalFontDefault => '系统等宽';
+  String get terminalFontDefault => '시스템고정 폭';
 
   @override
   String get terminalFontBuiltin => 'JetBrains Mono';
 
   @override
-  String get settingsGeneral => '偏好설정';
+  String get settingsGeneral => '선호도설정';
 
   @override
   String get settingsGeneralModels => '모델';
 
   @override
-  String get settingsAutoRemoveStaleModels => '拉取모델后自动移除없음效모델';
+  String get settingsAutoRemoveStaleModels => '모델 가져오기후자동제거없음효과모델';
 
   @override
-  String get settingsAutoRemoveStaleModelsDesc => '拉取成功后,移除远端已不存在的로컬모델개目';
+  String get settingsAutoRemoveStaleModelsDesc => '풀성공후,원격 제거됨없음에로컬모델개목표';
 
   @override
   String get settingsGeneralSession => '세션';
 
   @override
-  String get settingsStartupSession => '시작时세션';
+  String get settingsStartupSession => '시작시세션';
 
   @override
-  String get settingsStartupSessionNew => '新开세션';
+  String get settingsStartupSessionNew => '새로 열기세션';
 
   @override
-  String get settingsStartupSessionNewDesc => '复用尚未发送过消息的空세션,否则새로 만들기';
+  String get settingsStartupSessionNewDesc => '아직 재사용전송지남메시지빈세션,그렇지 않으면새로 만들기';
 
   @override
-  String get settingsStartupSessionRecent => '열기最近세션';
+  String get settingsStartupSessionRecent => '열기최근세션';
 
   @override
-  String get settingsStartupSessionRecentDesc => '直接进入最近更新的세션';
+  String get settingsStartupSessionRecentDesc => '최근 항목으로 바로 이동업데이트세션';
 
   @override
-  String get settingsDeleteExternalWorkspaceSessions => '삭제外部작업 영역채팅 기록';
+  String get settingsDeleteExternalWorkspaceSessions => '삭제외부작업 영역채팅 기록';
 
   @override
   String get settingsDeleteExternalWorkspaceSessionsDesc =>
-      '移除外部로컬작업 영역时,一并삭제该작업 영역的채팅 기록';
+      '외부 제거로컬작업 영역시,함께삭제해당작업 영역채팅 기록';
 
   @override
-  String get settingsGeneralInput => '输入';
+  String get settingsGeneralInput => '입력';
 
   @override
-  String get settingsEnterToSend => '回车键发送消息';
+  String get settingsEnterToSend => '엔터 키전송메시지';
 
   @override
-  String get settingsEnterToSendDesc => '닫기后回车换行,需点发送按钮发送';
+  String get settingsEnterToSendDesc => '닫기후엔터 줄바꿈,필요클릭전송버튼전송';
 
   @override
-  String get settingsCompactionThreshold => '自动压缩阈值';
+  String get settingsCompactionThreshold => '자동압축 임계값';
 
   @override
-  String get settingsCompactionThresholdDesc => '上下文占用达到窗口的该比例时自动压缩';
+  String get settingsCompactionThresholdDesc => '상하파일 점유율 도달에창 비율시자동압축';
 
   @override
-  String get settingsCompactionThresholdInputHint => '填 1-100 的整数百分比';
+  String get settingsCompactionThresholdInputHint => '입력 1-100 정수 백분율';
 
   @override
   String settingsPercentValue(int percent) {
@@ -2160,69 +2171,69 @@ class AppLocalizationsKo extends AppLocalizations {
   }
 
   @override
-  String get settingsGeneralNetwork => '网络';
+  String get settingsGeneralNetwork => '네트워크';
 
   @override
-  String get settingsFirstByteTimeout => '首字节超时';
+  String get settingsFirstByteTimeout => '첫 바이트시간 초과';
 
   @override
-  String get settingsFirstByteTimeoutDesc => '대기首个응답块的最长时间';
+  String get settingsFirstByteTimeoutDesc => '대기첫개응답블록 최대시간';
 
   @override
-  String get settingsStreamIdleTimeout => '数据块间隔超时';
+  String get settingsStreamIdleTimeout => '데이터블록 간격시간 초과';
 
   @override
-  String get settingsStreamIdleTimeoutDesc => '两个응답块之间的最长대기';
+  String get settingsStreamIdleTimeoutDesc => '두개응답블록 간 최대대기';
 
   @override
-  String get settingsTimeoutUnlimited => '不限制';
+  String get settingsTimeoutUnlimited => '제한 없음';
 
   @override
   String settingsTimeoutSeconds(int seconds) {
-    return '$seconds 秒';
+    return '$seconds 초';
   }
 
   @override
-  String get settingsTimeoutInputHint => '单位秒,填 0 表示不限制';
+  String get settingsTimeoutInputHint => '단위초,입력 0 표시제한 없음';
 
   @override
-  String get settingsMaxNetworkRetries => '재시도次数';
+  String get settingsMaxNetworkRetries => '재시도횟수';
 
   @override
-  String get settingsMaxNetworkRetriesDesc => '网络실패后的指数退避재시도次数';
+  String get settingsMaxNetworkRetriesDesc => '네트워크실패후지수 백오프재시도횟수';
 
   @override
   String settingsRetriesCount(int count) {
-    return '$count 次';
+    return '$count 회';
   }
 
   @override
-  String get settingsRetriesInputHint => '填 0 表示不재시도';
+  String get settingsRetriesInputHint => '입력 0 표시 안 함재시도';
 
   @override
-  String get settingsGeneralTools => '工具';
+  String get settingsGeneralTools => '도구';
 
   @override
-  String get settingsSendfileMaxSize => 'sendFile 单파일上限';
+  String get settingsSendfileMaxSize => 'sendFile 단일파일상제한';
 
   @override
   String get settingsGeneralGoal => '목표(goal)';
 
   @override
-  String get settingsGoalMaxTurns => '최대续跑轮数';
+  String get settingsGoalMaxTurns => '최대연속 실행바퀴수';
 
   @override
-  String get settingsGoalMaxTurnsDesc => '自主循环最多续跑多少轮,达到即중지';
+  String get settingsGoalMaxTurnsDesc => '자율 루프 최대 몇 바퀴 실행바퀴,도달에즉시중지';
 
   @override
-  String get settingsGoalMaxTokens => 'token 预算';
+  String get settingsGoalMaxTokens => 'token 예산';
 
   @override
-  String get settingsGoalMaxTokensDesc => '自主循环累计消耗的输入+输出 token 上限';
+  String get settingsGoalMaxTokensDesc => '자율 루프 누적 입력 소비입력+출력 token 상제한';
 
   @override
   String settingsTurnsValue(int count) {
-    return '$count 轮';
+    return '$count 바퀴';
   }
 
   @override
@@ -2231,16 +2242,16 @@ class AppLocalizationsKo extends AppLocalizations {
   }
 
   @override
-  String get settingsGoalMaxTurnsInputHint => '填大于 0 的整数轮数';
+  String get settingsGoalMaxTurnsInputHint => '확장 입력에 0 정수바퀴수';
 
   @override
-  String get settingsGoalMaxTokensInputHint => '填不小于 1000 的整数';
+  String get settingsGoalMaxTokensInputHint => '작게 입력에 1000 정수';
 
   @override
-  String get settingsSendfileMaxSizeDesc => '单个파일크기上限,超过则整批发送실패';
+  String get settingsSendfileMaxSizeDesc => '단일개파일크기상제한,초과그렇다면일괄전송실패';
 
   @override
-  String get settingsSendfileMaxSizeInputHint => '单位 MB,填大于 0 的整数';
+  String get settingsSendfileMaxSizeInputHint => '단위 MB,확장 입력에 0 정수';
 
   @override
   String settingsMbValue(int mb) {
@@ -2249,79 +2260,79 @@ class AppLocalizationsKo extends AppLocalizations {
 
   @override
   String providerModelsAlignedRemoved(int count) {
-    return '已移除 $count 个远端已不存在的모델';
+    return '됨제거 $count 개원격됨없음에모델';
   }
 
   @override
-  String get tokenStatsTitle => 'Token 统计';
+  String get tokenStatsTitle => 'Token 통계';
 
   @override
-  String get tokenStatsPeriodToday => '今일';
+  String get tokenStatsPeriodToday => '오늘';
 
   @override
-  String get tokenStatsPeriod7d => '近7일';
+  String get tokenStatsPeriod7d => '최근 7일';
 
   @override
-  String get tokenStatsPeriod30d => '近30일';
+  String get tokenStatsPeriod30d => '가까운30일';
 
   @override
   String get tokenStatsPeriodAll => '전체';
 
   @override
-  String get tokenStatsTotal => '总消耗';
+  String get tokenStatsTotal => '총 소비';
 
   @override
-  String get tokenStatsRequests => '요청次数';
+  String get tokenStatsRequests => '요청횟수';
 
   @override
-  String get tokenStatsCost => '费用';
+  String get tokenStatsCost => '비용';
 
   @override
-  String get tokenStatsCacheHitRate => '缓存命중간率';
+  String get tokenStatsCacheHitRate => '캐시명령중간비율';
 
   @override
   String tokenStatsCacheReadWrite(String read, String write) {
-    return '读取 $read / 写入 $write';
+    return '읽기 $read / 쓰기 $write';
   }
 
   @override
-  String get tokenStatsTrend => '消耗趋势';
+  String get tokenStatsTrend => '소비추세';
 
   @override
-  String get tokenStatsLegendInput => '输入';
+  String get tokenStatsLegendInput => '입력';
 
   @override
-  String get tokenStatsLegendOutput => '输出';
+  String get tokenStatsLegendOutput => '출력';
 
   @override
-  String get tokenStatsLegendCached => '缓存';
+  String get tokenStatsLegendCached => '캐시';
 
   @override
-  String get tokenStatsProvider => '供应商统计';
+  String get tokenStatsProvider => '제공자통계';
 
   @override
-  String get tokenStatsModel => '모델统计';
+  String get tokenStatsModel => '모델통계';
 
   @override
   String tokenStatsSuccessRate(String rate) {
-    return '成功率 $rate';
+    return '성공률 $rate';
   }
 
   @override
-  String get tokenStatsRecentCalls => '调用기록';
+  String get tokenStatsRecentCalls => '호출기록';
 
   @override
   String get tokenStatsUnknown => '알 수 없음';
 
   @override
-  String get tokenStatsNoData => '暂없음数据';
+  String get tokenStatsNoData => '임시없음데이터';
 
   @override
-  String get tokenStatsCallsSuffix => '次调用';
+  String get tokenStatsCallsSuffix => '호출 횟수';
 
   @override
   String tokenStatsCallsSuffix2(int count) {
-    return '$count 次调用';
+    return '$count 회호출';
   }
 
   @override
@@ -2331,69 +2342,69 @@ class AppLocalizationsKo extends AppLocalizations {
   String get tokenStatsColReasoningEffort => '사고 강도';
 
   @override
-  String get tokenStatsColProvider => '供应商';
+  String get tokenStatsColProvider => '제공자';
 
   @override
-  String get tokenStatsColInput => '输入';
+  String get tokenStatsColInput => '입력';
 
   @override
-  String get tokenStatsColOutput => '输出';
+  String get tokenStatsColOutput => '출력';
 
   @override
-  String get tokenStatsColCachedRead => '缓存读取';
+  String get tokenStatsColCachedRead => '캐시읽기';
 
   @override
-  String get tokenStatsColCachedWrite => '缓存写入';
+  String get tokenStatsColCachedWrite => '캐시쓰기';
 
   @override
-  String get tokenStatsColCacheHitRate => '命중간率';
+  String get tokenStatsColCacheHitRate => '명령중간비율';
 
   @override
-  String get tokenStatsColTtfb => '首字节';
+  String get tokenStatsColTtfb => '첫 바이트';
 
   @override
   String get tokenStatsColDuration => '소요 시간';
 
   @override
-  String get tokenStatsColTime => '时间';
+  String get tokenStatsColTime => '시간';
 
   @override
   String get tokenStatsColStatus => '상태';
 
   @override
-  String get tokenStatsColCost => '费用';
+  String get tokenStatsColCost => '비용';
 
   @override
   String tokenStatsPage(int page, int total) {
-    return '第 $page / $total 页';
+    return '제 $page / $total 페이지';
   }
 
   @override
   String tokenStatsRetries(int count) {
-    return '재시도 $count 次';
+    return '재시도 $count 회';
   }
 
   @override
   String get tokenStatsReset => '재설정';
 
   @override
-  String get tokenStatsResetTitle => '재설정 Token 统计';
+  String get tokenStatsResetTitle => '재설정 Token 통계';
 
   @override
-  String get tokenStatsResetConfirm => '将清空전체调用기록,此작업不可恢复。확인재설정?';
+  String get tokenStatsResetConfirm => '을청소빈전체호출기록,이작업불가복원。확인재설정?';
 
   @override
-  String get tokenStatsFilterAllProviders => '전체供应商';
+  String get tokenStatsFilterAllProviders => '전체제공자';
 
   @override
   String get tokenStatsFilterAllModels => '전체모델';
 
   @override
-  String get tokenStatsFilterClear => '清除筛选';
+  String get tokenStatsFilterClear => '지우기필터';
 
   @override
   String tokenStatsFilterProvider(String name) {
-    return '供应商:$name';
+    return '제공자:$name';
   }
 
   @override
@@ -2403,75 +2414,75 @@ class AppLocalizationsKo extends AppLocalizations {
 
   @override
   String tokenStatsProviderKeys(int count) {
-    return '$count 个密钥';
+    return '$count 개비밀번호';
   }
 
   @override
-  String get tokenStatsRequestsUnit => '次요청';
+  String get tokenStatsRequestsUnit => '요청 횟수';
 
   @override
-  String get tokenStatsHourSuffix => '时';
+  String get tokenStatsHourSuffix => '시';
 
   @override
-  String get tokenStatsPrevPage => '上一页';
+  String get tokenStatsPrevPage => '이전 페이지';
 
   @override
-  String get tokenStatsNextPage => '下一页';
+  String get tokenStatsNextPage => '다음 페이지';
 
   @override
-  String get settingsCategoryData => '数据与诊断';
+  String get settingsCategoryData => '데이터및 진단';
 
   @override
-  String get gitActionClone => '克隆';
+  String get gitActionClone => '클론';
 
   @override
-  String get gitActionInit => '初始化';
+  String get gitActionInit => '초기화';
 
   @override
-  String get gitActionMerge => '合并브랜치';
+  String get gitActionMerge => '병합브랜치';
 
   @override
-  String get gitActionStageAll => '전체暂存';
+  String get gitActionStageAll => '전체스테이징';
 
   @override
   String get gitCloneUrlHint => 'https://github.com/user/repo.git';
 
   @override
-  String get gitComputingDiff => '正在计算差异…';
+  String get gitComputingDiff => '중차이 계산…';
 
   @override
   String get gitCreateTagTitle => '새로 만들기태그';
 
   @override
   String gitCreateTrackingBranch(String branch) {
-    return '从远程브랜치 $branch 만들기로컬跟踪브랜치并切换?';
+    return '로부터원격브랜치 $branch 만들기로컬추적브랜치및전환?';
   }
 
   @override
-  String get gitCredentialsAndIdentity => '凭据与署名';
+  String get gitCredentialsAndIdentity => '자격 증명및서명';
 
   @override
   String gitDetachedHeadWarning(String ref) {
-    return '切换到태그 $ref 将进入 detached HEAD 상태——不处于任何브랜치上,新提交不属于任何브랜치。확인继续?';
+    return '전환에태그 $ref 을진입 detached HEAD 상태——처리 안 함에어떤브랜치상,새커밋속하지 않음에어떤브랜치。확인계속?';
   }
 
   @override
   String gitMergeConfirm(String branch, String current) {
-    return '확인将브랜치 $branch 合并到현재브랜치($current)吗?';
+    return '확인을브랜치 $branch 병합에현재브랜치($current)~?';
   }
 
   @override
-  String get gitMergeNoFf => '만들기合并提交(--no-ff)';
+  String get gitMergeNoFf => '만들기병합커밋(--no-ff)';
 
   @override
-  String get gitOpenInEditor => '在编辑器중간열기';
+  String get gitOpenInEditor => '에편집기기중간열기';
 
   @override
-  String get gitSwitchBranch => '切换브랜치';
+  String get gitSwitchBranch => '전환브랜치';
 
   @override
   String gitSwitchConfirm(String ref) {
-    return '확인切换到 $ref?';
+    return '확인전환에 $ref?';
   }
 
   @override
@@ -2496,52 +2507,53 @@ class AppLocalizationsKo extends AppLocalizations {
 
   @override
   String gitToastCheckoutFailed(String error) {
-    return '切换실패:$error';
+    return '전환실패:$error';
   }
 
   @override
-  String get gitToastNotRepo => '该디렉토리不是 Git 저장소';
+  String get gitToastNotRepo => '해당디렉토리안예 Git 저장소';
 
   @override
   String gitToastSwitchRepoFailed(String error) {
-    return '切换저장소실패:$error';
+    return '전환저장소실패:$error';
   }
 
   @override
-  String get gitToastDiffFailed => '불러오기差异실패';
+  String get gitToastDiffFailed => '불러오기차이실패';
 
   @override
-  String get gitToastNoDiffForCommit => '暂存区与작업 영역均없음差异,없음法生成提交정보';
+  String get gitToastNoDiffForCommit => '스테이징구역 및작업 영역균등없음차이,없음생성 불가커밋정보';
 
   @override
-  String get gitToastGenerateCommitFailed => 'AI 生成提交정보실패,请检查모델或网络';
+  String get gitToastGenerateCommitFailed => 'AI 생성커밋정보실패,부탁확인모델또는네트워크';
 
   @override
-  String get diffBinaryFile => '二进制파일,不支持文本差异对比';
+  String get diffBinaryFile => '2진수파일,지원 안 함파일본차이에비교';
 
   @override
-  String get diffFileTooLarge => '파일过大,已跳过差异计算';
+  String get diffFileTooLarge => '파일과다,됨건너뛰기차이 계산';
 
   @override
-  String get diffFileTooLargeDesc => '超过 2000 行或含超长行的파일不做行级 diff,以避免渲染与内存压力。';
+  String get diffFileTooLargeDesc =>
+      '초과 2000 줄 또는 초과 길이 줄파일행 단위 수행 안 함 diff,렌더링 및 메모리 압력 방지를 위해。';
 
   @override
-  String get diffNoChanges => '없음差异';
+  String get diffNoChanges => '없음차이';
 
   @override
-  String get back => '返回';
+  String get back => '뒤로 가기';
 
   @override
   String get chatOpenGit => '열기 Git';
 
   @override
-  String get switchLabel => '切换';
+  String get switchLabel => '전환';
 
   @override
-  String get credentialEdit => '编辑凭据';
+  String get credentialEdit => '편집자격 증명';
 
   @override
-  String get credentialToastSaved => '凭据已저장';
+  String get credentialToastSaved => '자격 증명저장됨';
 
   @override
   String credentialToastSaveFailed(String param1) {
@@ -2549,46 +2561,47 @@ class AppLocalizationsKo extends AppLocalizations {
   }
 
   @override
-  String get credentialToastDeleted => '凭据已삭제';
+  String get credentialToastDeleted => '자격 증명됨삭제';
 
   @override
-  String get credentialToastIdentitySaved => '署名与저장소地址已저장';
+  String get credentialToastIdentitySaved => '서명및저장소주소저장됨';
 
   @override
-  String get credentialEmptyHint => '尚未添加凭据,点右上角 + 添加';
+  String get credentialEmptyHint => '아직추가자격 증명,클릭오른쪽 상단 + 추가';
 
   @override
-  String get credentialEmptyTitle => '暂없음 Git 자격 증명';
+  String get credentialEmptyTitle => '임시없음 Git 자격 증명';
 
   @override
-  String get credentialEmptyDesc => '구성凭据后,Codecraft 可在推送或拉取代码저장소时自动완료身份认证';
+  String get credentialEmptyDesc =>
+      '구성자격 증명후,Codecraft 가능에푸시또는풀코드저장소시자동완료신원 인증';
 
   @override
-  String get credentialAddManual => '手动添加';
+  String get credentialAddManual => '수동추가';
 
   @override
-  String get gitTabIdentity => '署名';
+  String get gitTabIdentity => '서명';
 
   @override
-  String get gitTabCredentials => '凭据';
+  String get gitTabCredentials => '자격 증명';
 
   @override
-  String get gitIdentityTitle => '提交署名';
+  String get gitIdentityTitle => '커밋서명';
 
   @override
   String gitIdentityCodespace(String name) {
-    return '현재连接 GitHub Codespace $name';
+    return '현재연결 GitHub Codespace $name';
   }
 
   @override
-  String get gitRepoUrlTitle => '저장소地址';
+  String get gitRepoUrlTitle => '저장소주소';
 
   @override
   String get gitRemoteUrl => 'remote.origin.url';
 
   @override
   String gitCredentialsCount(int param1) {
-    return '凭据 ($param1)';
+    return '자격 증명 ($param1)';
   }
 
   @override
@@ -2596,11 +2609,11 @@ class AppLocalizationsKo extends AppLocalizations {
 
   @override
   String codespacesNetworkError(String error) {
-    return '网络오류:$error';
+    return '네트워크오류:$error';
   }
 
   @override
-  String get codespacesAccount => '账号';
+  String get codespacesAccount => '계정';
 
   @override
   String codespacesCount(int count) {
@@ -2608,19 +2621,19 @@ class AppLocalizationsKo extends AppLocalizations {
   }
 
   @override
-  String get codespacesEmptyTitle => '还没有 Codespace';
+  String get codespacesEmptyTitle => '아직없음 Codespace';
 
   @override
-  String get codespacesEmptyDesc => '在 GitHub 上만들기 Codespace 后,这里即可列出并连接';
+  String get codespacesEmptyDesc => '에 GitHub 상만들기 Codespace 후,여기목록 및 연결 가능연결';
 
   @override
-  String get codespacesCreateOnWeb => '在 github.com 새로 만들기';
+  String get codespacesCreateOnWeb => '에 github.com 새로 만들기';
 
   @override
   String get codespacesRefresh => '새로고침';
 
   @override
-  String get codespacesOpenInBrowser => '在浏览器열기';
+  String get codespacesOpenInBrowser => '에브라우저열기';
 
   @override
   String get codespacesStart => '시작';
@@ -2633,7 +2646,7 @@ class AppLocalizationsKo extends AppLocalizations {
 
   @override
   String codespacesDeleteConfirm(String name) {
-    return '삭제하시겠습니까? $name?该작업不可撤销';
+    return '삭제하시겠습니까? $name?해당작업되돌릴 수 없음';
   }
 
   @override
@@ -2650,47 +2663,47 @@ class AppLocalizationsKo extends AppLocalizations {
 
   @override
   String codespacesLastUsed(String time) {
-    return '最近使用 $time';
+    return '최근 사용 $time';
   }
 
   @override
   String get codespacesNoRepo => '알 수 없음저장소';
 
   @override
-  String get codespacesUncommitted => '有未提交改动';
+  String get codespacesUncommitted => '있음미커밋변경';
 
   @override
   String get codespacesMoreActions => '더보기작업';
 
   @override
-  String get editorLoadFailed => '없음法读取该파일';
+  String get editorLoadFailed => '없음방법해당 읽기파일';
 
   @override
   String get editorSaveFailed => '저장 실패';
 
   @override
-  String get editorSaved => '已저장';
+  String get editorSaved => '저장됨';
 
   @override
-  String get editorCharacters => '角色';
+  String get editorCharacters => '역할';
 
   @override
-  String get characterTitle => '角色管理';
+  String get characterTitle => '역할관리';
 
   @override
-  String get characterNew => '새로 만들기角色';
+  String get characterNew => '새로 만들기역할';
 
   @override
-  String get characterEdit => '编辑角色';
+  String get characterEdit => '편집역할';
 
   @override
-  String get characterEmpty => '暂없음角色';
+  String get characterEmpty => '임시없음역할';
 
   @override
-  String get characterSearchHint => '검색角色이름、별칭或태그';
+  String get characterSearchHint => '검색역할이름、별칭또는태그';
 
   @override
-  String get characterSearchEmpty => '未找到匹配角色';
+  String get characterSearchEmpty => '찾을 수 없음에매칭역할';
 
   @override
   String get characterFieldBasic => '기본 정보';
@@ -2699,67 +2712,67 @@ class AppLocalizationsKo extends AppLocalizations {
   String get characterFieldName => '이름';
 
   @override
-  String get characterFieldNameHint => '角色的真实이름';
+  String get characterFieldNameHint => '역할실제이름';
 
   @override
-  String get characterFieldAlias => '별칭/称呼';
+  String get characterFieldAlias => '별칭/호칭';
 
   @override
-  String get characterFieldAliasHint => '故事중간常用的称呼(如:老张、小李)';
+  String get characterFieldAliasHint => '이야기중간자주 사용하는 호칭(예:장 씨、리 씨)';
 
   @override
-  String get characterFieldGender => '性别';
+  String get characterFieldGender => '성별';
 
   @override
-  String get characterFieldGenderHint => '男/女/기타';
+  String get characterFieldGenderHint => '남/여/기타';
 
   @override
   String get characterFieldAge => '나이';
 
   @override
-  String get characterFieldAgeHint => '数字,如 25';
+  String get characterFieldAgeHint => '숫자,예 25';
 
   @override
   String get characterFieldBirthday => '생일';
 
   @override
-  String get characterFieldBirthdayHint => '格式:MM-DD,如 01-15';
+  String get characterFieldBirthdayHint => '형식:MM-DD,예 01-15';
 
   @override
-  String get characterFieldAppearance => '외모描写';
+  String get characterFieldAppearance => '외모묘사';
 
   @override
-  String get characterFieldAppearanceHint => '身높음、体型、发色、瞳色、特征等';
+  String get characterFieldAppearanceHint => '몸높음、체형、머리 색상、눈동자 색상、특성 등';
 
   @override
-  String get characterFieldPersonality => '性格';
+  String get characterFieldPersonality => '성격';
 
   @override
-  String get characterFieldPersonalityHint => '性格特点、동작模式、说话风格等';
+  String get characterFieldPersonalityHint => '성격 특성클릭、동작모드、말하기 스타일 등';
 
   @override
-  String get characterFieldBackground => '배경故事';
+  String get characterFieldBackground => '배경이야기';
 
   @override
-  String get characterFieldBackgroundHint => '成长经历、重要이벤트、家庭배경等';
+  String get characterFieldBackgroundHint => '성장 경험、중요이벤트、가족배경등';
 
   @override
   String get characterFieldGoals => '목표/소망';
 
   @override
-  String get characterFieldGoalsHint => '角色想要达成的事、追求的东西';
+  String get characterFieldGoalsHint => '역할달성하고자 하는 일、추구하는 것';
 
   @override
   String get characterFieldFears => '두려움/약점';
 
   @override
-  String get characterFieldFearsHint => '害怕的事、心理阴影、致命약점等';
+  String get characterFieldFearsHint => '두려운 일、심리적 트라우마、치명적약점등';
 
   @override
   String get characterFieldTags => '태그';
 
   @override
-  String get characterFieldTagsHint => '用逗号分隔,如:主角、反派、魔法师';
+  String get characterFieldTagsHint => '콤마로 구분,예:주인공、악역、마법사';
 
   @override
   String get characterScope => '범위';
@@ -2776,81 +2789,81 @@ class AppLocalizationsKo extends AppLocalizations {
   }
 
   @override
-  String get editorUndo => '撤销';
+  String get editorUndo => '실행 취소';
 
   @override
-  String get editorRedo => '重做';
+  String get editorRedo => '다시 실행';
 
   @override
   String get editorSearch => '검색';
 
   @override
-  String get editorSearchHint => '查找내용';
+  String get editorSearchHint => '찾기내용';
 
   @override
-  String get editorSearchPrev => '上一个';
+  String get editorSearchPrev => '이전';
 
   @override
-  String get editorSearchNext => '下一个';
+  String get editorSearchNext => '다음';
 
   @override
-  String get editorTypeset => '自动排版';
+  String get editorTypeset => '자동조판';
 
   @override
-  String get editorTypesetDone => '已排版,可撤销';
+  String get editorTypesetDone => '됨조판,가능실행 취소';
 
   @override
   String get editorCopy => '복사';
 
   @override
-  String get editorCopied => '已복사到剪贴板';
+  String get editorCopied => '됨복사에클리프보드';
 
   @override
-  String get editorUnsavedState => '未저장';
+  String get editorUnsavedState => '저장 안 됨';
 
   @override
   String editorWordCount(int count) {
-    return '$count 字';
+    return '$count 문자';
   }
 
   @override
-  String get editorNoFile => '还没有열기的파일,从差异页点「在编辑器중간열기」即可';
+  String get editorNoFile => '아직없음열기파일,로부터차이페이지클릭「에편집기기중간열기」그로 충분';
 
   @override
-  String get editorUnsavedTitle => '未저장的修改';
+  String get editorUnsavedTitle => '미저장수정';
 
   @override
-  String get editorUnsavedMessage => '현재파일有未저장的修改,是否저장?';
+  String get editorUnsavedMessage => '현재파일있음미저장수정,확인저장?';
 
   @override
-  String get editorSaveAndExit => '저장并退出';
+  String get editorSaveAndExit => '저장및로그아웃';
 
   @override
-  String get editorSaveAndSwitch => '저장并切换';
+  String get editorSaveAndSwitch => '저장및전환';
 
   @override
-  String get editorDontSave => '不저장';
+  String get editorDontSave => '저장 안 함';
 
   @override
-  String get editorMdPreview => '预览 Markdown';
+  String get editorMdPreview => '미리보기 Markdown';
 
   @override
-  String get editorMdShowSource => '显示源码';
+  String get editorMdShowSource => '표시소스 코드';
 
   @override
-  String get editorIndent => '缩进';
+  String get editorIndent => '들여쓰기';
 
   @override
-  String get editorCursorLeft => '光标左移';
+  String get editorCursorLeft => '커서왼쪽이동';
 
   @override
-  String get editorCursorRight => '光标右移';
+  String get editorCursorRight => '커서오른쪽이동';
 
   @override
-  String get editorSettings => '编辑器설정';
+  String get editorSettings => '편집기기설정';
 
   @override
-  String get editorFontSize => '字体크기';
+  String get editorFontSize => '글꼴크기';
 
   @override
   String editorFontSizeValue(int size) {
@@ -2858,45 +2871,45 @@ class AppLocalizationsKo extends AppLocalizations {
   }
 
   @override
-  String get editorWordWrap => '自动换行';
+  String get editorWordWrap => '자동줄바꿈';
 
   @override
-  String get editorShowIndentGuide => '显示缩进参考线';
+  String get editorShowIndentGuide => '표시들여쓰기참고선';
 
   @override
-  String get editorShowWhitespace => '显示空白符号';
+  String get editorShowWhitespace => '표시빈빈 기호';
 
   @override
   String editorFileTooLarge(int mb) {
-    return '파일过大($mb MB),暂不支持열기';
+    return '파일과다($mb MB),임시지원 안 함열기';
   }
 
   @override
-  String get editorBinaryUnsupported => '二进制파일,暂不支持열기';
+  String get editorBinaryUnsupported => '2진수파일,임시지원 안 함열기';
 
   @override
-  String get editorSaveConflictTitle => '파일已被修改';
+  String get editorSaveConflictTitle => '파일됨수정됨';
 
   @override
   String get editorSaveConflictMessage =>
-      '该파일在你열기之后已被 AI 或기타程序修改。直接저장会覆盖对方的改动。';
+      '해당파일에당신열기의후됨피함 AI 또는기타프로그램 수정。직접저장덮어씀에다른 변경 사항。';
 
   @override
   String editorSaveConflictDiff(String diff) {
-    return '- 磁盘현재내용';
+    return '- 디스크현재내용';
   }
 
   @override
-  String get editorSaveConflictOverwrite => '覆盖磁盘';
+  String get editorSaveConflictOverwrite => '디스크 덮어쓰기';
 
   @override
-  String get editorSaveConflictDiscard => '放弃我的修改';
+  String get editorSaveConflictDiscard => '내 수정 사항 폐기';
 
   @override
   String get editorSaveConflictCancel => '취소';
 
   @override
-  String get editorSaveConflictDiscarded => '已放弃修改并重新载入磁盘내용';
+  String get editorSaveConflictDiscarded => '됨수정 사항 폐기 후 디스크에서 다시 로드내용';
 
   @override
   String editorLineColumn(int line, int column) {
@@ -2904,27 +2917,27 @@ class AppLocalizationsKo extends AppLocalizations {
   }
 
   @override
-  String get codespacesConnect => '连接';
+  String get codespacesConnect => '연결';
 
   @override
-  String get codespacesDisconnect => '断开';
+  String get codespacesDisconnect => '연결 해제';
 
   @override
   String get codespacesGhMissing =>
-      '容器里还没有 gh(GitHub CLI)。请先在터미널명령 실행 codecraft,선택「GitHub Codespaces」场景安装依赖。';
+      '컨테이너 내에없음 gh(GitHub CLI)。부탁먼저에터미널명령 실행 codecraft,선택「GitHub Codespaces」시나리오설치의존성。';
 
   @override
-  String get codespacesExecutionEnv => '执行环境';
+  String get codespacesExecutionEnv => '실행 환경';
 
   @override
-  String get codespacesEnvLocal => '로컬容器';
+  String get codespacesEnvLocal => '로컬컨테이너';
 
   @override
-  String get codespacesEnvCodespace => '远程 Codespace';
+  String get codespacesEnvCodespace => '원격 Codespace';
 
   @override
   String terminalRemoteEnv(String name) {
-    return '远程环境:$name';
+    return '원격환경:$name';
   }
 
   @override
@@ -2937,94 +2950,95 @@ class AppLocalizationsKo extends AppLocalizations {
   String get codespacesRepoSearchHint => '검색저장소';
 
   @override
-  String get codespacesBranch => '브랜치(留空用默认브랜치)';
+  String get codespacesBranch => '브랜치(비움빈사용기본값브랜치)';
 
   @override
-  String get codespacesMachine => '机器规格';
+  String get codespacesMachine => '머신 사양';
 
   @override
-  String get codespacesMachineDefault => '默认规格';
+  String get codespacesMachineDefault => '기본값사양';
 
   @override
   String get codespacesCreate => '만들기';
 
   @override
-  String get codespacesRename => '重命名';
+  String get codespacesRename => '이름 변경';
 
   @override
-  String get codespacesRenameTitle => 'Codespace 显示名';
+  String get codespacesRenameTitle => 'Codespace 표시이름';
 
   @override
-  String get codespacesChangeMachine => '更改머신 유형';
+  String get codespacesChangeMachine => '변경머신 유형';
 
   @override
-  String get codespacesNoMachines => '该저장소没有선택 사항머신 유형';
+  String get codespacesNoMachines => '해당저장소없음선택 사항머신 유형';
 
   @override
   String get codespacesLoadFailed => '불러오기실패';
 
   @override
-  String get codespacesPorts => '端口';
+  String get codespacesPorts => '포트';
 
   @override
-  String get codespacesPortsEmpty => '该 Codespace 还没有转发的端口';
+  String get codespacesPortsEmpty => '해당 Codespace 아직없음전달포트';
 
   @override
-  String get codespacesPortVisibility => '可见性';
+  String get codespacesPortVisibility => '가시성';
 
   @override
-  String get codespacesPortPrivate => '仅自己';
+  String get codespacesPortPrivate => '나만';
 
   @override
-  String get codespacesPortOrg => '组织内';
+  String get codespacesPortOrg => '조직 내부';
 
   @override
-  String get codespacesPortPublic => '公开';
+  String get codespacesPortPublic => '공개';
 
   @override
   String get codespacesPortOpen => '열기';
 
   @override
-  String get codespacesRebuild => '重建容器';
+  String get codespacesRebuild => '컨테이너 재건축';
 
   @override
   String get codespacesRebuildDesc =>
-      '重建会按현재 devcontainer 重新만들기容器:代码与未提交改动保留,容器内已安装的工具与실행상태会丢失。';
+      '재건축 시현재 devcontainer 다시만들기컨테이너:코드및 미커밋변경 사항 유지,컨테이너 내부설치됨도구및실행상태손실됨。';
 
   @override
-  String get codespacesRebuildFull => '完全重建(同时清除缓存的 Docker 镜像,更慢)';
+  String get codespacesRebuildFull => '완전 재건축(동일시지우기캐시 Docker 이미지,더 느림)';
 
   @override
   String get settingsLog => '로그';
 
   @override
-  String get settingsLogSubtitle => '应用실행로그与 AI 요청로그';
+  String get settingsLogSubtitle => '앱실행로그및 AI 요청로그';
 
   @override
   String get logFiles => '로그파일';
 
   @override
-  String get logNoFiles => '还没有로그파일';
+  String get logNoFiles => '아직없음로그파일';
 
   @override
   String logReadFailed(String error) {
-    return '读取로그실패:$error';
+    return '읽기로그실패:$error';
   }
 
   @override
   String get logSearchHint => '검색로그';
 
   @override
-  String get logNoMatch => '현재筛选개件下没有로그';
+  String get logNoMatch => '현재필터개항목하없음로그';
 
   @override
   String get logLevel => '로그수준';
 
   @override
-  String get logLevelDesc => '기록낮음于该수준的로그将被忽略。开发期建议 VERBOSE(전체기록);NONE 닫기로그。';
+  String get logLevelDesc =>
+      '기록낮음에해당수준로그을무시됨。개발 중 권장 사항 VERBOSE(전체기록);NONE 닫기로그。';
 
   @override
-  String get logCopied => '已복사';
+  String get logCopied => '복사됨';
 
   @override
   String logMcpPrefix(String server) {
@@ -3033,42 +3047,42 @@ class AppLocalizationsKo extends AppLocalizations {
 
   @override
   String logSearchResults(int count) {
-    return '匹配 $count 行';
+    return '매칭 $count 행';
   }
 
   @override
   String logShowLastLines(int shown, int total) {
-    return '显示最后 $shown/$total 行';
+    return '표시최대후 $shown/$total 행';
   }
 
   @override
   String logShowLines(int count) {
-    return '显示 $count 行';
+    return '표시 $count 행';
   }
 
   @override
   String get logCopy => '복사';
 
   @override
-  String get logClearFilter => '清除筛选';
+  String get logClearFilter => '지우기필터';
 
   @override
   String get logCopyMenuTitle => '복사로그';
 
   @override
-  String get logCopyLine => '복사本개로그';
+  String get logCopyLine => '복사본개로그';
 
   @override
-  String get logCopyWithStack => '복사本개及堆栈';
+  String get logCopyWithStack => '복사본개및 스택 추적';
 
   @override
-  String get logCopyMessage => '복사消息내용';
+  String get logCopyMessage => '복사메시지내용';
 
   @override
-  String get logFollowLatest => '实时滚动';
+  String get logFollowLatest => '실제시스크롤';
 
   @override
-  String get logFileLocation => '로그파일位于 Android/data/<包名>/files/logs/。';
+  String get logFileLocation => '로그파일위치에 Android/data/<패키지명>/files/logs/。';
 
   @override
   String get logLevelVerbose => '자세히';
@@ -3090,59 +3104,59 @@ class AppLocalizationsKo extends AppLocalizations {
 
   @override
   String get credentialTokenHint =>
-      '建议用带 codespace 범위的 GitHub 令牌,填一次同时供 Git 推送与 Codespaces 登录使用';
+      '권장하는 대로 codespace 범위 GitHub 토큰,한 번 입력시제공 Git 푸시및 Codespaces 로그인사용';
 
   @override
-  String get credentialHostOptional => '主机(선택 사항)';
+  String get credentialHostOptional => '호스트(선택 사항)';
 
   @override
-  String get credentialHostAny => '留空 = 所有主机';
+  String get credentialHostAny => '비움빈 = 장소있음호스트';
 
   @override
-  String get credentialHostHint => '只在需要给特定主机单独配令牌时才填,例如 gitlab.com';
+  String get credentialHostHint => '단지에필요에게특정 호스트에만 개별 토큰 구성시입력,예 gitlab.com';
 
   @override
-  String get codespacesNeedCredentialTitle => '尚미설정 GitHub 자격 증명';
+  String get codespacesNeedCredentialTitle => '아직미설정 GitHub 자격 증명';
 
   @override
   String get codespacesNeedCredentialDesc =>
-      'Codespaces 使用「Git 자격 증명」里的令牌(需含 codespace 범위),不再单独填写。';
+      'Codespaces 사용「Git 자격 증명」안의 토큰(포함 필요 codespace 범위),더 이상 개별 입력。';
 
   @override
-  String get codespacesGoToCredentials => '去填写 Git 자격 증명';
+  String get codespacesGoToCredentials => '채우기 위해 가다 Git 자격 증명';
 
   @override
-  String get credentialAllHosts => '所有主机';
+  String get credentialAllHosts => '장소있음호스트';
 
   @override
-  String get credentialUsernameAuto => '用户名自动推导';
+  String get credentialUsernameAuto => '사용자명자동추론';
 
   @override
-  String get chatMentionSkill => '@ 技能';
+  String get chatMentionSkill => '@ 기술';
 
   @override
-  String get chatMentionSkillEmpty => '还没有사용 가능的技能,先在설정里가져오기或새로 만들기一个。';
+  String get chatMentionSkillEmpty => '아직없음사용 가능기술,먼저에설정안에가져오기또는새로 만들기하나개。';
 
   @override
-  String get chatMentionSkillManage => '管理技能';
+  String get chatMentionSkillManage => '관리기술';
 
   @override
   String get chatPickFile => '# 파일';
 
   @override
-  String get chatPickFileParent => '上一级';
+  String get chatPickFileParent => '상위';
 
   @override
-  String get chatPickFileEmpty => '这个디렉토리是空的';
+  String get chatPickFileEmpty => '이디렉토리예빈';
 
   @override
-  String get mentionHintSkill => '继续输入可筛选技能';
+  String get mentionHintSkill => '계속입력가능필터기술';
 
   @override
-  String get mentionHintFile => '继续输入可筛选파일';
+  String get mentionHintFile => '계속입력가능필터파일';
 
   @override
-  String get fileBrowserError => '读取디렉토리실패';
+  String get fileBrowserError => '읽기디렉토리실패';
 
   @override
   String get fileBrowserRefresh => '새로고침';
@@ -3169,51 +3183,51 @@ class AppLocalizationsKo extends AppLocalizations {
 
   @override
   String fileBrowserDeleteFolderConfirm(String name) {
-    return '삭제하시겠습니까?폴더「$name」及其전체내용?';
+    return '삭제하시겠습니까?폴더「$name」및전체내용?';
   }
 
   @override
-  String get fileBrowserCreateFailed => '생성에 실패했습니다,可能已存在同名개或없음写入权限';
+  String get fileBrowserCreateFailed => '생성에 실패했습니다,가능됨저장에동일 이름개또는없음쓰기권한';
 
   @override
-  String get fileBrowserRenameFailed => '이름 변경에 실패했습니다,可能已存在同名개';
+  String get fileBrowserRenameFailed => '이름 변경에 실패했습니다,가능됨저장에동일 이름개';
 
   @override
   String get fileBrowserDeleteFailed => '삭제에 실패했습니다';
 
   @override
-  String get fileBrowserPasteHere => '붙여넣기到此处';
+  String get fileBrowserPasteHere => '붙여넣기에여기';
 
   @override
-  String get fileBrowserExtract => '解压';
+  String get fileBrowserExtract => '압축 해제';
 
   @override
-  String get fileBrowserExtractFailed => '解压실패';
+  String get fileBrowserExtractFailed => '압축 해제실패';
 
   @override
-  String get fileBrowserExtractConflictTitle => '목표폴더已存在';
+  String get fileBrowserExtractConflictTitle => '목표폴더됨저장에';
 
   @override
   String fileBrowserExtractConflict(String name) {
-    return '同디렉토리下已有「$name」,解压会先覆盖它的내용。';
+    return '동일디렉토리하됨있음「$name」,압축 해제먼저 덮어씀내용。';
   }
 
   @override
-  String get fileBrowserExtractOverwrite => '覆盖并解压';
+  String get fileBrowserExtractOverwrite => '덮어쓰고압축 해제';
 
   @override
-  String get fileBrowserPasteConflictTitle => '同名파일已存在';
+  String get fileBrowserPasteConflictTitle => '동일 이름파일됨저장에';
 
   @override
   String fileBrowserPasteConflictMessage(String name) {
-    return '목표位置已存在同名프로젝트「$name」,是否覆盖?';
+    return '목표위치됨저장에동일 이름프로젝트「$name」,확인덮어쓰기?';
   }
 
   @override
-  String get fileBrowserClipboardCut => '已잘라내기';
+  String get fileBrowserClipboardCut => '됨잘라내기';
 
   @override
-  String get fileBrowserClipboardCopy => '已복사';
+  String get fileBrowserClipboardCopy => '복사됨';
 
   @override
   String get commonCopy => '복사';
@@ -3225,42 +3239,42 @@ class AppLocalizationsKo extends AppLocalizations {
   String get commonPaste => '붙여넣기';
 
   @override
-  String get workspacePickWritingFolder => '写作디렉토리';
+  String get workspacePickWritingFolder => '글쓰기디렉토리';
 
   @override
-  String get writingFolderNeedAccessTitle => '需要存储访问权限';
+  String get writingFolderNeedAccessTitle => '필요저장소접근권한';
 
   @override
   String get writingFolderNeedAccessDesc =>
-      '读取手机里的「AI写作」디렉토리需要「所有파일访问权限」。也可以跳过,直接在下一步선택디렉토리。';
+      '휴대폰에서 읽기「AI글쓰기」디렉토리필요「장소있음파일접근권한」。또한 가능건너뛰기,직접에하단계선택디렉토리。';
 
   @override
-  String get writingFolderGrant => '去授权';
+  String get writingFolderGrant => '권한 해제';
 
   @override
   String writingFolderSet(String path) {
-    return '写作디렉토리已设为 $path';
+    return '글쓰기디렉토리됨설정를 위해 $path';
   }
 
   @override
   String get modelAuto => 'Auto Model';
 
   @override
-  String get modelAutoDesc => '按任务自动선택最合适的모델';
+  String get modelAutoDesc => '작업별자동선택가장 적합모델';
 
   @override
   String get sessionExport => '내보내기세션';
 
   @override
   String sessionExportDone(String path) {
-    return '已내보내기到 $path';
+    return '됨내보내기에 $path';
   }
 
   @override
   String get sessionExportFailed => '내보내기실패';
 
   @override
-  String get sessionBatchSelect => '批量선택';
+  String get sessionBatchSelect => '일괄선택';
 
   @override
   String sessionSelectedCount(String count) {
@@ -3274,16 +3288,16 @@ class AppLocalizationsKo extends AppLocalizations {
   String get sessionCancelSelect => '취소';
 
   @override
-  String get sessionDeleteSelected => '삭제所选';
+  String get sessionDeleteSelected => '삭제선택';
 
   @override
-  String get sessionDeleteConfirm => '삭제该세션及其전체消息?';
+  String get sessionDeleteConfirm => '삭제해당세션및전체메시지?';
 
   @override
-  String get fileBrowserNeedPermission => '없음法读取该폴더,可能需要存储访问权限';
+  String get fileBrowserNeedPermission => '없음방법해당 읽기폴더,필요할 수 있음저장소접근권한';
 
   @override
-  String get checkpointRewindTitle => '回退到此处';
+  String get checkpointRewindTitle => '롤백에여기';
 
   @override
   String checkpointTargetPrompt(String snippet) {
@@ -3291,40 +3305,41 @@ class AppLocalizationsKo extends AppLocalizations {
   }
 
   @override
-  String get checkpointRestoreCodeAndConversation => '복원代码与세션';
+  String get checkpointRestoreCodeAndConversation => '복원코드및세션';
 
   @override
   String get checkpointRestoreCodeAndConversationDesc =>
-      '回滚작업 영역 파일,并삭제这之后的所有消息,提问会回填到输入框';
+      '롤백작업 영역 파일,및삭제이의후장소있음메시지,질문 내용이 채워짐에입력상자';
 
   @override
-  String get checkpointRestoreConversation => '只복원세션';
+  String get checkpointRestoreConversation => '단지복원세션';
 
   @override
-  String get checkpointRestoreConversationDesc => '삭제这之后的所有消息,작업 영역 파일保持不变';
+  String get checkpointRestoreConversationDesc =>
+      '삭제이의후장소있음메시지,작업 영역 파일변경 없음 유지';
 
   @override
-  String get checkpointRestoreCode => '只복원代码';
+  String get checkpointRestoreCode => '단지복원코드';
 
   @override
-  String get checkpointRestoreCodeDesc => '回滚작업 영역 파일,对话기록保持不变';
+  String get checkpointRestoreCodeDesc => '롤백작업 영역 파일,대화기록변경 없음 유지';
 
   @override
   String checkpointRewindSkipped(int count) {
-    return '$count 个파일因存在기타改动已跳过';
+    return '$count 개파일저장됨에기타변경됨건너뛰기';
   }
 
   @override
   String get chatMoreOptions => '더보기옵션';
 
   @override
-  String get chatActionEdit => '编辑';
+  String get chatActionEdit => '수정';
 
   @override
   String get chatActionDelete => '삭제';
 
   @override
-  String get chatEditMessageTitle => '编辑消息';
+  String get chatEditMessageTitle => '편집메시지';
 
   @override
   String get commonConfirm => '확인';
@@ -3339,13 +3354,13 @@ class AppLocalizationsKo extends AppLocalizations {
   String get commonClose => '닫기';
 
   @override
-  String get commonBatchDelete => '批量삭제';
+  String get commonBatchDelete => '일괄삭제';
 
   @override
   String get tabProjects => '프로젝트';
 
   @override
-  String get projectListEmpty => '还没有프로젝트';
+  String get projectListEmpty => '아직없음프로젝트';
 
   @override
   String get workspaceCurrent => '현재';
@@ -3357,150 +3372,151 @@ class AppLocalizationsKo extends AppLocalizations {
   String get projectNew => '새로 만들기프로젝트';
 
   @override
-  String get projectUntitled => '未命名프로젝트';
+  String get projectUntitled => '제목 없음프로젝트';
 
   @override
-  String get projectKindCoding => '编程';
+  String get projectKindCoding => '프로그래밍';
 
   @override
-  String get projectKindCodingDesc => '在沙盒작업 영역里写代码、跑命令、改파일';
+  String get projectKindCodingDesc => '에샌드박스작업 영역안에 쓰기코드、명령 실행、변경파일';
 
   @override
-  String get projectKindWriting => '写作';
+  String get projectKindWriting => '글쓰기';
 
   @override
-  String get projectKindWritingDesc => '在「AI写作」디렉토리里撰写与修改文稿';
+  String get projectKindWritingDesc => '에「AI글쓰기」디렉토리여기서 문서 작성 및 수정';
 
   @override
-  String get projectKindReverse => '应用逆向';
+  String get projectKindReverse => '앱역방향';
 
   @override
-  String get projectKindReverseDesc => '分析 APK、패킷 캡처接口、静态逆向与디버그辅助';
+  String get projectKindReverseDesc => '분석 APK、패킷 캡처인터페이스、정적 역분석 및디버그도움';
 
   @override
   String projectDeleteConfirm(String name) {
-    return '삭제하시겠습니까?프로젝트「$name」?其下所有세션都会一并삭제。';
+    return '삭제하시겠습니까?프로젝트「$name」?기타하장소있음세션모두 함께삭제。';
   }
 
   @override
-  String get installedAppsTitle => '선택应用';
+  String get installedAppsTitle => '선택앱';
 
   @override
-  String get installedAppsSearch => '검색应用名或包名';
+  String get installedAppsSearch => '검색앱이름 또는 패키지명';
 
   @override
-  String get installedAppsEmpty => '没有匹配的应用';
+  String get installedAppsEmpty => '없음매칭앱';
 
   @override
-  String get storagePermissionGrant => '去授权';
+  String get storagePermissionGrant => '권한 해제';
 
   @override
-  String get softwarePermissionsTitle => '软件权限';
+  String get softwarePermissionsTitle => '소프트웨어권한';
 
   @override
-  String get softwarePermissionsSubtitle => '点任一개由系统弹出授权,或跳到对应的系统설정页。';
+  String get softwarePermissionsSubtitle =>
+      '클릭어떤개에 의해시스템팝업인증,또는 건너뜀에에응용시스템설정페이지。';
 
   @override
-  String get systemPermissionsGroup => '系统权限';
+  String get systemPermissionsGroup => '시스템권한';
 
   @override
-  String get permissionStorageTitle => '访问存储空间';
+  String get permissionStorageTitle => '접근저장소빈간격';
 
   @override
-  String get permissionBatteryTitle => '忽略电池优化';
+  String get permissionBatteryTitle => '배터리 최적화 무시';
 
   @override
-  String get permissionBatteryDesc => '允许后台持续실행,减少被杀';
+  String get permissionBatteryDesc => '허용후지속실행,종료 감소';
 
   @override
-  String get permissionAutoStartTitle => '自시작管理';
+  String get permissionAutoStartTitle => '스스로시작관리';
 
   @override
-  String get permissionAutoStartDesc => '允许系统在后台自动拉起应用';
+  String get permissionAutoStartDesc => '허용시스템에후대자동시작앱';
 
   @override
   String get permissionShizukuTitle => 'Shizuku';
 
   @override
-  String get permissionShizukuDesc => '点击前往下载安装 Shizuku';
+  String get permissionShizukuDesc => '클릭클릭전향해하로드설치 Shizuku';
 
   @override
-  String get permissionAllowed => '已允许';
+  String get permissionAllowed => '허용됨';
 
   @override
-  String get permissionNotAllowed => '未允许';
+  String get permissionNotAllowed => '허용 안 됨';
 
   @override
-  String get permissionInstalled => '已安装';
+  String get permissionInstalled => '설치됨';
 
   @override
-  String get permissionNotInstalled => '未安装';
+  String get permissionNotInstalled => '설치 안 됨';
 
   @override
-  String get permissionAppsTitle => '应用列表';
+  String get permissionAppsTitle => '앱목록';
 
   @override
-  String get permissionAppsDesc => '读取已安装应用的이름、包名与版本';
+  String get permissionAppsDesc => '읽기설치됨앱이름、패키지명 및버전';
 
   @override
-  String get apkPathUnavailable => '拿不到这个应用的安装包경로,换一个应用再试。';
+  String get apkPathUnavailable => '가져올 수 없음에이앱설치패키지경로,바꾸기개앱다시 시도。';
 
   @override
-  String get apkExtractHint => '这个프로젝트显示所选 APK 里的파일。首次浏览需要先解压一次。';
+  String get apkExtractHint => '이프로젝트표시선택 APK 안에파일。최초 탐색 시 먼저압축 해제한 번。';
 
   @override
-  String get apkExtractAction => '解压 APK';
+  String get apkExtractAction => '압축 해제 APK';
 
   @override
-  String get apkExtracting => '正在解压…';
+  String get apkExtracting => '중압축 해제…';
 
   @override
-  String get apkExtractFailed => '解压실패,可能没有读取该安装包的权限。';
+  String get apkExtractFailed => '압축 해제실패,가능없음해당 읽기설치패키지권한。';
 
   @override
-  String get terminalAgentTab => 'AI 命令';
+  String get terminalAgentTab => 'AI 명령';
 
   @override
-  String get runModeAuto => '自动模式';
+  String get runModeAuto => '자동모드';
 
   @override
-  String get runModeBuild => '构建模式';
+  String get runModeBuild => '구축모드';
 
   @override
-  String get runModePlan => '计划模式';
+  String get runModePlan => '계획모드';
 
   @override
-  String get runModePlanIntercept => '현재处于计划模式,禁止执行写작업';
+  String get runModePlanIntercept => '현재장소에계획모드,금지쓰기 실행작업';
 
   @override
-  String get runModeBuildAuthorize => 'AI 尝试执行写작업,是否允许?';
+  String get runModeBuildAuthorize => 'AI 시도쓰기 실행작업,확인허용?';
 
   @override
-  String get runModeBuildAllow => '允许';
+  String get runModeBuildAllow => '허용';
 
   @override
-  String get runModeBuildDeny => '拒绝';
+  String get runModeBuildDeny => '거부';
 
   @override
   String runModeSwitchChanged(Object mode) {
-    return '실행模式已切换至 $mode';
+    return '실행모드됨전환까지 $mode';
   }
 
   @override
-  String get commonScrollToBottom => '回到底部';
+  String get commonScrollToBottom => '회에하단';
 
   @override
   String get subagentTitle => '서브 에이전트';
 
   @override
-  String get subagentSubtitle => '모델档位与사용자 정의정의';
+  String get subagentSubtitle => '모델단계 및사용자 정의정의';
 
   @override
   String get subagentTierSubtitle =>
-      '为每个档位绑定제공자与모델。미설정的档位:서브 에이전트정의写死모델时用정의모델,否则상속현재세션모델';
+      '를 위해매개단계 바인딩제공자및모델。미설정단계:서브 에이전트정의하드코딩모델시사용정의모델,그렇지 않으면상속현재세션모델';
 
   @override
-  String get subagentTierSection => '모델档位';
+  String get subagentTierSection => '모델단계';
 
   @override
   String get subagentTierLight => '가벼움';
@@ -3512,13 +3528,13 @@ class AppLocalizationsKo extends AppLocalizations {
   String get subagentTierStrong => '강력';
 
   @override
-  String get subagentTierLightDesc => '只读探索、批量定位、机械改名';
+  String get subagentTierLightDesc => '읽기 전용 탐색、일괄위치 지정、기계적 이름 변경';
 
   @override
-  String get subagentTierStandardDesc => '单파일 수정与표준修复';
+  String get subagentTierStandardDesc => '단일파일 수정및표준수정';
 
   @override
-  String get subagentTierStrongDesc => '跨模块重构、疑难排查与方案设计';
+  String get subagentTierStrongDesc => '모듈 간 리팩토링、문제 해결 및 솔루션 설계';
 
   @override
   String get subagentTierUnset => '미설정(상속현재세션모델)';
@@ -3527,21 +3543,21 @@ class AppLocalizationsKo extends AppLocalizations {
   String get subagentTierPick => '선택모델';
 
   @override
-  String get subagentTierClear => '清除';
+  String get subagentTierClear => '지우기';
 
   @override
-  String get subagentTierCleared => '已清除';
+  String get subagentTierCleared => '지움';
 
   @override
-  String get subagentTierSaved => '已저장';
+  String get subagentTierSaved => '저장됨';
 
   @override
   String subagentTierSheetTitle(String tier) {
-    return '$tier 档모델';
+    return '$tier 파일모델';
   }
 
   @override
-  String get subagentTierSheetHint => '선택该档位使用的제공자与모델';
+  String get subagentTierSheetHint => '선택해당 단계 사용제공자및모델';
 
   @override
   String get subagentTierSheetInherit => '상속현재세션모델';
@@ -3556,34 +3572,34 @@ class AppLocalizationsKo extends AppLocalizations {
   String get subagentStateCompleted => '완료';
 
   @override
-  String get subagentStateFailed => '执行실패';
+  String get subagentStateFailed => '실행실패';
 
   @override
-  String get subagentStateMessage => '来消息';
+  String get subagentStateMessage => '새 메시지';
 
   @override
-  String get subagentViewOutput => '查看输出';
+  String get subagentViewOutput => '보기출력';
 
   @override
   String get subagentOpen => '열기';
 
   @override
-  String get subagentOutputEmpty => '暂없음输出';
+  String get subagentOutputEmpty => '임시없음출력';
 
   @override
-  String get subagentOutputTitle => '서브 에이전트输出';
+  String get subagentOutputTitle => '서브 에이전트출력';
 
   @override
-  String get promptsTitle => '팁词';
+  String get promptsTitle => '팁단어';
 
   @override
-  String get promptsScenarioSection => '场景팁词';
+  String get promptsScenarioSection => '시나리오팁단어';
 
   @override
-  String get promptsSortLongPress => '长按可调整顺序';
+  String get promptsSortLongPress => '길게 눌러 조정 가능순서';
 
   @override
-  String get promptsEmpty => '暂없음사용 가능片段';
+  String get promptsEmpty => '임시없음사용 가능조각';
 
   @override
   String get promptsSourceProject => '프로젝트';
@@ -3604,7 +3620,7 @@ class AppLocalizationsKo extends AppLocalizations {
   String get promptsFieldNumber => '번호';
 
   @override
-  String get promptsFieldNumberPlaceholder => '두 자리 숫자,如 35';
+  String get promptsFieldNumberPlaceholder => '두 자리 숫자,예 35';
 
   @override
   String get promptsFieldTitle => '이름';
@@ -3622,7 +3638,7 @@ class AppLocalizationsKo extends AppLocalizations {
   String get promptsFieldContent => '조각 내용';
 
   @override
-  String get promptsFieldContentPlaceholder => '写모델要遵守的내용';
+  String get promptsFieldContentPlaceholder => '쓰기모델준수해야 함내용';
 
   @override
   String get promptsEditorNew => '새 프롬프트';
@@ -3638,7 +3654,7 @@ class AppLocalizationsKo extends AppLocalizations {
 
   @override
   String get promptsResetConfirm =>
-      '将삭제현재 프로젝트与전역层里的所有사용자 정의팁词,各번호回落到기본 제공팁词。이 작업은 되돌릴 수 없습니다。';
+      '을삭제현재 프로젝트및전역내부의 모든있음사용자 정의팁단어,각번호폴백에기본 제공팁단어。이 작업은 되돌릴 수 없습니다。';
 
   @override
   String get promptsResetAction => '재설정';
@@ -3657,7 +3673,7 @@ class AppLocalizationsKo extends AppLocalizations {
 
   @override
   String promptsBatchDeleteConfirm(int count) {
-    return '선택한 항목을 삭제하시겠습니까? $count 개의 사용자 정의 프롬프트吗?해당 번호는 다음 계층의 소스로 대체됩니다。';
+    return '선택한 항목을 삭제하시겠습니까? $count 개의 사용자 정의 프롬프트~?해당 번호는 다음 계층의 소스로 대체됩니다。';
   }
 
   @override
@@ -3714,7 +3730,7 @@ class AppLocalizationsKo extends AppLocalizations {
   String get novelFieldTags => '소설 태그';
 
   @override
-  String get novelFieldTagsHint => '可다중 선택,也可以사용자 정의';
+  String get novelFieldTagsHint => '가능다중 선택,또한 가능사용자 정의';
 
   @override
   String get novelCustomTagHint => '사용자 정의태그';
@@ -3723,7 +3739,7 @@ class AppLocalizationsKo extends AppLocalizations {
   String get novelFieldWordsPerChapter => '장당 글자 수';
 
   @override
-  String get novelFieldWordsHint => '선택 사항档位,也可以사용자 정의';
+  String get novelFieldWordsHint => '선택 사항단계,또한 가능사용자 정의';
 
   @override
   String get novelCreate => '만들기';
@@ -3735,17 +3751,17 @@ class AppLocalizationsKo extends AppLocalizations {
   String get novelOpen => '열기';
 
   @override
-  String get novelExistingEmpty => '「AI소설」디렉토리里还没有기타小说';
+  String get novelExistingEmpty => '「AI소설」디렉토리안에 있음없음기타소설';
 
   @override
-  String get novelExistingEmptyHint => '把小说폴더放进 AI小说 디렉토리后,再回到这里선택';
+  String get novelExistingEmptyHint => '소설을 넣다폴더넣기 AI소설 디렉토리후,다시 돌아감에여기선택';
 
   @override
   String get novelExistingFailed => '소설 목록 읽기 실패';
 
   @override
   String novelExistingBrief(String title) {
-    return '집필 계속已有小说《$title》,먼저 읽기「소설 자료」与已有章节,了解设定与进度后再动笔。';
+    return '집필 계속됨있음소설《$title》,먼저 읽기「소설 자료」및됨있음장,설정 및 진행 상황후다시 쓰기 시작。';
   }
 
   @override
@@ -3768,7 +3784,7 @@ class AppLocalizationsKo extends AppLocalizations {
 
   @override
   String novelScaffoldFailed(String path) {
-    return '$path 에서 소설 디렉토리를 생성할 수 없음,请检查存储权限后재시도。';
+    return '$path 에서 소설 디렉토리를 생성할 수 없음,부탁확인저장소권한후재시도。';
   }
 
   @override
@@ -3781,7 +3797,7 @@ class AppLocalizationsKo extends AppLocalizations {
   String get agentListEmpty => '사용자 정의 서브 에이전트 없음';
 
   @override
-  String get agentListEmptyHint => '点右上角 + 새로 만들기사용자 정의 서브 에이전트 정의';
+  String get agentListEmptyHint => '클릭오른쪽 상단 + 새로 만들기사용자 정의 서브 에이전트 정의';
 
   @override
   String get agentScopeProject => '현재 프로젝트';
@@ -3815,7 +3831,7 @@ class AppLocalizationsKo extends AppLocalizations {
 
   @override
   String agentDeleteConfirm(Object name) {
-    return '삭제 $name?此작업不可恢复。';
+    return '삭제 $name?이작업불가복원。';
   }
 
   @override
@@ -3971,7 +3987,7 @@ class AppLocalizationsKo extends AppLocalizations {
   String get agentDetail => '서브 에이전트 상세';
 
   @override
-  String get agentDetailHint => '编辑정의;이름 변경 시 정의 파일도 함께 이름 변경';
+  String get agentDetailHint => '편집정의;이름 변경 시 정의 파일도 함께 이름 변경';
 
   @override
   String get promptsFieldType => '유형';
@@ -4119,7 +4135,7 @@ class AppLocalizationsKo extends AppLocalizations {
   String get codespacesIdleTimeoutHint => '휴식 후 자동 중지까지의 분 수（선택 사항）';
 
   @override
-  String get codespacesRetentionHint => '중지后保留일数（선택 사항）';
+  String get codespacesRetentionHint => '중지후보존일수（선택 사항）';
 
   @override
   String get codespacesReadinessTitle => '연결 준비 완료';
@@ -4129,7 +4145,7 @@ class AppLocalizationsKo extends AppLocalizations {
 
   @override
   String get codespacesReadinessCredMissing =>
-      'GitHub 자격 증명：미설정（需含 codespace 权限的令牌）';
+      'GitHub 자격 증명：미설정（포함 필요 codespace 권한토큰）';
 
   @override
   String get codespacesReadinessGhOk => 'gh CLI：준비 완료';
@@ -4149,7 +4165,7 @@ class AppLocalizationsKo extends AppLocalizations {
 
   @override
   String get codespacesDeploySyncHint =>
-      'Git 푸시/풀 등 작업会作用于현재执行环境；连接 Codespace 后即在远端저장소执行部署/同步。';
+      'Git 푸시/풀 등 작업작용함에현재실행 환경；연결 Codespace 후즉시에원격저장소배포 실행/동기화。';
 
   @override
   String gitExecutionTargetCodespace(String name) {
@@ -4211,7 +4227,7 @@ class AppLocalizationsKo extends AppLocalizations {
 
   @override
   String get captureLimitHint =>
-      '仅抓取经代理的流量。HTTPS는 CA 설치 및 신뢰 필요；Android 7+ 대부분의 앱 및 인증서 고정 앱은 MITM 불가능（디버그 버전/신뢰된 인증서 시나리오에서 사용 가능）。';
+      '프록시를 통한 트래픽만 수집。HTTPS는 CA 설치 및 신뢰 필요；Android 7+ 대부분의 앱 및 인증서 고정 앱은 MITM 불가능（디버그 버전/신뢰된 인증서 시나리오에서 사용 가능）。';
 
   @override
   String get captureCaTitle => 'CA 인증서';
@@ -4288,7 +4304,7 @@ class AppLocalizationsKo extends AppLocalizations {
   String get captureCopyHost => '도메인 복사';
 
   @override
-  String get captureDeleteConfirm => '삭제该域名的전체기록？';
+  String get captureDeleteConfirm => '삭제해당 도메인전체기록？';
 
   @override
   String get captureSort => '정렬';
