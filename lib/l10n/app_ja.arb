@@ -4,35 +4,35 @@
   "tabSessions": "セッション",
   "tabSettings": "設定",
   "newSession": "新規作成セッション",
-  "send": "发送",
+  "send": "送信",
   "stop": "停止",
-  "reverseTabClasses": "类",
-  "reverseTabStrings": "字符串池",
-  "reverseTabResources": "资源",
-  "reverseTabHex": "十六进制",
-  "reverseSearchClassHint": "検索类名",
-  "reverseSearchStringHint": "検索字符串",
-  "reverseSearchResourceHint": "検索资源名、タイプ或 0x 番号",
-  "reverseNoMatch": "没有匹配件",
-  "reverseEmptyFile": "ファイル为空",
+  "reverseTabClasses": "クラス",
+  "reverseTabStrings": "文字列プール",
+  "reverseTabResources": "リソース",
+  "reverseTabHex": "16進数",
+  "reverseSearchClassHint": "検索クラス名",
+  "reverseSearchStringHint": "検索文字列",
+  "reverseSearchResourceHint": "検索リソース名、タイプまたは 0x 番号",
+  "reverseNoMatch": "なし一致件",
+  "reverseEmptyFile": "ファイルのため空",
   "reverseLoadFailed": "開く失敗",
-  "reverseParseFailed": "解析失敗,这个ファイル可能被加固或已损坏",
-  "reverseEditString": "修改字符串",
-  "reverseEqualLengthHint": "只能等长替换:新コンテンツ编码后的字节数必须与原字符串一致,否则ファイル内偏移会すべて错位",
-  "reverseEditByte": "修改字节",
-  "reverseEditByteHint": "输入两位十六进制,例如 0a、ff",
-  "reverseInvalidByte": "请输入 00-ff 之间的十六进制字节",
-  "reverseJumpToOffset": "跳转到偏移",
-  "reverseOffsetInvalid": "偏移なし效,请输入十六进制",
-  "reverseSuperclass": "父类",
-  "reverseInterfaces": "接口",
-  "reverseAccessFlags": "修饰符",
-  "reverseFields": "字段",
-  "reverseMethods": "方法",
-  "reverseAbstractMethod": "なし方法体",
-  "reverseSmaliHint": "以上为 smali 反汇编结果;offset 是该指令在方法体内的字节偏移",
-  "reverseOpenAsHex": "以十六进制開く",
-  "reverseMethodCount": "{count} 个方法",
+  "reverseParseFailed": "解析失敗,このファイル可能能被加固または済み损坏",
+  "reverseEditString": "編集文字列",
+  "reverseEqualLengthHint": "只能等长置換:新コンテンツ编码後バイト数必须と原文字列一致,そうでなければファイル内オフセット会すべて错位",
+  "reverseEditByte": "修正バイト",
+  "reverseEditByteHint": "入力两位16進数,例えば 0a、ff",
+  "reverseInvalidByte": "お願いします入力 00-ff 之间16進数バイト",
+  "reverseJumpToOffset": "跳转にオフセット",
+  "reverseOffsetInvalid": "オフセットなし効,お願いします入力16進数",
+  "reverseSuperclass": "父クラス",
+  "reverseInterfaces": "インターフェース",
+  "reverseAccessFlags": "修飾",
+  "reverseFields": "フィールド",
+  "reverseMethods": "メソッド",
+  "reverseAbstractMethod": "なしメソッド体",
+  "reverseSmaliHint": "以上のため smali 反汇编結果;offset はいこの指令でメソッド体内バイトオフセット",
+  "reverseOpenAsHex": "以16進数開く",
+  "reverseMethodCount": "{count} 個メソッド",
   "@reverseMethodCount": {
     "placeholders": {
       "count": {
@@ -40,7 +40,7 @@
       }
     }
   },
-  "reverseFieldCount": "{count} 个字段",
+  "reverseFieldCount": "{count} 個フィールド",
   "@reverseFieldCount": {
     "placeholders": {
       "count": {
@@ -48,7 +48,7 @@
       }
     }
   },
-  "reverseHexByteCount": "共 {count} 字节",
+  "reverseHexByteCount": "合計 {count} バイト",
   "@reverseHexByteCount": {
     "placeholders": {
       "count": {
@@ -60,62 +60,62 @@
   "confirm": "OK",
   "save": "保存",
   "delete": "削除",
-  "rename": "重命名",
+  "rename": "名前変更",
   "copy": "コピー",
-  "copied": "已コピー",
+  "copied": "済みコピー",
   "retry": "再試行",
-  "pin": "置顶",
-  "unpin": "キャンセル置顶",
+  "pin": "ピン留め",
+  "unpin": "キャンセルピン留め",
   "search": "検索",
   "searchSessions": "検索セッション",
-  "noSessions": "暂なしセッション",
-  "noMessages": "開始新的对话吧",
-  "chatInputPlaceholder": "输入消息,与 AI 对话…",
-  "reasoningTitle": "思考过程",
-  "untitled": "未命名",
-  "pinned": "已置顶",
+  "noSessions": "一時なしセッション",
+  "noMessages": "開始新チャット吧",
+  "chatInputPlaceholder": "入力メッセージ,と AI チャット…",
+  "reasoningTitle": "思考プロセス",
+  "untitled": "無題",
+  "pinned": "済みピン留め",
   "settings": "設定",
   "providers": "AI プロバイダ",
-  "providersSubtitle": "モデル、接口与密钥",
+  "providersSubtitle": "モデル、インターフェースとAPIキー",
   "appearance": "外観",
   "themeMode": "テーマモード",
-  "themeModeSystem": "システムに従う",
+  "themeModeSystem": "システムに従うう",
   "themeModeLight": "ライト",
   "themeModeDark": "ダーク",
   "language": "言語",
-  "languageSystem": "システムに従う",
-  "about": "关于",
-  "version": "版本",
-  "license": "开源プロトコル",
-  "licenseBody": "本プロジェクト是 jieapi/Codecraft 的 Flutter 复刻,按 GPL-3.0 プロトコル开源。",
-  "addProvider": "添加供应商",
+  "languageSystem": "システムに従うう",
+  "about": "について",
+  "version": "バージョン",
+  "license": "オープンソースプロトコル",
+  "licenseBody": "本プロジェクトはい jieapi/Codecraft  Flutter フォーク,按 GPL-3.0 プロトコルオープンソース。",
+  "addProvider": "追加プロバイダ",
   "providerName": "名前",
   "providerType": "プロトコル",
   "baseUrl": "Base URL",
   "apiKey": "API Key",
-  "defaultModel": "默认モデル",
-  "modelList": "モデル列表",
+  "defaultModel": "デフォルトモデル",
+  "modelList": "モデルリスト",
   "model": "モデル",
-  "mode": "模式",
-  "reasoningEffort": "思考深度",
-  "reasoningEffortNone": "不思考",
+  "mode": "モード",
+  "reasoningEffort": "思考の深さ",
+  "reasoningEffortNone": "思考なし",
   "reasoningEffortMinimal": "非常に低い",
   "reasoningEffortLow": "低",
   "reasoningEffortMedium": "中",
   "reasoningEffortHigh": "高",
   "reasoningEffortXHigh": "非常に高い",
   "reasoningEffortMax": "最高",
-  "deleteProviderConfirm": "削除してもよろしいですか？该供应商?",
-  "deleteSessionConfirm": "削除してもよろしいですか？该セッション?",
-  "emptyProviders": "还没有供应商,点右上角 + 添加",
-  "emptyModels": "还没有モデル",
-  "modelInputHint": "输入モデル ID 后回车添加",
-  "errorGeneric": "出错了",
-  "retrying": "正在再試行",
-  "emptyMessage": "消息コンテンツ为空",
-  "enabled": "有効",
+  "deleteProviderConfirm": "削除してもよろしいですか？このプロバイダ?",
+  "deleteSessionConfirm": "削除してもよろしいですか？このセッション?",
+  "emptyProviders": "还なしプロバイダ,クリック右上隅 + 追加",
+  "emptyModels": "还なしモデル",
+  "modelInputHint": "入力モデル ID 後回车追加",
+  "errorGeneric": "エラー",
+  "retrying": "再試行中",
+  "emptyMessage": "メッセージコンテンツのため空",
+  "enabled": "あり効",
   "disabled": "無効",
-  "providerModelsCountTag": "{count} 个モデル",
+  "providerModelsCountTag": "{count} 個モデル",
   "@providerModelsCountTag": {
     "placeholders": {
       "count": {
@@ -123,30 +123,30 @@
       }
     }
   },
-  "inputTokens": "输入",
-  "outputTokens": "输出",
-  "emptyChatHint": "選択一个セッション開始对话",
-  "errorNoProvider": "未設定利用可能的供应商,请先在設定中添加",
-  "errorNoModel": "请为该供应商選択モデル",
-  "errorEmptyResponse": "モデル返回了空白コンテンツ",
+  "inputTokens": "入力",
+  "outputTokens": "出力",
+  "emptyChatHint": "選択一個セッション開始チャット",
+  "errorNoProvider": "未設定利使用可能能プロバイダ,お願いします先で設定中追加",
+  "errorNoModel": "お願いしますのためこのプロバイダ選択モデル",
+  "errorEmptyResponse": "モデル返回空白コンテンツ",
   "thinking": "思考中…",
   "modelListTitle": "選択モデル",
-  "providerListTitle": "選択供应商",
+  "providerListTitle": "選択プロバイダ",
   "customProvider": "カスタム",
-  "addFromPreset": "从预设添加",
-  "useFullUrlHint": "baseUrl 已是完整端点",
-  "aboutBody": "Codecraft Flutter 是 jieapi/Codecraft 的 Flutter 复刻(Phase 1:核心对话闭环)。",
-  "chatPlaceholder": "有什么可以帮你的?",
-  "chatInputHint": "描述你的需求,我来帮你编写、修改或解释代码",
-  "openSidebar": "開く侧边栏",
+  "addFromPreset": "から预設追加",
+  "useFullUrlHint": "baseUrl 済みはい完全端クリック",
+  "aboutBody": "Codecraft Flutter はい jieapi/Codecraft  Flutter フォーク(Phase 1:核心チャット闭环)。",
+  "chatPlaceholder": "あり什么可能以帮你?",
+  "chatInputHint": "説明你要件,我来帮你執筆、修正または説明コード",
+  "openSidebar": "開くサイドバー",
   "noModelSelected": "未選択モデル",
-  "sessionGroupPinned": "置顶",
+  "sessionGroupPinned": "ピン留め",
   "sessionGroupToday": "今日",
   "sessionGroupYesterday": "昨日",
-  "sessionGroupLast7Days": "7日内",
-  "sessionGroupLast30Days": "30日内",
+  "sessionGroupLast7Days": "7日以内",
+  "sessionGroupLast30Days": "30日以内",
   "sessionGroupMonthFormat": "yyyy年M月",
-  "chatThinkingRunningTime": "正在思考(所要時間 {seconds} 秒)",
+  "chatThinkingRunningTime": "思考中(所要時間 {seconds} 秒)",
   "@chatThinkingRunningTime": {
     "placeholders": {
       "seconds": {
@@ -154,7 +154,7 @@
       }
     }
   },
-  "chatThinkingDoneTime": "思考完了(所要時間 {seconds} 秒)",
+  "chatThinkingDoneTime": "思考完(所要時間 {seconds} 秒)",
   "@chatThinkingDoneTime": {
     "placeholders": {
       "seconds": {
@@ -162,29 +162,29 @@
       }
     }
   },
-  "chatThinkingDone": "思考完了",
-  "chatQueueHint": "AI 正在処理中,点右侧方块可停止",
-  "chatStatusGenerating": "正在生成",
-  "chatStatusThinking": "正在思考",
-  "chatStatusCallingTool": "正在调用工具",
-  "chatStatusRunningCommand": "正在コマンドの実行",
-  "chatStatusEditingFile": "正在編集ファイル",
-  "chatStatusReadingFile": "正在读取ファイル",
-  "chatStatusViewingImage": "正在查看图片",
-  "chatStatusSearchingWeb": "正在联网検索",
-  "chatStatusBrowsingWeb": "正在操作浏览器",
-  "chatStatusAskingUser": "正在询问用户",
-  "chatStatusGeneratingImage": "正在生成图片",
-  "chatStatusUpdatingTodo": "正在整理待办",
-  "chatStatusStartingSubagent": "正在開始サブエージェント",
-  "chatCompressingContext": "正在压缩上下文",
-  "chatContextCompressed": "上下文已压缩",
-  "chatCompactionSummary": "接手概要",
-  "chatStatusReadingMemory": "正在读取记忆",
-  "chatToolRunning": "工具执行中",
-  "chatToolSucceeded": "工具执行成功",
-  "chatToolFailed": "工具执行失敗",
-  "chatEffortNone": "不思考",
+  "chatThinkingDone": "思考完",
+  "chatQueueHint": "AI 中処理中,クリック右方块可能停止",
+  "chatStatusGenerating": "生成中",
+  "chatStatusThinking": "思考中",
+  "chatStatusCallingTool": "中呼び出しび出し工具",
+  "chatStatusRunningCommand": "中コマンドの実行",
+  "chatStatusEditingFile": "中編集ファイル",
+  "chatStatusReadingFile": "読み取得り中ファイル",
+  "chatStatusViewingImage": "画像表示中",
+  "chatStatusSearchingWeb": "中ウェブ検索",
+  "chatStatusBrowsingWeb": "操作中ブラウザ",
+  "chatStatusAskingUser": "ユーザー確認中ユーザー",
+  "chatStatusGeneratingImage": "画像生成中",
+  "chatStatusUpdatingTodo": "タスク整理中",
+  "chatStatusStartingSubagent": "開始中サブエージェント",
+  "chatCompressingContext": "圧縮中コンテキスト",
+  "chatContextCompressed": "上下文済み压缩",
+  "chatCompactionSummary": "引き継ぎ概要",
+  "chatStatusReadingMemory": "メモリ読み取得り中",
+  "chatToolRunning": "工具実行中",
+  "chatToolSucceeded": "工具実行成功",
+  "chatToolFailed": "工具実行失敗",
+  "chatEffortNone": "思考なし",
   "chatEffortMinimal": "非常に低い",
   "chatEffortLow": "低",
   "chatEffortMedium": "中",
@@ -192,12 +192,12 @@
   "chatEffortXHigh": "非常に高い",
   "chatEffortMax": "最高",
   "searchModels": "検索モデル",
-  "chatAddAttachment": "添加附件",
+  "chatAddAttachment": "ファイルを追加",
   "chatUploadFile": "上传ファイル",
-  "chatUploadImage": "上传图片",
-  "chatTakePhoto": "拍照",
-  "attachmentPrefix": "附件:",
-  "attachmentMax": "最多可同时发送 {count} 个附件",
+  "chatUploadImage": "画像をアップロード",
+  "chatTakePhoto": "写真を撮る",
+  "attachmentPrefix": "添付:",
+  "attachmentMax": "最大 {count} 個のファイルを同時に送信",
   "@attachmentMax": {
     "placeholders": {
       "count": {
@@ -205,7 +205,7 @@
       }
     }
   },
-  "attachmentUploaded": "已上传 {count} 个附件",
+  "attachmentUploaded": "済み上传 {count} 個附件",
   "@attachmentUploaded": {
     "placeholders": {
       "count": {
@@ -213,7 +213,7 @@
       }
     }
   },
-  "attachmentUploadedPartial": "已上传 {count} 个附件,部分附件未加入",
+  "attachmentUploadedPartial": "済み上传 {count} 個附件,部分附件未加入",
   "@attachmentUploadedPartial": {
     "placeholders": {
       "count": {
@@ -221,7 +221,7 @@
       }
     }
   },
-  "attachmentUploading": "正在上传 {count} 个ファイル…",
+  "attachmentUploading": "アップロード中 {count} 個ファイル…",
   "@attachmentUploading": {
     "placeholders": {
       "count": {
@@ -229,7 +229,7 @@
       }
     }
   },
-  "attachmentImageTooLarge": "图片超过 {size},请压缩后再試行",
+  "attachmentImageTooLarge": "画像超過 {size},お願いします压缩後再試行",
   "@attachmentImageTooLarge": {
     "placeholders": {
       "size": {
@@ -237,24 +237,24 @@
       }
     }
   },
-  "attachmentUnsupportedImageType": "なし法识别图片タイプ,仅支持 jpg/png/gif/webp",
-  "attachmentReadFileFailed": "なし法读取所选ファイル",
-  "attachmentUploadFailed": "上传失敗",
-  "removeAttachment": "移除附件",
-  "imagePreview": "图片预览",
-  "imageLoadFailed": "图片読み込み失敗,ファイル可能已被移动或削除",
+  "attachmentUnsupportedImageType": "なし法识别画像タイプ,仅支持 jpg/png/gif/webp",
+  "attachmentReadFileFailed": "なし法読み取り得所选ファイル",
+  "attachmentUploadFailed": "アップロード失敗",
+  "removeAttachment": "添付ファイルを削除",
+  "imagePreview": "画像プレビュー",
+  "imageLoadFailed": "画像読み込み失敗,ファイル可能能済み被移動または削除",
   "close": "閉じる",
   "fileFallback": "ファイル",
-  "skillsTitle": "Skill 管理",
-  "skillsSubtitle": "浏览、インポート与管理写作技能",
-  "skillsNew": "新規作成技能",
+  "skillsTitle": "スキル管理",
+  "skillsSubtitle": "浏览、インポートと管理執筆技能",
+  "skillsNew": "新規スキル作成",
   "skillsImport": "インポート Markdown",
   "skillsScopeTitle": "選択スコープ",
   "skillsScopeGlobal": "",
   "skillsScopeProject": "プロジェクト技能",
-  "skillsScopeGlobalHint": "~/.codecraft/skills,跨プロジェクト共享",
-  "skillsScopeProjectHint": "~/workspace/.codecraft/skills,随現在ワークスペース",
-  "skillsProjectGroup": "現在のプロジェクト({name})",
+  "skillsScopeGlobalHint": "~/.codecraft/skills,跨プロジェクト合計享",
+  "skillsScopeProjectHint": "~/workspace/.codecraft/skills,随現でワークスペース",
+  "skillsProjectGroup": "現でのプロジェクト({name})",
   "@skillsProjectGroup": {
     "placeholders": {
       "name": {
@@ -262,16 +262,16 @@
       }
     }
   },
-  "skillsNoProjectSkills": "現在のプロジェクト还没有技能",
-  "skillsNoGlobalSkills": "还没有グローバル技能",
-  "skillsEmpty": "还没有技能",
-  "skillsEmptyHint": "技能是写给 AI 的专件操作説明;インポート SKILL.md 或手动新規作成一个吧。",
+  "skillsNoProjectSkills": "現でのプロジェクト还なし技能",
+  "skillsNoGlobalSkills": "还なしグローバル技能",
+  "skillsEmpty": "还なし技能",
+  "skillsEmptyHint": "技能はい書くに AI 专件操作説明;インポート SKILL.md または手動新規作成一個吧。",
   "skillsName": "名前",
-  "skillsDescription": "描述",
-  "skillsDescriptionHint": "何时使用这个技能(会进系统ヒント)",
-  "skillsInstructions": "指令正文",
-  "skillsInstructionsHint": "技能要执行的步骤,Markdown 书写",
-  "skillsImported": "已インポート技能「{name}」",
+  "skillsDescription": "説明",
+  "skillsDescriptionHint": "何時使使用この技能(会進システムヒント)",
+  "skillsInstructions": "指示本文",
+  "skillsInstructionsHint": "技能要実行ステップ,Markdown 书書く",
+  "skillsImported": "済みインポート技能「{name}」",
   "@skillsImported": {
     "placeholders": {
       "name": {
@@ -279,8 +279,8 @@
       }
     }
   },
-  "skillsDeleteTitle": "削除技能",
-  "skillsDeleteConfirm": "削除してもよろしいですか？技能「{name}」(含其ディレクトリ与脚本)?",
+  "skillsDeleteTitle": "スキル削除",
+  "skillsDeleteConfirm": "削除してもよろしいですか？技能「{name}」(含むその他ディレクトリと脚本)?",
   "@skillsDeleteConfirm": {
     "placeholders": {
       "name": {
@@ -288,9 +288,9 @@
       }
     }
   },
-  "skillsErrorInvalidName": "技能名なし效:不能为空、超长或含 / \\ : * ? \" < > |",
-  "skillsErrorEmptyInstructions": "指令正文不能为空",
-  "skillsErrorNameConflict": "同スコープ已有名为「{name}」的技能",
+  "skillsErrorInvalidName": "技能名なし効:なし能のため空、超长または含む / \\ : * ? \" < > |",
+  "skillsErrorEmptyInstructions": "指令本文なし能のため空",
+  "skillsErrorNameConflict": "同スコープ済みあり名のため「{name}」技能",
   "@skillsErrorNameConflict": {
     "placeholders": {
       "name": {
@@ -298,22 +298,22 @@
       }
     }
   },
-  "skillsErrorNoSkill": "ファイル里没有可识别的技能",
-  "skillsErrorIoFailed": "读写技能ファイル失敗",
-  "providerAdd": "添加供应商",
-  "providerEdit": "編集供应商",
+  "skillsErrorNoSkill": "ファイル内なし可能识别技能",
+  "skillsErrorIoFailed": "読書く技能ファイル失敗",
+  "providerAdd": "追加プロバイダ",
+  "providerEdit": "編集プロバイダ",
   "providerEditModel": "編集モデル",
   "providerConfig": "設定",
   "providerSectionBasic": "基本情報",
-  "providerSectionType": "上游格式",
+  "providerSectionType": "上流形式",
   "providerSectionOptions": "オプション",
-  "providerFullUrl": "完整 URL",
-  "providerFullUrlDesc": "Base URL 即完整リクエスト地址,不自动拼接默认パス",
+  "providerFullUrl": "完全な URL",
+  "providerFullUrlDesc": "Base URL 即完全リクエストアドレス,なし自動拼接デフォルトパス",
   "providerHeadersTitle": "カスタムリクエストヘッダー",
-  "providerHeadersDesc": "完全覆盖该供应商リクエスト的同名默认头",
-  "providerHeadersAdd": "添加リクエストヘッダー",
+  "providerHeadersDesc": "完全覆盖このプロバイダリクエスト同名デフォルト头",
+  "providerHeadersAdd": "追加リクエストヘッダー",
   "providerHeadersManage": "管理",
-  "providerHeadersCount": "設定済み {count} 个リクエストヘッダー",
+  "providerHeadersCount": "設定済みみ {count} 個リクエストヘッダー",
   "@providerHeadersCount": {
     "placeholders": {
       "count": {
@@ -321,12 +321,12 @@
       }
     }
   },
-  "providerShowApiKey": "显示密钥",
-  "providerHideApiKey": "隐藏密钥",
-  "providerAddModel": "添加モデル",
-  "providerNoModels": "暂なしモデル",
-  "providerNoModelsHint": "点击右上方按钮添加モデル",
-  "providerModelCurrent": "現在",
+  "providerShowApiKey": "表示APIキー",
+  "providerHideApiKey": "非表示APIキー",
+  "providerAddModel": "追加モデル",
+  "providerNoModels": "一時なしモデル",
+  "providerNoModelsHint": "クリック击右上方按钮追加モデル",
+  "providerModelCurrent": "現で",
   "providerModelsCount": "モデル({count})",
   "@providerModelsCount": {
     "placeholders": {
@@ -345,11 +345,11 @@
     }
   },
   "providerModelsSelectAll": "すべて選択",
-  "providerModelsDeselectAll": "全選択を解除",
-  "providerModelsBatchTest": "测试",
+  "providerModelsDeselectAll": "すべて選択を解除",
+  "providerModelsBatchTest": "テスト",
   "providerModelsBatchDelete": "削除",
   "providerModelsBatchDeleteTitle": "削除モデル",
-  "providerModelsBatchDeleteConfirm": "選択した項目を削除してもよろしいですか？ {count} 个モデル吗?",
+  "providerModelsBatchDeleteConfirm": "選択した項目を削除してもよろしいですか？ {count} 個モデルですか?",
   "@providerModelsBatchDeleteConfirm": {
     "placeholders": {
       "count": {
@@ -357,10 +357,10 @@
       }
     }
   },
-  "providerFetchModels": "拉取モデル",
-  "providerAddAllModels": "すべて添加",
-  "providerAddAllModelsTitle": "添加すべてモデル",
-  "providerAddAllModelsConfirm": "OK将拉取到的 {count} 个モデルすべて添加至現在プロバイダ?",
+  "providerFetchModels": "取得得モデル",
+  "providerAddAllModels": "すべて追加",
+  "providerAddAllModelsTitle": "追加すべてモデル",
+  "providerAddAllModelsConfirm": "OKを取得得に {count} 個モデルすべて追加至現でプロバイダ?",
   "@providerAddAllModelsConfirm": {
     "placeholders": {
       "count": {
@@ -368,9 +368,9 @@
       }
     }
   },
-  "providerFilterModelsHint": "输入モデル名前筛选",
-  "providerNoMatchingModels": "没有匹配的モデル",
-  "providerModelAdded": "已添加モデル「{name}」",
+  "providerFilterModelsHint": "入力モデル名前フィルタ",
+  "providerNoMatchingModels": "なし一致モデル",
+  "providerModelAdded": "追加済みみモデル「{name}」",
   "@providerModelAdded": {
     "placeholders": {
       "name": {
@@ -379,7 +379,7 @@
     }
   },
   "providerModelName": "モデル名前",
-  "providerModelAlreadyAdded": "该モデル已添加",
+  "providerModelAlreadyAdded": "このモデル追加済みみ",
   "providerFetchHttpError": "HTTP {code} · {latency}ms",
   "@providerFetchHttpError": {
     "placeholders": {
@@ -391,36 +391,36 @@
       }
     }
   },
-  "providerFetchMissingFields": "レスポンス缺少列表字段",
-  "providerFetchFailed": "拉取モデル失敗",
-  "providerApiKeyRequired": "请先填写 API Key",
-  "providerTestModel": "测试",
-  "providerModelContext": "上下文窗口 (tokens)",
-  "providerModelContextInput": "输入上限 (tokens)",
-  "providerModelContextOutput": "输出上限 (tokens)",
-  "providerModelWindowInvalid": "请输入有效的正整数,或留空使用自动识别值",
-  "providerModelSectionPrice": "价格",
-  "providerModelPriceInput": "输入价格 (USD/1M tokens)",
-  "providerModelPriceOutput": "输出价格 (USD/1M tokens)",
-  "providerModelPriceCacheRead": "缓存读价格 (USD/1M tokens)",
-  "providerModelPriceCacheWrite": "缓存写价格 (USD/1M tokens)",
+  "providerFetchMissingFields": "レスポンス缺少リストフィールド",
+  "providerFetchFailed": "取得得モデル失敗",
+  "providerApiKeyRequired": "お願いします先入力 API Key",
+  "providerTestModel": "テスト",
+  "providerModelContext": "上下文ウィンドウ (tokens)",
+  "providerModelContextInput": "入力上限 (tokens)",
+  "providerModelContextOutput": "出力上限 (tokens)",
+  "providerModelWindowInvalid": "お願いします入力あり効正整数,または空欄使使用自動识别値",
+  "providerModelSectionPrice": "価格",
+  "providerModelPriceInput": "入力価格 (USD/1M tokens)",
+  "providerModelPriceOutput": "出力価格 (USD/1M tokens)",
+  "providerModelPriceCacheRead": "キャッシュ読价格 (USD/1M tokens)",
+  "providerModelPriceCacheWrite": "キャッシュ書く价格 (USD/1M tokens)",
   "providerModelCapabilities": "能力",
-  "providerModelCapVision": "图片输入",
-  "providerModelCapImageOutput": "图片输出",
-  "providerModelCapTools": "工具调用",
+  "providerModelCapVision": "画像入力",
+  "providerModelCapImageOutput": "画像出力",
+  "providerModelCapTools": "工具呼び出しび出し",
   "providerModelCapReasoning": "思考",
-  "providerModelSectionReasoning": "思考档位",
-  "providerModelReasoningHint": "只勾选该モデル真实支持的档位;すべて不勾则由組み込み能力表自动判断",
-  "providerModelReasoningCanDisable": "可以閉じる思考",
-  "providerTestRequestUrl": "リクエスト地址",
+  "providerModelSectionReasoning": "思考クラス",
+  "providerModelReasoningHint": "只勾选このモデル真实支持クラス;すべてなし勾ならにより組み込み能力表自動判断",
+  "providerModelReasoningCanDisable": "可能以閉じる思考",
+  "providerTestRequestUrl": "リクエストアドレス",
   "providerTestRequestHeaders": "リクエストヘッダー",
   "providerTestRequestBody": "リクエストボディ",
   "providerTestResponse": "レスポンス",
   "providerTestError": "エラー詳細",
-  "providerMultiKeyTitle": "多 Key 模式",
-  "providerMultiKeySubtitle": "同一供应商下配多个 Key,密钥利用不可时自动切换并重发",
+  "providerMultiKeyTitle": "多 Key モード",
+  "providerMultiKeySubtitle": "同一プロバイダ下配多個 Key,APIキー利使用なし可能時自動切换并重发",
   "providerMultiKeyManage": "多 Key 管理",
-  "providerMultiKeySummary": "{count} 个 · {strategy}",
+  "providerMultiKeySummary": "{count} 個 · {strategy}",
   "@providerMultiKeySummary": {
     "placeholders": {
       "count": {
@@ -431,8 +431,8 @@
       }
     }
   },
-  "providerMultiKeyList": "Key 列表",
-  "providerMultiKeyItem": "密钥 #{index}",
+  "providerMultiKeyList": "Key リスト",
+  "providerMultiKeyItem": "APIキー #{index}",
   "@providerMultiKeyItem": {
     "placeholders": {
       "index": {
@@ -440,36 +440,36 @@
       }
     }
   },
-  "providerMultiKeyEmpty": "点此添加第一个 Key",
-  "providerMultiKeyAdd": "添加 Key",
-  "providerMultiKeyWeight": "调度权重",
-  "providerMultiKeyWeightHint": "默认 1 · ≤ 0 时不参与 · 最大 1,000,000",
-  "providerMultiKeyStrategy": "取用策略",
-  "providerMultiKeyStrategySequential": "顺序",
-  "providerMultiKeyStrategySequentialDesc": "始终用靠前的 Key,失敗达阈值才切下一个",
-  "providerMultiKeyStrategyRoundRobin": "轮询",
-  "providerMultiKeyStrategyRoundRobinDesc": "新セッション轮流起步以摊平额度;同一セッション内不换 Key,保持缓存命中",
-  "providerMultiKeyStatusCodes": "自动切换ステータスコード",
-  "providerMultiKeyStatusCodesHint": "逗号分隔,留空使用默认 401,402,403,429",
-  "providerMultiKeyCooldown": "冷却时长",
-  "providerMultiKeyCooldownDesc": "被切走的 Key 隔多久重新纳入候选",
+  "providerMultiKeyEmpty": "クリック此追加第一個 Key",
+  "providerMultiKeyAdd": "追加 Key",
+  "providerMultiKeyWeight": "スケジュール重み",
+  "providerMultiKeyWeightHint": "デフォルト 1 · ≤ 0 時なし参と · 最大 1,000,000",
+  "providerMultiKeyStrategy": "取得使用ポリシー",
+  "providerMultiKeyStrategySequential": "順序",
+  "providerMultiKeyStrategySequentialDesc": "常に先頭の Key を使用し、失敗し読み取り値に達したら次の Key に切り替え",
+  "providerMultiKeyStrategyRoundRobin": "ラウンドロビン",
+  "providerMultiKeyStrategyRoundRobinDesc": "新セッション回流起步以摊平额度;同一セッション内なし换 Key,保持キャッシュ命中",
+  "providerMultiKeyStatusCodes": "自動切换ステータスコード",
+  "providerMultiKeyStatusCodesHint": "逗号分隔,空欄使使用デフォルト 401,402,403,429",
+  "providerMultiKeyCooldown": "冷却時間",
+  "providerMultiKeyCooldownDesc": "切り替えられた Key がどれくらいの間候補に再追加されるか",
   "workspaceOpen": "ワークスペース",
   "workspaceLocal": "ローカルワークスペース",
-  "workspaceLocalSubtitle": "应用数据ディレクトリ",
-  "allow": "允许",
-  "deny": "拒绝",
+  "workspaceLocalSubtitle": "アプリデータディレクトリ",
+  "allow": "許可",
+  "deny": "拒いいえいいえ",
   "tabFiles": "ファイル",
   "newFile": "新規作成ファイル",
   "newFolder": "新規作成フォルダ",
   "create": "作成",
-  "deleteFileConfirm": "削除してもよろしいですか？该ファイル?",
-  "deleteFolderConfirm": "削除してもよろしいですか？该フォルダ(含コンテンツ)?",
+  "deleteFileConfirm": "削除してもよろしいですか？このファイル?",
+  "deleteFolderConfirm": "削除してもよろしいですか？このフォルダ(含むコンテンツ)?",
   "refresh": "更新",
   "workspaceNew": "新規作成",
-  "workspaceEmptyHint": "还没有ワークスペース,点右上角「新規作成」",
-  "workspaceNameExists": "同名ワークスペース已存在",
+  "workspaceEmptyHint": "还なしワークスペース,クリック右上隅「新規作成」",
+  "workspaceNameExists": "同名ワークスペース済み存で",
   "workspaceDelete": "削除ワークスペース",
-  "workspaceDeleteConfirm": "削除してもよろしいですか？ワークスペース「{name}」(含其中すべてファイル)?",
+  "workspaceDeleteConfirm": "削除してもよろしいですか？ワークスペース「{name}」(含むその他中すべてファイル)?",
   "@workspaceDeleteConfirm": {
     "placeholders": {
       "name": {
@@ -477,8 +477,8 @@
       }
     }
   },
-  "todoDashboardTitle": "任务待办",
-  "todoDashboardProgress": "{completed}/{total} 完了",
+  "todoDashboardTitle": "タスク管理",
+  "todoDashboardProgress": "{completed}/{total} 完",
   "@todoDashboardProgress": {
     "placeholders": {
       "completed": {
@@ -489,22 +489,22 @@
       }
     }
   },
-  "todoDashboardAllDone": "すべて完了",
+  "todoDashboardAllDone": "すべて完",
   "todoInProgress": "実行中",
-  "todoCompleted": "完了",
+  "todoCompleted": "完",
   "gitTitle": "Git",
   "gitRefresh": "更新",
   "gitTabStatus": "ステータス",
-  "browserTitle": "浏览器",
-  "browserAddressHint": "输入网址或検索",
-  "browserBack": "后退",
-  "browserForward": "前进",
+  "browserTitle": "ブラウザ",
+  "browserAddressHint": "入力ネットワーク址または検索",
+  "browserBack": "戻る",
+  "browserForward": "進む",
   "browserReload": "更新",
-  "browserNotReady": "浏览器準備未完了,请在地址栏输入网址開始浏览",
-  "browserNewTab": "新規作成タグ页",
-  "browserCloseTab": "閉じるタグ页",
-  "browserTabDefaultTitle": "新タグ页",
-  "browserTabsCount": "タグ页 ({count})",
+  "browserNotReady": "ブラウザ準備未完,お願いしますでアドレス栏入力ネットワーク址開始浏览",
+  "browserNewTab": "新規作成タグページ",
+  "browserCloseTab": "閉じるタグページ",
+  "browserTabDefaultTitle": "新タグページ",
+  "browserTabsCount": "タグページ ({count})",
   "@browserTabsCount": {
     "placeholders": {
       "count": {
@@ -512,45 +512,45 @@
       }
     }
   },
-  "browserEmptyHint": "在上方地址栏输入网址開始浏览",
-  "browserTabsManage": "タグ页管理",
-  "browserEmptyClickHint": "点击上方输入网址開始浏览",
-  "browserNightModeOn": "閉じる夜间模式",
-  "browserNightModeOff": "有効化夜间模式",
-  "browserDevtools": "开发者工具",
-  "browserDialogAlertTitle": "网页ヒント",
-  "browserDialogConfirmTitle": "网页确认",
-  "browserDialogPromptTitle": "网页输入",
+  "browserEmptyHint": "で上方アドレス栏入力ネットワーク址開始浏览",
+  "browserTabsManage": "タグページ管理",
+  "browserEmptyClickHint": "クリック击上方入力ネットワーク址開始浏览",
+  "browserNightModeOn": "閉じる夜間モード",
+  "browserNightModeOff": "あり効化夜間モード",
+  "browserDevtools": "開発者ツール",
+  "browserDialogAlertTitle": "ネットワークページヒント",
+  "browserDialogConfirmTitle": "ネットワークページ確認",
+  "browserDialogPromptTitle": "ネットワークページ入力",
   "browserMenu": "さらに表示設定",
-  "browserMenuTitle": "浏览器設定与工具",
-  "browserMenuGeneralSection": "页面与工具",
-  "browserNightModeTitle": "夜间模式",
-  "browserNightModeDesc": "降低页面亮度并有効化深色偏好",
-  "browserDevtoolsTitle": "开发者工具",
-  "browserDevtoolsDesc": "有効化移动端 Eruda デバッグ控制台",
-  "browserUaSection": "浏览器标识 (User-Agent)",
-  "browserUaDesc": "模拟不同设备与环境访问网页",
-  "browserUaDefault": "系统默认",
-  "browserUaDefaultDesc": "現在设备原生 WebView 标识",
-  "browserUaAndroidPhone": "安卓手机",
+  "browserMenuTitle": "ブラウザ設定と工具",
+  "browserMenuGeneralSection": "ページと工具",
+  "browserNightModeTitle": "夜間モード",
+  "browserNightModeDesc": "降低ページ亮度并あり効化ダーク偏好",
+  "browserDevtoolsTitle": "開発者ツール",
+  "browserDevtoolsDesc": "あり効化移動端 Eruda デバッグ控制台",
+  "browserUaSection": "ブラウザ識別 (User-Agent)",
+  "browserUaDesc": "模拟なし同デバイスと环境アクセスネットワークページ",
+  "browserUaDefault": "システムデフォルト",
+  "browserUaDefaultDesc": "現でデバイス原生 WebView 識別",
+  "browserUaAndroidPhone": "Android スマートフォン",
   "browserUaAndroidPhoneDesc": "Chrome Mobile (Android)",
-  "browserUaAndroidTablet": "安卓平板",
+  "browserUaAndroidTablet": "Android タブレット",
   "browserUaAndroidTabletDesc": "Chrome Tablet (Android)",
-  "browserUaDesktopPc": "桌面电脑",
+  "browserUaDesktopPc": "デスクトップ PC",
   "browserUaDesktopPcDesc": "Chrome Desktop (Windows PC)",
-  "browserUaIphone": "苹果 iPhone",
+  "browserUaIphone": "アップル iPhone",
   "browserUaIphoneDesc": "Mobile Safari (iOS)",
-  "browserUaIpad": "苹果 iPad",
+  "browserUaIpad": "アップル iPad",
   "browserUaIpadDesc": "Tablet Safari (iPadOS)",
   "browserUaCustom": "カスタム",
-  "browserUaCustomDesc": "手动指定 User-Agent 字符串",
+  "browserUaCustomDesc": "手動指定 User-Agent 文字列",
   "browserUaCustomDialogTitle": "カスタム User-Agent",
-  "browserUaCustomInputHint": "输入完整的 User-Agent 字符串",
-  "browserUaAppliedToast": "已切换浏览器标识并更新页面",
+  "browserUaCustomInputHint": "完全な User-Agent 文字列を入力",
+  "browserUaAppliedToast": "済み切换ブラウザ識別并更新ページ",
   "gitTabBranches": "ブランチ",
-  "gitTabCommits": "提交",
-  "gitStatusClean": "ワークスペース干净,なし改动",
-  "gitConflictedCount": "存在冲突 ({count})",
+  "gitTabCommits": "コミット",
+  "gitStatusClean": "ワークスペースクリーン,なし変更",
+  "gitConflictedCount": "存で衝突 ({count})",
   "@gitConflictedCount": {
     "placeholders": {
       "count": {
@@ -558,7 +558,7 @@
       }
     }
   },
-  "gitStagedCount": "已暂存 ({count})",
+  "gitStagedCount": "済み一時存 ({count})",
   "@gitStagedCount": {
     "placeholders": {
       "count": {
@@ -566,7 +566,7 @@
       }
     }
   },
-  "gitModifiedCount": "已修改 ({count})",
+  "gitModifiedCount": "済み修正 ({count})",
   "@gitModifiedCount": {
     "placeholders": {
       "count": {
@@ -574,7 +574,7 @@
       }
     }
   },
-  "gitUntrackedCount": "未跟踪 ({count})",
+  "gitUntrackedCount": "未トレース ({count})",
   "@gitUntrackedCount": {
     "placeholders": {
       "count": {
@@ -582,17 +582,17 @@
       }
     }
   },
-  "gitConflictedLabel": "存在冲突",
-  "gitStagedLabel": "已暂存",
-  "gitModifiedLabel": "已修改",
-  "gitUntrackedLabel": "未跟踪",
-  "gitStage": "暂存",
-  "gitUnstage": "キャンセル暂存",
-  "gitStageAll": "暂存すべて",
-  "gitUnstageAll": "すべてキャンセル暂存",
-  "gitUnstageAllConfirm": "将キャンセル所有ファイル的暂存,但不会削除ファイルコンテンツ。OK继续吗?",
-  "gitActionRevertAll": "すべて回退",
-  "gitRevertAllConfirm": "丢弃すべて未暂存的改动({count} 个ファイル),復元到上次暂存或提交的コンテンツ?已暂存的コンテンツ不受影响,但丢弃的改动なし法找回。",
+  "gitConflictedLabel": "存で衝突",
+  "gitStagedLabel": "済み一時存",
+  "gitModifiedLabel": "済み修正",
+  "gitUntrackedLabel": "未トレース",
+  "gitStage": "ステージ",
+  "gitUnstage": "キャンセル一時存",
+  "gitStageAll": "一時存すべて",
+  "gitUnstageAll": "すべてキャンセル一時存",
+  "gitUnstageAllConfirm": "をキャンセルすべてファイル一時存,但なし会削除ファイルコンテンツ。OK继续ですか?",
+  "gitActionRevertAll": "すべて戻す",
+  "gitRevertAllConfirm": "破棄すべて未一時存変更({count} 個ファイル),復元に上回一時存またはコミットコンテンツ?済み一時存コンテンツなし受影响,但破棄変更なし見つからない。",
   "@gitRevertAllConfirm": {
     "placeholders": {
       "count": {
@@ -600,8 +600,8 @@
       }
     }
   },
-  "gitActionRestoreFile": "恢复ファイル",
-  "gitRevertConfirmWorktree": "把 {name} 復元成上次暂存或提交的コンテンツ?未暂存的改动会丢失,且なし法找回。",
+  "gitActionRestoreFile": "復元ファイル",
+  "gitRevertConfirmWorktree": "を {name} 復元成上回一時存またはコミットコンテンツ?未一時存変更会紛失,かつなし見つからない。",
   "@gitRevertConfirmWorktree": {
     "placeholders": {
       "name": {
@@ -609,7 +609,7 @@
       }
     }
   },
-  "gitRevertConfirmHead": "把 {name} 復元到上次提交的コンテンツ?该ファイル已暂存和未暂存的改动都会丢失,且なし法找回。",
+  "gitRevertConfirmHead": "を {name} 復元に前回コミットコンテンツ?このファイル済み一時存と未一時存変更都会紛失,かつなし見つからない。",
   "@gitRevertConfirmHead": {
     "placeholders": {
       "name": {
@@ -617,7 +617,7 @@
       }
     }
   },
-  "gitRestoreFileConfirm": "恢复已削除的 {name}?将从上次提交取回这个ファイル。",
+  "gitRestoreFileConfirm": "復元済み削除 {name}?をから前回コミット取得回このファイル。",
   "@gitRestoreFileConfirm": {
     "placeholders": {
       "name": {
@@ -627,28 +627,28 @@
   },
   "gitActionDeleteFile": "削除ファイル",
   "gitActionDeleteDir": "削除ディレクトリ",
-  "gitMergePendingTitle": "合并待提交",
-  "gitMergePendingHint": "現在没有未解决的冲突。请确认并暂存需要保留的改动,然后提交以完了合并。",
-  "gitActionAbortMerge": "中止合并",
-  "gitAbortMergeConfirm": "OK中止現在合并吗?未解决的冲突改动将被放弃,ワークスペース将復元到合并前的ステータス。",
-  "gitCommitChanges": "提交更改",
-  "gitCommitNeedsIdentity": "尚未設定提交署名,请在「凭据与署名」页填写用户名和邮箱",
-  "gitCommitDialogTitle": "提交更改",
-  "gitCommitMessage": "提交情報",
-  "gitCommitAmend": "追加到上次提交 (--amend)",
+  "gitMergePendingTitle": "マージ待コミット",
+  "gitMergePendingHint": "現でなし未解决衝突。お願いします確認并一時存必要保留変更,回にコミット以完マージ。",
+  "gitActionAbortMerge": "中止マージ",
+  "gitAbortMergeConfirm": "OK中止現でマージですか?未解决衝突変更を被放弃,ワークスペースを復元にマージ前ステータス。",
+  "gitCommitChanges": "変更をコミット",
+  "gitCommitNeedsIdentity": "未設定コミット署名,お願いしますで「認証情報と署名」ページ入力ユーザー名とメールアドレス",
+  "gitCommitDialogTitle": "変更をコミット",
+  "gitCommitMessage": "コミット情報",
+  "gitCommitAmend": "追加に前回コミット (--amend)",
   "gitCommitAiGenerate": "AI 生成",
-  "gitCommitGenerating": "正在生成…",
-  "gitActionCommit": "提交",
-  "gitTabStash": "储藏",
-  "gitStashTitle": "储藏箱",
-  "gitActionStash": "储藏改动",
-  "gitStashMessageHint": "储藏説明(オプション)",
-  "gitStashIncludeUntracked": "包含未跟踪ファイル(-u)",
-  "gitStashEmpty": "暂なし储藏記録",
-  "gitStashPop": "弹出 (Pop)",
-  "gitStashApply": "应用 (Apply)",
-  "gitStashDrop": "丢弃 (Drop)",
-  "gitStashDropConfirm": "OK丢弃储藏 {index} 吗?该操作不可撤销。",
+  "gitCommitGenerating": "生成中…",
+  "gitActionCommit": "コミット",
+  "gitTabStash": "スタッシュ",
+  "gitStashTitle": "スタッシュ箱",
+  "gitActionStash": "スタッシュ変更",
+  "gitStashMessageHint": "スタッシュ説明(オプション)",
+  "gitStashIncludeUntracked": "包含む未トレースファイル(-u)",
+  "gitStashEmpty": "一時なしスタッシュ記録",
+  "gitStashPop": "ポップ (Pop)",
+  "gitStashApply": "アプリ (Apply)",
+  "gitStashDrop": "破棄 (Drop)",
+  "gitStashDropConfirm": "OK破棄スタッシュ {index} ですか?この操作元に戻せません。",
   "@gitStashDropConfirm": {
     "placeholders": {
       "index": {
@@ -656,9 +656,9 @@
       }
     }
   },
-  "gitStashClear": "清空すべて",
-  "gitStashClearConfirm": "OK清空所有储藏記録吗?该操作不可撤销。",
-  "gitStashCount": "储藏 ({count})",
+  "gitStashClear": "クリアすべて",
+  "gitStashClearConfirm": "OKクリアすべてスタッシュ記録ですか?この操作元に戻せません。",
+  "gitStashCount": "スタッシュ ({count})",
   "@gitStashCount": {
     "placeholders": {
       "count": {
@@ -666,12 +666,12 @@
       }
     }
   },
-  "gitPull": "拉取",
-  "gitPush": "推送",
-  "gitPullDirtyConfirm": "現在ワークスペース有未提交改动,拉取可能导致冲突。建议先提交或暂存。仍要继续拉取吗?",
-  "gitPullContinue": "继续拉取",
-  "gitNoUpstream": "未設定上游",
-  "gitTrackingBranch": "跟踪 {name}",
+  "gitPull": "取得",
+  "gitPush": "プッシュ",
+  "gitPullDirtyConfirm": "現でワークスペースあり未コミットの変更,取得得可能能导致衝突。建议先コミットまたは一時存。仍要继续取得得ですか?",
+  "gitPullContinue": "続けて取得",
+  "gitNoUpstream": "アップストリーム未設定",
+  "gitTrackingBranch": "トレース {name}",
   "@gitTrackingBranch": {
     "placeholders": {
       "name": {
@@ -679,7 +679,7 @@
       }
     }
   },
-  "gitAheadCount": "待推送 {count}",
+  "gitAheadCount": "待プッシュ {count}",
   "@gitAheadCount": {
     "placeholders": {
       "count": {
@@ -687,7 +687,7 @@
       }
     }
   },
-  "gitBehindCount": "待拉取 {count}",
+  "gitBehindCount": "取得待ち {count}",
   "@gitBehindCount": {
     "placeholders": {
       "count": {
@@ -695,33 +695,33 @@
       }
     }
   },
-  "gitBranchSynced": "已同步",
-  "gitDetachedHeadLabel": "detached HEAD:現在不在任何ブランチ上",
+  "gitBranchSynced": "済み同期",
+  "gitDetachedHeadLabel": "detached HEAD:現でなしで任意ブランチ上",
   "gitNoBranch": "(なしブランチ)",
-  "gitLoadingBranches": "正在読み込みブランチ列表…",
+  "gitLoadingBranches": "読み取得り中み込みブランチリスト…",
   "gitNoCheckedOutBranch": "未检出ブランチ",
-  "gitClean": "ワークスペース干净",
-  "gitHasChanges": "ワークスペース有改动",
-  "gitNotARepo": "現在ワークスペース还不是 Git リポジトリ",
-  "gitCloningHint": "正在克隆リポジトリ,请稍候…",
-  "gitInitDescPrimary": "可在此初始化新リポジトリ,開始版本管理",
-  "gitInitDescSecondary": "若子ディレクトリ已有 Git リポジトリ,也可直接選択使用",
-  "gitInitRepo": "初始化新リポジトリ",
-  "gitCloneRepo": "克隆远程リポジトリ",
-  "gitCloneDialogTitle": "克隆 Git リポジトリ",
-  "gitCloneDesc": "将远程リポジトリ克隆到現在ワークスペース根ディレクトリ(ワークスペース需为空)。若为私有リポジトリ,可先点右上角钥匙登录 GitHub 或填入访问令牌。",
-  "gitCloneUrlLabel": "リポジトリ地址",
-  "gitCloning": "正在克隆リポジトリ,请稍候…",
+  "gitClean": "ワークスペースクリーン",
+  "gitHasChanges": "ワークスペースあり変更",
+  "gitNotARepo": "現でワークスペース还なしはい Git リポジトリ",
+  "gitCloningHint": "クローン中リポジトリ,お願いしますしばらくお待ちください…",
+  "gitInitDescPrimary": "可能で此初期化新リポジトリ,開始バージョン管理",
+  "gitInitDescSecondary": "若子ディレクトリ済みあり Git リポジトリ,也可能直接選択使使用",
+  "gitInitRepo": "初期化新リポジトリ",
+  "gitCloneRepo": "クローンリモートリポジトリ",
+  "gitCloneDialogTitle": "クローン Git リポジトリ",
+  "gitCloneDesc": "をリモートリポジトリクローンに現でワークスペース根ディレクトリ(ワークスペース必要のため空)。若のためプライベートリポジトリ,可能先クリック右上隅钥匙ログイン GitHub または入力入アクセストークン。",
+  "gitCloneUrlLabel": "リポジトリアドレス",
+  "gitCloning": "クローン中リポジトリ,お願いしますしばらくお待ちください…",
   "gitSwitchRepo": "切换リポジトリ",
-  "gitPickExistingRepo": "選択已有リポジトリ",
+  "gitPickExistingRepo": "選択済みありリポジトリ",
   "gitRepoSelectorTitle": "選択リポジトリ",
   "gitRepoNotRepo": "非リポジトリ",
-  "gitPickRepoEmpty": "現在ワークスペース没有オプション的ディレクトリ",
-  "gitNoBranches": "暂なしブランチ",
+  "gitPickRepoEmpty": "現でワークスペースなしオプションディレクトリ",
+  "gitNoBranches": "一時なしブランチ",
   "gitNewBranch": "新規作成ブランチ",
   "gitBranchName": "ブランチ名",
   "gitBaseBranch": "基准ブランチ",
-  "gitCreateAndSwitch": "作成并切换",
+  "gitCreateAndSwitch": "作成して切り替え",
   "gitDeleteBranch": "削除ブランチ",
   "gitDeleteLocalBranchConfirm": "削除ローカルブランチ {name}?",
   "@gitDeleteLocalBranchConfirm": {
@@ -731,8 +731,8 @@
       }
     }
   },
-  "gitDeleteRemoteBranch": "削除远程ブランチ",
-  "gitDeleteRemoteBranchConfirm": "削除远程ブランチ {name}?该操作不可撤销。",
+  "gitDeleteRemoteBranch": "リモート削除ブランチ",
+  "gitDeleteRemoteBranchConfirm": "リモート削除ブランチ {name}?この操作元に戻せません。",
   "@gitDeleteRemoteBranchConfirm": {
     "placeholders": {
       "name": {
@@ -740,8 +740,8 @@
       }
     }
   },
-  "gitRenameBranch": "重命名ブランチ",
-  "gitRenameTo": "将 {name} 重命名为:",
+  "gitRenameBranch": "名前変更ブランチ",
+  "gitRenameTo": "を {name} 名前変更のため:",
   "@gitRenameTo": {
     "placeholders": {
       "name": {
@@ -761,7 +761,7 @@
       }
     }
   },
-  "gitCreateTagDesc": "从現在 HEAD({hash})作成軽量タグ",
+  "gitCreateTagDesc": "から現で HEAD({hash})作成軽量タグ",
   "@gitCreateTagDesc": {
     "placeholders": {
       "hash": {
@@ -769,13 +769,13 @@
       }
     }
   },
-  "gitCheckedOut": "現在检出",
-  "gitCurrentBranch": "現在ブランチ",
-  "gitRemote": "远程",
+  "gitCheckedOut": "現で检出",
+  "gitCurrentBranch": "現でブランチ",
+  "gitRemote": "リモート",
   "commonLocal": "ローカル",
-  "gitNew": "新增",
-  "gitNoCommits": "暂なし提交記録",
-  "gitCommitCount": "提交記録 ({count})",
+  "gitNew": "新規",
+  "gitNoCommits": "一時なしコミット記録",
+  "gitCommitCount": "コミット記録 ({count})",
   "@gitCommitCount": {
     "placeholders": {
       "count": {
@@ -783,11 +783,11 @@
       }
     }
   },
-  "gitSearchCommitsHint": "検索提交説明或作者…",
-  "gitLoadMoreCommits": "上拉読み込み更早提交",
-  "gitNoMoreCommits": "没有さらに表示了",
-  "gitLatestCommit": "最新提交",
-  "gitFilesChanged": "{count} 个ファイル改动",
+  "gitSearchCommitsHint": "検索コミット説明または作者…",
+  "gitLoadMoreCommits": "上拉読み込みより早いコミット",
+  "gitNoMoreCommits": "なしさらに表示",
+  "gitLatestCommit": "最新コミット",
+  "gitFilesChanged": "{count} 個ファイル変更",
   "@gitFilesChanged": {
     "placeholders": {
       "count": {
@@ -795,19 +795,19 @@
       }
     }
   },
-  "gitNoFilesChanged": "该提交なしファイル改动",
-  "gitMergeCommit": "合并提交",
-  "gitLoadingFiles": "正在読み込み改动ファイル…",
-  "gitCopyShortHash": "コピー短哈希",
-  "gitCopyFullHash": "コピー完整哈希",
+  "gitNoFilesChanged": "このコミットなしファイル変更",
+  "gitMergeCommit": "マージコミット",
+  "gitLoadingFiles": "読み取得り中み込み変更ファイル…",
+  "gitCopyShortHash": "コピー短ハッシュ",
+  "gitCopyFullHash": "コピー完全ハッシュ",
   "gitActionCreateBranch": "作成ブランチ",
   "gitActionCreateTag": "作成タグ",
-  "gitCreateBranchFromCommit": "基于此提交作成ブランチ",
-  "gitCreateTagAtCommit": "在此提交作成タグ",
-  "gitResetToCommit": "リセット到此提交 (Reset)",
-  "gitResetSoft": "Soft(保留ワークスペース与暂存区)",
-  "gitResetMixed": "Mixed(保留ワークスペース,清空暂存区)",
-  "gitResetConfirm": "OK将現在ブランチリセット到提交 {hash} 吗?",
+  "gitCreateBranchFromCommit": "基にこのコミットを作成ブランチ",
+  "gitCreateTagAtCommit": "でこのコミットを作成タグ",
+  "gitResetToCommit": "リセットに此コミット (Reset)",
+  "gitResetSoft": "Soft(保留ワークスペースとステージング)",
+  "gitResetMixed": "Mixed(保留ワークスペース,クリアステージング)",
+  "gitResetConfirm": "OKを現でブランチリセットにコミット {hash} ですか?",
   "@gitResetConfirm": {
     "placeholders": {
       "hash": {
@@ -815,14 +815,14 @@
       }
     }
   },
-  "gitDiffBinary": "二进制ファイル,不显示差异",
-  "gitDiffTooLarge": "ファイル过大,未计算差异",
-  "gitDiffEmpty": "没有可显示的差异",
+  "gitDiffBinary": "2進数ファイル,なし表示差异",
+  "gitDiffTooLarge": "ファイル過大,未计算差异",
+  "gitDiffEmpty": "なし可能表示差异",
   "gitCopyPath": "パスをコピー",
-  "gitViewDiff": "查看差异",
-  "gitRevert": "回退改动",
-  "gitDeleteUntrackedConfirm": "削除 {name}?它从未被提交过,削除后なし法通过 Git 恢复。",
-  "gitAddToGitignore": "添加到 .gitignore",
+  "gitViewDiff": "差分を表示",
+  "gitRevert": "戻す変更",
+  "gitDeleteUntrackedConfirm": "削除 {name}?它から未被コミット过,削除後なし法通过 Git 復元。",
+  "gitAddToGitignore": "追加に .gitignore",
   "gitIgnoreFile": "忽略此ファイル ({name})",
   "@gitIgnoreFile": {
     "placeholders": {
@@ -831,7 +831,7 @@
       }
     }
   },
-  "gitIgnoreDir": "忽略整个ディレクトリ ({name}/)",
+  "gitIgnoreDir": "忽略整個ディレクトリ ({name}/)",
   "@gitIgnoreDir": {
     "placeholders": {
       "name": {
@@ -847,8 +847,8 @@
       }
     }
   },
-  "gitPathCopied": "已パスをコピー",
-  "gitActionFailed": "{action}失敗:{error}",
+  "gitPathCopied": "済みパスをコピー",
+  "gitActionFailed": "{action}失敗: {error}",
   "@gitActionFailed": {
     "placeholders": {
       "action": {
@@ -867,7 +867,7 @@
       }
     }
   },
-  "gitCheckoutSuccess": "已切换到 {name}",
+  "gitCheckoutSuccess": "済み切换に {name}",
   "@gitCheckoutSuccess": {
     "placeholders": {
       "name": {
@@ -875,57 +875,57 @@
       }
     }
   },
-  "gitNoRemotePull": "未設定远程リポジトリ,なし法拉取",
-  "gitNoRemotePush": "未設定远程リポジトリ,なし法推送",
+  "gitNoRemotePull": "リモート未設定リポジトリ,なし法取得得",
+  "gitNoRemotePush": "リモート未設定リポジトリ,なし法プッシュ",
   "gitPushMasterConfirmTitle": "ブランチ命名建议",
-  "gitPushMasterConfirmDesc": "現在ローカルブランチ为 master,GitHub 与 GitLab 推荐使用 main 作为默认主ブランチ。是否将ローカルブランチ重命名为 main 后再推送?",
-  "gitPushRenameToMain": "重命名为 main 并推送",
-  "gitPushKeepMaster": "保留 master 推送",
-  "gitTesting": "测试",
-  "credentialToken": "访问令牌(Token / PAT)",
+  "gitPushMasterConfirmDesc": "現でローカルブランチのため master,GitHub と GitLab 推荐使使用 main 作のためデフォルト主ブランチ。よろしいですかをローカルブランチ名前変更のため main 後再プッシュ?",
+  "gitPushRenameToMain": "名前変更のため main 并プッシュ",
+  "gitPushKeepMaster": "保留 master プッシュ",
+  "gitTesting": "テスト",
+  "credentialToken": "アクセストークン(Token / PAT)",
   "gitUserName": "user.name",
   "gitUserEmail": "user.email",
-  "gitRepoUrl": "リポジトリ地址",
+  "gitRepoUrl": "リポジトリアドレス",
   "gitSelectBranch": "選択基准ブランチ",
-  "credentialTokenLogin": "令牌登录",
-  "credentialTokenLoginDesc": "只需貼り付け访问令牌(PAT),推送时自动匹配远端主机",
-  "credentialTokenSaved": "令牌已保存",
-  "commonShow": "显示",
-  "commonHide": "隐藏",
-  "credentialAdd": "添加凭据",
-  "settingsSubtitle": "管理 AI、外观、同步和应用数据",
-  "accountAndData": "账户与数据",
+  "credentialTokenLogin": "トークンログイン",
+  "credentialTokenLoginDesc": "只必要貼り支払いけアクセストークン(PAT),プッシュ時自動一致远端ホスト",
+  "credentialTokenSaved": "トークン保存済みみ",
+  "commonShow": "表示",
+  "commonHide": "非表示",
+  "credentialAdd": "追加認証情報",
+  "settingsSubtitle": "管理 AI、外观、同期とアプリデータ",
+  "accountAndData": "账户とデータ",
   "themeTitle": "テーマ",
   "themeSubtitle": "外観、バックグラウンドと表示",
-  "aboutSubtitle": "版本、更新与反馈",
-  "aboutAutoCheck": "自动检查更新",
-  "aboutAutoCheckDesc": "開く App 时自动检测新版本",
-  "aboutUpdateChannel": "更新通道",
-  "aboutStableChannel": "稳定版",
-  "aboutDownloadMirror": "下载镜像源",
+  "aboutSubtitle": "バージョン、更新と反馈",
+  "aboutAutoCheck": "自動チェック更新",
+  "aboutAutoCheckDesc": "開く App 時自動检测新バージョン",
+  "aboutUpdateChannel": "更新チャンネル",
+  "aboutStableChannel": "安定版",
+  "aboutDownloadMirror": "下载イメージ源",
   "aboutMirrorUrl": "https://cdn.gh-proxy.co...",
   "githubRepo": "GitHub リポジトリ",
-  "aboutUserAgreement": "用户プロトコル",
-  "aboutPrivacyPolicy": "隐私政策",
+  "aboutUserAgreement": "ユーザープロトコル",
+  "aboutPrivacyPolicy": "プライバシーポリシー",
   "mcpTitle": "MCP サーバー",
-  "mcpSubtitle": "接入外部工具的 Model Context Protocol 服务",
-  "mcpAdd": "添加 MCP",
+  "mcpSubtitle": "接入外部工具 Model Context Protocol サービス",
+  "mcpAdd": "追加 MCP",
   "mcpEdit": "編集 MCP",
-  "mcpEmpty": "还没有設定 MCP サーバー",
-  "mcpEmptyHint": "点击右上角 + 可以添加远程 HTTP 或ローカル stdio 服务器",
+  "mcpEmpty": "还なし設定 MCP サーバー",
+  "mcpEmptyHint": "クリック击右上隅 + 可能以追加リモート HTTP またはローカル stdio サーバー",
   "mcpSearchPlaceholder": "検索 MCP サーバー…",
-  "mcpSearchEmpty": "未找到匹配的 MCP サーバー",
+  "mcpSearchEmpty": "見つかりません一致 MCP サーバー",
   "mcpScopeLabel": "スコープ",
   "mcpScopeGlobal": "グローバル",
   "mcpScopeProject": "プロジェクト",
   "mcpTypeStdio": "stdio",
   "mcpStatusDisabled": "無効",
-  "mcpStatusNotConnected": "未连接",
-  "mcpStatusConnected": "已连接",
-  "mcpStatusConnecting": "连接中…",
+  "mcpStatusNotConnected": "未接続",
+  "mcpStatusConnected": "接続済みみ",
+  "mcpStatusConnecting": "接続中…",
   "mcpStatusFailed": "接続に失敗しました",
-  "mcpStatusNeedsAuth": "需要登录",
-  "mcpToolsCount": "{count} 个工具",
+  "mcpStatusNeedsAuth": "必要ログイン",
+  "mcpToolsCount": "{count} 個のツール",
   "@mcpToolsCount": {
     "placeholders": {
       "count": {
@@ -935,30 +935,30 @@
   },
   "mcpDetails": "詳細",
   "mcpBasicSettings": "基本設定",
-  "mcpEnabledLabel": "是否有効化",
+  "mcpEnabledLabel": "よろしいですかあり効化",
   "mcpNameLabel": "名前",
-  "mcpNameHint": "例如:fetch、github、gitlab",
-  "mcpNameInvalid": "名前只能包含字母、数字、下划线和连字符",
+  "mcpNameHint": "例えば:fetch、github、gitlab",
+  "mcpNameInvalid": "名前只能包含む字母、数値、下線と连字符",
   "mcpTransportType": "传输タイプ",
-  "mcpRemoteHttp": "远程 HTTP",
+  "mcpRemoteHttp": "リモート HTTP",
   "mcpLocalStdio": "ローカル stdio",
-  "mcpServerUrl": "服务器地址",
-  "mcpServerUrlHint": "例如:https://api.example.com/mcp",
+  "mcpServerUrl": "サーバーアドレス",
+  "mcpServerUrlHint": "例えば:https://api.example.com/mcp",
   "mcpCustomHeaders": "カスタムリクエストヘッダー",
-  "mcpNoCustomHeaders": "暂なし設定的カスタム Header",
+  "mcpNoCustomHeaders": "一時なし設定カスタム Header",
   "mcpHeaderName": "リクエストヘッダー名前",
-  "mcpHeaderNameHint": "如 Authorization",
-  "mcpHeaderValue": "リクエストヘッダー值",
-  "mcpHeaderValueHint": "如 Bearer xxxxxx",
-  "mcpAddHeader": "添加リクエストヘッダー",
-  "mcpCommand": "開始命令",
-  "mcpCommandHint": "例如:npx",
-  "mcpArgs": "命令参数",
-  "mcpNoArgs": "なし额外命令行参数",
-  "mcpArgValue": "参数值",
-  "mcpArgHint": "如 -y 或 @modelcontextprotocol/server-xxx",
-  "mcpAddArg": "添加参数",
-  "mcpToolsSummary": "有効 {enabled} / {total} 个工具",
+  "mcpHeaderNameHint": "例: Authorization",
+  "mcpHeaderValue": "リクエストヘッダー値",
+  "mcpHeaderValueHint": "例: Bearer xxxxxx",
+  "mcpAddHeader": "追加リクエストヘッダー",
+  "mcpCommand": "開始コマンド",
+  "mcpCommandHint": "例えば:npx",
+  "mcpArgs": "コマンドパラメータ",
+  "mcpNoArgs": "なし额外コマンド行パラメータ",
+  "mcpArgValue": "パラメータ値",
+  "mcpArgHint": "如 -y または @modelcontextprotocol/server-xxx",
+  "mcpAddArg": "追加パラメータ",
+  "mcpToolsSummary": "あり効 {enabled} / {total} 個のツール",
   "@mcpToolsSummary": {
     "placeholders": {
       "enabled": {
@@ -969,28 +969,28 @@
       }
     }
   },
-  "mcpToolsSearch": "検索工具名前或描述…",
-  "mcpToolsSearchEmpty": "未找到匹配的工具",
-  "mcpToolsEnableAll": "すべて有効化",
+  "mcpToolsSearch": "検索工具名前または説明…",
+  "mcpToolsSearchEmpty": "見つかりません一致工具",
+  "mcpToolsEnableAll": "すべてあり効化",
   "mcpToolsDisableAll": "すべて無効化",
-  "mcpSaveFirstHint": "请先保存并连接服务器后查看工具列表",
-  "mcpNoToolsHint": "未检测到工具,点击右上角更新按钮再試行",
-  "mcpNoDescription": "なし描述",
-  "mcpAddSheetTitle": "添加 MCP サーバー",
-  "mcpAddManual": "手动填写",
-  "mcpAddManualDesc": "逐个填写地址、リクエストヘッダー或開始命令",
-  "mcpAddFromJson": "从 JSON インポート",
-  "mcpAddFromJsonDesc": "貼り付け标准 mcpServers 設定批量インポート",
-  "mcpJsonImportTitle": "从 JSON インポート",
-  "mcpJsonImportHint": "貼り付け标准 mcpServers 設定:键是服务器名,值里填 url(远程 HTTP)或 command(ローカル stdio)。",
+  "mcpSaveFirstHint": "お願いします先保存并接続サーバー後表示工具リスト",
+  "mcpNoToolsHint": "未检测に工具,クリック击右上隅更新按钮再試行",
+  "mcpNoDescription": "なし説明",
+  "mcpAddSheetTitle": "追加 MCP サーバー",
+  "mcpAddManual": "手動入力",
+  "mcpAddManualDesc": "逐個入力アドレス、リクエストヘッダーまたは開始コマンド",
+  "mcpAddFromJson": "から JSON インポート",
+  "mcpAddFromJsonDesc": "貼り支払いけ標準 mcpServers 設定一括インポート",
+  "mcpJsonImportTitle": "から JSON インポート",
+  "mcpJsonImportHint": "貼り支払いけ標準 mcpServers 設定:键はいサーバー名,値内入力 url(リモート HTTP)または command(ローカル stdio)。",
   "mcpJsonImportAction": "インポート",
-  "mcpJsonImportEmpty": "未解析到任何 MCP サーバー",
-  "mcpSaved": "已保存",
+  "mcpJsonImportEmpty": "未解析に任意 MCP サーバー",
+  "mcpSaved": "保存済みみ",
   "mcpRefreshTools": "更新工具",
-  "mcpRemoved": "已移除 MCP サーバー",
-  "permissionsTitle": "工具授权",
-  "permissionsSubtitle": "规则与记忆",
-  "permCurrentProject": "現在のプロジェクト:{name}",
+  "mcpRemoved": "済み削除 MCP サーバー",
+  "permissionsTitle": "工具認証",
+  "permissionsSubtitle": "ルールと记忆",
+  "permCurrentProject": "現でのプロジェクト:{name}",
   "@permCurrentProject": {
     "placeholders": {
       "name": {
@@ -998,22 +998,22 @@
       }
     }
   },
-  "permCurrentProjectNone": "現在のプロジェクト(未選択)",
-  "permNoProjectRules": "本プロジェクト暂なし规则",
+  "permCurrentProjectNone": "現でのプロジェクト(未選択)",
+  "permNoProjectRules": "本プロジェクト一時なしルール",
   "permGlobal": "グローバル",
-  "permNoGlobalRules": "暂なしグローバル规则",
-  "permEntireTool": "整个工具",
+  "permNoGlobalRules": "一時なしグローバルルール",
+  "permEntireTool": "整個のツール",
   "permDeny": "禁止",
-  "permPromoteToGlobal": "提升为グローバル",
-  "permRulesShort": "对话中选「始终実行」会在現在のプロジェクト生成记忆规则",
-  "chatPermDeny": "拒绝",
-  "chatPermAlwaysAllow": "始终実行",
-  "chatPermAlwaysToolDesc": "「始终実行」将在本プロジェクト记住:该工具的すべて调用",
-  "chatPermAlwaysPrefix": "「始终実行」将在本プロジェクト记住:",
-  "chatPermSingleUseDesc": "该调用不可记忆,仅可单次放行",
+  "permPromoteToGlobal": "提升のためグローバル",
+  "permRulesShort": "チャット中选「始终実行」会で現でのプロジェクト生成记忆ルール",
+  "chatPermDeny": "拒いいえいいえ",
+  "chatPermAlwaysAllow": "常に実行",
+  "chatPermAlwaysToolDesc": "「始终実行」をで本プロジェクト記憶:この工具すべて呼び出しび出し",
+  "chatPermAlwaysPrefix": "「始终実行」をで本プロジェクト記憶:",
+  "chatPermSingleUseDesc": "この呼び出しび出しなし可能记忆,仅可能単一回放行",
   "commonName": "名前",
   "commonTool": "工具",
-  "commonAdd": "添加",
+  "commonAdd": "追加",
   "commonLabelWithApi": "{label}({api})",
   "@commonLabelWithApi": {
     "placeholders": {
@@ -1026,23 +1026,23 @@
     }
   },
   "commonExpand": "展開",
-  "commonCollapse": "收起",
-  "mcpViewLogs": "查看此 MCP ログ",
-  "mcpAuthEnable": "OAuth 认证",
-  "mcpAuthDesc": "用于需要浏览器登录授权的远程 MCP 服务",
+  "commonCollapse": "折りたたむ",
+  "mcpViewLogs": "表示此 MCP ログ",
+  "mcpAuthEnable": "OAuth 認証",
+  "mcpAuthDesc": "使用に必要ブラウザログイン認証リモート MCP サービス",
   "mcpAuthClientId": "client_id(オプション)",
-  "mcpAuthClientIdHint": "预注册的客户端 ID;留空则尝试动态注册",
-  "mcpAuthServer": "授权服务器(オプション)",
-  "mcpAuthServerHint": "覆盖自动发现的授权服务器地址",
+  "mcpAuthClientIdHint": "预注册クライアント ID;空欄なら尝试動态注册",
+  "mcpAuthServer": "認証サーバー(オプション)",
+  "mcpAuthServerHint": "覆盖自動发现認証サーバーアドレス",
   "mcpAuthAdvanced": "詳細設定认证オプション",
-  "mcpAuthLogin": "登录 / 重新授权",
-  "mcpAuthReauthorize": "重新授权",
-  "mcpAuthLogout": "退出登录",
-  "mcpAuthCancel": "キャンセル授权",
-  "mcpAuthInProgress": "待機浏览器授权…",
-  "mcpAuthInProgressHint": "已在系统浏览器開く登录页,授权完了后将自动返回并连接",
-  "mcpAuthSaveFirst": "保存服务器設定后,即可在此发起登录授权",
-  "mcpAuthFailed": "授权失敗:{message}",
+  "mcpAuthLogin": "ログイン / 再認証",
+  "mcpAuthReauthorize": "再認証",
+  "mcpAuthLogout": "ログアウト",
+  "mcpAuthCancel": "キャンセル認証",
+  "mcpAuthInProgress": "待機ブラウザ認証…",
+  "mcpAuthInProgressHint": "済みでシステムブラウザ開くログインページ,認証完後を自動返回并接続",
+  "mcpAuthSaveFirst": "保存サーバー設定後,それで十分で此发起ログイン認証",
+  "mcpAuthFailed": "認証失敗:{message}",
   "@mcpAuthFailed": {
     "placeholders": {
       "message": {
@@ -1050,17 +1050,17 @@
       }
     }
   },
-  "mcpAuthStatusLabel": "授权ステータス",
-  "mcpAuthStatusAuthorized": "已登录",
-  "mcpAuthStatusUnauthorized": "未登录",
-  "mcpAuthStatusAuthorizing": "授权中",
-  "mcpAuthSuccess": "授权成功,已连接",
-  "settingsReconnect": "重新连接",
-  "settingsAddMcpServer": "添加 MCP サーバー",
-  "settingsContainer": "容器与镜像",
-  "settingsContainerSubtitle": "PRoot 容器、镜像与初始化",
+  "mcpAuthStatusLabel": "認証ステータス",
+  "mcpAuthStatusAuthorized": "済みログイン",
+  "mcpAuthStatusUnauthorized": "未ログイン",
+  "mcpAuthStatusAuthorizing": "認証中",
+  "mcpAuthSuccess": "認証成功,接続済みみ",
+  "settingsReconnect": "再接続",
+  "settingsAddMcpServer": "追加 MCP サーバー",
+  "settingsContainer": "コンテナとイメージ",
+  "settingsContainerSubtitle": "PRoot コンテナ、イメージと初期化",
   "commonEdit": "編集",
-  "commonSwitch": "切换",
+  "commonSwitch": "切り替え",
   "chatOpenTerminal": "開くターミナル",
   "terminalTitle": "ターミナル",
   "terminalStartFailed": "なし法開始ターミナル:",
@@ -1072,44 +1072,44 @@
     }
   },
   "terminalRetry": "再試行",
-  "terminalNoOpenTabs": "没有開く的ターミナルタグ",
+  "terminalNoOpenTabs": "なし開くターミナルタグ",
   "terminalNewTab": "新規作成タグ",
   "terminalCloseTab": "閉じるタグ",
   "terminalSettingsTitle": "ターミナル設定",
-  "terminalThemeTitle": "配色主题",
-  "terminalThemeFollowApp": "跟随应用",
+  "terminalThemeTitle": "配色テーマ",
+  "terminalThemeFollowApp": "跟随アプリ",
   "terminalThemeTermiusDark": "Termius Dark",
   "terminalThemeGithubLight": "GitHub Light",
   "terminalThemeDracula": "Dracula",
   "terminalThemeOneDark": "One Dark",
   "terminalThemeMonokai": "Monokai",
   "terminalThemeGithubDark": "GitHub Dark",
-  "terminalFontSizeTitle": "字体サイズ",
-  "terminalCursorStyleTitle": "光标样式",
-  "terminalCursorBlock": "方块",
-  "terminalCursorUnderline": "下划线",
-  "terminalCursorBar": "竖线",
-  "terminalFontTitle": "ターミナル字体",
-  "terminalFontDefault": "系统等宽",
+  "terminalFontSizeTitle": "フォントサイズ",
+  "terminalCursorStyleTitle": "カーソルスタイル",
+  "terminalCursorBlock": "ブロック",
+  "terminalCursorUnderline": "下線",
+  "terminalCursorBar": "縦線",
+  "terminalFontTitle": "ターミナルフォント",
+  "terminalFontDefault": "システム等宽",
   "terminalFontBuiltin": "JetBrains Mono",
-  "settingsGeneral": "偏好設定",
+  "settingsGeneral": "一般設定",
   "settingsGeneralModels": "モデル",
-  "settingsAutoRemoveStaleModels": "拉取モデル后自动移除なし效モデル",
-  "settingsAutoRemoveStaleModelsDesc": "拉取成功后,移除远端已不存在的ローカルモデル件目",
+  "settingsAutoRemoveStaleModels": "取得得モデル後自動削除なし効モデル",
+  "settingsAutoRemoveStaleModelsDesc": "取得得成功後,削除远端済みなしでローカルモデル件目",
   "settingsGeneralSession": "セッション",
-  "settingsStartupSession": "開始时セッション",
+  "settingsStartupSession": "開始時セッション",
   "settingsStartupSessionNew": "新开セッション",
-  "settingsStartupSessionNewDesc": "复用尚未发送过消息的空セッション,否则新規作成",
+  "settingsStartupSessionNewDesc": "复使用尚未送信过メッセージ空セッション,そうでなければ新規作成",
   "settingsStartupSessionRecent": "開く最近セッション",
-  "settingsStartupSessionRecentDesc": "直接进入最近更新的セッション",
+  "settingsStartupSessionRecentDesc": "直接進入最近更新セッション",
   "settingsDeleteExternalWorkspaceSessions": "削除外部ワークスペースチャット履歴",
-  "settingsDeleteExternalWorkspaceSessionsDesc": "移除外部ローカルワークスペース时,一并削除该ワークスペース的チャット履歴",
-  "settingsGeneralInput": "输入",
-  "settingsEnterToSend": "回车键发送消息",
-  "settingsEnterToSendDesc": "閉じる后回车换行,需点发送按钮发送",
-  "settingsCompactionThreshold": "自动压缩阈值",
-  "settingsCompactionThresholdDesc": "上下文占用达到窗口的该比例时自动压缩",
-  "settingsCompactionThresholdInputHint": "填 1-100 的整数百分比",
+  "settingsDeleteExternalWorkspaceSessionsDesc": "削除外部ローカルワークスペース時,一そして削除このワークスペースチャット履歴",
+  "settingsGeneralInput": "入力",
+  "settingsEnterToSend": "回车键送信メッセージ",
+  "settingsEnterToSendDesc": "閉じる後回车改行,必要クリック送信按钮送信",
+  "settingsCompactionThreshold": "自動圧縮閾値",
+  "settingsCompactionThresholdDesc": "上下文占使用达にウィンドウこの比率時自動压缩",
+  "settingsCompactionThresholdInputHint": "入力 1-100 整数パーセント",
   "settingsPercentValue": "{percent}%",
   "@settingsPercentValue": {
     "placeholders": {
@@ -1118,12 +1118,12 @@
       }
     }
   },
-  "settingsGeneralNetwork": "网络",
-  "settingsFirstByteTimeout": "首字节超时",
-  "settingsFirstByteTimeoutDesc": "待機首个レスポンス块的最长时间",
-  "settingsStreamIdleTimeout": "数据块间隔超时",
-  "settingsStreamIdleTimeoutDesc": "两个レスポンス块之间的最长待機",
-  "settingsTimeoutUnlimited": "不限制",
+  "settingsGeneralNetwork": "ネットワーク",
+  "settingsFirstByteTimeout": "TTFBタイムアウト",
+  "settingsFirstByteTimeoutDesc": "待機首個レスポンス块最长時間",
+  "settingsStreamIdleTimeout": "データ块間隔タイムアウト",
+  "settingsStreamIdleTimeoutDesc": "两個レスポンス块之间最长待機",
+  "settingsTimeoutUnlimited": "なし限制",
   "settingsTimeoutSeconds": "{seconds} 秒",
   "@settingsTimeoutSeconds": {
     "placeholders": {
@@ -1132,10 +1132,10 @@
       }
     }
   },
-  "settingsTimeoutInputHint": "单位秒,填 0 表示不限制",
-  "settingsMaxNetworkRetries": "再試行次数",
-  "settingsMaxNetworkRetriesDesc": "网络失敗后的指数退避再試行次数",
-  "settingsRetriesCount": "{count} 次",
+  "settingsTimeoutInputHint": "単一位秒,入力 0 表示なし限制",
+  "settingsMaxNetworkRetries": "再試行回数",
+  "settingsMaxNetworkRetriesDesc": "ネットワーク失敗後指数退避再試行回数",
+  "settingsRetriesCount": "{count} 回",
   "@settingsRetriesCount": {
     "placeholders": {
       "count": {
@@ -1143,15 +1143,15 @@
       }
     }
   },
-  "settingsRetriesInputHint": "填 0 表示不再試行",
+  "settingsRetriesInputHint": "入力 0 表示なし再試行",
   "settingsGeneralTools": "工具",
-  "settingsSendfileMaxSize": "sendFile 单ファイル上限",
+  "settingsSendfileMaxSize": "sendFile 単一ファイル上限",
   "settingsGeneralGoal": "目標(goal)",
-  "settingsGoalMaxTurns": "最大续跑轮数",
-  "settingsGoalMaxTurnsDesc": "自主循环最多续跑多少轮,达到即停止",
-  "settingsGoalMaxTokens": "token 预算",
-  "settingsGoalMaxTokensDesc": "自主循环累计消耗的输入+输出 token 上限",
-  "settingsTurnsValue": "{count} 轮",
+  "settingsGoalMaxTurns": "最大実行回数",
+  "settingsGoalMaxTurnsDesc": "自律ループ最大续跑多少回,达に即停止",
+  "settingsGoalMaxTokens": "token 予算",
+  "settingsGoalMaxTokensDesc": "自律ループ累计消耗入力+出力 token 上限",
+  "settingsTurnsValue": "{count} 回",
   "@settingsTurnsValue": {
     "placeholders": {
       "count": {
@@ -1167,10 +1167,10 @@
       }
     }
   },
-  "settingsGoalMaxTurnsInputHint": "填大于 0 的整数轮数",
-  "settingsGoalMaxTokensInputHint": "填不小于 1000 的整数",
-  "settingsSendfileMaxSizeDesc": "单个ファイルサイズ上限,超过则整批发送失敗",
-  "settingsSendfileMaxSizeInputHint": "单位 MB,填大于 0 的整数",
+  "settingsGoalMaxTurnsInputHint": "拡大入力に 0 整数回数",
+  "settingsGoalMaxTokensInputHint": "入力なし小に 1000 整数",
+  "settingsSendfileMaxSizeDesc": "単一個ファイルサイズ上限,超過なら整批送信失敗",
+  "settingsSendfileMaxSizeInputHint": "単一位 MB,拡大入力に 0 整数",
   "settingsMbValue": "{mb} MB",
   "@settingsMbValue": {
     "placeholders": {
@@ -1179,7 +1179,7 @@
       }
     }
   },
-  "providerModelsAlignedRemoved": "已移除 {count} 个远端已不存在的モデル",
+  "providerModelsAlignedRemoved": "済み削除 {count} 個远端済みなしでモデル",
   "@providerModelsAlignedRemoved": {
     "placeholders": {
       "count": {
@@ -1187,16 +1187,16 @@
       }
     }
   },
-  "tokenStatsTitle": "Token 统计",
+  "tokenStatsTitle": "Token 統計",
   "tokenStatsPeriodToday": "今日",
-  "tokenStatsPeriod7d": "近7日",
-  "tokenStatsPeriod30d": "近30日",
+  "tokenStatsPeriod7d": "直近 7 日",
+  "tokenStatsPeriod30d": "直近 30 日",
   "tokenStatsPeriodAll": "すべて",
-  "tokenStatsTotal": "总消耗",
-  "tokenStatsRequests": "リクエスト次数",
-  "tokenStatsCost": "费用",
-  "tokenStatsCacheHitRate": "缓存命中率",
-  "tokenStatsCacheReadWrite": "读取 {read} / 写入 {write}",
+  "tokenStatsTotal": "総消費",
+  "tokenStatsRequests": "リクエスト回数",
+  "tokenStatsCost": "費用",
+  "tokenStatsCacheHitRate": "キャッシュ命中率",
+  "tokenStatsCacheReadWrite": "読み取り得 {read} / 書き込み {write}",
   "@tokenStatsCacheReadWrite": {
     "placeholders": {
       "read": {
@@ -1207,12 +1207,12 @@
       }
     }
   },
-  "tokenStatsTrend": "消耗趋势",
-  "tokenStatsLegendInput": "输入",
-  "tokenStatsLegendOutput": "输出",
-  "tokenStatsLegendCached": "缓存",
-  "tokenStatsProvider": "供应商统计",
-  "tokenStatsModel": "モデル统计",
+  "tokenStatsTrend": "消耗トレンド",
+  "tokenStatsLegendInput": "入力",
+  "tokenStatsLegendOutput": "出力",
+  "tokenStatsLegendCached": "キャッシュ",
+  "tokenStatsProvider": "プロバイダ統計",
+  "tokenStatsModel": "モデル統計",
   "tokenStatsSuccessRate": "成功率 {rate}",
   "@tokenStatsSuccessRate": {
     "placeholders": {
@@ -1221,11 +1221,11 @@
       }
     }
   },
-  "tokenStatsRecentCalls": "调用記録",
-  "tokenStatsUnknown": "不明",
-  "tokenStatsNoData": "暂なし数据",
-  "tokenStatsCallsSuffix": "次调用",
-  "tokenStatsCallsSuffix2": "{count} 次调用",
+  "tokenStatsRecentCalls": "呼び出しび出し記録",
+  "tokenStatsUnknown": "なし明",
+  "tokenStatsNoData": "一時なしデータ",
+  "tokenStatsCallsSuffix": "回の呼び出しび出しび出し",
+  "tokenStatsCallsSuffix2": "{count} 回の呼び出しび出しび出し",
   "@tokenStatsCallsSuffix2": {
     "placeholders": {
       "count": {
@@ -1234,19 +1234,19 @@
     }
   },
   "tokenStatsColModel": "モデル",
-  "tokenStatsColReasoningEffort": "思考深度",
-  "tokenStatsColProvider": "供应商",
-  "tokenStatsColInput": "输入",
-  "tokenStatsColOutput": "输出",
-  "tokenStatsColCachedRead": "缓存读取",
-  "tokenStatsColCachedWrite": "缓存写入",
+  "tokenStatsColReasoningEffort": "思考の深さ",
+  "tokenStatsColProvider": "プロバイダ",
+  "tokenStatsColInput": "入力",
+  "tokenStatsColOutput": "出力",
+  "tokenStatsColCachedRead": "キャッシュ読み取り得",
+  "tokenStatsColCachedWrite": "キャッシュ書き込み",
   "tokenStatsColCacheHitRate": "命中率",
-  "tokenStatsColTtfb": "首字节",
+  "tokenStatsColTtfb": "TTFB",
   "tokenStatsColDuration": "所要時間",
-  "tokenStatsColTime": "时间",
+  "tokenStatsColTime": "時間",
   "tokenStatsColStatus": "ステータス",
-  "tokenStatsColCost": "费用",
-  "tokenStatsPage": "第 {page} / {total} 页",
+  "tokenStatsColCost": "費用",
+  "tokenStatsPage": "第 {page} / {total} ページ",
   "@tokenStatsPage": {
     "placeholders": {
       "page": {
@@ -1257,7 +1257,7 @@
       }
     }
   },
-  "tokenStatsRetries": "再試行 {count} 次",
+  "tokenStatsRetries": "再試行 {count} 回",
   "@tokenStatsRetries": {
     "placeholders": {
       "count": {
@@ -1266,12 +1266,12 @@
     }
   },
   "tokenStatsReset": "リセット",
-  "tokenStatsResetTitle": "リセット Token 统计",
-  "tokenStatsResetConfirm": "将清空すべて调用記録,此操作不可恢复。OKリセット?",
-  "tokenStatsFilterAllProviders": "すべて供应商",
+  "tokenStatsResetTitle": "リセット Token 統計",
+  "tokenStatsResetConfirm": "をクリアすべて呼び出しび出し記録,この操作は元に戻せません。OKリセット?",
+  "tokenStatsFilterAllProviders": "すべてプロバイダ",
   "tokenStatsFilterAllModels": "すべてモデル",
-  "tokenStatsFilterClear": "清除筛选",
-  "tokenStatsFilterProvider": "供应商:{name}",
+  "tokenStatsFilterClear": "クリアフィルタ",
+  "tokenStatsFilterProvider": "プロバイダ:{name}",
   "@tokenStatsFilterProvider": {
     "placeholders": {
       "name": {
@@ -1287,7 +1287,7 @@
       }
     }
   },
-  "tokenStatsProviderKeys": "{count} 个密钥",
+  "tokenStatsProviderKeys": "{count} 個APIキー",
   "@tokenStatsProviderKeys": {
     "placeholders": {
       "count": {
@@ -1295,19 +1295,19 @@
       }
     }
   },
-  "tokenStatsRequestsUnit": "次リクエスト",
-  "tokenStatsHourSuffix": "时",
-  "tokenStatsPrevPage": "上一页",
-  "tokenStatsNextPage": "下一页",
-  "settingsCategoryData": "数据与诊断",
-  "gitActionClone": "克隆",
-  "gitActionInit": "初始化",
-  "gitActionMerge": "合并ブランチ",
-  "gitActionStageAll": "すべて暂存",
+  "tokenStatsRequestsUnit": "回リクエスト",
+  "tokenStatsHourSuffix": "時",
+  "tokenStatsPrevPage": "前ページ",
+  "tokenStatsNextPage": "回ページ",
+  "settingsCategoryData": "データと诊断",
+  "gitActionClone": "クローン",
+  "gitActionInit": "初期化",
+  "gitActionMerge": "マージブランチ",
+  "gitActionStageAll": "すべて一時存",
   "gitCloneUrlHint": "https://github.com/user/repo.git",
-  "gitComputingDiff": "正在计算差异…",
+  "gitComputingDiff": "差分計算中…",
   "gitCreateTagTitle": "新規作成タグ",
-  "gitCreateTrackingBranch": "从远程ブランチ {branch} 作成ローカル跟踪ブランチ并切换?",
+  "gitCreateTrackingBranch": "からリモートブランチ {branch} 作成ローカルトレースブランチ并切换?",
   "@gitCreateTrackingBranch": {
     "placeholders": {
       "branch": {
@@ -1315,8 +1315,8 @@
       }
     }
   },
-  "gitCredentialsAndIdentity": "凭据与署名",
-  "gitDetachedHeadWarning": "切换到タグ {ref} 将进入 detached HEAD ステータス——不处于任何ブランチ上,新提交不属于任何ブランチ。OK继续?",
+  "gitCredentialsAndIdentity": "認証情報と署名",
+  "gitDetachedHeadWarning": "切换にタグ {ref} を進入 detached HEAD ステータス——なし处に任意ブランチ上,新コミットなし属に任意ブランチ。OK继续?",
   "@gitDetachedHeadWarning": {
     "placeholders": {
       "ref": {
@@ -1324,7 +1324,7 @@
       }
     }
   },
-  "gitMergeConfirm": "OK将ブランチ {branch} 合并到現在ブランチ({current})吗?",
+  "gitMergeConfirm": "OKをブランチ {branch} マージに現でブランチ({current})ですか?",
   "@gitMergeConfirm": {
     "placeholders": {
       "branch": {
@@ -1335,10 +1335,10 @@
       }
     }
   },
-  "gitMergeNoFf": "作成合并提交(--no-ff)",
-  "gitOpenInEditor": "在編集器中開く",
+  "gitMergeNoFf": "作成マージコミット(--no-ff)",
+  "gitOpenInEditor": "でエディタで開くく",
   "gitSwitchBranch": "切换ブランチ",
-  "gitSwitchConfirm": "OK切换到 {ref}?",
+  "gitSwitchConfirm": "OK切换に {ref}?",
   "@gitSwitchConfirm": {
     "placeholders": {
       "ref": {
@@ -1378,7 +1378,7 @@
       }
     }
   },
-  "gitToastCheckoutFailed": "切换失敗:{error}",
+  "gitToastCheckoutFailed": "切り替え失敗: {error}",
   "@gitToastCheckoutFailed": {
     "placeholders": {
       "error": {
@@ -1386,7 +1386,7 @@
       }
     }
   },
-  "gitToastNotRepo": "该ディレクトリ不是 Git リポジトリ",
+  "gitToastNotRepo": "このディレクトリなしはい Git リポジトリ",
   "gitToastSwitchRepoFailed": "切换リポジトリ失敗:{error}",
   "@gitToastSwitchRepoFailed": {
     "placeholders": {
@@ -1396,17 +1396,17 @@
     }
   },
   "gitToastDiffFailed": "読み込み差异失敗",
-  "gitToastNoDiffForCommit": "暂存区与ワークスペース均なし差异,なし法生成提交情報",
-  "gitToastGenerateCommitFailed": "AI 生成提交情報失敗,请检查モデル或网络",
-  "diffBinaryFile": "二进制ファイル,不支持文本差异对比",
-  "diffFileTooLarge": "ファイル过大,已跳过差异计算",
-  "diffFileTooLargeDesc": "超过 2000 行或含超长行的ファイル不做行级 diff,以避免渲染与内存压力。",
+  "gitToastNoDiffForCommit": "ステージングとワークスペース均なし差异,なし法生成コミット情報",
+  "gitToastGenerateCommitFailed": "AI 生成コミット情報失敗,お願いしますチェックモデルまたはネットワーク",
+  "diffBinaryFile": "2進数ファイル,なし支持テキスト差异に比",
+  "diffFileTooLarge": "ファイル過大,済みスキップ差异计算",
+  "diffFileTooLargeDesc": "超過 2000 行または含む超长行ファイルなし做行レベル diff,以避免渲染と内存压力。",
   "diffNoChanges": "なし差异",
-  "back": "返回",
+  "back": "戻る",
   "chatOpenGit": "開く Git",
-  "switchLabel": "切换",
-  "credentialEdit": "編集凭据",
-  "credentialToastSaved": "凭据已保存",
+  "switchLabel": "切り替え",
+  "credentialEdit": "編集認証情報",
+  "credentialToastSaved": "認証情報保存済みみ",
   "credentialToastSaveFailed": "保存に失敗しました:%1$s",
   "@credentialToastSaveFailed": {
     "placeholders": {
@@ -1415,16 +1415,16 @@
       }
     }
   },
-  "credentialToastDeleted": "凭据已削除",
-  "credentialToastIdentitySaved": "署名与リポジトリ地址已保存",
-  "credentialEmptyHint": "尚未添加凭据,点右上角 + 添加",
-  "credentialEmptyTitle": "暂なし Git 認証情報",
-  "credentialEmptyDesc": "設定凭据后,Codecraft 可在推送或拉取代码リポジトリ时自动完了身份认证",
-  "credentialAddManual": "手动添加",
+  "credentialToastDeleted": "認証情報済み削除",
+  "credentialToastIdentitySaved": "署名とリポジトリアドレス保存済みみ",
+  "credentialEmptyHint": "尚未追加認証情報,クリック右上隅 + 追加",
+  "credentialEmptyTitle": "一時なし Git 認証情報",
+  "credentialEmptyDesc": "設定認証情報後,Codecraft 可能でプッシュまたは取得得コードリポジトリ時自動完身份认证",
+  "credentialAddManual": "手動追加",
   "gitTabIdentity": "署名",
-  "gitTabCredentials": "凭据",
-  "gitIdentityTitle": "提交署名",
-  "gitIdentityCodespace": "現在连接 GitHub Codespace {name}",
+  "gitTabCredentials": "認証情報",
+  "gitIdentityTitle": "コミット署名",
+  "gitIdentityCodespace": "現で接続 GitHub Codespace {name}",
   "@gitIdentityCodespace": {
     "placeholders": {
       "name": {
@@ -1432,9 +1432,9 @@
       }
     }
   },
-  "gitRepoUrlTitle": "リポジトリ地址",
+  "gitRepoUrlTitle": "リポジトリアドレス",
   "gitRemoteUrl": "remote.origin.url",
-  "gitCredentialsCount": "凭据 ({param1})",
+  "gitCredentialsCount": "認証情報 ({param1})",
   "@gitCredentialsCount": {
     "placeholders": {
       "param1": {
@@ -1443,7 +1443,7 @@
     }
   },
   "codespacesTitle": "GitHub Codespaces",
-  "codespacesNetworkError": "网络エラー:{error}",
+  "codespacesNetworkError": "ネットワークエラー:{error}",
   "@codespacesNetworkError": {
     "placeholders": {
       "error": {
@@ -1451,7 +1451,7 @@
       }
     }
   },
-  "codespacesAccount": "账号",
+  "codespacesAccount": "アカウント",
   "codespacesCount": "Codespaces ({count})",
   "@codespacesCount": {
     "placeholders": {
@@ -1460,15 +1460,15 @@
       }
     }
   },
-  "codespacesEmptyTitle": "还没有 Codespace",
-  "codespacesEmptyDesc": "在 GitHub 上作成 Codespace 后,这里即可列出并连接",
-  "codespacesCreateOnWeb": "在 github.com 新規作成",
+  "codespacesEmptyTitle": "还なし Codespace",
+  "codespacesEmptyDesc": "で GitHub 上作成 Codespace 後,ここそれで十分列出并接続",
+  "codespacesCreateOnWeb": "で github.com 新規作成",
   "codespacesRefresh": "更新",
-  "codespacesOpenInBrowser": "在浏览器開く",
+  "codespacesOpenInBrowser": "でブラウザ開く",
   "codespacesStart": "開始",
   "codespacesStop": "停止",
   "codespacesDelete": "削除",
-  "codespacesDeleteConfirm": "削除してもよろしいですか？ {name}?该操作不可撤销",
+  "codespacesDeleteConfirm": "削除してもよろしいですか？ {name}?この操作元に戻せません",
   "@codespacesDeleteConfirm": {
     "placeholders": {
       "name": {
@@ -1478,9 +1478,9 @@
   },
   "codespacesStateAvailable": "実行中",
   "codespacesStateStarting": "開始中",
-  "codespacesStateStopped": "停止済み",
-  "codespacesStateUnknown": "ステータス不明",
-  "codespacesLastUsed": "最近使用 {time}",
+  "codespacesStateStopped": "停止済みみ",
+  "codespacesStateUnknown": "ステータスなし明",
+  "codespacesLastUsed": "最近使用: {time}",
   "@codespacesLastUsed": {
     "placeholders": {
       "time": {
@@ -1488,44 +1488,44 @@
       }
     }
   },
-  "codespacesNoRepo": "不明リポジトリ",
-  "codespacesUncommitted": "有未提交改动",
+  "codespacesNoRepo": "なし明リポジトリ",
+  "codespacesUncommitted": "あり未コミットの変更",
   "codespacesMoreActions": "さらに表示操作",
-  "editorLoadFailed": "なし法读取该ファイル",
+  "editorLoadFailed": "なし読み取得れませんファイル",
   "editorSaveFailed": "保存に失敗しました",
-  "editorSaved": "已保存",
-  "editorCharacters": "角色",
-  "characterTitle": "角色管理",
-  "characterNew": "新規作成角色",
-  "characterEdit": "編集角色",
-  "characterEmpty": "暂なし角色",
-  "characterSearchHint": "検索角色名前、別名或タグ",
-  "characterSearchEmpty": "未找到匹配角色",
+  "editorSaved": "保存済みみ",
+  "editorCharacters": "ロール",
+  "characterTitle": "ロール管理",
+  "characterNew": "新規作成ロール",
+  "characterEdit": "編集ロール",
+  "characterEmpty": "一時なしロール",
+  "characterSearchHint": "検索ロール名前、別名またはタグ",
+  "characterSearchEmpty": "見つかりません一致ロール",
   "characterFieldBasic": "基本情報",
   "characterFieldName": "氏名",
-  "characterFieldNameHint": "角色的真实氏名",
-  "characterFieldAlias": "別名/称呼",
-  "characterFieldAliasHint": "故事中常用的称呼(如:老张、小李)",
+  "characterFieldNameHint": "ロール真实氏名",
+  "characterFieldAlias": "別名/称呼び出し",
+  "characterFieldAliasHint": "故事中常使用称呼び出し(如:老张、小李)",
   "characterFieldGender": "性別",
   "characterFieldGenderHint": "男/女/その他",
   "characterFieldAge": "年齢",
-  "characterFieldAgeHint": "数字,如 25",
+  "characterFieldAgeHint": "数値,例: 25",
   "characterFieldBirthday": "誕生日",
-  "characterFieldBirthdayHint": "格式:MM-DD,如 01-15",
-  "characterFieldAppearance": "外見描写",
-  "characterFieldAppearanceHint": "身高、体型、发色、瞳色、特征等",
+  "characterFieldBirthdayHint": "形式:MM-DD,例: 01-15",
+  "characterFieldAppearance": "外見描書く",
+  "characterFieldAppearanceHint": "身長、体型、髪の色、瞳の色、特徴など",
   "characterFieldPersonality": "性格",
-  "characterFieldPersonalityHint": "性格特点、動作模式、说话风格等",
+  "characterFieldPersonalityHint": "性格特クリック、動作モード、说话风格等",
   "characterFieldBackground": "バックグラウンド故事",
   "characterFieldBackgroundHint": "成长经历、重要イベント、家庭バックグラウンド等",
   "characterFieldGoals": "目標/願望",
-  "characterFieldGoalsHint": "角色想要达成的事、追求的东西",
-  "characterFieldFears": "恐怖/弱点",
-  "characterFieldFearsHint": "害怕的事、心理阴影、致命弱点等",
+  "characterFieldGoalsHint": "ロール想要达成事、追求东西",
+  "characterFieldFears": "恐怖/弱クリック",
+  "characterFieldFearsHint": "害怕事、心理阴影、致命弱クリック等",
   "characterFieldTags": "タグ",
-  "characterFieldTagsHint": "用逗号分隔,如:主角、反派、魔法师",
+  "characterFieldTagsHint": "カンマ区切り,如:主角、反派、魔法师",
   "characterScope": "スコープ",
-  "characterScopeProject": "現在のプロジェクト",
+  "characterScopeProject": "現でのプロジェクト",
   "characterScopeGlobal": "グローバル",
   "characterSelectedCount": "選択済み {count} 件",
   "@characterSelectedCount": {
@@ -1535,16 +1535,16 @@
       }
     }
   },
-  "editorUndo": "撤销",
-  "editorRedo": "重做",
+  "editorUndo": "元に戻す",
+  "editorRedo": "やり直し",
   "editorSearch": "検索",
-  "editorSearchHint": "查找コンテンツ",
-  "editorSearchPrev": "上一个",
-  "editorSearchNext": "下一个",
-  "editorTypeset": "自动排版",
-  "editorTypesetDone": "已排版,可撤销",
+  "editorSearchHint": "検索コンテンツ",
+  "editorSearchPrev": "前へ",
+  "editorSearchNext": "次へ",
+  "editorTypeset": "自動組版",
+  "editorTypesetDone": "済み排版,可能元に戻す",
   "editorCopy": "コピー",
-  "editorCopied": "已コピー到剪贴板",
+  "editorCopied": "済みコピーに剪贴板",
   "editorUnsavedState": "未保存",
   "editorWordCount": "{count} 字",
   "@editorWordCount": {
@@ -1554,19 +1554,19 @@
       }
     }
   },
-  "editorNoFile": "还没有開く的ファイル,从差异页点「在編集器中開く」即可",
-  "editorUnsavedTitle": "未保存的修改",
-  "editorUnsavedMessage": "現在ファイル有未保存的修改,是否保存?",
-  "editorSaveAndExit": "保存并退出",
-  "editorSaveAndSwitch": "保存并切换",
-  "editorDontSave": "不保存",
-  "editorMdPreview": "预览 Markdown",
-  "editorMdShowSource": "显示源码",
-  "editorIndent": "缩进",
-  "editorCursorLeft": "光标左移",
-  "editorCursorRight": "光标右移",
-  "editorSettings": "編集器設定",
-  "editorFontSize": "字体サイズ",
+  "editorNoFile": "还なし開くファイル,から差异ページクリック「でエディタで開くく」それで十分",
+  "editorUnsavedTitle": "未保存の修正",
+  "editorUnsavedMessage": "現でファイルあり未保存の修正,よろしいですか保存?",
+  "editorSaveAndExit": "保存して終",
+  "editorSaveAndSwitch": "保存して切り替え",
+  "editorDontSave": "なし保存",
+  "editorMdPreview": "プレビュー Markdown",
+  "editorMdShowSource": "ソースコードを表示",
+  "editorIndent": "インデント",
+  "editorCursorLeft": "カーソルを左に移動",
+  "editorCursorRight": "カーソルを右に移動",
+  "editorSettings": "エディタ設定",
+  "editorFontSize": "フォントサイズ",
   "editorFontSizeValue": "{size} sp",
   "@editorFontSizeValue": {
     "placeholders": {
@@ -1575,10 +1575,10 @@
       }
     }
   },
-  "editorWordWrap": "自动换行",
-  "editorShowIndentGuide": "显示缩进参考线",
-  "editorShowWhitespace": "显示空白符号",
-  "editorFileTooLarge": "ファイル过大({mb} MB),暂不支持開く",
+  "editorWordWrap": "自動改行",
+  "editorShowIndentGuide": "インデント参考線を表示",
+  "editorShowWhitespace": "空白文字を表示",
+  "editorFileTooLarge": "ファイル過大({mb} MB),一時に開けませんく",
   "@editorFileTooLarge": {
     "placeholders": {
       "mb": {
@@ -1586,10 +1586,10 @@
       }
     }
   },
-  "editorBinaryUnsupported": "二进制ファイル,暂不支持開く",
-  "editorSaveConflictTitle": "ファイル已被修改",
-  "editorSaveConflictMessage": "该ファイル在你開く之后已被 AI 或その他程序修改。直接保存会覆盖对方的改动。",
-  "editorSaveConflictDiff": "- 磁盘現在コンテンツ",
+  "editorBinaryUnsupported": "2進数ファイル,一時に開けませんく",
+  "editorSaveConflictTitle": "ファイル済み被修正",
+  "editorSaveConflictMessage": "このファイルで你開く後済み被 AI またはその他程序修正。直接保存会覆盖に方変更。",
+  "editorSaveConflictDiff": "- 磁盘現でコンテンツ",
   "@editorSaveConflictDiff": {
     "placeholders": {
       "diff": {
@@ -1597,10 +1597,10 @@
       }
     }
   },
-  "editorSaveConflictOverwrite": "覆盖磁盘",
-  "editorSaveConflictDiscard": "放弃我的修改",
+  "editorSaveConflictOverwrite": "ディスクを上書き",
+  "editorSaveConflictDiscard": "自分の変更を破棄",
   "editorSaveConflictCancel": "キャンセル",
-  "editorSaveConflictDiscarded": "已放弃修改并重新载入磁盘コンテンツ",
+  "editorSaveConflictDiscarded": "済み放弃修正并重新载入磁盘コンテンツ",
   "editorLineColumn": "{line}:{column}",
   "@editorLineColumn": {
     "placeholders": {
@@ -1612,13 +1612,13 @@
       }
     }
   },
-  "codespacesConnect": "连接",
-  "codespacesDisconnect": "断开",
-  "codespacesGhMissing": "容器里还没有 gh(GitHub CLI)。请先在ターミナルコマンドの実行 codecraft,選択「GitHub Codespaces」场景安装依赖。",
-  "codespacesExecutionEnv": "执行环境",
-  "codespacesEnvLocal": "ローカル容器",
-  "codespacesEnvCodespace": "远程 Codespace",
-  "terminalRemoteEnv": "远程环境:{name}",
+  "codespacesConnect": "接続",
+  "codespacesDisconnect": "切断",
+  "codespacesGhMissing": "コンテナ内还なし gh(GitHub CLI)。お願いします先でターミナルコマンドの実行 codecraft,選択「GitHub Codespaces」シーンインストール依赖。",
+  "codespacesExecutionEnv": "実行環境",
+  "codespacesEnvLocal": "ローカルコンテナ",
+  "codespacesEnvCodespace": "リモート Codespace",
+  "terminalRemoteEnv": "リモート环境:{name}",
   "@terminalRemoteEnv": {
     "placeholders": {
       "name": {
@@ -1626,33 +1626,33 @@
       }
     }
   },
-  "codespacesNew": "新規作成 Codespace",
+  "codespacesNew": "Codespace を新規作成",
   "codespacesRepoTab": "リポジトリ",
   "codespacesRepoSearchHint": "検索リポジトリ",
-  "codespacesBranch": "ブランチ(留空用默认ブランチ)",
-  "codespacesMachine": "机器规格",
-  "codespacesMachineDefault": "默认规格",
+  "codespacesBranch": "ブランチ(空欄使用デフォルトブランチ)",
+  "codespacesMachine": "マシン仕様",
+  "codespacesMachineDefault": "デフォルト规格",
   "codespacesCreate": "作成",
-  "codespacesRename": "重命名",
-  "codespacesRenameTitle": "Codespace 显示名",
+  "codespacesRename": "名前変更",
+  "codespacesRenameTitle": "Codespace 表示名",
   "codespacesChangeMachine": "更改マシンタイプ",
-  "codespacesNoMachines": "该リポジトリ没有オプションマシンタイプ",
+  "codespacesNoMachines": "このリポジトリなしオプションマシンタイプ",
   "codespacesLoadFailed": "読み込み失敗",
-  "codespacesPorts": "端口",
-  "codespacesPortsEmpty": "该 Codespace 还没有转发的端口",
-  "codespacesPortVisibility": "可见性",
-  "codespacesPortPrivate": "仅自己",
-  "codespacesPortOrg": "组织内",
-  "codespacesPortPublic": "公开",
+  "codespacesPorts": "ポート",
+  "codespacesPortsEmpty": "この Codespace 还なし転送端口",
+  "codespacesPortVisibility": "可視性",
+  "codespacesPortPrivate": "自分だけ",
+  "codespacesPortOrg": "グループ织内",
+  "codespacesPortPublic": "公開",
   "codespacesPortOpen": "開く",
-  "codespacesRebuild": "重建容器",
-  "codespacesRebuildDesc": "重建会按現在 devcontainer 重新作成容器:代码与未提交改动保留,容器内已安装的工具与実行ステータス会丢失。",
-  "codespacesRebuildFull": "完全重建(同时清除缓存的 Docker 镜像,更慢)",
+  "codespacesRebuild": "重建コンテナ",
+  "codespacesRebuildDesc": "重建会按現で devcontainer 重新作成コンテナ:コードと未コミットの変更保留,コンテナ内済みインストール工具と実行ステータス会紛失。",
+  "codespacesRebuildFull": "完全重建(同時クリアキャッシュ Docker イメージ,更慢)",
   "settingsLog": "ログ",
-  "settingsLogSubtitle": "应用実行ログ与 AI リクエストログ",
+  "settingsLogSubtitle": "アプリ実行ログと AI リクエストログ",
   "logFiles": "ログファイル",
-  "logNoFiles": "还没有ログファイル",
-  "logReadFailed": "读取ログ失敗:{error}",
+  "logNoFiles": "还なしログファイル",
+  "logReadFailed": "読み取り得ログ失敗:{error}",
   "@logReadFailed": {
     "placeholders": {
       "error": {
@@ -1661,10 +1661,10 @@
     }
   },
   "logSearchHint": "検索ログ",
-  "logNoMatch": "現在筛选件件下没有ログ",
+  "logNoMatch": "現でフィルタ件件下なしログ",
   "logLevel": "ログレベル",
-  "logLevelDesc": "記録低于该レベル的ログ将被忽略。开发期建议 VERBOSE(すべて記録);NONE 閉じるログ。",
-  "logCopied": "已コピー",
+  "logLevelDesc": "記録低にこのレベルログを被忽略。开发期建议 VERBOSE(すべて記録);NONE 閉じるログ。",
+  "logCopied": "済みコピー",
   "logMcpPrefix": "MCP ログ:{server}",
   "@logMcpPrefix": {
     "placeholders": {
@@ -1673,7 +1673,7 @@
       }
     }
   },
-  "logSearchResults": "匹配 {count} 行",
+  "logSearchResults": "一致 {count} 行",
   "@logSearchResults": {
     "placeholders": {
       "count": {
@@ -1681,7 +1681,7 @@
       }
     }
   },
-  "logShowLastLines": "显示最后 {shown}/{total} 行",
+  "logShowLastLines": "表示最後 {shown}/{total} 行",
   "@logShowLastLines": {
     "placeholders": {
       "shown": {
@@ -1692,7 +1692,7 @@
       }
     }
   },
-  "logShowLines": "显示 {count} 行",
+  "logShowLines": "表示 {count} 行",
   "@logShowLines": {
     "placeholders": {
       "count": {
@@ -1701,37 +1701,37 @@
     }
   },
   "logCopy": "コピー",
-  "logClearFilter": "清除筛选",
+  "logClearFilter": "クリアフィルタ",
   "logCopyMenuTitle": "コピーログ",
-  "logCopyLine": "コピー本件ログ",
-  "logCopyWithStack": "コピー本件及堆栈",
-  "logCopyMessage": "コピー消息コンテンツ",
-  "logFollowLatest": "实时滚动",
-  "logFileLocation": "ログファイル位于 Android/data/<包名>/files/logs/。",
+  "logCopyLine": "コピーこの件ログ",
+  "logCopyWithStack": "コピーこの件およびヒープスタック",
+  "logCopyMessage": "コピーメッセージコンテンツ",
+  "logFollowLatest": "リアルタイム滚動",
+  "logFileLocation": "ログファイル位に Android/data/<パッケージ名>/files/logs/。",
   "logLevelVerbose": "詳細",
   "logLevelDebug": "デバッグ",
   "logLevelInfo": "情報",
   "logLevelWarn": "警告",
   "logLevelError": "エラー",
   "logLevelNone": "閉じる",
-  "credentialTokenHint": "建议用带 codespace スコープ的 GitHub 令牌,填一次同时供 Git 推送与 Codespaces 登录使用",
-  "credentialHostOptional": "主机(オプション)",
-  "credentialHostAny": "留空 = 所有主机",
-  "credentialHostHint": "只在需要给特定主机单独配令牌时才填,例如 gitlab.com",
-  "codespacesNeedCredentialTitle": "尚未設定 GitHub 認証情報",
-  "codespacesNeedCredentialDesc": "Codespaces 使用「Git 認証情報」里的令牌(需含 codespace スコープ),不再单独填写。",
-  "codespacesGoToCredentials": "去填写 Git 認証情報",
-  "credentialAllHosts": "所有主机",
-  "credentialUsernameAuto": "用户名自动推导",
-  "chatMentionSkill": "@ 技能",
-  "chatMentionSkillEmpty": "还没有利用可能的技能,先在設定里インポート或新規作成一个。",
-  "chatMentionSkillManage": "管理技能",
+  "credentialTokenHint": "建议使用带 codespace スコープ GitHub トークン,入力一度同時供 Git プッシュと Codespaces ログイン使使用",
+  "credentialHostOptional": "ホスト(オプション)",
+  "credentialHostAny": "空欄 = すべてホスト",
+  "credentialHostHint": "只で必要に特定ホスト単一独配トークン時才入力,例えば gitlab.com",
+  "codespacesNeedCredentialTitle": "未設定 GitHub 認証情報",
+  "codespacesNeedCredentialDesc": "Codespaces 使使用「Git 認証情報」内トークン(含むめる必要があります codespace スコープ),なし再単一独入力。",
+  "codespacesGoToCredentials": "入力してください Git 認証情報",
+  "credentialAllHosts": "すべてホスト",
+  "credentialUsernameAuto": "ユーザー名自動推导",
+  "chatMentionSkill": "@ スキル",
+  "chatMentionSkillEmpty": "还なし利使用可能能技能,先で設定内インポートまたは新規作成一個。",
+  "chatMentionSkillManage": "スキル管理",
   "chatPickFile": "# ファイル",
-  "chatPickFileParent": "上一级",
-  "chatPickFileEmpty": "这个ディレクトリ是空的",
-  "mentionHintSkill": "继续输入可筛选技能",
-  "mentionHintFile": "继续输入可筛选ファイル",
-  "fileBrowserError": "读取ディレクトリ失敗",
+  "chatPickFileParent": "上一レベル",
+  "chatPickFileEmpty": "このディレクトリはい空",
+  "mentionHintSkill": "入力を続行可能能フィルタ技能",
+  "mentionHintFile": "入力を続行可能能フィルタファイル",
+  "fileBrowserError": "読み取り得ディレクトリ失敗",
   "fileBrowserRefresh": "更新",
   "fileBrowserExpand": "展開",
   "fileBrowserCollapse": "折りたたみ",
@@ -1746,7 +1746,7 @@
       }
     }
   },
-  "fileBrowserDeleteFolderConfirm": "削除してもよろしいですか？フォルダ「{name}」及其すべてコンテンツ?",
+  "fileBrowserDeleteFolderConfirm": "削除してもよろしいですか？フォルダ「{name}」およびその他すべてコンテンツ?",
   "@fileBrowserDeleteFolderConfirm": {
     "placeholders": {
       "name": {
@@ -1754,14 +1754,14 @@
       }
     }
   },
-  "fileBrowserCreateFailed": "作成に失敗しました,可能已存在同名件或なし写入权限",
-  "fileBrowserRenameFailed": "名前の変更に失敗しました,可能已存在同名件",
+  "fileBrowserCreateFailed": "作成に失敗しました,可能能済み存で同名項目またはなし書き込み権限",
+  "fileBrowserRenameFailed": "名前の変更に失敗しました,可能能済み存で同名項目",
   "fileBrowserDeleteFailed": "削除に失敗しました",
-  "fileBrowserPasteHere": "貼り付け到此处",
-  "fileBrowserExtract": "解压",
-  "fileBrowserExtractFailed": "解压失敗",
-  "fileBrowserExtractConflictTitle": "目標フォルダ已存在",
-  "fileBrowserExtractConflict": "同ディレクトリ下已有「{name}」,解压会先覆盖它的コンテンツ。",
+  "fileBrowserPasteHere": "貼り支払いけにここ",
+  "fileBrowserExtract": "解凍",
+  "fileBrowserExtractFailed": "解凍失敗",
+  "fileBrowserExtractConflictTitle": "目標フォルダ済み存で",
+  "fileBrowserExtractConflict": "同ディレクトリ下済みあり「{name}」,解凍会先覆盖它コンテンツ。",
   "@fileBrowserExtractConflict": {
     "placeholders": {
       "name": {
@@ -1769,9 +1769,9 @@
       }
     }
   },
-  "fileBrowserExtractOverwrite": "覆盖并解压",
-  "fileBrowserPasteConflictTitle": "同名ファイル已存在",
-  "fileBrowserPasteConflictMessage": "目標位置已存在同名プロジェクト「{name}」,是否覆盖?",
+  "fileBrowserExtractOverwrite": "上書きして解凍",
+  "fileBrowserPasteConflictTitle": "同名ファイル済み存で",
+  "fileBrowserPasteConflictMessage": "目標位置済み存で同名プロジェクト「{name}」,よろしいですか覆盖?",
   "@fileBrowserPasteConflictMessage": {
     "placeholders": {
       "name": {
@@ -1779,16 +1779,16 @@
       }
     }
   },
-  "fileBrowserClipboardCut": "已切り取り",
-  "fileBrowserClipboardCopy": "已コピー",
+  "fileBrowserClipboardCut": "済み切り取得り",
+  "fileBrowserClipboardCopy": "済みコピー",
   "commonCopy": "コピー",
-  "commonCut": "切り取り",
-  "commonPaste": "貼り付け",
-  "workspacePickWritingFolder": "写作ディレクトリ",
-  "writingFolderNeedAccessTitle": "需要存储访问权限",
-  "writingFolderNeedAccessDesc": "读取手机里的「AI写作」ディレクトリ需要「所有ファイル访问权限」。也可以跳过,直接在下一步選択ディレクトリ。",
-  "writingFolderGrant": "去授权",
-  "writingFolderSet": "写作ディレクトリ已设为 {path}",
+  "commonCut": "切り取得り",
+  "commonPaste": "貼り支払いけ",
+  "workspacePickWritingFolder": "執筆ディレクトリ",
+  "writingFolderNeedAccessTitle": "必要ストレージアクセス権限",
+  "writingFolderNeedAccessDesc": "読み取り得手机内「AI執筆」ディレクトリ必要「すべてファイルアクセス権限」。またはスキップ,直接で下一步選択ディレクトリ。",
+  "writingFolderGrant": "認証へ",
+  "writingFolderSet": "執筆ディレクトリ済み設のため {path}",
   "@writingFolderSet": {
     "placeholders": {
       "path": {
@@ -1797,9 +1797,9 @@
     }
   },
   "modelAuto": "Auto Model",
-  "modelAutoDesc": "按任务自动選択最合适的モデル",
+  "modelAutoDesc": "按任务自動選択最合适モデル",
   "sessionExport": "エクスポートセッション",
-  "sessionExportDone": "已エクスポート到 {path}",
+  "sessionExportDone": "済みエクスポートに {path}",
   "@sessionExportDone": {
     "placeholders": {
       "path": {
@@ -1808,7 +1808,7 @@
     }
   },
   "sessionExportFailed": "エクスポート失敗",
-  "sessionBatchSelect": "批量選択",
+  "sessionBatchSelect": "一括選択",
   "sessionSelectedCount": "選択済み {count} 件",
   "@sessionSelectedCount": {
     "placeholders": {
@@ -1819,10 +1819,10 @@
   },
   "sessionSelectAll": "すべて選択",
   "sessionCancelSelect": "キャンセル",
-  "sessionDeleteSelected": "削除所选",
-  "sessionDeleteConfirm": "削除该セッション及其すべて消息?",
-  "fileBrowserNeedPermission": "なし法读取该フォルダ,可能需要存储访问权限",
-  "checkpointRewindTitle": "回退到此处",
+  "sessionDeleteSelected": "選択項目を削除",
+  "sessionDeleteConfirm": "削除このセッションおよびその他すべてメッセージ?",
+  "fileBrowserNeedPermission": "なし読み取得れませんフォルダ,必要な場合がありますストレージアクセス権限",
+  "checkpointRewindTitle": "戻すにここ",
   "checkpointTargetPrompt": "目標:{snippet}",
   "@checkpointTargetPrompt": {
     "placeholders": {
@@ -1831,13 +1831,13 @@
       }
     }
   },
-  "checkpointRestoreCodeAndConversation": "復元代码与セッション",
-  "checkpointRestoreCodeAndConversationDesc": "回滚ワークスペースファイル,并削除这之后的所有消息,提问会回填到输入框",
-  "checkpointRestoreConversation": "只復元セッション",
-  "checkpointRestoreConversationDesc": "削除这之后的所有消息,ワークスペースファイル保持不变",
-  "checkpointRestoreCode": "只復元代码",
-  "checkpointRestoreCodeDesc": "回滚ワークスペースファイル,对话記録保持不变",
-  "checkpointRewindSkipped": "{count} 个ファイル因存在その他改动已跳过",
+  "checkpointRestoreCodeAndConversation": "復元コードとセッション",
+  "checkpointRestoreCodeAndConversationDesc": "ロールバックワークスペースファイル,そして削除この後すべてメッセージ,提问会回入力に入力框",
+  "checkpointRestoreConversation": "復元のみセッション",
+  "checkpointRestoreConversationDesc": "削除この後すべてメッセージ,ワークスペースファイル保持なし变",
+  "checkpointRestoreCode": "復元のみコード",
+  "checkpointRestoreCodeDesc": "ロールバックワークスペースファイル,チャット記録保持なし变",
+  "checkpointRewindSkipped": "{count} 個ファイル因存でその他変更済みスキップ",
   "@checkpointRewindSkipped": {
     "placeholders": {
       "count": {
@@ -1848,25 +1848,25 @@
   "chatMoreOptions": "さらに表示オプション",
   "chatActionEdit": "編集",
   "chatActionDelete": "削除",
-  "chatEditMessageTitle": "編集消息",
+  "chatEditMessageTitle": "編集メッセージ",
   "commonConfirm": "OK",
   "commonCancel": "キャンセル",
   "commonSave": "保存",
   "commonClose": "閉じる",
-  "commonBatchDelete": "批量削除",
+  "commonBatchDelete": "一括削除",
   "tabProjects": "プロジェクト",
-  "projectListEmpty": "还没有プロジェクト",
-  "workspaceCurrent": "現在",
+  "projectListEmpty": "还なしプロジェクト",
+  "workspaceCurrent": "現で",
   "workspaceNameHint": "プロジェクト名前",
   "projectNew": "新規作成プロジェクト",
-  "projectUntitled": "未命名プロジェクト",
-  "projectKindCoding": "编程",
-  "projectKindCodingDesc": "在沙盒ワークスペース里写代码、跑命令、改ファイル",
-  "projectKindWriting": "写作",
-  "projectKindWritingDesc": "在「AI写作」ディレクトリ里撰写与修改文稿",
-  "projectKindReverse": "应用逆向",
-  "projectKindReverseDesc": "分析 APK、パケットキャプチャ接口、静态逆向与デバッグ辅助",
-  "projectDeleteConfirm": "削除してもよろしいですか？プロジェクト「{name}」?其下所有セッション都会一并削除。",
+  "projectUntitled": "無題プロジェクト",
+  "projectKindCoding": "プログラミング",
+  "projectKindCodingDesc": "で沙盒ワークスペース内書くコード、跑コマンド、改ファイル",
+  "projectKindWriting": "執筆",
+  "projectKindWritingDesc": "で「AI執筆」ディレクトリ内撰書くと修本文稿",
+  "projectKindReverse": "アプリ逆向",
+  "projectKindReverseDesc": "分析 APK、パケットキャプチャインターフェース、静态逆向とデバッグ辅助",
+  "projectDeleteConfirm": "削除してもよろしいですか？プロジェクト「{name}」?その他下すべてセッション都会一そして削除。",
   "@projectDeleteConfirm": {
     "placeholders": {
       "name": {
@@ -1874,56 +1874,56 @@
       }
     }
   },
-  "installedAppsTitle": "選択应用",
-  "installedAppsSearch": "検索应用名或包名",
-  "installedAppsEmpty": "没有匹配的应用",
-  "storagePermissionGrant": "去授权",
-  "softwarePermissionsTitle": "软件权限",
-  "softwarePermissionsSubtitle": "点任一件由系统弹出授权,或跳到对应的系统設定页。",
-  "systemPermissionsGroup": "系统权限",
-  "permissionStorageTitle": "访问存储空间",
-  "permissionBatteryTitle": "忽略电池优化",
-  "permissionBatteryDesc": "允许后台持续実行,减少被杀",
-  "permissionAutoStartTitle": "自開始管理",
-  "permissionAutoStartDesc": "允许系统在后台自动拉起应用",
+  "installedAppsTitle": "選択アプリ",
+  "installedAppsSearch": "検索アプリ名またはパッケージ名",
+  "installedAppsEmpty": "なし一致アプリ",
+  "storagePermissionGrant": "認証へ",
+  "softwarePermissionsTitle": "ソフトウェア権限",
+  "softwarePermissionsSubtitle": "クリック任一件によりシステム弹出認証,または跳にに应システム設定ページ。",
+  "systemPermissionsGroup": "システム権限",
+  "permissionStorageTitle": "アクセスストレージ空间",
+  "permissionBatteryTitle": "バッテリ最適化を無視",
+  "permissionBatteryDesc": "バックグラウンドでの実行を許可し、終を減らす",
+  "permissionAutoStartTitle": "自動起動管理",
+  "permissionAutoStartDesc": "許可能システムで後台自動拉起アプリ",
   "permissionShizukuTitle": "Shizuku",
-  "permissionShizukuDesc": "点击前往下载安装 Shizuku",
-  "permissionAllowed": "已允许",
-  "permissionNotAllowed": "未允许",
-  "permissionInstalled": "已安装",
-  "permissionNotInstalled": "未安装",
-  "permissionAppsTitle": "应用列表",
-  "permissionAppsDesc": "读取已安装应用的名前、包名与版本",
-  "apkPathUnavailable": "拿不到这个应用的安装包パス,换一个应用再试。",
-  "apkExtractHint": "这个プロジェクト显示所选 APK 里的ファイル。首次浏览需要先解压一次。",
-  "apkExtractAction": "解压 APK",
-  "apkExtracting": "正在解压…",
-  "apkExtractFailed": "解压失敗,可能没有读取该安装包的权限。",
-  "terminalAgentTab": "AI 命令",
-  "runModeAuto": "自动模式",
-  "runModeBuild": "构建模式",
-  "runModePlan": "计划模式",
-  "runModePlanIntercept": "現在处于计划模式,禁止执行写操作",
-  "runModeBuildAuthorize": "AI 尝试执行写操作,是否允许?",
-  "runModeBuildAllow": "允许",
-  "runModeBuildDeny": "拒绝",
-  "runModeSwitchChanged": "実行模式已切换至 {mode}",
-  "commonScrollToBottom": "回到底部",
+  "permissionShizukuDesc": "クリック击前往下载インストール Shizuku",
+  "permissionAllowed": "済み許可能",
+  "permissionNotAllowed": "未許可",
+  "permissionInstalled": "済みインストール",
+  "permissionNotInstalled": "未インストール",
+  "permissionAppsTitle": "アプリリスト",
+  "permissionAppsDesc": "読み取り得済みインストールアプリ名前、パッケージ名とバージョン",
+  "apkPathUnavailable": "拿なしにこのアプリインストール包パス,换一個アプリ再试。",
+  "apkExtractHint": "このプロジェクト表示所选 APK 内ファイル。首回浏览必要先解凍一度。",
+  "apkExtractAction": "解凍 APK",
+  "apkExtracting": "解凍中…",
+  "apkExtractFailed": "解凍失敗,可能能なし読み取り得このインストール包権限。",
+  "terminalAgentTab": "AI コマンド",
+  "runModeAuto": "自動モード",
+  "runModeBuild": "构建モード",
+  "runModePlan": "計画モード",
+  "runModePlanIntercept": "現で处に計画モード,禁止実行書く操作",
+  "runModeBuildAuthorize": "AI 尝试実行書く操作,よろしいですか許可能?",
+  "runModeBuildAllow": "許可",
+  "runModeBuildDeny": "拒いいえいいえ",
+  "runModeSwitchChanged": "実行モード済み切换至 {mode}",
+  "commonScrollToBottom": "回にボトム",
   "subagentTitle": "サブエージェント",
-  "subagentSubtitle": "モデル档位与カスタム定義",
-  "subagentTierSubtitle": "为每个档位绑定プロバイダ与モデル。未設定的档位:サブエージェント定義写死モデル时用定義モデル,否则継承現在セッションモデル",
-  "subagentTierSection": "モデル档位",
+  "subagentSubtitle": "モデルクラスとカスタム定義",
+  "subagentTierSubtitle": "のため每個クラス绑定プロバイダとモデル。未設定クラス:サブエージェント定義書く死モデル時使用定義モデル,そうでなければ継承でセッションモデル",
+  "subagentTierSection": "モデルクラス",
   "subagentTierLight": "軽量",
   "subagentTierStandard": "バランス",
   "subagentTierStrong": "強力",
-  "subagentTierLightDesc": "只读探索、批量定位、机械改名",
-  "subagentTierStandardDesc": "单ファイルの修正与標準修复",
-  "subagentTierStrongDesc": "跨模块重构、疑难排查与方案设计",
-  "subagentTierUnset": "未設定(継承現在セッションモデル)",
+  "subagentTierLightDesc": "読み取り専用探索、一括位置特定、機械な名前変更",
+  "subagentTierStandardDesc": "単一ファイルの修正と標準修复",
+  "subagentTierStrongDesc": "跨模块重构、疑难排查と方案設计",
+  "subagentTierUnset": "未設定(継承でセッションモデル)",
   "subagentTierPick": "選択モデル",
-  "subagentTierClear": "清除",
-  "subagentTierCleared": "已清除",
-  "subagentTierSaved": "已保存",
+  "subagentTierClear": "クリア",
+  "subagentTierCleared": "済みクリア",
+  "subagentTierSaved": "保存済みみ",
   "subagentTierSheetTitle": "{tier} 档モデル",
   "@subagentTierSheetTitle": {
     "placeholders": {
@@ -1932,45 +1932,45 @@
       }
     }
   },
-  "subagentTierSheetHint": "選択该档位使用的プロバイダ与モデル",
-  "subagentTierSheetInherit": "継承現在セッションモデル",
+  "subagentTierSheetHint": "選択このクラス使使用プロバイダとモデル",
+  "subagentTierSheetInherit": "継承でセッションモデル",
   "subagentNoticeTitle": "サブエージェント",
   "subagentStateRunning": "実行中",
-  "subagentStateCompleted": "完了",
-  "subagentStateFailed": "执行失敗",
-  "subagentStateMessage": "来消息",
-  "subagentViewOutput": "查看输出",
+  "subagentStateCompleted": "完",
+  "subagentStateFailed": "実行失敗",
+  "subagentStateMessage": "来メッセージ",
+  "subagentViewOutput": "表示出力",
   "subagentOpen": "開く",
-  "subagentOutputEmpty": "暂なし输出",
-  "subagentOutputTitle": "サブエージェント输出",
-  "promptsTitle": "ヒント词",
-  "promptsScenarioSection": "场景ヒント词",
-  "promptsSortLongPress": "长按可调整顺序",
-  "promptsEmpty": "暂なし利用可能片段",
+  "subagentOutputEmpty": "一時なし出力",
+  "subagentOutputTitle": "サブエージェント出力",
+  "promptsTitle": "ヒント単語",
+  "promptsScenarioSection": "シーンヒント単語",
+  "promptsSortLongPress": "長押しで順序を調整",
+  "promptsEmpty": "一時なし利使用可能能片段",
   "promptsSourceProject": "プロジェクト",
   "promptsSourceGlobal": "グローバル",
   "promptsSourceLocal": "ローカル",
   "promptsSourceBuiltin": "組み込み",
   "promptsFieldBasic": "基本情報",
   "promptsFieldNumber": "番号",
-  "promptsFieldNumberPlaceholder": "2桁の数字,如 35",
+  "promptsFieldNumberPlaceholder": "2桁の数値,如 35",
   "promptsFieldTitle": "名前",
-  "promptsFieldTitlePlaceholder": "例: 自分用のセキュリティルール",
+  "promptsFieldTitlePlaceholder": "例: 自分使用のセキュリティルール",
   "promptsFieldSummary": "概要(オプション)",
   "promptsFieldSummaryPlaceholder": "スニペットコンテンツを簡潔に説明,プロンプトには注入されません",
-  "promptsFieldContent": "スニペット内容",
-  "promptsFieldContentPlaceholder": "写モデル要遵守的コンテンツ",
+  "promptsFieldContent": "スニペットコンテンツ",
+  "promptsFieldContentPlaceholder": "書くモデル要遵守コンテンツ",
   "promptsEditorNew": "新規プロンプト",
   "promptsEditorEdit": "プロンプトを編集",
   "promptsAddPrompt": "スニペットを追加",
   "promptsResetCustom": "カスタムプロンプトをリセット",
-  "promptsResetConfirm": "将削除現在のプロジェクト与グローバル层里的所有カスタムヒント词,各番号回落到組み込みヒント词。この操作は元に戻せません。",
+  "promptsResetConfirm": "を削除現でのプロジェクトとグローバル层内すべてカスタムヒント単語,各番号回落に組み込みヒント単語。この操作は元に戻せません。",
   "promptsResetAction": "リセット",
   "promptsHelp": "ヘルプ",
   "promptsDisableBuiltin": "組み込みプロンプトを完全に無効化",
-  "promptsDisableBuiltinHint": "自分のスニペットのみを保持;すべてのルールを自分で補完する必要があります,注意して有効化してください",
+  "promptsDisableBuiltinHint": "自分のスニペットのみを保持;すべてのルールを自分で補完する必要があります,注意してあり効化してください",
   "promptsBatchDeleteTitle": "プロンプトを削除",
-  "promptsBatchDeleteConfirm": "選択した項目を削除してもよろしいですか？ {count} 件のカスタムプロンプト吗?対応する番号は次のレイヤーのソースにフォールバックします。",
+  "promptsBatchDeleteConfirm": "選択した項目を削除してもよろしいですか？ {count} 件のカスタムプロンプトですか?対応する番号は回のレイヤーのソースにフォールバックします。",
   "@promptsBatchDeleteConfirm": {
     "placeholders": {
       "count": {
@@ -1979,7 +1979,7 @@
     }
   },
   "promptsScope": "スコープ",
-  "promptsScopeProject": "現在のプロジェクト",
+  "promptsScopeProject": "現でのプロジェクト",
   "promptsScopeGlobal": "グローバル",
   "promptsSelectMode": "複数選択",
   "promptsSelectedCount": "選択済み {count} 件",
@@ -1991,7 +1991,7 @@
     }
   },
   "promptsSelectAll": "すべて選択",
-  "promptsDeselectAll": "全選択を解除",
+  "promptsDeselectAll": "すべて選択を解除",
   "promptsSummary": "概要",
   "promptsGotIt": "わかりました",
   "promptsSubtitle": "カスタムプロンプトスニペット",
@@ -2002,17 +2002,17 @@
   "novelGenderMale": "男性向け",
   "novelGenderFemale": "女性向け",
   "novelFieldTags": "小説タグ",
-  "novelFieldTagsHint": "可複数選択,也可以カスタム",
+  "novelFieldTagsHint": "可能複数選択,またはカスタム",
   "novelCustomTagHint": "カスタムタグ",
   "novelFieldWordsPerChapter": "1章あたりの文字数",
-  "novelFieldWordsHint": "オプション档位,也可以カスタム",
+  "novelFieldWordsHint": "オプションクラス,またはカスタム",
   "novelCreate": "作成",
   "novelPickExisting": "既存の小説を選択",
   "novelOpen": "開く",
-  "novelExistingEmpty": "「AI小説」ディレクトリ里还没有その他小说",
-  "novelExistingEmptyHint": "把小说フォルダ放进 AI小说 ディレクトリ后,再回到这里選択",
-  "novelExistingFailed": "小説リストの読み取りに失敗しました",
-  "novelExistingBrief": "執筆を続行已有小说《{title}》,まず読む「小説資料」与已有章节,了解设定与进度后再动笔。",
+  "novelExistingEmpty": "「AI小説」ディレクトリ内还なしその他小説",
+  "novelExistingEmptyHint": "を小説フォルダ放進 AI小説 ディレクトリ後,再回にここ選択",
+  "novelExistingFailed": "小説リストの読み取得りに失敗しました",
+  "novelExistingBrief": "執筆を続行済みあり小説《{title}》,まず読む「小説資料」と済みあり章,解設定と進捗後再執筆。",
   "@novelExistingBrief": {
     "placeholders": {
       "title": {
@@ -2020,7 +2020,7 @@
       }
     }
   },
-  "novelBriefTitle": "新規小説《{title}》",
+  "novelBriefTitle": "新規小説『{title}』",
   "@novelBriefTitle": {
     "placeholders": {
       "title": {
@@ -2045,7 +2045,7 @@
     }
   },
   "novelScaffoldFailedTitle": "小説ディレクトリの作成に失敗しました",
-  "novelScaffoldFailed": "{path} に小説ディレクトリを作成できません,请检查存储权限后再試行。",
+  "novelScaffoldFailed": "{path} に小説ディレクトリを作成できません,お願いしますチェックストレージ権限後再試行。",
   "@novelScaffoldFailed": {
     "placeholders": {
       "path": {
@@ -2057,47 +2057,47 @@
   "agentSubtitle": "カスタムサブエージェント定義",
   "agentListEmpty": "カスタムサブエージェントはありません",
   "agentListEmptyHint": "右上の + から新規作成カスタムサブエージェント定義",
-  "agentScopeProject": "現在のプロジェクト",
+  "agentScopeProject": "現でのプロジェクト",
   "agentScopeGlobal": "グローバル",
-  "agentScopeProjectHint": "現在のワークスペースにのみ適用",
-  "agentScopeGlobalHint": "すべてのプロジェクトで共有",
+  "agentScopeProjectHint": "現でのワークスペースにのみ適使用",
+  "agentScopeGlobalHint": "すべてのプロジェクトで合計あり",
   "agentNew": "新規サブエージェント",
   "agentEdit": "サブエージェントを編集",
   "agentSave": "保存",
   "agentCancel": "キャンセル",
   "agentDelete": "削除",
   "agentDeleteTitle": "削除サブエージェント",
-  "agentDeleteConfirm": "削除 {name}?此操作不可恢复。",
+  "agentDeleteConfirm": "削除 {name}?この操作は元に戻せません。",
   "agentImport": "インポート",
   "agentName": "名前",
-  "agentDescription": "用途の説明",
+  "agentDescription": "使用途の説明",
   "agentDescriptionHint": "このサブエージェントを選択するタイミング",
   "agentPrompt": "プロンプト本文",
-  "agentPromptHint": "追加到基线系统ヒント词后的专属指令",
+  "agentPromptHint": "追加に基线システムヒント単語後专属指令",
   "agentProvider": "プロバイダ",
   "agentModel": "モデル",
-  "agentReasoningEffort": "思考深度",
+  "agentReasoningEffort": "思考の深さ",
   "agentMode": "デフォルトモード",
   "agentTools": "ツールホワイトリスト",
   "agentToolsHint": "空欄の場合はすべてのツールを開放",
   "agentDisallowedTools": "ツールブラックリスト",
   "agentInject": "ルールスニペットを注入",
   "agentInjectHint": "base/mainRules/skills/memory/projectRules または none",
-  "agentEnable": "有効化",
+  "agentEnable": "あり効化",
   "agentDisable": "無効化",
-  "agentEnabled": "有効",
+  "agentEnabled": "あり効",
   "agentDisabled": "無効",
   "agentErrorInvalidName": "無効な名前です",
   "agentErrorEmptyPrompt": "プロンプト本文を入力してください",
-  "agentErrorNameConflict": "このスコープには既に同じ名前のサブエージェントが存在します",
+  "agentErrorNameConflict": "このスコープには既に同じ名前のサブエージェントが存でします",
   "agentErrorIoFailed": "ファイルの書き込みに失敗しました",
-  "agentCapabilityRead": "ファイルの読み取り",
+  "agentCapabilityRead": "ファイルの読み取得り",
   "agentCapabilityWrite": "ファイルの修正",
   "agentCapabilityCommand": "コマンドの実行",
   "agentBuiltin": "組み込み",
   "agentBuiltinHint": "初回起動時に展開,アップグレード時に完全に保持",
   "agentSelectMode": "複数選択",
-  "agentBatchEnable": "有効化",
+  "agentBatchEnable": "あり効化",
   "agentBatchDisable": "無効化",
   "agentBatchDelete": "削除",
   "agentBatchAll": "すべて選択",
@@ -2120,15 +2120,15 @@
   "agentDetailHint": "定義を編集;名前変更時に定義ファイルもリネームされます",
   "promptsFieldType": "タイプ",
   "promptsSaveFailed": "保存に失敗しました",
-  "promptsNoOverrideToDelete": "このプロンプトには削除可能なカスタムオーバーライドはありません",
+  "promptsNoOverrideToDelete": "このプロンプトには削除可能能なカスタムオーバーライドはありません",
   "codespacesSearchHint": "名前で検索、リポジトリまたはブランチで検索",
   "codespacesFilterAll": "すべて",
   "codespacesFilterRunning": "実行中",
-  "codespacesFilterStopped": "停止済み",
-  "codespacesNoMatch": "現在のフィルタに一致する Codespace はありません",
+  "codespacesFilterStopped": "停止済みみ",
+  "codespacesNoMatch": "現でのフィルタに一致する Codespace はありません",
   "codespacesStartAndConnect": "起動して接続",
   "codespacesConnecting": "接続中…",
-  "codespacesWaitingForStart": "待機 Codespace 变为利用可能…",
+  "codespacesWaitingForStart": "待機 Codespace 变のため利使用可能能…",
   "codespacesConnectError": "接続に失敗しました：{error}",
   "@codespacesConnectError": {
     "placeholders": {
@@ -2143,11 +2143,11 @@
   "codespacesMachineLabel": "マシンタイプ",
   "codespacesLocation": "リージョン",
   "codespacesIdleTimeout": "アイドルタイムアウト（分）",
-  "codespacesRetentionPeriod": "保持期間（日）",
+  "codespacesRetentionPeriod": "保持期間 (日)",
   "codespacesDevcontainerPath": "Dev container パス",
   "codespacesCreatedAt": "作成日時",
-  "codespacesOwner": "所有者",
-  "codespacesBillableOwner": "課金所有者",
+  "codespacesOwner": "すべて者",
+  "codespacesBillableOwner": "課金すべて者",
   "codespacesCopySsh": "SSH コマンドをコピー",
   "codespacesSshCopied": "SSH コマンドをコピーしました",
   "codespacesOpenWeb": "VS Code Web 版で開く",
@@ -2160,8 +2160,8 @@
   "codespacesStateShuttingDown": "停止中",
   "codespacesStateFailed": "失敗",
   "codespacesStateDeleting": "削除中",
-  "codespacesCurrentEnv": "現在の環境",
-  "codespacesSwitchToLocal": "ローカルコンテナに切り替え",
+  "codespacesCurrentEnv": "現での環境",
+  "codespacesSwitchToLocal": "ローカルコンテナに切り置換え",
   "codespacesManage": "Codespaces を管理",
   "codespacesQuickActions": "Codespaces",
   "codespacesPortCopyUrl": "リンクをコピー",
@@ -2178,18 +2178,18 @@
   "codespacesRegionDefault": "デフォルトリージョン",
   "codespacesAdvanced": "詳細設定",
   "codespacesDevcontainerPathHint": "devcontainer.json パス（オプション）",
-  "codespacesIdleTimeoutHint": "空闲后自动停止的分数（オプション）",
+  "codespacesIdleTimeoutHint": "空闲後自動停止分数（オプション）",
   "codespacesRetentionHint": "停止後の保持日数（オプション）",
-  "codespacesReadinessTitle": "接続準備完了",
-  "codespacesReadinessCredOk": "GitHub 認証情報：設定済み",
-  "codespacesReadinessCredMissing": "GitHub 認証情報：未設定（需含 codespace 权限的令牌）",
-  "codespacesReadinessGhOk": "gh CLI：準備完了",
-  "codespacesReadinessGhMissing": "gh CLI：準備未完了（ターミナルで codecraft を実行し「GitHub Codespaces」シナリオをインストール）",
+  "codespacesReadinessTitle": "接続準備完",
+  "codespacesReadinessCredOk": "GitHub 認証情報：設定済みみ",
+  "codespacesReadinessCredMissing": "GitHub 認証情報：未設定（含むめる必要があります codespace 権限トークン）",
+  "codespacesReadinessGhOk": "gh CLI：準備完",
+  "codespacesReadinessGhMissing": "gh CLI：準備未完（ターミナルで codecraft を実行し「GitHub Codespaces」シナリオをインストール）",
   "codespacesOpenTerminal": "ターミナルで開く",
   "codespacesOpenGit": "Git を開く（デプロイ/同期）",
   "codespacesManageCredentials": "認証情報を管理",
-  "codespacesDeploySyncHint": "Git のプッシュ/プル等の操作会作用于現在执行环境；连接 Codespace 后即在远端リポジトリ执行部署/同步。",
-  "gitExecutionTargetCodespace": "現在の操作は Codespace に適用：{name}",
+  "codespacesDeploySyncHint": "Git のプッシュ/プル等の操作会作使用に現で実行環境；接続 Codespace 後即で远端リポジトリ実行部署/同期。",
+  "gitExecutionTargetCodespace": "現での操作は Codespace に適使用：{name}",
   "@gitExecutionTargetCodespace": {
     "placeholders": {
       "name": {
@@ -2197,10 +2197,10 @@
       }
     }
   },
-  "gitExecutionTargetLocal": "現在の操作はローカルコンテナに適用",
+  "gitExecutionTargetLocal": "現での操作はローカルコンテナに適使用",
   "gitDeploySyncSection": "デプロイ / 同期",
-  "gitDeploySyncHintCodespace": "プッシュ、プルおよびリモート操作接続済みの Codespace で実行。",
-  "gitDeploySyncHintLocal": "プッシュ、プルおよびリモート操作ローカルコンテナで実行；Codespace に接続するとリモートでデプロイ/同期可能。",
+  "gitDeploySyncHintCodespace": "プッシュ、プルおよびリモート操作接続済みみの Codespace で実行。",
+  "gitDeploySyncHintLocal": "プッシュ、プルおよびリモート操作ローカルコンテナで実行；Codespace に接続するとリモートでデプロイ/同期可能能。",
   "gitOpenCodespaces": "Codespaces",
   "gitOpenTerminal": "ターミナル",
   "terminalCodespaceManage": "Codespaces 管理",
@@ -2209,26 +2209,26 @@
   "captureStart": "プロキシを起動",
   "captureStop": "停止",
   "captureRunning": "実行中",
-  "captureStopped": "停止済み",
+  "captureStopped": "停止済みみ",
   "capturePort": "プロキシポート",
   "captureClear": "記録をクリア",
   "captureSearchHint": "URL / メソッド / ステータスコードを検索",
-  "captureEmpty": "パケットキャプチャ記録はありません。プロキシ起動後，対象トラフィックをプロキシ経由で 127.0.0.1:<ポート>。",
-  "captureLimitHint": "仅抓取经代理的流量。HTTPS には CA をインストールし信頼する必要があります；Android 7+ のほとんどのアプリと証明書ピンニングアプリは MITM 不可能（デバッグ版/信頼済み証明書のシナリオで利用可能）。",
+  "captureEmpty": "パケットキャプチャ記録はありません。プロキシ起動後，対象トラフィックをプロキシ経によりで 127.0.0.1:<ポート>。",
+  "captureLimitHint": "仅抓取得经代理流量。HTTPS には CA をインストールし信頼する必要があります；Android 7+ のほとんどのアプリと証明書ピンニングアプリは MITM なし可能能（デバッグ版/信頼済み証明書のシナリオで利使用可能能）。",
   "captureCaTitle": "CA 証明書",
   "captureCaPath": "証明書パス",
-  "captureCaGuide": "証明書をシステム/ユーザー証明書にインストールし信頼設定（ネットワーク/HTTPS キャプチャ用）。Android 設定パスは機種により異なります，通常は「セキュリティ/暗号化と認証情報/証明書のインストール」。インストール後は HTTP プロキシを 127.0.0.1:<ポート> に設定。",
+  "captureCaGuide": "証明書をシステム/ユーザー証明書にインストールし信頼設定（ネットワーク/HTTPS キャプチャ使用）。Android 設定パスは機種により異なります，通常は「セキュリティ/暗号化と認証情報/証明書のインストール」。インストール後は HTTP プロキシを 127.0.0.1:<ポート> に設定。",
   "captureCopyPath": "パスをコピー",
   "captureDetail": "リクエスト詳細",
   "captureRequest": "リクエスト",
   "captureResponse": "レスポンス",
-  "captureNotFound": "記録が存在しません",
+  "captureNotFound": "記録が存でしません",
   "captureCopyUrl": "URL をコピー",
   "captureInstallCa": "証明書をインストール",
   "captureOpenSecurity": "セキュリティ設定",
   "captureDownloadCa": "証明書を保存",
-  "captureCaInstallFail": "直接インストール不可（パスをコピー済み），システムセキュリティ設定から手動で証明書をインストール。",
-  "captureVpnPermissionDenied": "VPN 権限が拒否されました，パケットキャプチャを有効化できません。VPN 権限を許可してから再試行。",
+  "captureCaInstallFail": "直接インストールなし可能（パスをコピー済み），システムセキュリティ設定から手動で証明書をインストール。",
+  "captureVpnPermissionDenied": "VPN 権限が拒いいえいいえされました，パケットキャプチャをあり効化できません。VPN 権限を許可能してから再試行。",
   "captureSequence": "すべてのリクエスト",
   "captureDomains": "ドメインリスト",
   "captureDomainSubtitle": "最後のリクエスト: {time} · {count} 件",
@@ -2248,8 +2248,8 @@
   "capturePipNoTraffic": "トラフィックなし",
   "captureNoDomains": "ドメインなし",
   "captureCopyHost": "ドメインをコピー",
-  "captureDeleteConfirm": "削除该域名的すべて記録？",
-  "captureSort": "並び替え",
+  "captureDeleteConfirm": "削除この域名すべて記録？",
+  "captureSort": "並び置換え",
   "captureOverview": "概要",
   "captureCookies": "Cookie",
   "captureProtocol": "プロトコル",
@@ -2263,7 +2263,7 @@
   "captureResponseHeaders": "レスポンスヘッダー",
   "captureRequestBody": "リクエストボディ",
   "captureResponseBody": "レスポンスボディ",
-  "captureBodyTruncated": "（内容は省略されています）",
+  "captureBodyTruncated": "（コンテンツは省略されています）",
   "captureFormatted": "フォーマット",
   "captureRaw": "生データ",
   "captureNoCookies": "Cookie なし",
@@ -2275,23 +2275,23 @@
   "connectSync": "接続と同期",
   "chatRecords": "チャット履歴",
   "mcpServer": "MCP サーバー",
-  "permissionRules": "認可ルール",
+  "permissionRules": "認可能ルール",
   "appSettings": "アプリ設定",
   "workspaceFiles": "ワークスペースファイル",
-  "workspaceFilesHint": "ワークスペースファイルは Git コミットでのバックアップを推奨，エクスポートバックアップは予備用のみ",
+  "workspaceFilesHint": "ワークスペースファイルは Git コミットでのバックアップを推奨，エクスポートバックアップは予備使用のみ",
   "exportBackup": "バックアップのエクスポート",
-  "exportBackupDesc": "エクスポートするデータを選択，パスワードで暗号化可能",
+  "exportBackupDesc": "エクスポートするデータを選択，パスワードで暗号化可能能",
   "importBackup": "バックアップのインポート",
   "importBackupDesc": "バックアップファイルからデータを復元",
   "localBackup": "ローカルバックアップ",
   "cloudBackup": "クラウドバックアップ",
-  "aboutUpdateAvailable": "新しいバージョンが利用可能",
-  "aboutUpdateDesc": "新しいバージョンが利用可能",
+  "aboutUpdateAvailable": "新しいバージョンが利使用可能能",
+  "aboutUpdateDesc": "新しいバージョンが利使用可能能",
   "aboutUpdateLater": "後で",
   "aboutUpdateGo": "ダウンロードへ",
   "aboutCheckingUpdate": "GitHub で最新バージョンを確認中…",
   "aboutAlreadyLatest": "最新バージョンです",
-  "aboutCurrentVersion": "現在のバージョン",
+  "aboutCurrentVersion": "現でのバージョン",
   "aboutNewVersionFound": "新しいバージョンが見つかりました",
   "aboutUpdateFailed": "アップデートの確認に失敗しました"
 }
