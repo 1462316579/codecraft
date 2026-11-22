@@ -7,7 +7,7 @@ import '../../agent/models/skill.dart';
 import '../../core/theme/semantic_colors.dart';
 import '../../core/theme/tokens.dart';
 import '../../data/skills.dart';
-import '../../l10n/app_localizations.dart';
+import '../../g11n/app_globalizations.dart';
 import 'skills_page.dart';
 
 /// 技能详情 / 编辑页(对齐上游 SkillDetailSection + SkillEditorScreen):
@@ -72,12 +72,12 @@ class _SkillEditPageState extends ConsumerState<SkillEditPage> {
 
   @override
   Widget build(BuildContext context) {
-    final l10n = AppLocalizations.of(context);
+    final g11n = AppGlobalizations.of(context);
     final theme = Theme.of(context);
     return Scaffold(
       extendBodyBehindAppBar: true,
       appBar: AppBar(
-        title: Text(_isNew ? l10n.skillsNew : l10n.skillsTitle),
+        title: Text(_isNew ? g11n.skillsNew : g11n.skillsTitle),
         backgroundColor: Colors.transparent,
         surfaceTintColor: Colors.transparent,
         elevation: 0,
@@ -85,13 +85,13 @@ class _SkillEditPageState extends ConsumerState<SkillEditPage> {
         actions: [
           if (!_isNew)
             IconButton(
-              tooltip: l10n.delete,
+              tooltip: g11n.delete,
               icon: const Icon(Iconfont.trash2),
-              onPressed: _saving ? null : () => _delete(l10n),
+              onPressed: _saving ? null : () => _delete(g11n),
             ),
           TextButton(
-            onPressed: _saving || !_loaded ? null : () => _save(l10n),
-            child: Text(l10n.save),
+            onPressed: _saving || !_loaded ? null : () => _save(g11n),
+            child: Text(g11n.save),
           ),
         ],
       ),
@@ -110,14 +110,14 @@ class _SkillEditPageState extends ConsumerState<SkillEditPage> {
             : ListView(
                 padding: const EdgeInsets.fromLTRB(Spacing.lg, 100, Spacing.lg, 140),
               children: [
-                _field(label: l10n.skillsName, controller: _name, hint: 'skill-name'),
+                _field(label: g11n.skillsName, controller: _name, hint: 'skill-name'),
                 const SizedBox(height: Spacing.md),
-                _field(label: l10n.skillsDescription, controller: _description, hint: l10n.skillsDescriptionHint),
+                _field(label: g11n.skillsDescription, controller: _description, hint: g11n.skillsDescriptionHint),
                 const SizedBox(height: Spacing.md),
                 _field(
-                  label: l10n.skillsInstructions,
+                  label: g11n.skillsInstructions,
                   controller: _instructions,
-                  hint: l10n.skillsInstructionsHint,
+                  hint: g11n.skillsInstructionsHint,
                   maxLines: 14,
                 ),
               ],
@@ -151,7 +151,7 @@ class _SkillEditPageState extends ConsumerState<SkillEditPage> {
     );
   }
 
-  Future<void> _save(AppLocalizations l10n) async {
+  Future<void> _save(AppGlobalizations g11n) async {
     setState(() => _saving = true);
     final messenger = ScaffoldMessenger.of(context);
     final error = await ref.read(skillsStoreProvider).save(
@@ -167,35 +167,35 @@ class _SkillEditPageState extends ConsumerState<SkillEditPage> {
     if (!mounted) return;
     setState(() => _saving = false);
     if (error != null) {
-      messenger.showSnackBar(SnackBar(content: Text(_saveErrorText(l10n, error))));
+      messenger.showSnackBar(SnackBar(content: Text(_saveErrorText(g11n, error))));
       return;
     }
     refreshSkills(ref);
     context.pop();
   }
 
-  String _saveErrorText(AppLocalizations l10n, SkillSaveError error) => switch (error) {
-        SkillSaveError.invalidName => l10n.skillsErrorInvalidName,
-        SkillSaveError.emptyInstructions => l10n.skillsErrorEmptyInstructions,
-        SkillSaveError.nameConflict => l10n.skillsErrorNameConflict(_name.text.trim()),
-        SkillSaveError.ioFailed => l10n.skillsErrorIoFailed,
+  String _saveErrorText(AppGlobalizations g11n, SkillSaveError error) => switch (error) {
+        SkillSaveError.invalidName => g11n.skillsErrorInvalidName,
+        SkillSaveError.emptyInstructions => g11n.skillsErrorEmptyInstructions,
+        SkillSaveError.nameConflict => g11n.skillsErrorNameConflict(_name.text.trim()),
+        SkillSaveError.ioFailed => g11n.skillsErrorIoFailed,
       };
 
-  Future<void> _delete(AppLocalizations l10n) async {
+  Future<void> _delete(AppGlobalizations g11n) async {
     final messenger = ScaffoldMessenger.of(context);
     final confirmed = await showDialog<bool>(
       context: context,
       builder: (dialogContext) => AlertDialog(
-        title: Text(l10n.skillsDeleteTitle),
-        content: Text(l10n.skillsDeleteConfirm(widget.skillName!)),
+        title: Text(g11n.skillsDeleteTitle),
+        content: Text(g11n.skillsDeleteConfirm(widget.skillName!)),
         actions: [
           TextButton(
             onPressed: () => Navigator.pop(dialogContext, false),
-            child: Text(l10n.cancel),
+            child: Text(g11n.cancel),
           ),
           TextButton(
             onPressed: () => Navigator.pop(dialogContext, true),
-            child: Text(l10n.delete),
+            child: Text(g11n.delete),
           ),
         ],
       ),
@@ -205,7 +205,7 @@ class _SkillEditPageState extends ConsumerState<SkillEditPage> {
         await ref.read(skillsStoreProvider).delete(widget.skillName!, SkillScope.global);
     if (!mounted) return;
     if (!deleted) {
-      messenger.showSnackBar(SnackBar(content: Text(l10n.skillsErrorIoFailed)));
+      messenger.showSnackBar(SnackBar(content: Text(g11n.skillsErrorIoFailed)));
       return;
     }
     refreshSkills(ref);

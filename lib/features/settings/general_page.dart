@@ -7,7 +7,7 @@ import '../../core/theme/semantic_colors.dart';
 import '../../core/theme/tokens.dart';
 import '../../core/ui/settings_group.dart';
 import '../../data/settings/general_settings.dart';
-import '../../l10n/app_localizations.dart';
+import '../../g11n/app_globalizations.dart';
 
 /// 偏好设置页(逐项对齐上游 GeneralSettingsSection):集中放置不属于单个提供商配置、
 /// 也不针对某个专用模型的全局偏好。五个分组依次为模型 / 会话 / 输入 / 网络 / 工具,
@@ -17,7 +17,7 @@ class GeneralPage extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final l10n = AppLocalizations.of(context);
+    final g11n = AppGlobalizations.of(context);
     final settings = ref.watch(generalSettingsProvider);
     final notifier = ref.read(generalSettingsProvider.notifier);
 
@@ -25,7 +25,7 @@ class GeneralPage extends ConsumerWidget {
     return Scaffold(
       extendBodyBehindAppBar: true,
       appBar: AppBar(
-        title: Text(l10n.settingsGeneral),
+        title: Text(g11n.settingsGeneral),
         backgroundColor: Colors.transparent,
         surfaceTintColor: Colors.transparent,
         elevation: 0,
@@ -49,12 +49,12 @@ class GeneralPage extends ConsumerWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
-                SettingsGroupHeader(text: l10n.settingsGeneralModels),
+                SettingsGroupHeader(text: g11n.settingsGeneralModels),
                 SettingsGroup(
                   children: [
                     SettingsRow(
-                      title: l10n.settingsAutoRemoveStaleModels,
-                      subtitle: l10n.settingsAutoRemoveStaleModelsDesc,
+                      title: g11n.settingsAutoRemoveStaleModels,
+                      subtitle: g11n.settingsAutoRemoveStaleModelsDesc,
                       trailing: Switch(
                         value: settings.autoRemoveStaleModels,
                         onChanged: notifier.setAutoRemoveStaleModels,
@@ -62,17 +62,17 @@ class GeneralPage extends ConsumerWidget {
                     ),
                     const SettingsDivider(),
                     SettingsRow(
-                      title: l10n.settingsCompactionThreshold,
-                      subtitle: l10n.settingsCompactionThresholdDesc,
+                      title: g11n.settingsCompactionThreshold,
+                      subtitle: g11n.settingsCompactionThresholdDesc,
                       trailing: _trailingValue(
                         context,
-                        l10n.settingsPercentValue(settings.compactionThresholdPercent),
+                        g11n.settingsPercentValue(settings.compactionThresholdPercent),
                       ),
                       onTap: () => _editNumber(
                         context,
-                        title: l10n.settingsCompactionThreshold,
+                        title: g11n.settingsCompactionThreshold,
                         initialValue: settings.compactionThresholdPercent,
-                        hint: l10n.settingsCompactionThresholdInputHint,
+                        hint: g11n.settingsCompactionThresholdInputHint,
                         minValue: 1,
                         maxValue: 100,
                         onConfirm: notifier.setCompactionThresholdPercent,
@@ -80,14 +80,14 @@ class GeneralPage extends ConsumerWidget {
                     ),
                   ],
                 ),
-                SettingsGroupHeader(text: l10n.settingsGeneralSession),
+                SettingsGroupHeader(text: g11n.settingsGeneralSession),
                 SettingsGroup(
                   children: [
                     SettingsRow(
-                      title: l10n.settingsStartupSession,
+                      title: g11n.settingsStartupSession,
                       trailing: _trailingValue(
                         context,
-                        _startupSessionLabel(l10n, settings.startupSessionMode),
+                        _startupSessionLabel(g11n, settings.startupSessionMode),
                       ),
                       onTap: () => _pickStartupSession(
                         context,
@@ -97,8 +97,8 @@ class GeneralPage extends ConsumerWidget {
                     ),
                     const SettingsDivider(),
                     SettingsRow(
-                      title: l10n.settingsDeleteExternalWorkspaceSessions,
-                      subtitle: l10n.settingsDeleteExternalWorkspaceSessionsDesc,
+                      title: g11n.settingsDeleteExternalWorkspaceSessions,
+                      subtitle: g11n.settingsDeleteExternalWorkspaceSessionsDesc,
                       trailing: Switch(
                         value: settings.deleteExternalWorkspaceSessions,
                         onChanged: notifier.setDeleteExternalWorkspaceSessions,
@@ -106,12 +106,12 @@ class GeneralPage extends ConsumerWidget {
                     ),
                   ],
                 ),
-                SettingsGroupHeader(text: l10n.settingsGeneralInput),
+                SettingsGroupHeader(text: g11n.settingsGeneralInput),
                 SettingsGroup(
                   children: [
                     SettingsRow(
-                      title: l10n.settingsEnterToSend,
-                      subtitle: l10n.settingsEnterToSendDesc,
+                      title: g11n.settingsEnterToSend,
+                      subtitle: g11n.settingsEnterToSendDesc,
                       trailing: Switch(
                         value: settings.enterToSend,
                         onChanged: notifier.setEnterToSend,
@@ -119,111 +119,111 @@ class GeneralPage extends ConsumerWidget {
                     ),
                   ],
                 ),
-                SettingsGroupHeader(text: l10n.settingsGeneralNetwork),
+                SettingsGroupHeader(text: g11n.settingsGeneralNetwork),
                 SettingsGroup(
                   children: [
                     SettingsRow(
-                      title: l10n.settingsFirstByteTimeout,
-                      subtitle: l10n.settingsFirstByteTimeoutDesc,
+                      title: g11n.settingsFirstByteTimeout,
+                      subtitle: g11n.settingsFirstByteTimeoutDesc,
                       trailing: _trailingValue(
                         context,
-                        _timeoutLabel(l10n, settings.firstByteTimeoutSec),
+                        _timeoutLabel(g11n, settings.firstByteTimeoutSec),
                       ),
                       onTap: () => _editNumber(
                         context,
-                        title: l10n.settingsFirstByteTimeout,
+                        title: g11n.settingsFirstByteTimeout,
                         initialValue: settings.firstByteTimeoutSec,
-                        hint: l10n.settingsTimeoutInputHint,
+                        hint: g11n.settingsTimeoutInputHint,
                         onConfirm: notifier.setFirstByteTimeoutSec,
                       ),
                     ),
                     const SettingsDivider(),
                     SettingsRow(
-                      title: l10n.settingsStreamIdleTimeout,
-                      subtitle: l10n.settingsStreamIdleTimeoutDesc,
+                      title: g11n.settingsStreamIdleTimeout,
+                      subtitle: g11n.settingsStreamIdleTimeoutDesc,
                       trailing: _trailingValue(
                         context,
-                        _timeoutLabel(l10n, settings.streamIdleTimeoutSec),
+                        _timeoutLabel(g11n, settings.streamIdleTimeoutSec),
                       ),
                       onTap: () => _editNumber(
                         context,
-                        title: l10n.settingsStreamIdleTimeout,
+                        title: g11n.settingsStreamIdleTimeout,
                         initialValue: settings.streamIdleTimeoutSec,
-                        hint: l10n.settingsTimeoutInputHint,
+                        hint: g11n.settingsTimeoutInputHint,
                         onConfirm: notifier.setStreamIdleTimeoutSec,
                       ),
                     ),
                     const SettingsDivider(),
                     SettingsRow(
-                      title: l10n.settingsMaxNetworkRetries,
-                      subtitle: l10n.settingsMaxNetworkRetriesDesc,
+                      title: g11n.settingsMaxNetworkRetries,
+                      subtitle: g11n.settingsMaxNetworkRetriesDesc,
                       trailing: _trailingValue(
                         context,
-                        l10n.settingsRetriesCount(settings.maxNetworkRetries),
+                        g11n.settingsRetriesCount(settings.maxNetworkRetries),
                       ),
                       onTap: () => _editNumber(
                         context,
-                        title: l10n.settingsMaxNetworkRetries,
+                        title: g11n.settingsMaxNetworkRetries,
                         initialValue: settings.maxNetworkRetries,
-                        hint: l10n.settingsRetriesInputHint,
+                        hint: g11n.settingsRetriesInputHint,
                         onConfirm: notifier.setMaxNetworkRetries,
                       ),
                     ),
                   ],
                 ),
-                SettingsGroupHeader(text: l10n.settingsGeneralTools),
+                SettingsGroupHeader(text: g11n.settingsGeneralTools),
                 SettingsGroup(
                   children: [
                     SettingsRow(
-                      title: l10n.settingsSendfileMaxSize,
-                      subtitle: l10n.settingsSendfileMaxSizeDesc,
+                      title: g11n.settingsSendfileMaxSize,
+                      subtitle: g11n.settingsSendfileMaxSizeDesc,
                       trailing: _trailingValue(
                         context,
-                        l10n.settingsMbValue(settings.sendFileMaxSizeMb),
+                        g11n.settingsMbValue(settings.sendFileMaxSizeMb),
                       ),
                       onTap: () => _editNumber(
                         context,
-                        title: l10n.settingsSendfileMaxSize,
+                        title: g11n.settingsSendfileMaxSize,
                         initialValue: settings.sendFileMaxSizeMb,
-                        hint: l10n.settingsSendfileMaxSizeInputHint,
+                        hint: g11n.settingsSendfileMaxSizeInputHint,
                         minValue: 1,
                         onConfirm: notifier.setSendFileMaxSizeMb,
                       ),
                     ),
                   ],
                 ),
-                SettingsGroupHeader(text: l10n.settingsGeneralGoal),
+                SettingsGroupHeader(text: g11n.settingsGeneralGoal),
                 SettingsGroup(
                   children: [
                     SettingsRow(
-                      title: l10n.settingsGoalMaxTurns,
-                      subtitle: l10n.settingsGoalMaxTurnsDesc,
+                      title: g11n.settingsGoalMaxTurns,
+                      subtitle: g11n.settingsGoalMaxTurnsDesc,
                       trailing: _trailingValue(
                         context,
-                        l10n.settingsTurnsValue(settings.goalMaxTurns),
+                        g11n.settingsTurnsValue(settings.goalMaxTurns),
                       ),
                       onTap: () => _editNumber(
                         context,
-                        title: l10n.settingsGoalMaxTurns,
+                        title: g11n.settingsGoalMaxTurns,
                         initialValue: settings.goalMaxTurns,
-                        hint: l10n.settingsGoalMaxTurnsInputHint,
+                        hint: g11n.settingsGoalMaxTurnsInputHint,
                         minValue: 1,
                         onConfirm: notifier.setGoalMaxTurns,
                       ),
                     ),
                     const SettingsDivider(),
                     SettingsRow(
-                      title: l10n.settingsGoalMaxTokens,
-                      subtitle: l10n.settingsGoalMaxTokensDesc,
+                      title: g11n.settingsGoalMaxTokens,
+                      subtitle: g11n.settingsGoalMaxTokensDesc,
                       trailing: _trailingValue(
                         context,
-                        l10n.settingsTokensValue(settings.goalMaxTokens),
+                        g11n.settingsTokensValue(settings.goalMaxTokens),
                       ),
                       onTap: () => _editNumber(
                         context,
-                        title: l10n.settingsGoalMaxTokens,
+                        title: g11n.settingsGoalMaxTokens,
                         initialValue: settings.goalMaxTokens,
-                        hint: l10n.settingsGoalMaxTokensInputHint,
+                        hint: g11n.settingsGoalMaxTokensInputHint,
                         minValue: 1000,
                         onConfirm: notifier.setGoalMaxTokens,
                       ),
@@ -247,12 +247,12 @@ class GeneralPage extends ConsumerWidget {
       );
 
   /// 超时值的行尾展示:0(或负数)视为不限制。
-  String _timeoutLabel(AppLocalizations l10n, int sec) =>
-      sec <= 0 ? l10n.settingsTimeoutUnlimited : l10n.settingsTimeoutSeconds(sec);
+  String _timeoutLabel(AppGlobalizations g11n, int sec) =>
+      sec <= 0 ? g11n.settingsTimeoutUnlimited : g11n.settingsTimeoutSeconds(sec);
 
-  String _startupSessionLabel(AppLocalizations l10n, StartupSessionMode mode) => switch (mode) {
-        StartupSessionMode.newSession => l10n.settingsStartupSessionNew,
-        StartupSessionMode.recentSession => l10n.settingsStartupSessionRecent,
+  String _startupSessionLabel(AppGlobalizations g11n, StartupSessionMode mode) => switch (mode) {
+        StartupSessionMode.newSession => g11n.settingsStartupSessionNew,
+        StartupSessionMode.recentSession => g11n.settingsStartupSessionRecent,
       };
 
   Future<void> _editNumber(
@@ -283,7 +283,7 @@ class GeneralPage extends ConsumerWidget {
     required StartupSessionMode current,
     required Future<void> Function(StartupSessionMode) onSelect,
   }) async {
-    final l10n = AppLocalizations.of(context);
+    final g11n = AppGlobalizations.of(context);
     final theme = Theme.of(context);
     final selected = await showModalBottomSheet<StartupSessionMode>(
       context: context,
@@ -296,7 +296,7 @@ class GeneralPage extends ConsumerWidget {
             Padding(
               padding: const EdgeInsets.fromLTRB(Spacing.lg, 0, Spacing.lg, Spacing.md),
               child: Text(
-                l10n.settingsStartupSession,
+                g11n.settingsStartupSession,
                 style: theme.textTheme.titleMedium?.copyWith(fontWeight: FontWeight.bold),
               ),
             ),
@@ -315,7 +315,7 @@ class GeneralPage extends ConsumerWidget {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
-                              _startupSessionLabel(l10n, mode),
+                              _startupSessionLabel(g11n, mode),
                               style: theme.textTheme.bodyLarge?.copyWith(
                                 color: mode == current
                                     ? theme.colorScheme.primary
@@ -324,8 +324,8 @@ class GeneralPage extends ConsumerWidget {
                             ),
                             Text(
                               mode == StartupSessionMode.newSession
-                                  ? l10n.settingsStartupSessionNewDesc
-                                  : l10n.settingsStartupSessionRecentDesc,
+                                  ? g11n.settingsStartupSessionNewDesc
+                                  : g11n.settingsStartupSessionRecentDesc,
                               style: theme.textTheme.bodySmall?.copyWith(
                                 color: theme.colorScheme.onSurfaceVariant,
                               ),
@@ -414,11 +414,11 @@ class _NumberInputDialogState extends State<_NumberInputDialog> {
       actions: [
         TextButton(
           onPressed: () => Navigator.pop(context),
-          child: Text(AppLocalizations.of(context).cancel),
+          child: Text(AppGlobalizations.of(context).cancel),
         ),
         TextButton(
           onPressed: _isValid ? () => Navigator.pop(context, _parsed ?? 0) : null,
-          child: Text(AppLocalizations.of(context).save),
+          child: Text(AppGlobalizations.of(context).save),
         ),
       ],
     );

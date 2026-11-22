@@ -8,7 +8,7 @@ import '../../core/ui/settings_group.dart';
 import '../../core/ui/swipe_to_delete_row.dart';
 import '../../data/mcp/mcp_config.dart';
 import '../../data/mcp/mcp_manager.dart';
-import '../../l10n/app_localizations.dart';
+import '../../g11n/app_globalizations.dart';
 import 'mcp_sheets.dart';
 
 /// MCP 服务器列表(对齐上游 McpSection):
@@ -33,7 +33,7 @@ class _McpPageState extends ConsumerState<McpPage> {
 
   @override
   Widget build(BuildContext context) {
-    final l10n = AppLocalizations.of(context);
+    final g11n = AppGlobalizations.of(context);
     final theme = Theme.of(context);
     final entriesAsync = ref.watch(mcpEntriesProvider);
     final mcpState = ref.watch(mcpManagerProvider);
@@ -41,7 +41,7 @@ class _McpPageState extends ConsumerState<McpPage> {
     return Scaffold(
       extendBodyBehindAppBar: true,
       appBar: AppBar(
-        title: Text(l10n.mcpTitle),
+        title: Text(g11n.mcpTitle),
         backgroundColor: Colors.transparent,
         surfaceTintColor: Colors.transparent,
         elevation: 0,
@@ -55,14 +55,14 @@ class _McpPageState extends ConsumerState<McpPage> {
                     child: CircularProgressIndicator(strokeWidth: 2),
                   )
                 : const Icon(Iconfont.refreshCw, size: 22),
-            tooltip: l10n.settingsReconnect,
+            tooltip: g11n.settingsReconnect,
             onPressed: mcpState.reloading
                 ? null
                 : () => ref.read(mcpManagerProvider.notifier).reload(),
           ),
           IconButton(
             icon: const Icon(Iconfont.plus, size: 22),
-            tooltip: l10n.settingsAddMcpServer,
+            tooltip: g11n.settingsAddMcpServer,
             onPressed: () => showMcpAddSheet(context, ref),
           ),
         ],
@@ -79,9 +79,9 @@ class _McpPageState extends ConsumerState<McpPage> {
         ),
         child: entriesAsync.when(
         loading: () => const Center(child: CircularProgressIndicator()),
-        error: (error, _) => Center(child: Text('${l10n.errorGeneric}: $error')),
+        error: (error, _) => Center(child: Text('${g11n.errorGeneric}: $error')),
         data: (entries) {
-          if (entries.isEmpty) return _EmptyState(l10n: l10n);
+          if (entries.isEmpty) return _EmptyState(g11n: g11n);
           final filtered = _query.trim().isEmpty
               ? entries
               : [
@@ -100,7 +100,7 @@ class _McpPageState extends ConsumerState<McpPage> {
                   padding: const EdgeInsets.fromLTRB(Spacing.lg, 0, Spacing.lg, Spacing.sm),
                   child: CapsuleSearchField(
                     controller: _searchController,
-                    hint: l10n.mcpSearchPlaceholder,
+                    hint: g11n.mcpSearchPlaceholder,
                     onChanged: (value) => setState(() => _query = value),
                   ),
                 ),
@@ -119,7 +119,7 @@ class _McpPageState extends ConsumerState<McpPage> {
                               ),
                               const SizedBox(height: Spacing.sm),
                               Text(
-                                l10n.mcpSearchEmpty,
+                                g11n.mcpSearchEmpty,
                                 style: Theme.of(context)
                                     .textTheme
                                     .bodyMedium
@@ -154,18 +154,18 @@ class _McpPageState extends ConsumerState<McpPage> {
   }
 
   Future<void> _delete(McpServerEntry entry) async {
-    final l10n = AppLocalizations.of(context);
+    final g11n = AppGlobalizations.of(context);
     final messenger = ScaffoldMessenger.of(context);
     await ref.read(mcpManagerProvider.notifier).removeServer(entry.server.name);
     ref.invalidate(mcpEntriesProvider);
-    messenger.showSnackBar(SnackBar(content: Text(l10n.mcpRemoved)));
+    messenger.showSnackBar(SnackBar(content: Text(g11n.mcpRemoved)));
   }
 }
 
 class _EmptyState extends StatelessWidget {
-  const _EmptyState({required this.l10n});
+  const _EmptyState({required this.g11n});
 
-  final AppLocalizations l10n;
+  final AppGlobalizations g11n;
 
   @override
   Widget build(BuildContext context) {
@@ -191,10 +191,10 @@ class _EmptyState extends StatelessWidget {
               ),
             ),
             const SizedBox(height: Spacing.md),
-            Text(l10n.mcpEmpty, style: theme.textTheme.titleMedium),
+            Text(g11n.mcpEmpty, style: theme.textTheme.titleMedium),
             const SizedBox(height: Spacing.xs),
             Text(
-              l10n.mcpEmptyHint,
+              g11n.mcpEmptyHint,
               textAlign: TextAlign.center,
               style: theme.textTheme.bodySmall?.copyWith(color: context.semantic.subtleText),
             ),
@@ -221,19 +221,19 @@ class _McpServerRow extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final l10n = AppLocalizations.of(context);
+    final g11n = AppGlobalizations.of(context);
     final theme = Theme.of(context);
     final semantic = context.semantic;
     final server = entry.server;
     final isConnected = server.enabled && status?.state == McpServerState.connected;
 
     final statusText = switch (status?.state) {
-      null => l10n.mcpStatusNotConnected,
-      McpServerState.connected => l10n.mcpStatusConnected,
-      McpServerState.connecting => l10n.mcpStatusConnecting,
-      McpServerState.needsAuth => l10n.mcpStatusNeedsAuth,
-      McpServerState.failed => l10n.mcpStatusFailed,
-      McpServerState.disabled => l10n.mcpStatusDisabled,
+      null => g11n.mcpStatusNotConnected,
+      McpServerState.connected => g11n.mcpStatusConnected,
+      McpServerState.connecting => g11n.mcpStatusConnecting,
+      McpServerState.needsAuth => g11n.mcpStatusNeedsAuth,
+      McpServerState.failed => g11n.mcpStatusFailed,
+      McpServerState.disabled => g11n.mcpStatusDisabled,
     };
     final statusColor = switch (status?.state) {
       null || McpServerState.disabled => semantic.subtleText,
@@ -241,9 +241,9 @@ class _McpServerRow extends StatelessWidget {
       McpServerState.connecting || McpServerState.needsAuth => theme.colorScheme.primary,
       McpServerState.failed => theme.colorScheme.error,
     };
-    final typeText = server.isStdio ? l10n.mcpTypeStdio : 'HTTP';
+    final typeText = server.isStdio ? g11n.mcpTypeStdio : 'HTTP';
     final infoText = isConnected
-        ? l10n.mcpToolsCount(status?.toolCount ?? 0)
+        ? g11n.mcpToolsCount(status?.toolCount ?? 0)
         : (server.isStdio ? (server.command.isEmpty ? 'stdio' : server.command) : null);
 
     return SwipeToDeleteRow(
@@ -287,8 +287,8 @@ class _McpServerRow extends StatelessWidget {
                     children: [
                       _Pill(
                         text: entry.scope == McpScope.project
-                            ? l10n.mcpScopeProject
-                            : l10n.mcpScopeGlobal,
+                            ? g11n.mcpScopeProject
+                            : g11n.mcpScopeGlobal,
                         textColor: entry.scope == McpScope.project
                             ? theme.colorScheme.primary
                             : semantic.subtleText,

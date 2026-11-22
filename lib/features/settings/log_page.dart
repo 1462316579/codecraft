@@ -13,7 +13,7 @@ import '../../core/theme/semantic_colors.dart';
 import '../../core/theme/tokens.dart';
 import '../../core/ui/settings_group.dart';
 import '../../data/settings/app_settings.dart';
-import '../../l10n/app_localizations.dart';
+import '../../g11n/app_globalizations.dart';
 
 /// 日志页(对齐上游 LogSection):单页合并结构——
 /// 等级(点击弹底部面板)+ 文件切换(底部面板)+ 搜索/复制 + MCP 过滤徽章 +
@@ -84,7 +84,7 @@ class _LogPageState extends ConsumerState<LogPage> {
           files.where((f) => f.name == today).firstOrNull ??
           (files.isEmpty ? null : files.last);
       if (!mounted) return;
-      final l10n = AppLocalizations.of(context);
+      final g11n = AppGlobalizations.of(context);
       if (selected == null) {
         setState(() {
           _files = files;
@@ -92,7 +92,7 @@ class _LogPageState extends ConsumerState<LogPage> {
           _content = '';
           _totalLines = 0;
           _shownLines = 0;
-          _error = l10n.logNoFiles;
+          _error = g11n.logNoFiles;
           _loading = false;
         });
         return;
@@ -117,10 +117,10 @@ class _LogPageState extends ConsumerState<LogPage> {
       _followToEnd();
     } catch (error) {
       if (!mounted) return;
-      final l10n = AppLocalizations.of(context);
+      final g11n = AppGlobalizations.of(context);
       setState(() {
         _loading = false;
-        _error = l10n.logReadFailed('$error');
+        _error = g11n.logReadFailed('$error');
       });
     }
   }
@@ -143,12 +143,12 @@ class _LogPageState extends ConsumerState<LogPage> {
     return _entries.where((entry) => entry.raw.toLowerCase().contains(lower)).toList();
   }
 
-  String _summary(AppLocalizations l10n) {
-    if (_query.trim().isNotEmpty) return l10n.logSearchResults(_filtered.length);
+  String _summary(AppGlobalizations g11n) {
+    if (_query.trim().isNotEmpty) return g11n.logSearchResults(_filtered.length);
     if (_totalLines > _shownLines) {
-      return l10n.logShowLastLines(_filtered.length, _totalLines);
+      return g11n.logShowLastLines(_filtered.length, _totalLines);
     }
-    return l10n.logShowLines(_filtered.length);
+    return g11n.logShowLines(_filtered.length);
   }
 
   static String _dateStamp(DateTime now) =>
@@ -161,13 +161,13 @@ class _LogPageState extends ConsumerState<LogPage> {
     return s;
   }
 
-  String _levelName(AppLocalizations l10n, LogLevel level) => switch (level) {
-        LogLevel.verbose => l10n.logLevelVerbose,
-        LogLevel.debug => l10n.logLevelDebug,
-        LogLevel.info => l10n.logLevelInfo,
-        LogLevel.warn => l10n.logLevelWarn,
-        LogLevel.error => l10n.logLevelError,
-        LogLevel.none => l10n.logLevelNone,
+  String _levelName(AppGlobalizations g11n, LogLevel level) => switch (level) {
+        LogLevel.verbose => g11n.logLevelVerbose,
+        LogLevel.debug => g11n.logLevelDebug,
+        LogLevel.info => g11n.logLevelInfo,
+        LogLevel.warn => g11n.logLevelWarn,
+        LogLevel.error => g11n.logLevelError,
+        LogLevel.none => g11n.logLevelNone,
       };
 
   Future<void> _setLevel(LogLevel level) async {
@@ -239,7 +239,7 @@ class _LogPageState extends ConsumerState<LogPage> {
 
   @override
   Widget build(BuildContext context) {
-    final l10n = AppLocalizations.of(context);
+    final g11n = AppGlobalizations.of(context);
     final theme = Theme.of(context);
     final entries = _filtered;
 
@@ -250,7 +250,7 @@ class _LogPageState extends ConsumerState<LogPage> {
         surfaceTintColor: Colors.transparent,
         elevation: 0,
         scrolledUnderElevation: 0,
-        title: Text(l10n.settingsLog),
+        title: Text(g11n.settingsLog),
       ),
       body: Container(
         decoration: BoxDecoration(
@@ -272,15 +272,15 @@ class _LogPageState extends ConsumerState<LogPage> {
               children: [
                 SettingsRow(
                   icon: Iconfont.fileText,
-                  title: l10n.logLevel,
-                  trailing: _levelBadge(l10n, theme),
+                  title: g11n.logLevel,
+                  trailing: _levelBadge(g11n, theme),
                   onTap: () => _openLevelSheet(),
                 ),
                 const SettingsDivider(),
                 SettingsRow(
-                  title: l10n.logFiles,
+                  title: g11n.logFiles,
                   subtitle: _selectedFileName == null
-                      ? l10n.logNoFiles
+                      ? g11n.logNoFiles
                       : _fileNameDisplay(_selectedFileName!),
                   enabled: _files.isNotEmpty,
                   onTap: _files.isEmpty ? null : () => _openFileSheet(),
@@ -294,7 +294,7 @@ class _LogPageState extends ConsumerState<LogPage> {
                 Expanded(
                   child: CapsuleSearchField(
                     controller: _search,
-                    hint: l10n.logSearchHint,
+                    hint: g11n.logSearchHint,
                   ),
                 ),
                 const SizedBox(width: Spacing.sm),
@@ -307,11 +307,11 @@ class _LogPageState extends ConsumerState<LogPage> {
             // ── MCP 过滤徽章(从 MCP 弹窗进入时显示,可清除)──
             if (_filterServerName != null) ...[
               const SizedBox(height: Spacing.sm),
-              _filterBadge(l10n, theme),
+              _filterBadge(g11n, theme),
             ],
             const SizedBox(height: Spacing.sm),
             // ── 日志内容卡片 ──
-            Expanded(child: _contentCard(l10n, theme, entries)),
+            Expanded(child: _contentCard(g11n, theme, entries)),
           ],
         ),
         ),
@@ -320,7 +320,7 @@ class _LogPageState extends ConsumerState<LogPage> {
   }
 
   /// 等级行尾徽章:等级色浅底 + 圆点 + 等级名(对齐上游 trailing Surface)。
-  Widget _levelBadge(AppLocalizations l10n, ThemeData theme) {
+  Widget _levelBadge(AppGlobalizations g11n, ThemeData theme) {
     final level = _level ?? LogLevel.info;
     final color = LogLevelColors.of(level);
     return Container(
@@ -339,7 +339,7 @@ class _LogPageState extends ConsumerState<LogPage> {
           ),
           const SizedBox(width: 6),
           Text(
-            _levelName(l10n, level),
+            _levelName(g11n, level),
             style: theme.textTheme.labelSmall?.copyWith(
               fontWeight: FontWeight.w500,
               color: color,
@@ -350,7 +350,7 @@ class _LogPageState extends ConsumerState<LogPage> {
     );
   }
 
-  Widget _filterBadge(AppLocalizations l10n, ThemeData theme) {
+  Widget _filterBadge(AppGlobalizations g11n, ThemeData theme) {
     return Container(
       decoration: BoxDecoration(
         color: theme.colorScheme.primary.withValues(alpha: 0.12),
@@ -361,7 +361,7 @@ class _LogPageState extends ConsumerState<LogPage> {
         mainAxisSize: MainAxisSize.min,
         children: [
           Text(
-            l10n.logMcpPrefix(_filterServerName!),
+            g11n.logMcpPrefix(_filterServerName!),
             style: theme.textTheme.labelMedium?.copyWith(
               color: theme.colorScheme.primary,
             ),
@@ -377,7 +377,7 @@ class _LogPageState extends ConsumerState<LogPage> {
     );
   }
 
-  Widget _contentCard(AppLocalizations l10n, ThemeData theme, List<LogEntry> entries) {
+  Widget _contentCard(AppGlobalizations g11n, ThemeData theme, List<LogEntry> entries) {
     final Widget child;
     if (_loading) {
       child = const Center(
@@ -400,8 +400,8 @@ class _LogPageState extends ConsumerState<LogPage> {
     } else if (entries.isEmpty) {
       // 搜索中或 MCP 过滤中显示「没有匹配」;否则兜底显示「还没有日志文件」。
       final emptyText = _query.trim().isNotEmpty || _filterServerName != null
-          ? l10n.logNoMatch
-          : l10n.logNoFiles;
+          ? g11n.logNoMatch
+          : g11n.logNoFiles;
       child = Center(
         child: Text(
           emptyText,
@@ -413,7 +413,7 @@ class _LogPageState extends ConsumerState<LogPage> {
     } else {
       child = Column(
         children: [
-          _summaryRow(l10n, theme),
+          _summaryRow(g11n, theme),
           Divider(
             height: 0.5,
             thickness: 0.5,
@@ -452,7 +452,7 @@ class _LogPageState extends ConsumerState<LogPage> {
   }
 
   /// 统计行:匹配/截断/全量行数 + 实时滚动开关(对齐上游 summary + AppSwitch)。
-  Widget _summaryRow(AppLocalizations l10n, ThemeData theme) {
+  Widget _summaryRow(AppGlobalizations g11n, ThemeData theme) {
     final style = theme.textTheme.labelMedium?.copyWith(
       color: theme.colorScheme.onSurfaceVariant,
     );
@@ -460,8 +460,8 @@ class _LogPageState extends ConsumerState<LogPage> {
       padding: const EdgeInsets.symmetric(horizontal: Spacing.md, vertical: Spacing.sm),
       child: Row(
         children: [
-          Expanded(child: Text(_summary(l10n), style: style)),
-          Text(l10n.logFollowLatest, style: style),
+          Expanded(child: Text(_summary(g11n), style: style)),
+          Text(g11n.logFollowLatest, style: style),
           const SizedBox(width: Spacing.xs),
           Switch(
             value: _followLatest,
@@ -524,7 +524,7 @@ class _LogPageState extends ConsumerState<LogPage> {
         borderRadius: BorderRadius.circular(Radii.xs),
       ),
       child: Text(
-        _levelName(AppLocalizations.of(context), level),
+        _levelName(AppGlobalizations.of(context), level),
         style: theme.textTheme.labelSmall?.copyWith(
           fontSize: 9,
           fontWeight: FontWeight.w600,
@@ -570,7 +570,7 @@ class _LogPageState extends ConsumerState<LogPage> {
       isScrollControlled: true,
       showDragHandle: true,
       builder: (sheetContext) {
-        final l10n = AppLocalizations.of(sheetContext);
+        final g11n = AppGlobalizations.of(sheetContext);
         final theme = Theme.of(sheetContext);
         return SafeArea(
           child: Padding(
@@ -580,12 +580,12 @@ class _LogPageState extends ConsumerState<LogPage> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  l10n.logLevel,
+                  g11n.logLevel,
                   style: theme.textTheme.titleMedium?.copyWith(fontWeight: FontWeight.bold),
                 ),
                 const SizedBox(height: Spacing.xs),
                 Text(
-                  l10n.logLevelDesc,
+                  g11n.logLevelDesc,
                   style: theme.textTheme.bodySmall?.copyWith(
                     color: theme.colorScheme.onSurfaceVariant,
                   ),
@@ -612,7 +612,7 @@ class _LogPageState extends ConsumerState<LogPage> {
                           const SizedBox(width: Spacing.md),
                           Expanded(
                             child: Text(
-                              _levelName(l10n, level),
+                              _levelName(g11n, level),
                               style: theme.textTheme.bodyLarge,
                             ),
                           ),
@@ -624,7 +624,7 @@ class _LogPageState extends ConsumerState<LogPage> {
                   ),
                 const SizedBox(height: Spacing.sm),
                 Text(
-                  l10n.logFileLocation,
+                  g11n.logFileLocation,
                   style: theme.textTheme.bodySmall?.copyWith(
                     color: theme.colorScheme.onSurfaceVariant.withValues(alpha: 0.8),
                   ),
@@ -644,7 +644,7 @@ class _LogPageState extends ConsumerState<LogPage> {
       isScrollControlled: true,
       showDragHandle: true,
       builder: (sheetContext) {
-        final l10n = AppLocalizations.of(sheetContext);
+        final g11n = AppGlobalizations.of(sheetContext);
         final theme = Theme.of(sheetContext);
         return SafeArea(
           child: Padding(
@@ -654,7 +654,7 @@ class _LogPageState extends ConsumerState<LogPage> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  l10n.logFiles,
+                  g11n.logFiles,
                   style: theme.textTheme.titleMedium?.copyWith(fontWeight: FontWeight.bold),
                 ),
                 const SizedBox(height: Spacing.sm),
@@ -710,7 +710,7 @@ class _LogPageState extends ConsumerState<LogPage> {
       isScrollControlled: true,
       showDragHandle: true,
       builder: (sheetContext) {
-        final l10n = AppLocalizations.of(sheetContext);
+        final g11n = AppGlobalizations.of(sheetContext);
         final theme = Theme.of(sheetContext);
         void markCopied() {
           setState(() => _copiedIndex = index);
@@ -727,14 +727,14 @@ class _LogPageState extends ConsumerState<LogPage> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  l10n.logCopyMenuTitle,
+                  g11n.logCopyMenuTitle,
                   style: theme.textTheme.titleMedium?.copyWith(fontWeight: FontWeight.bold),
                 ),
                 const SizedBox(height: Spacing.sm),
                 _menuRow(
                   sheetContext,
                   Iconfont.copy,
-                  l10n.logCopyLine,
+                  g11n.logCopyLine,
                   () {
                     Navigator.pop(sheetContext);
                     _copy(entry.raw);
@@ -745,7 +745,7 @@ class _LogPageState extends ConsumerState<LogPage> {
                   _menuRow(
                     sheetContext,
                     Iconfont.fileText,
-                    l10n.logCopyWithStack,
+                    g11n.logCopyWithStack,
                     () {
                       Navigator.pop(sheetContext);
                       _copy([entry, ...stack].map((e) => e.raw).join('\n'));
@@ -755,7 +755,7 @@ class _LogPageState extends ConsumerState<LogPage> {
                 _menuRow(
                   sheetContext,
                   Iconfont.messageSquare,
-                  l10n.logCopyMessage,
+                  g11n.logCopyMessage,
                   () {
                     Navigator.pop(sheetContext);
                     _copy(entry.message);

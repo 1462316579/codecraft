@@ -9,7 +9,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import '../../core/icons/iconfont.dart';
 import '../../core/theme/tokens.dart';
 import '../../core/ui/settings_group.dart';
-import '../../l10n/app_localizations.dart';
+import '../../g11n/app_globalizations.dart';
 
 /// 备份与还原页面:与 AICode 一致的 UI，包含选择导出数据、导出/导入备份、本地/网络备份切换。
 class BackupRestorePage extends StatefulWidget {
@@ -46,7 +46,7 @@ class _BackupRestorePageState extends State<BackupRestorePage> {
 
   @override
   Widget build(BuildContext context) {
-    final l10n = AppLocalizations.of(context);
+    final g11n = AppGlobalizations.of(context);
     final theme = Theme.of(context);
 
     return Scaffold(
@@ -60,7 +60,7 @@ class _BackupRestorePageState extends State<BackupRestorePage> {
           icon: const Icon(Icons.arrow_back),
           onPressed: () => Navigator.pop(context),
         ),
-        title: Text(l10n.backupAndRestore),
+        title: Text(g11n.backupAndRestore),
       ),
       body: ListView(
         padding: const EdgeInsets.fromLTRB(Spacing.md, 0, Spacing.md, Spacing.xxl),
@@ -68,11 +68,11 @@ class _BackupRestorePageState extends State<BackupRestorePage> {
           // 选择导出数据
           SettingsGroup(
             children: [
-              SettingsGroupHeader(text: l10n.selectExportData),
+              SettingsGroupHeader(text: g11n.selectExportData),
               const SettingsDivider(indent: SettingsRow.textIndent),
               SettingsRow(
                 icon: Iconfont.smartphone,
-                title: l10n.aiProvider,
+                title: g11n.aiProvider,
                 trailing: Switch(
                   value: _aiProvider,
                   onChanged: (v) => setState(() => _aiProvider = v),
@@ -82,7 +82,7 @@ class _BackupRestorePageState extends State<BackupRestorePage> {
               const SettingsDivider(indent: SettingsRow.textIndent),
               SettingsRow(
                 icon: Iconfont.plug,
-                title: l10n.connectSync,
+                title: g11n.connectSync,
                 trailing: Switch(
                   value: _connectSync,
                   onChanged: (v) => setState(() => _connectSync = v),
@@ -92,7 +92,7 @@ class _BackupRestorePageState extends State<BackupRestorePage> {
               const SettingsDivider(indent: SettingsRow.textIndent),
               SettingsRow(
                 icon: Iconfont.messageSquare,
-                title: l10n.chatRecords,
+                title: g11n.chatRecords,
                 trailing: Switch(
                   value: _chatRecords,
                   onChanged: (v) => setState(() => _chatRecords = v),
@@ -102,7 +102,7 @@ class _BackupRestorePageState extends State<BackupRestorePage> {
               const SettingsDivider(indent: SettingsRow.textIndent),
               SettingsRow(
                 icon: Iconfont.server,
-                title: l10n.mcpServer,
+                title: g11n.mcpServer,
                 trailing: Switch(
                   value: _mcpServer,
                   onChanged: (v) => setState(() => _mcpServer = v),
@@ -112,7 +112,7 @@ class _BackupRestorePageState extends State<BackupRestorePage> {
               const SettingsDivider(indent: SettingsRow.textIndent),
               SettingsRow(
                 icon: Iconfont.shield,
-                title: l10n.permissionRules,
+                title: g11n.permissionRules,
                 trailing: Switch(
                   value: _permissionRules,
                   onChanged: (v) => setState(() => _permissionRules = v),
@@ -122,7 +122,7 @@ class _BackupRestorePageState extends State<BackupRestorePage> {
               const SettingsDivider(indent: SettingsRow.textIndent),
               SettingsRow(
                 icon: Iconfont.palette,
-                title: l10n.appSettings,
+                title: g11n.appSettings,
                 trailing: Switch(
                   value: _appSettings,
                   onChanged: (v) => setState(() => _appSettings = v),
@@ -132,7 +132,7 @@ class _BackupRestorePageState extends State<BackupRestorePage> {
               const SettingsDivider(indent: SettingsRow.textIndent),
               SettingsRow(
                 icon: Iconfont.hardDrive,
-                title: l10n.workspaceFiles,
+                title: g11n.workspaceFiles,
                 trailing: Switch(
                   value: _workspaceFiles,
                   onChanged: (v) => setState(() => _workspaceFiles = v),
@@ -153,7 +153,7 @@ class _BackupRestorePageState extends State<BackupRestorePage> {
                   const SizedBox(width: Spacing.sm),
                   Expanded(
                     child: Text(
-                      l10n.workspaceFilesHint,
+                      g11n.workspaceFilesHint,
                       style: theme.textTheme.bodyMedium?.copyWith(
                         fontSize: 13,
                         color: theme.colorScheme.onSurfaceVariant,
@@ -172,16 +172,16 @@ class _BackupRestorePageState extends State<BackupRestorePage> {
               const SettingsDivider(indent: SettingsRow.textIndent),
               SettingsRow(
                 icon: Iconfont.download,
-                title: l10n.exportBackup,
-                subtitle: l10n.exportBackupDesc,
-                onTap: _exporting ? null : () => _showExportDialog(l10n),
+                title: g11n.exportBackup,
+                subtitle: g11n.exportBackupDesc,
+                onTap: _exporting ? null : () => _showExportDialog(g11n),
               ),
               const SettingsDivider(indent: SettingsRow.textIndent),
               SettingsRow(
                 icon: Iconfont.upload,
-                title: l10n.importBackup,
-                subtitle: l10n.importBackupDesc,
-                onTap: _importing ? null : () => _importBackup(l10n),
+                title: g11n.importBackup,
+                subtitle: g11n.importBackupDesc,
+                onTap: _importing ? null : () => _importBackup(g11n),
               ),
             ],
           ),
@@ -201,12 +201,12 @@ class _BackupRestorePageState extends State<BackupRestorePage> {
               segments: [
                 ButtonSegment(
                   icon: const Icon(Icons.download, size: 20),
-                  label: Text(l10n.localBackup),
+                  label: Text(g11n.localBackup),
                   value: true,
                 ),
                 ButtonSegment(
                   icon: const Icon(Icons.cloud_upload, size: 20),
-                  label: Text(l10n.cloudBackup),
+                  label: Text(g11n.cloudBackup),
                   value: false,
                 ),
               ],
@@ -217,19 +217,19 @@ class _BackupRestorePageState extends State<BackupRestorePage> {
     );
   }
 
-  Future<void> _showExportDialog(AppLocalizations l10n) async {
+  Future<void> _showExportDialog(AppGlobalizations g11n) async {
     final passwordController = TextEditingController();
     await showDialog<void>(
       context: context,
       builder: (context) {
         return AlertDialog(
-          title: Text(l10n.exportBackup),
+          title: Text(g11n.exportBackup),
           content: Column(
             mainAxisSize: MainAxisSize.min,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                l10n.exportBackupDesc,
+                g11n.exportBackupDesc,
                 style: Theme.of(context).textTheme.bodyMedium?.copyWith(
                       fontSize: 13,
                       color: Theme.of(context).colorScheme.onSurfaceVariant,
@@ -240,7 +240,7 @@ class _BackupRestorePageState extends State<BackupRestorePage> {
                 controller: passwordController,
                 obscureText: true,
                 decoration: InputDecoration(
-                  labelText: l10n.exportSetPassword,
+                  labelText: g11n.exportSetPassword,
                   border: const OutlineInputBorder(),
                 ),
               ),
@@ -249,15 +249,15 @@ class _BackupRestorePageState extends State<BackupRestorePage> {
           actions: [
             TextButton(
               onPressed: () => Navigator.pop(context),
-              child: Text(l10n.cancel),
+              child: Text(g11n.cancel),
             ),
             TextButton(
               onPressed: () async {
                 final password = passwordController.text.trim();
                 Navigator.pop(context);
-                await _exportBackup(password, l10n);
+                await _exportBackup(password, g11n);
               },
-              child: Text(l10n.exportBackupAction),
+              child: Text(g11n.exportBackupAction),
             ),
           ],
         );
@@ -265,7 +265,7 @@ class _BackupRestorePageState extends State<BackupRestorePage> {
     );
   }
 
-  Future<void> _exportBackup(String password, AppLocalizations l10n) async {
+  Future<void> _exportBackup(String password, AppGlobalizations g11n) async {
     if (!mounted) return;
     setState(() => _exporting = true);
     try {
@@ -278,19 +278,19 @@ class _BackupRestorePageState extends State<BackupRestorePage> {
       await file.writeAsString(jsonEncode(data));
       if (!mounted) return;
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text(l10n.exportSuccess(fileName))),
+        SnackBar(content: Text(g11n.exportSuccess(fileName))),
       );
     } catch (e) {
       if (!mounted) return;
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text(l10n.exportFailed(e.toString()))),
+        SnackBar(content: Text(g11n.exportFailed(e.toString()))),
       );
     } finally {
       if (mounted) setState(() => _exporting = false);
     }
   }
 
-  Future<void> _importBackup(AppLocalizations l10n) async {
+  Future<void> _importBackup(AppGlobalizations g11n) async {
     if (!mounted) return;
     setState(() => _importing = true);
     try {
@@ -306,7 +306,7 @@ class _BackupRestorePageState extends State<BackupRestorePage> {
       await _restoreBackupData(data);
       if (!mounted) return;
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text(l10n.importSuccess)),
+        SnackBar(content: Text(g11n.importSuccess)),
       );
     } finally {
       if (mounted) setState(() => _importing = false);
@@ -368,9 +368,9 @@ class _ImportFileDialog extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final l10n = AppLocalizations.of(context);
+    final g11n = AppGlobalizations.of(context);
     return AlertDialog(
-      title: Text(l10n.importSelectBackupFile),
+      title: Text(g11n.importSelectBackupFile),
       content: SizedBox(
         width: double.maxFinite,
         height: 300,
@@ -378,8 +378,8 @@ class _ImportFileDialog extends StatelessWidget {
           children: [
             ListTile(
               leading: const Icon(Icons.folder),
-              title: Text(l10n.importLocalBackup),
-              subtitle: Text(l10n.importLocalBackupDesc),
+              title: Text(g11n.importLocalBackup),
+              subtitle: Text(g11n.importLocalBackupDesc),
             ),
           ],
         ),
@@ -387,7 +387,7 @@ class _ImportFileDialog extends StatelessWidget {
       actions: [
         TextButton(
           onPressed: () => Navigator.pop(context),
-          child: Text(l10n.cancel),
+          child: Text(g11n.cancel),
         ),
       ],
     );

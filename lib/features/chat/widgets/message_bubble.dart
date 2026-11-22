@@ -20,7 +20,7 @@ import '../../../core/theme/tokens.dart';
 import '../../../data/attachment_store.dart';
 import '../../../data/container/external_storage.dart';
 import '../../../data/workspaces.dart';
-import '../../../l10n/app_localizations.dart';
+import '../../../g11n/app_globalizations.dart';
 import 'image_preview.dart';
 import 'todo_views.dart';
 
@@ -76,38 +76,38 @@ IconData toolIconFor(String? toolName) {
 }
 
 /// 工具执行中的场景文案:把工具名归成「正在做什么」(对齐上游 toolRunningLabelRes)。
-String toolRunningLabel(AppLocalizations l10n, String? toolName) {
+String toolRunningLabel(AppGlobalizations g11n, String? toolName) {
   switch (toolName?.toLowerCase()) {
     case 'editfile':
     case 'writefile':
-      return l10n.chatStatusEditingFile;
+      return g11n.chatStatusEditingFile;
     case 'readfile':
     case 'list':
     case 'sendfile':
-      return l10n.chatStatusReadingFile;
+      return g11n.chatStatusReadingFile;
     case 'viewimage':
-      return l10n.chatStatusViewingImage;
+      return g11n.chatStatusViewingImage;
     case 'search':
     case 'websearch':
     case 'webfetch':
-      return l10n.chatStatusSearchingWeb;
+      return g11n.chatStatusSearchingWeb;
     case 'browser':
-      return l10n.chatStatusBrowsingWeb;
+      return g11n.chatStatusBrowsingWeb;
     case 'bash':
     case 'terminal':
-      return l10n.chatStatusRunningCommand;
+      return g11n.chatStatusRunningCommand;
     case 'askuserquestion':
-      return l10n.chatStatusAskingUser;
+      return g11n.chatStatusAskingUser;
     case 'generateimage':
-      return l10n.chatStatusGeneratingImage;
+      return g11n.chatStatusGeneratingImage;
     case 'todo':
-      return l10n.chatStatusUpdatingTodo;
+      return g11n.chatStatusUpdatingTodo;
     case 'task':
-      return l10n.chatStatusStartingSubagent;
+      return g11n.chatStatusStartingSubagent;
     case 'memory':
-      return l10n.chatStatusReadingMemory;
+      return g11n.chatStatusReadingMemory;
     default:
-      return l10n.chatStatusCallingTool;
+      return g11n.chatStatusCallingTool;
   }
 }
 
@@ -200,7 +200,7 @@ class MessageBubble extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final l10n = AppLocalizations.of(context);
+    final g11n = AppGlobalizations.of(context);
     // 工具结果消息:扁平工具行(工具图标 + 工具名 + 参数摘要,可展开看结果)
     if (role == MessageRole.tool) {
       return ToolRow(
@@ -211,8 +211,8 @@ class MessageBubble extends StatelessWidget {
       );
     }
     // 上下文压缩:marker 渲染为分隔线,摘要渲染为卡片(对齐上游压缩卡片展示)。
-    if (isCompactionMarker) return _compactionDivider(context, l10n);
-    if (isContextSummary) return _compactionSummaryCard(context, l10n);
+    if (isCompactionMarker) return _compactionDivider(context, g11n);
+    if (isContextSummary) return _compactionSummaryCard(context, g11n);
     final hasReasoning = reasoning != null && reasoning!.trim().isNotEmpty;
     final hasContent = content.trim().isNotEmpty;
     return Padding(
@@ -232,8 +232,8 @@ class MessageBubble extends StatelessWidget {
                 children: [
                   Text(
                     runningTool == null
-                        ? l10n.chatStatusThinking
-                        : toolRunningLabel(l10n, runningTool),
+                        ? g11n.chatStatusThinking
+                        : toolRunningLabel(g11n, runningTool),
                     style: Theme.of(context).textTheme.labelMedium?.copyWith(
                           color: context.semantic.subtleText,
                         ),
@@ -257,7 +257,7 @@ class MessageBubble extends StatelessWidget {
   }
 
   /// 压缩 marker 的渲染:居中分隔线(对齐上游压缩卡片的展示语义)。
-  Widget _compactionDivider(BuildContext context, AppLocalizations l10n) {
+  Widget _compactionDivider(BuildContext context, AppGlobalizations g11n) {
     final color = Theme.of(context).colorScheme.outlineVariant;
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: Spacing.md),
@@ -267,7 +267,7 @@ class MessageBubble extends StatelessWidget {
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: Spacing.sm),
             child: Text(
-              l10n.chatContextCompressed,
+              g11n.chatContextCompressed,
               style: Theme.of(context).textTheme.labelSmall?.copyWith(
                     color: context.semantic.subtleText,
                   ),
@@ -280,7 +280,7 @@ class MessageBubble extends StatelessWidget {
   }
 
   /// 压缩产生的接手摘要卡片:弱化背景 + 标题 + Markdown 正文。
-  Widget _compactionSummaryCard(BuildContext context, AppLocalizations l10n) {
+  Widget _compactionSummaryCard(BuildContext context, AppGlobalizations g11n) {
     final theme = Theme.of(context);
     return Container(
       width: double.infinity,
@@ -297,7 +297,7 @@ class MessageBubble extends StatelessWidget {
               Icon(Icons.compress, size: 14, color: theme.colorScheme.primary),
               const SizedBox(width: Spacing.sm),
               Text(
-                l10n.chatCompactionSummary,
+                g11n.chatCompactionSummary,
                 style: theme.textTheme.labelMedium?.copyWith(
                   color: theme.colorScheme.primary,
                 ),
@@ -391,7 +391,7 @@ class MessageBubble extends StatelessWidget {
 
   /// 气泡下方的元信息行:用户 = 时间 + 复制;助手(最新一条)= 用量 + 缓存命中 + 复制。
   Widget _metaRow(BuildContext context, bool hasContent) {
-    final l10n = AppLocalizations.of(context);
+    final g11n = AppGlobalizations.of(context);
     final children = <Widget>[];
     var emitted = false;
     void gap(double size) {
@@ -411,7 +411,7 @@ class MessageBubble extends StatelessWidget {
         gap(_metaGap);
         children.add(_MetaAction(
           icon: Iconfont.rotateCcw,
-          tooltip: l10n.checkpointRewindTitle,
+          tooltip: g11n.checkpointRewindTitle,
           onTap: onRewind!,
         ));
         emitted = true;
@@ -450,7 +450,7 @@ class MessageBubble extends StatelessWidget {
       gap(_metaGap);
       children.add(_MetaAction(
         icon: Iconfont.moreHorizontal,
-        tooltip: l10n.chatMoreOptions,
+        tooltip: g11n.chatMoreOptions,
         onTap: onMore!,
       ));
       emitted = true;
@@ -515,7 +515,7 @@ class _ToolRowState extends State<ToolRow> {
 
   @override
   Widget build(BuildContext context) {
-    final l10n = AppLocalizations.of(context);
+    final g11n = AppGlobalizations.of(context);
     final theme = Theme.of(context);
     final semantic = context.semantic;
     // 图标基色对齐上游 ToolStatusIcon:失败=删除色,其余=中性色(运行中才用主色)。
@@ -542,7 +542,7 @@ class _ToolRowState extends State<ToolRow> {
                     toolIconFor(widget.name),
                     size: ChatStyle.rowIconSize,
                     color: statusColor,
-                    semanticLabel: widget.isError ? l10n.chatToolFailed : l10n.chatToolSucceeded,
+                    semanticLabel: widget.isError ? g11n.chatToolFailed : g11n.chatToolSucceeded,
                   ),
                   const SizedBox(width: Spacing.sm),
                   Text(
@@ -670,9 +670,9 @@ class _AttachmentRow extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final l10n = AppLocalizations.of(context);
+    final g11n = AppGlobalizations.of(context);
     final theme = Theme.of(context);
-    final name = attachment.fileName.isEmpty ? l10n.fileFallback : attachment.fileName;
+    final name = attachment.fileName.isEmpty ? g11n.fileFallback : attachment.fileName;
     final meta = [
       if (attachment.sizeBytes > 0) formatBytes(attachment.sizeBytes),
       if (attachment.containerPath.isNotEmpty) attachment.containerPath,
@@ -825,7 +825,7 @@ class _CopyActionState extends State<_CopyAction> {
 
   @override
   Widget build(BuildContext context) {
-    final l10n = AppLocalizations.of(context);
+    final g11n = AppGlobalizations.of(context);
     // 20dp 定尺寸:IconButton 的 constraints 只是下限,默认 tapTargetSize 会撑到 48dp。
     // 盒子只比 14dp 图标大 3dp,三个按钮的视觉间隙才紧凑。
     return SizedBox(
@@ -834,7 +834,7 @@ class _CopyActionState extends State<_CopyAction> {
       child: IconButton(
       padding: EdgeInsets.zero,
       color: context.semantic.subtleText,
-      tooltip: _copied ? l10n.copied : l10n.copy,
+      tooltip: _copied ? g11n.copied : g11n.copy,
       icon: Icon(_copied ? Icons.check : Iconfont.copy, size: 14),
       onPressed: () {
         Clipboard.setData(ClipboardData(text: widget.text));
@@ -964,17 +964,17 @@ class _ReasoningRowState extends State<ReasoningRow> {
 
   @override
   Widget build(BuildContext context) {
-    final l10n = AppLocalizations.of(context);
+    final g11n = AppGlobalizations.of(context);
     final semantic = context.semantic;
     final iconGray = semantic.subtleText;
     final elapsed = widget.live ? _elapsedMs : (widget.durationMs ?? 0);
     // 上游:耗时为空或 <=0 时只显示「思考完成」,不编造最小时长。
     final seconds = elapsed > 0 ? (elapsed / 1000).toStringAsFixed(1) : null;
     final label = widget.live
-        ? l10n.chatThinkingRunningTime(seconds ?? '0.1')
+        ? g11n.chatThinkingRunningTime(seconds ?? '0.1')
         : seconds != null
-            ? l10n.chatThinkingDoneTime(seconds)
-            : l10n.chatThinkingDone;
+            ? g11n.chatThinkingDoneTime(seconds)
+            : g11n.chatThinkingDone;
     final preview = previewLine(widget.text, live: widget.live);
 
     return Column(

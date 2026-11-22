@@ -11,7 +11,7 @@ import '../../core/ui/settings_group.dart';
 import '../../core/ui/swipe_to_delete_row.dart';
 import '../../data/skills.dart';
 import '../../data/workspaces.dart';
-import '../../l10n/app_localizations.dart';
+import '../../g11n/app_globalizations.dart';
 
 /// Skill 管理(对齐上游 SkillsSection):按作用域分组的技能列表——
 /// 「当前项目 / 全局」两组,每行名称 + 描述 + 启停开关,点击进入详情/编辑页。
@@ -20,25 +20,25 @@ class SkillsPage extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final l10n = AppLocalizations.of(context);
+    final g11n = AppGlobalizations.of(context);
     final theme = Theme.of(context);
     final skills = ref.watch(skillsProvider);
     return Scaffold(
       extendBodyBehindAppBar: true,
       appBar: AppBar(
-        title: Text(l10n.skillsTitle),
+        title: Text(g11n.skillsTitle),
         backgroundColor: Colors.transparent,
         surfaceTintColor: Colors.transparent,
         elevation: 0,
         scrolledUnderElevation: 0,
         actions: [
           IconButton(
-            tooltip: l10n.skillsNew,
+            tooltip: g11n.skillsNew,
             icon: const Icon(Icons.add),
             onPressed: () => context.push('/settings/skills/edit'),
           ),
           IconButton(
-            tooltip: l10n.skillsImport,
+            tooltip: g11n.skillsImport,
             icon: const Icon(Iconfont.fileUp),
             onPressed: () => _importMarkdown(context, ref, SkillScope.global),
           ),
@@ -58,11 +58,11 @@ class SkillsPage extends ConsumerWidget {
         loading: () => const Center(child: CircularProgressIndicator()),
         error: (error, stack) => Center(
           child: Text(
-            '${l10n.errorGeneric}: $error',
+            '${g11n.errorGeneric}: $error',
             style: TextStyle(color: context.semantic.subtleText),
           ),
         ),
-        data: (entries) => _list(context, ref, l10n, entries),
+        data: (entries) => _list(context, ref, g11n, entries),
       ),
       ),
     );
@@ -71,7 +71,7 @@ class SkillsPage extends ConsumerWidget {
   Widget _list(
     BuildContext context,
     WidgetRef ref,
-    AppLocalizations l10n,
+    AppGlobalizations g11n,
     List<SkillEntry> entries,
   ) {
     if (entries.isEmpty) {
@@ -96,10 +96,10 @@ class SkillsPage extends ConsumerWidget {
                 ),
               ),
               const SizedBox(height: Spacing.md),
-              Text(l10n.skillsEmpty, style: Theme.of(context).textTheme.titleMedium),
+              Text(g11n.skillsEmpty, style: Theme.of(context).textTheme.titleMedium),
               const SizedBox(height: Spacing.xs),
               Text(
-                l10n.skillsEmptyHint,
+                g11n.skillsEmptyHint,
                 textAlign: TextAlign.center,
                 style: Theme.of(context)
                     .textTheme
@@ -120,29 +120,29 @@ class SkillsPage extends ConsumerWidget {
       children: [
         SettingsGroupHeader(
           text: projectName == null
-              ? l10n.skillsScopeProject
-              : l10n.skillsProjectGroup(projectName),
+              ? g11n.skillsScopeProject
+              : g11n.skillsProjectGroup(projectName),
         ),
         SettingsGroup(
           children: [
             if (projectEntries.isEmpty)
-              _emptyHint(context, l10n.skillsNoProjectSkills)
+              _emptyHint(context, g11n.skillsNoProjectSkills)
             else
               for (var index = 0; index < projectEntries.length; index++) ...[
                 if (index > 0) const SettingsDivider(),
-                _row(context, ref, l10n, projectEntries[index]),
+                _row(context, ref, g11n, projectEntries[index]),
               ],
           ],
         ),
-        SettingsGroupHeader(text: l10n.skillsScopeGlobal),
+        SettingsGroupHeader(text: g11n.skillsScopeGlobal),
         SettingsGroup(
           children: [
             if (globalEntries.isEmpty)
-              _emptyHint(context, l10n.skillsNoGlobalSkills)
+              _emptyHint(context, g11n.skillsNoGlobalSkills)
             else
               for (var index = 0; index < globalEntries.length; index++) ...[
                 if (index > 0) const SettingsDivider(),
-                _row(context, ref, l10n, globalEntries[index]),
+                _row(context, ref, g11n, globalEntries[index]),
               ],
           ],
         ),
@@ -161,7 +161,7 @@ class SkillsPage extends ConsumerWidget {
   Widget _row(
     BuildContext context,
     WidgetRef ref,
-    AppLocalizations l10n,
+    AppGlobalizations g11n,
     SkillEntry entry,
   ) {
     final disabled = ref.watch(disabledSkillsProvider).valueOrNull ?? const <String>{};
@@ -184,7 +184,7 @@ class SkillsPage extends ConsumerWidget {
       ),
     );
     return SwipeToDeleteRow(
-      onDelete: () => _confirmDelete(context, ref, l10n, entry),
+      onDelete: () => _confirmDelete(context, ref, g11n, entry),
       child: row,
     );
   }
@@ -192,23 +192,23 @@ class SkillsPage extends ConsumerWidget {
   Future<void> _confirmDelete(
     BuildContext context,
     WidgetRef ref,
-    AppLocalizations l10n,
+    AppGlobalizations g11n,
     SkillEntry entry,
   ) async {
     final confirmed = await showDialog<bool>(
       context: context,
       builder: (dialogContext) => AlertDialog(
-        title: Text(l10n.skillsDeleteTitle),
-        content: Text(l10n.skillsDeleteConfirm(entry.skill.name)),
+        title: Text(g11n.skillsDeleteTitle),
+        content: Text(g11n.skillsDeleteConfirm(entry.skill.name)),
         actions: [
           TextButton(
             onPressed: () => Navigator.pop(dialogContext, false),
-            child: Text(l10n.cancel),
+            child: Text(g11n.cancel),
           ),
           TextButton(
             onPressed: () => Navigator.pop(dialogContext, true),
             style: TextButton.styleFrom(foregroundColor: Theme.of(dialogContext).colorScheme.error),
-            child: Text(l10n.delete),
+            child: Text(g11n.delete),
           ),
         ],
       ),
@@ -220,13 +220,13 @@ class SkillsPage extends ConsumerWidget {
     if (ok) {
       refreshSkills(ref);
     } else {
-      messenger.showSnackBar(SnackBar(content: Text(l10n.errorGeneric)));
+      messenger.showSnackBar(SnackBar(content: Text(g11n.errorGeneric)));
     }
   }
 
   /// 从 Markdown 文件导入技能(对齐上游「导入技能」的来源之一)。
   Future<void> _importMarkdown(BuildContext context, WidgetRef ref, SkillScope scope) async {
-    final l10n = AppLocalizations.of(context);
+    final g11n = AppGlobalizations.of(context);
     final messenger = ScaffoldMessenger.of(context);
     final file = await file_selector.openFile(
       acceptedTypeGroups: const [file_selector.XTypeGroup(label: 'Markdown', extensions: ['md'])],
@@ -240,26 +240,26 @@ class SkillsPage extends ConsumerWidget {
       if (result.imported.isNotEmpty) {
         refreshSkills(ref);
         messenger.showSnackBar(
-          SnackBar(content: Text(l10n.skillsImported(result.imported.first))),
+          SnackBar(content: Text(g11n.skillsImported(result.imported.first))),
         );
         return;
       }
       final failure = result.failures.isEmpty ? null : result.failures.first;
       messenger.showSnackBar(
-        SnackBar(content: Text(_importErrorText(l10n, failure?.name ?? '', failure?.error))),
+        SnackBar(content: Text(_importErrorText(g11n, failure?.name ?? '', failure?.error))),
       );
     } catch (error) {
-      messenger.showSnackBar(SnackBar(content: Text('${l10n.errorGeneric}: $error')));
+      messenger.showSnackBar(SnackBar(content: Text('${g11n.errorGeneric}: $error')));
     }
   }
 
-  String _importErrorText(AppLocalizations l10n, String name, SkillImportError? error) =>
+  String _importErrorText(AppGlobalizations g11n, String name, SkillImportError? error) =>
       switch (error) {
-        SkillImportError.invalidName => l10n.skillsErrorInvalidName,
-        SkillImportError.nameConflict => l10n.skillsErrorNameConflict(name),
-        SkillImportError.emptyContent => l10n.skillsErrorEmptyInstructions,
-        SkillImportError.noSkillFound => l10n.skillsErrorNoSkill,
-        SkillImportError.ioFailed || null => l10n.skillsErrorIoFailed,
+        SkillImportError.invalidName => g11n.skillsErrorInvalidName,
+        SkillImportError.nameConflict => g11n.skillsErrorNameConflict(name),
+        SkillImportError.emptyContent => g11n.skillsErrorEmptyInstructions,
+        SkillImportError.noSkillFound => g11n.skillsErrorNoSkill,
+        SkillImportError.ioFailed || null => g11n.skillsErrorIoFailed,
       };
 }
 

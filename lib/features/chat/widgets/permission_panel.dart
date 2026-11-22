@@ -4,7 +4,7 @@ import '../../../core/icons/iconfont.dart';
 import '../../../core/theme/semantic_colors.dart';
 import '../../../core/theme/tokens.dart';
 import '../../../data/permissions.dart';
-import '../../../l10n/app_localizations.dart';
+import '../../../g11n/app_globalizations.dart';
 import '../../../agent/models/agent_ui_state.dart';
 
 /// 工具授权卡(对齐上游 ToolPermissionPanel):
@@ -29,17 +29,17 @@ class _PermissionPanelState extends State<PermissionPanel> {
 
   @override
   Widget build(BuildContext context) {
-    final l10n = AppLocalizations.of(context);
+    final g11n = AppGlobalizations.of(context);
     final theme = Theme.of(context);
     final semantic = context.semantic;
     final permission = widget.permission;
     final canRemember = permission.rememberablePatterns.isNotEmpty;
     final rememberLabel = !canRemember
-        ? (permission.rememberDisabledReason ?? l10n.chatPermSingleUseDesc)
+        ? (permission.rememberDisabledReason ?? g11n.chatPermSingleUseDesc)
         : permission.rememberablePatterns.length == 1 &&
                 permission.rememberablePatterns.first == PermissionRule.wholeTool
-            ? l10n.chatPermAlwaysToolDesc
-            : '${l10n.chatPermAlwaysPrefix}${permission.rememberablePatterns.join('、')}';
+            ? g11n.chatPermAlwaysToolDesc
+            : '${g11n.chatPermAlwaysPrefix}${permission.rememberablePatterns.join('、')}';
 
     return Container(
       width: double.infinity,
@@ -154,7 +154,7 @@ class _PermissionPanelState extends State<PermissionPanel> {
               children: [
                 Expanded(
                   child: _ActionButton(
-                    text: l10n.chatPermDeny,
+                    text: g11n.chatPermDeny,
                     onPressed: () => widget.onChoice(PermissionChoice.reject),
                     foreground: theme.colorScheme.error,
                     background: theme.colorScheme.errorContainer,
@@ -163,7 +163,7 @@ class _PermissionPanelState extends State<PermissionPanel> {
                 const SizedBox(width: Spacing.sm),
                 Expanded(
                   child: _ActionButton(
-                    text: l10n.chatPermAlwaysAllow,
+                    text: g11n.chatPermAlwaysAllow,
                     onPressed: canRemember
                         ? () => widget.onChoice(PermissionChoice.always)
                         : null,
@@ -174,7 +174,7 @@ class _PermissionPanelState extends State<PermissionPanel> {
                 const SizedBox(width: Spacing.sm),
                 Expanded(
                   child: _ActionButton(
-                    text: l10n.allow,
+                    text: g11n.allow,
                     onPressed: () => widget.onChoice(PermissionChoice.once),
                     foreground: Colors.white,
                     background: semantic.success,

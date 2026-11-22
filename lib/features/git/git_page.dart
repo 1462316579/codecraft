@@ -9,7 +9,7 @@ import '../../core/util/window_size.dart';
 import '../../data/editor_target.dart';
 import '../../data/git_controller.dart';
 import '../../data/workbench.dart';
-import '../../l10n/app_localizations.dart';
+import '../../g11n/app_globalizations.dart';
 import 'diff_viewer.dart';
 import 'git_branches_tab.dart';
 import 'git_log_tab.dart';
@@ -95,7 +95,7 @@ class _GitPageState extends ConsumerState<GitPage> {
 
   @override
   Widget build(BuildContext context) {
-    final l10n = AppLocalizations.of(context);
+    final g11n = AppGlobalizations.of(context);
     final state = ref.watch(gitControllerProvider);
     final controller = ref.read(gitControllerProvider.notifier);
     _consumeToast(state);
@@ -122,7 +122,7 @@ class _GitPageState extends ConsumerState<GitPage> {
           crossAxisAlignment: CrossAxisAlignment.start,
           mainAxisSize: MainAxisSize.min,
           children: [
-            Text(l10n.gitTitle),
+            Text(g11n.gitTitle),
             if (state.repoPath != null)
               InkWell(
                 onTap: controller.showRepoPicker,
@@ -152,19 +152,19 @@ class _GitPageState extends ConsumerState<GitPage> {
         ),
         leading: IconButton(
           onPressed: widget.onNavigateBack ?? () => Navigator.of(context).maybePop(),
-          tooltip: widget.embedded ? l10n.close : l10n.back,
+          tooltip: widget.embedded ? g11n.close : g11n.back,
           icon: Icon(widget.embedded ? Iconfont.x : Iconfont.arrowLeft),
         ),
         actions: [
           if (widget.onNavigateToCredentials != null)
             IconButton(
               onPressed: widget.onNavigateToCredentials,
-              tooltip: l10n.gitCredentialsAndIdentity,
+              tooltip: g11n.gitCredentialsAndIdentity,
               icon: const Icon(Iconfont.key),
             ),
           IconButton(
             onPressed: state.busy ? null : controller.refresh,
-            tooltip: l10n.gitRefresh,
+            tooltip: g11n.gitRefresh,
             icon: const Icon(Iconfont.refreshCw),
           ),
         ],
@@ -204,9 +204,9 @@ class _GitPageState extends ConsumerState<GitPage> {
                   controller: _pageController,
                   page: _page,
                   items: [
-                    FloatingTabItem(icon: Iconfont.activity, label: l10n.gitTabStatus),
-                    FloatingTabItem(icon: Iconfont.gitBranch, label: l10n.gitTabBranches),
-                    FloatingTabItem(icon: Iconfont.gitCommit, label: l10n.gitTabCommits),
+                    FloatingTabItem(icon: Iconfont.activity, label: g11n.gitTabStatus),
+                    FloatingTabItem(icon: Iconfont.gitBranch, label: g11n.gitTabBranches),
+                    FloatingTabItem(icon: Iconfont.gitCommit, label: g11n.gitTabCommits),
                   ],
                   maskColor: context.semantic.pageBackground,
                   onSelect: (index) => _pageController.animateToPage(
@@ -255,7 +255,7 @@ class _NotARepoState extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final l10n = AppLocalizations.of(context);
+    final g11n = AppGlobalizations.of(context);
     final theme = Theme.of(context);
     final subtle = theme.colorScheme.onSurfaceVariant;
     return Center(
@@ -264,15 +264,15 @@ class _NotARepoState extends StatelessWidget {
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
-            Text(l10n.gitNotARepo, style: theme.textTheme.bodyMedium?.copyWith(color: subtle)),
+            Text(g11n.gitNotARepo, style: theme.textTheme.bodyMedium?.copyWith(color: subtle)),
             const SizedBox(height: Spacing.md),
             Text(
-              l10n.gitInitDescPrimary,
+              g11n.gitInitDescPrimary,
               style: theme.textTheme.bodySmall?.copyWith(color: subtle),
             ),
             const SizedBox(height: Spacing.xs),
             Text(
-              l10n.gitInitDescSecondary,
+              g11n.gitInitDescSecondary,
               style: theme.textTheme.bodySmall?.copyWith(color: subtle),
             ),
             if (busy) ...[
@@ -284,7 +284,7 @@ class _NotARepoState extends StatelessWidget {
               ),
               const SizedBox(height: Spacing.xs),
               Text(
-                l10n.gitCloningHint,
+                g11n.gitCloningHint,
                 style: theme.textTheme.bodySmall?.copyWith(color: subtle),
               ),
             ] else ...[
@@ -299,7 +299,7 @@ class _NotARepoState extends StatelessWidget {
                       children: [
                         const Icon(Iconfont.gitBranch, size: 18),
                         const SizedBox(width: Spacing.xs),
-                        Text(l10n.gitInitRepo),
+                        Text(g11n.gitInitRepo),
                       ],
                     ),
                   ),
@@ -311,7 +311,7 @@ class _NotARepoState extends StatelessWidget {
                       children: [
                         const Icon(Iconfont.download, size: 18),
                         const SizedBox(width: Spacing.xs),
-                        Text(l10n.gitCloneRepo),
+                        Text(g11n.gitCloneRepo),
                       ],
                     ),
                   ),
@@ -325,7 +325,7 @@ class _NotARepoState extends StatelessWidget {
                   children: [
                     const Icon(Iconfont.folder, size: 18),
                     const SizedBox(width: Spacing.xs),
-                    Text(l10n.gitPickExistingRepo),
+                    Text(g11n.gitPickExistingRepo),
                   ],
                 ),
               ),

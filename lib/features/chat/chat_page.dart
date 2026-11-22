@@ -32,7 +32,7 @@ import '../../data/db/checkpoint_dao.dart';
 import 'widgets/rewind_options_sheet.dart';
 import 'widgets/message_actions_sheet.dart';
 import 'widgets/edit_message_dialog.dart';
-import '../../l10n/app_localizations.dart';
+import '../../g11n/app_globalizations.dart';
 import '../../core/ui/settings_group.dart';
 import 'chat_welcome.dart';
 import 'widgets/chat_composer.dart';
@@ -86,11 +86,11 @@ class _ChatPageState extends ConsumerState<ChatPage>
 
   @override
   Widget build(BuildContext context) {
-    final l10n = AppLocalizations.of(context);
+    final g11n = AppGlobalizations.of(context);
     final state = ref.watch(chatControllerProvider(widget.sessionId));
     final session = ref.watch(sessionByIdProvider(widget.sessionId)).valueOrNull;
     final controller = ref.read(chatControllerProvider(widget.sessionId).notifier);
-    final title = (session?.title.trim().isEmpty ?? true) ? l10n.untitled : session!.title;
+    final title = (session?.title.trim().isEmpty ?? true) ? g11n.untitled : session!.title;
 
     return Scaffold(
       extendBodyBehindAppBar: true,
@@ -155,7 +155,7 @@ class _ChatPageState extends ConsumerState<ChatPage>
                                     !_showScrollToBottom ? 0 : (_scrolling ? 0.4 : 1),
                                 duration: const Duration(milliseconds: 160),
                                 child: _ScrollToBottomButton(
-                                  label: l10n.commonScrollToBottom,
+                                  label: g11n.commonScrollToBottom,
                                   onTap: _scrollToBottom,
                                 ),
                               ),
@@ -171,20 +171,20 @@ class _ChatPageState extends ConsumerState<ChatPage>
             _StatusBanner(
               icon: Icons.compress,
               color: context.semantic.warning,
-              text: l10n.chatCompressingContext,
+              text: g11n.chatCompressingContext,
             ),
           if (state.retry != null)
             _StatusBanner(
               icon: Icons.sync,
               color: context.semantic.warning,
               text:
-                  '${l10n.retrying} (${state.retry!.attempt}/${state.retry!.maxRetries}) · ${state.retry!.error}',
+                  '${g11n.retrying} (${state.retry!.attempt}/${state.retry!.maxRetries}) · ${state.retry!.error}',
             ),
           if (state.errorCode != null)
             _StatusBanner(
               icon: Icons.error_outline,
               color: Theme.of(context).colorScheme.error,
-              text: _errorText(l10n, state),
+              text: _errorText(g11n, state),
               onDismiss: controller.clearError,
             ),
           // 回滚时有文件因「存在本会话未见过的改动」被跳过——必须告诉用户,
@@ -193,7 +193,7 @@ class _ChatPageState extends ConsumerState<ChatPage>
             _StatusBanner(
               icon: Icons.info_outline,
               color: context.semantic.warning,
-              text: l10n.checkpointRewindSkipped(state.rewindConflicts.length),
+              text: g11n.checkpointRewindSkipped(state.rewindConflicts.length),
               onDismiss: controller.clearRewindConflicts,
             ),
           if (state.pendingPermission != null)
@@ -332,11 +332,11 @@ class _ChatPageState extends ConsumerState<ChatPage>
     return null;
   }
 
-  String _errorText(AppLocalizations l10n, ChatViewState state) => switch (state.errorCode!) {
-        ChatErrorCode.noProvider => l10n.errorNoProvider,
-        ChatErrorCode.noModel => l10n.errorNoModel,
-        ChatErrorCode.emptyResponse => l10n.errorEmptyResponse,
-        ChatErrorCode.generic => state.errorDetail ?? l10n.errorGeneric,
+  String _errorText(AppGlobalizations g11n, ChatViewState state) => switch (state.errorCode!) {
+        ChatErrorCode.noProvider => g11n.errorNoProvider,
+        ChatErrorCode.noModel => g11n.errorNoModel,
+        ChatErrorCode.emptyResponse => g11n.errorEmptyResponse,
+        ChatErrorCode.generic => state.errorDetail ?? g11n.errorGeneric,
       };
 
   /// 选文件(多选)→ 上传到当前工作区(对齐上游 OpenMultipleDocuments + "*/*")。
@@ -373,13 +373,13 @@ class _ChatPageState extends ConsumerState<ChatPage>
     required bool images,
   }) async {
     if (files.isEmpty) return;
-    final l10n = AppLocalizations.of(context);
+    final g11n = AppGlobalizations.of(context);
     final messenger = ScaffoldMessenger.of(context);
     final controller = ref.read(chatControllerProvider(widget.sessionId).notifier);
     final pending = ref.read(chatControllerProvider(widget.sessionId)).pendingAttachments;
     if (pending.length >= AttachmentStore.maxPendingAttachments) {
       messenger.showSnackBar(SnackBar(
-        content: Text(l10n.attachmentMax(AttachmentStore.maxPendingAttachments)),
+        content: Text(g11n.attachmentMax(AttachmentStore.maxPendingAttachments)),
       ));
       return;
     }
@@ -404,9 +404,9 @@ class _ChatPageState extends ConsumerState<ChatPage>
           controller.addAttachment(attachment);
           success++;
         } on AttachmentUploadException catch (error) {
-          failures.add(_uploadErrorText(l10n, error));
+          failures.add(_uploadErrorText(g11n, error));
         } catch (_) {
-          failures.add(l10n.attachmentUploadFailed);
+          failures.add(g11n.attachmentUploadFailed);
         }
       }
     } finally {
@@ -418,17 +418,17 @@ class _ChatPageState extends ConsumerState<ChatPage>
     final text = success == 0 && failures.isNotEmpty
         ? failures.first
         : skipped > 0 || failures.isNotEmpty
-            ? l10n.attachmentUploadedPartial(success)
-            : l10n.attachmentUploaded(success);
+            ? g11n.attachmentUploadedPartial(success)
+            : g11n.attachmentUploaded(success);
     messenger.showSnackBar(SnackBar(content: Text(text)));
   }
 
-  String _uploadErrorText(AppLocalizations l10n, AttachmentUploadException error) =>
+  String _uploadErrorText(AppGlobalizations g11n, AttachmentUploadException error) =>
       switch (error.error) {
         AttachmentUploadError.imageTooLarge =>
-          l10n.attachmentImageTooLarge(formatBytes(error.limitBytes)),
-        AttachmentUploadError.unsupportedImageType => l10n.attachmentUnsupportedImageType,
-        AttachmentUploadError.unreadableFile => l10n.attachmentReadFileFailed,
+          g11n.attachmentImageTooLarge(formatBytes(error.limitBytes)),
+        AttachmentUploadError.unsupportedImageType => g11n.attachmentUnsupportedImageType,
+        AttachmentUploadError.unreadableFile => g11n.attachmentReadFileFailed,
       };
 
   /// 打开某条用户消息的回退弹层,并按选择执行回退。
@@ -516,7 +516,7 @@ class _ChatPageState extends ConsumerState<ChatPage>
 
   Future<void> _pickModel(ChatSession? session) async {
     if (session == null) return;
-    final l10n = AppLocalizations.of(context);
+    final g11n = AppGlobalizations.of(context);
     // 必须 await:providersProvider 要读数据库,启动初期还没就绪。
     // 之前用 valueOrNull 同步取,冷启动时会拿到空列表 → 弹层显示「没有模型」,
     // 等一会儿数据加载完又恢复正常,看起来就像「配置好的模型丢了」。
@@ -532,7 +532,7 @@ class _ChatPageState extends ConsumerState<ChatPage>
     if (!mounted) return;
     if (providers.isEmpty) {
       ScaffoldMessenger.of(context)
-          .showSnackBar(SnackBar(content: Text(l10n.errorNoProvider)));
+          .showSnackBar(SnackBar(content: Text(g11n.errorNoProvider)));
       return;
     }
     final selected = await showModalBottomSheet<(String?, String)>(
@@ -605,13 +605,13 @@ class _ModelPickerSheetState extends ConsumerState<_ModelPickerSheet> {
   Future<void> _testModel(ProviderConfig provider, String model) async {
     final key = _key(provider.id, model);
     if (_testing.contains(key)) return;
-    final l10n = AppLocalizations.of(context);
+    final g11n = AppGlobalizations.of(context);
     setState(() => _testing.add(key));
     final result = await ref.read(modelApiProvider).testModel(
           provider: provider,
           apiKey: provider.firstUsableApiKey,
           model: model,
-          messageForKeyMissing: l10n.providerApiKeyRequired,
+          messageForKeyMissing: g11n.providerApiKeyRequired,
         );
     if (!mounted) return;
     setState(() {
@@ -622,7 +622,7 @@ class _ModelPickerSheetState extends ConsumerState<_ModelPickerSheet> {
 
   @override
   Widget build(BuildContext context) {
-    final l10n = AppLocalizations.of(context);
+    final g11n = AppGlobalizations.of(context);
     final theme = Theme.of(context);
     final query = _query.trim().toLowerCase();
     // 与上游一致:只列「已启用且已配置模型」的供应商。
@@ -678,7 +678,7 @@ class _ModelPickerSheetState extends ConsumerState<_ModelPickerSheet> {
             Padding(
               padding: const EdgeInsets.fromLTRB(Spacing.lg, 0, Spacing.lg, Spacing.sm),
               child: Text(
-                l10n.model,
+                g11n.model,
                 style: theme.textTheme.titleMedium,
               ),
             ),
@@ -686,7 +686,7 @@ class _ModelPickerSheetState extends ConsumerState<_ModelPickerSheet> {
               padding: const EdgeInsets.symmetric(horizontal: Spacing.lg),
               child: CapsuleSearchField(
                 controller: _search,
-                hint: l10n.searchModels,
+                hint: g11n.searchModels,
                 onChanged: (value) => setState(() => _query = value.trim()),
               ),
             ),
@@ -735,7 +735,7 @@ class _ModelPickerSheetState extends ConsumerState<_ModelPickerSheet> {
                     padding: const EdgeInsets.symmetric(vertical: Spacing.xl),
                     child: Center(
                       child: Text(
-                        l10n.emptyModels,
+                        g11n.emptyModels,
                         style: theme.textTheme.bodyMedium?.copyWith(
                           color: context.semantic.subtleText,
                         ),
@@ -875,7 +875,7 @@ class _ModelRow extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
-    final l10n = AppLocalizations.of(context);
+    final g11n = AppGlobalizations.of(context);
     return InkWell(
       onTap: onTap,
       child: Padding(
@@ -949,7 +949,7 @@ class _ModelRow extends StatelessWidget {
                         ),
                         onPressed: onTest,
                         child: Text(
-                          l10n.providerTestModel,
+                          g11n.providerTestModel,
                           style: theme.textTheme.labelMedium,
                         ),
                       ),

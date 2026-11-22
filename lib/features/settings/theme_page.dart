@@ -6,7 +6,7 @@ import '../../core/theme/semantic_colors.dart';
 import '../../core/theme/tokens.dart';
 import '../../core/ui/settings_group.dart';
 import '../../data/settings/app_settings.dart';
-import '../../l10n/app_localizations.dart';
+import '../../g11n/app_globalizations.dart';
 
 /// 主题页(外观、背景与显示):主题模式与语言,行样式与设置首页一致。
 class ThemePage extends ConsumerWidget {
@@ -14,7 +14,7 @@ class ThemePage extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final l10n = AppLocalizations.of(context);
+    final g11n = AppGlobalizations.of(context);
     final theme = Theme.of(context);
     final settings = ref.watch(settingsProvider);
     final notifier = ref.read(settingsProvider.notifier);
@@ -40,22 +40,22 @@ class ThemePage extends ConsumerWidget {
         child: ListView(
           padding: const EdgeInsets.only(top: 80, bottom: 140),
         children: [
-          SettingsPageHeader(title: l10n.themeTitle, subtitle: l10n.themeSubtitle),
+          SettingsPageHeader(title: g11n.themeTitle, subtitle: g11n.themeSubtitle),
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: Spacing.lg),
             child: SettingsGroup(
               children: [
                 SettingsRow(
                   icon: Iconfont.sunMoon,
-                  title: l10n.themeMode,
-                  trailing: _trailingValue(context, _themeModeLabel(l10n, settings.themeMode)),
+                  title: g11n.themeMode,
+                  trailing: _trailingValue(context, _themeModeLabel(g11n, settings.themeMode)),
                   onTap: () => _pickThemeMode(context, settings.themeMode, notifier.setThemeMode),
                 ),
                 const SettingsDivider(indent: SettingsRow.textIndent),
                 SettingsRow(
                   icon: Iconfont.languages,
-                  title: l10n.language,
-                  trailing: _trailingValue(context, _localeLabel(l10n, settings.localeCode)),
+                  title: g11n.language,
+                  trailing: _trailingValue(context, _localeLabel(g11n, settings.localeCode)),
                   onTap: () => _pickLocale(context, settings.localeCode, notifier.setLocale),
                 ),
               ],
@@ -75,14 +75,14 @@ class ThemePage extends ConsumerWidget {
             ?.copyWith(color: context.semantic.subtleText),
       );
 
-  String _themeModeLabel(AppLocalizations l10n, AppThemeMode mode) => switch (mode) {
-        AppThemeMode.system => l10n.themeModeSystem,
-        AppThemeMode.light => l10n.themeModeLight,
-        AppThemeMode.dark => l10n.themeModeDark,
+  String _themeModeLabel(AppGlobalizations g11n, AppThemeMode mode) => switch (mode) {
+        AppThemeMode.system => g11n.themeModeSystem,
+        AppThemeMode.light => g11n.themeModeLight,
+        AppThemeMode.dark => g11n.themeModeDark,
       };
 
-  String _localeLabel(AppLocalizations l10n, String code) => switch (code) {
-        '' => l10n.languageSystem,
+  String _localeLabel(AppGlobalizations g11n, String code) => switch (code) {
+        '' => g11n.languageSystem,
         'zh' => '中文',
         'zh_Hant' => '繁體中文',
         'ja' => '日本語',
@@ -95,7 +95,7 @@ class ThemePage extends ConsumerWidget {
     AppThemeMode current,
     Future<void> Function(AppThemeMode) onSelect,
   ) async {
-    final l10n = AppLocalizations.of(context);
+    final g11n = AppGlobalizations.of(context);
     await showModalBottomSheet<void>(
       context: context,
       showDragHandle: true,
@@ -107,7 +107,7 @@ class ThemePage extends ConsumerWidget {
               RadioListTile<AppThemeMode>(
                 value: mode,
                 groupValue: current,
-                title: Text(_themeModeLabel(l10n, mode)),
+                title: Text(_themeModeLabel(g11n, mode)),
                 onChanged: (value) {
                   Navigator.pop(context);
                   if (value != null) onSelect(value);
@@ -124,7 +124,7 @@ class ThemePage extends ConsumerWidget {
     String current,
     Future<void> Function(String) onSelect,
   ) async {
-    final l10n = AppLocalizations.of(context);
+    final g11n = AppGlobalizations.of(context);
     await showModalBottomSheet<void>(
       context: context,
       showDragHandle: true,
@@ -133,7 +133,7 @@ class ThemePage extends ConsumerWidget {
           mainAxisSize: MainAxisSize.min,
           children: [
             for (final entry in [
-              ('', l10n.languageSystem),
+              ('', g11n.languageSystem),
               ('zh', '中文'),
               ('zh_Hant', '繁體中文'),
               ('ja', '日本語'),

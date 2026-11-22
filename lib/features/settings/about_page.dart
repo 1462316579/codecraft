@@ -10,7 +10,7 @@ import 'package:url_launcher/url_launcher.dart';
 import '../../core/icons/iconfont.dart';
 import '../../core/theme/tokens.dart';
 import '../../core/ui/settings_group.dart';
-import '../../l10n/app_localizations.dart';
+import '../../g11n/app_globalizations.dart';
 
 const String _githubRepo = '1462316579/codecraft';
 const String _githubApi = 'https://api.github.com';
@@ -55,8 +55,8 @@ class _AboutPageState extends State<AboutPage> {
     setState(() => _checking = true);
 
     // 显示查询中对话框，给用户明确反馈
-    final l10n = AppLocalizations.of(context)!;
-    _showCheckingDialog(l10n);
+    final g11n = AppGlobalizations.of(context)!;
+    _showCheckingDialog(g11n);
 
     try {
       final client = HttpClient()
@@ -91,7 +91,7 @@ class _AboutPageState extends State<AboutPage> {
         return;
       } else {
         if (mounted) {
-          _showErrorDialog(l10n, '查询失败：HTTP ${response.statusCode}');
+          _showErrorDialog(g11n, '查询失败：HTTP ${response.statusCode}');
         }
         setState(() => _updateAvailable = false);
       }
@@ -99,7 +99,7 @@ class _AboutPageState extends State<AboutPage> {
       if (mounted) Navigator.pop(context); // 关闭查询中对话框
       if (!mounted) return;
       if (mounted) {
-        _showErrorDialog(l10n, '查询失败：无法连接到 GitHub');
+        _showErrorDialog(g11n, '查询失败：无法连接到 GitHub');
       }
       setState(() => _updateAvailable = false);
     } finally {
@@ -108,13 +108,13 @@ class _AboutPageState extends State<AboutPage> {
   }
 
   /// 查询更新中对话框:给用户明确的正在查询反馈，禁止点击外部关闭。
-  void _showCheckingDialog(AppLocalizations l10n) {
+  void _showCheckingDialog(AppGlobalizations g11n) {
     showDialog<void>(
       context: context,
       barrierDismissible: false,
       builder: (context) {
         return AlertDialog(
-          title: Text(l10n.aboutCheckingUpdate),
+          title: Text(g11n.aboutCheckingUpdate),
           content: const SizedBox(
             height: 60,
             child: Center(
@@ -156,9 +156,9 @@ class _AboutPageState extends State<AboutPage> {
     }
   }
 
-  String _getVersionText(AppLocalizations l10n) {
+  String _getVersionText(AppGlobalizations g11n) {
     if (_updateAvailable && _latestVersion.isNotEmpty) {
-      return '${l10n.aboutNewVersionFound}: $_latestVersion';
+      return '${g11n.aboutNewVersionFound}: $_latestVersion';
     }
     if (_buildNumber.isNotEmpty) return 'v$_version ($_buildNumber)';
     return 'v$_version';
@@ -166,7 +166,7 @@ class _AboutPageState extends State<AboutPage> {
 
   @override
   Widget build(BuildContext context) {
-    final l10n = AppLocalizations.of(context);
+    final g11n = AppGlobalizations.of(context);
     final theme = Theme.of(context);
     return Scaffold(
       backgroundColor: theme.scaffoldBackgroundColor,
@@ -179,21 +179,21 @@ class _AboutPageState extends State<AboutPage> {
       body: ListView(
         padding: const EdgeInsets.fromLTRB(Spacing.md, Spacing.md, Spacing.md, Spacing.xxl),
         children: [
-          SettingsPageHeader(title: l10n.about, subtitle: l10n.aboutSubtitle),
+          SettingsPageHeader(title: g11n.about, subtitle: g11n.aboutSubtitle),
           const SizedBox(height: Spacing.md),
           SettingsGroup(
             children: [
               SettingsRow(
                 icon: Iconfont.info,
-                title: l10n.version,
-                subtitle: _checking ? l10n.aboutCheckingUpdate : _getVersionText(l10n),
+                title: g11n.version,
+                subtitle: _checking ? g11n.aboutCheckingUpdate : _getVersionText(g11n),
                 onTap: () async => await _checkUpdate(),
               ),
               const SettingsDivider(indent: SettingsRow.textIndent),
               SettingsRow(
                 icon: Iconfont.refreshCw,
-                title: l10n.aboutAutoCheck,
-                subtitle: l10n.aboutAutoCheckDesc,
+                title: g11n.aboutAutoCheck,
+                subtitle: g11n.aboutAutoCheckDesc,
                 trailing: Switch(
                   value: _autoCheck,
                   onChanged: _toggleAutoCheck,
@@ -203,14 +203,14 @@ class _AboutPageState extends State<AboutPage> {
               const SettingsDivider(indent: SettingsRow.textIndent),
               SettingsRow(
                 icon: Iconfont.github,
-                title: l10n.githubRepo,
+                title: g11n.githubRepo,
                 onTap: _openReleasePage,
               ),
               const SettingsDivider(indent: SettingsRow.textIndent),
               SettingsRow(
                 icon: Iconfont.fileText,
-                title: l10n.license,
-                onTap: () => _showLicense(context, l10n),
+                title: g11n.license,
+                onTap: () => _showLicense(context, g11n),
               ),
             ],
           ),
@@ -220,13 +220,13 @@ class _AboutPageState extends State<AboutPage> {
   }
 
   /// 开源协议弹窗:展示随包分发的 GPL-3.0 全文。
-  Future<void> _showLicense(BuildContext context, AppLocalizations l10n) =>
+  Future<void> _showLicense(BuildContext context, AppGlobalizations g11n) =>
       showDialog<void>(
         context: context,
         builder: (context) {
           final theme = Theme.of(context);
           return AlertDialog(
-            title: Text(l10n.license),
+            title: Text(g11n.license),
             content: SizedBox(
               width: double.maxFinite,
               height: MediaQuery.sizeOf(context).height * 0.6,
@@ -260,7 +260,7 @@ class _AboutPageState extends State<AboutPage> {
             actions: [
               TextButton(
                 onPressed: () => Navigator.pop(context),
-                child: Text(l10n.confirm),
+                child: Text(g11n.confirm),
               ),
             ],
           );
@@ -269,27 +269,27 @@ class _AboutPageState extends State<AboutPage> {
 
   /// 有新版本时的更新提示弹窗，点击前往 GitHub Releases 页面下载。
   Future<void> _showUpdateDialog(String latestVersion) async {
-    final l10n = AppLocalizations.of(context);
+    final g11n = AppGlobalizations.of(context);
     await showDialog<void>(
       context: context,
       builder: (context) {
         return AlertDialog(
-          title: Text(l10n.aboutUpdateAvailable),
+          title: Text(g11n.aboutUpdateAvailable),
           content: Text(
-            '${l10n.aboutUpdateDesc}: $latestVersion',
+            '${g11n.aboutUpdateDesc}: $latestVersion',
             style: Theme.of(context).textTheme.bodyMedium,
           ),
           actions: [
             TextButton(
               onPressed: () => Navigator.pop(context),
-              child: Text(l10n.aboutUpdateLater),
+              child: Text(g11n.aboutUpdateLater),
             ),
             TextButton(
               onPressed: () async {
                 Navigator.pop(context);
                 await _openReleasePage();
               },
-              child: Text(l10n.aboutUpdateGo),
+              child: Text(g11n.aboutUpdateGo),
             ),
           ],
         );
@@ -299,20 +299,20 @@ class _AboutPageState extends State<AboutPage> {
 
   /// 已是最新版本的提示弹窗。
   Future<void> _showAlreadyLatestDialog() async {
-    final l10n = AppLocalizations.of(context)!;
+    final g11n = AppGlobalizations.of(context)!;
     await showDialog<void>(
       context: context,
       builder: (context) {
         return AlertDialog(
-          title: Text(l10n.aboutAlreadyLatest),
+          title: Text(g11n.aboutAlreadyLatest),
           content: Text(
-            '${l10n.aboutCurrentVersion} v$_version, 已是 GitHub 上最新的 Release。',
+            '${g11n.aboutCurrentVersion} v$_version, 已是 GitHub 上最新的 Release。',
             style: Theme.of(context).textTheme.bodyMedium,
           ),
           actions: [
             TextButton(
               onPressed: () => Navigator.pop(context),
-              child: Text(l10n.confirm),
+              child: Text(g11n.confirm),
             ),
           ],
         );
@@ -321,17 +321,17 @@ class _AboutPageState extends State<AboutPage> {
   }
 
   /// 查询失败错误提示弹窗。
-  Future<void> _showErrorDialog(AppLocalizations l10n, String message) async {
+  Future<void> _showErrorDialog(AppGlobalizations g11n, String message) async {
     await showDialog<void>(
       context: context,
       builder: (context) {
         return AlertDialog(
-          title: Text(l10n.aboutUpdateFailed),
+          title: Text(g11n.aboutUpdateFailed),
           content: Text(message),
           actions: [
             TextButton(
               onPressed: () => Navigator.pop(context),
-              child: Text(l10n.confirm),
+              child: Text(g11n.confirm),
             ),
           ],
         );

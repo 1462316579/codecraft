@@ -8,7 +8,7 @@ import '../../agent/models/project.dart';
 import '../../core/theme/tokens.dart';
 import '../../core/ui/settings_group.dart';
 import '../../data/prompts.dart';
-import '../../l10n/app_localizations.dart';
+import '../../g11n/app_globalizations.dart';
 import 'prompt_markdown.dart';
 import 'prompts_viewmodel.dart';
 
@@ -22,7 +22,7 @@ class PromptDetailPage extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final l10n = AppLocalizations.of(context);
+    final g11n = AppGlobalizations.of(context);
     final theme = Theme.of(context);
     final vm = ref.watch(promptsViewModelProvider);
     final state = vm.state;
@@ -43,7 +43,7 @@ class PromptDetailPage extends ConsumerWidget {
       return Scaffold(
         extendBodyBehindAppBar: true,
         appBar: AppBar(
-          title: Text(l10n.promptsTitle),
+          title: Text(g11n.promptsTitle),
           backgroundColor: Colors.transparent,
           surfaceTintColor: Colors.transparent,
           elevation: 0,
@@ -63,14 +63,14 @@ class PromptDetailPage extends ConsumerWidget {
       return Scaffold(
         extendBodyBehindAppBar: true,
         appBar: AppBar(
-          title: Text(l10n.promptsTitle),
+          title: Text(g11n.promptsTitle),
           backgroundColor: Colors.transparent,
           surfaceTintColor: Colors.transparent,
           elevation: 0,
           scrolledUnderElevation: 0,
           actions: [
             IconButton(
-              tooltip: l10n.commonEdit,
+              tooltip: g11n.commonEdit,
               icon: const Icon(Iconfont.edit),
               onPressed: () => context.push(
                 '/settings/prompts/edit?kind=${k.name}&scope=${scenario.source.name}',
@@ -94,14 +94,14 @@ class PromptDetailPage extends ConsumerWidget {
     return Scaffold(
       extendBodyBehindAppBar: true,
       appBar: AppBar(
-        title: Text(l10n.promptsTitle),
+        title: Text(g11n.promptsTitle),
         backgroundColor: Colors.transparent,
         surfaceTintColor: Colors.transparent,
         elevation: 0,
         scrolledUnderElevation: 0,
         actions: [
           IconButton(
-            tooltip: l10n.commonEdit,
+            tooltip: g11n.commonEdit,
             icon: const Icon(Iconfont.edit),
             onPressed: () => context.push('/settings/prompts/edit?number=$number'),
           ),
@@ -124,7 +124,7 @@ class PromptDetailSection extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final l10n = AppLocalizations.of(context);
+    final g11n = AppGlobalizations.of(context);
     final theme = Theme.of(context);
 
     return ListView(
@@ -139,17 +139,17 @@ class PromptDetailSection extends StatelessWidget {
         SettingsGroup(
           children: [
             _InfoRow(
-              label: l10n.promptsFieldNumber,
+              label: g11n.promptsFieldNumber,
               value: fragment.number.toString().padLeft(2, '0'),
             ),
             const SettingsDivider(indent: SettingsRow.textIndent),
             _InfoRow(
-              label: l10n.promptsFieldTitle,
+              label: g11n.promptsFieldTitle,
               value: fragment.title,
             ),
             const SettingsDivider(indent: SettingsRow.textIndent),
             _InfoRow(
-              label: l10n.promptsScope,
+              label: g11n.promptsScope,
               value: _sourceLabel(context, fragment.source),
             ),
           ],
@@ -157,7 +157,7 @@ class PromptDetailSection extends StatelessWidget {
 
         if (fragment.description.isNotEmpty) ...[
           const SizedBox(height: Spacing.md),
-          SettingsGroupHeader(text: l10n.promptsSummary),
+          SettingsGroupHeader(text: g11n.promptsSummary),
           SettingsGroup(
             children: [
               Padding(
@@ -174,7 +174,7 @@ class PromptDetailSection extends StatelessWidget {
         ],
 
         const SizedBox(height: Spacing.md),
-        SettingsGroupHeader(text: l10n.promptsFieldContent),
+        SettingsGroupHeader(text: g11n.promptsFieldContent),
         SettingsGroup(
           children: [
             Padding(
@@ -191,12 +191,12 @@ class PromptDetailSection extends StatelessWidget {
   }
 
   String _sourceLabel(BuildContext context, PromptFragmentSource source) {
-    final l10n = AppLocalizations.of(context);
+    final g11n = AppGlobalizations.of(context);
     return switch (source) {
-      PromptFragmentSource.project => l10n.promptsSourceProject,
-      PromptFragmentSource.global => l10n.promptsSourceGlobal,
-      PromptFragmentSource.local => l10n.promptsSourceLocal,
-      PromptFragmentSource.builtin => l10n.promptsSourceBuiltin,
+      PromptFragmentSource.project => g11n.promptsSourceProject,
+      PromptFragmentSource.global => g11n.promptsSourceGlobal,
+      PromptFragmentSource.local => g11n.promptsSourceLocal,
+      PromptFragmentSource.builtin => g11n.promptsSourceBuiltin,
     };
   }
 }
@@ -209,12 +209,12 @@ class _ScenarioDetailSection extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final l10n = AppLocalizations.of(context);
+    final g11n = AppGlobalizations.of(context);
     final theme = Theme.of(context);
     final title = switch (scenario.kind) {
-      ProjectKind.coding => l10n.projectKindCoding,
-      ProjectKind.writing => l10n.projectKindWriting,
-      ProjectKind.reverse => l10n.projectKindReverse,
+      ProjectKind.coding => g11n.projectKindCoding,
+      ProjectKind.writing => g11n.projectKindWriting,
+      ProjectKind.reverse => g11n.projectKindReverse,
     };
 
     return ListView(
@@ -228,15 +228,15 @@ class _ScenarioDetailSection extends StatelessWidget {
       children: [
         SettingsGroup(
           children: [
-            _InfoRow(label: l10n.promptsFieldTitle, value: title),
+            _InfoRow(label: g11n.promptsFieldTitle, value: title),
             const SettingsDivider(indent: SettingsRow.textIndent),
-            _InfoRow(label: l10n.promptsScope, value: _sourceLabel(context, scenario.source)),
+            _InfoRow(label: g11n.promptsScope, value: _sourceLabel(context, scenario.source)),
           ],
         ),
 
         if (scenario.description.isNotEmpty) ...[
           const SizedBox(height: Spacing.md),
-          SettingsGroupHeader(text: l10n.promptsSummary),
+          SettingsGroupHeader(text: g11n.promptsSummary),
           SettingsGroup(
             children: [
               Padding(
@@ -253,7 +253,7 @@ class _ScenarioDetailSection extends StatelessWidget {
         ],
 
         const SizedBox(height: Spacing.md),
-        SettingsGroupHeader(text: l10n.promptsFieldContent),
+        SettingsGroupHeader(text: g11n.promptsFieldContent),
         SettingsGroup(
           children: [
             Padding(
@@ -270,12 +270,12 @@ class _ScenarioDetailSection extends StatelessWidget {
   }
 
   String _sourceLabel(BuildContext context, PromptFragmentSource source) {
-    final l10n = AppLocalizations.of(context);
+    final g11n = AppGlobalizations.of(context);
     return switch (source) {
-      PromptFragmentSource.project => l10n.promptsSourceProject,
-      PromptFragmentSource.global => l10n.promptsSourceGlobal,
-      PromptFragmentSource.local => l10n.promptsSourceLocal,
-      PromptFragmentSource.builtin => l10n.promptsSourceBuiltin,
+      PromptFragmentSource.project => g11n.promptsSourceProject,
+      PromptFragmentSource.global => g11n.promptsSourceGlobal,
+      PromptFragmentSource.local => g11n.promptsSourceLocal,
+      PromptFragmentSource.builtin => g11n.promptsSourceBuiltin,
     };
   }
 }

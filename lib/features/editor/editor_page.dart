@@ -25,7 +25,7 @@ import '../../core/util/line_diff.dart';
 import '../../core/util/text_typeset.dart';
 import '../../data/workspace_files.dart';
 import '../../data/settings/editor_settings.dart';
-import '../../l10n/app_localizations.dart';
+import '../../g11n/app_globalizations.dart';
 import '../reverse/hex_editor_page.dart';
 import '../sessions/file_type_icon.dart';
 import 'editor_settings_page.dart';
@@ -373,7 +373,7 @@ class _EditorPageState extends ConsumerState<EditorPage> {
   }
 
   Future<void> _writeThrough(String text, {bool silent = false}) async {
-    final l10n = AppLocalizations.of(context);
+    final g11n = AppGlobalizations.of(context);
     try {
       final files = await _files();
       await files.writeText(widget.path, text);
@@ -385,7 +385,7 @@ class _EditorPageState extends ConsumerState<EditorPage> {
         _baselineFingerprint = FileVersionRegistry.fingerprintOf(text);
         _dirty = false;
       });
-      if (!silent) _toast(l10n.editorSaved);
+      if (!silent) _toast(g11n.editorSaved);
       final leave = _pendingLeave;
       if (leave != null) {
         _pendingLeave = null;
@@ -418,16 +418,16 @@ class _EditorPageState extends ConsumerState<EditorPage> {
   }
 
   Future<void> _confirmUnsaved() async {
-    final l10n = AppLocalizations.of(context);
+    final g11n = AppGlobalizations.of(context);
     final choice = await showDialog<_UnsavedChoice>(
       context: context,
       builder: (dialogContext) => AlertDialog(
-        title: Text(l10n.editorUnsavedTitle),
-        content: Text(l10n.editorUnsavedMessage),
+        title: Text(g11n.editorUnsavedTitle),
+        content: Text(g11n.editorUnsavedMessage),
         actions: [
-          TextButton(onPressed: () => Navigator.pop(dialogContext, _UnsavedChoice.save), child: Text(l10n.editorSaveAndExit)),
-          TextButton(onPressed: () => Navigator.pop(dialogContext, _UnsavedChoice.discard), child: Text(l10n.editorDontSave)),
-          TextButton(onPressed: () => Navigator.pop(dialogContext), child: Text(l10n.cancel)),
+          TextButton(onPressed: () => Navigator.pop(dialogContext, _UnsavedChoice.save), child: Text(g11n.editorSaveAndExit)),
+          TextButton(onPressed: () => Navigator.pop(dialogContext, _UnsavedChoice.discard), child: Text(g11n.editorDontSave)),
+          TextButton(onPressed: () => Navigator.pop(dialogContext), child: Text(g11n.cancel)),
         ],
       ),
     );
@@ -444,24 +444,24 @@ class _EditorPageState extends ConsumerState<EditorPage> {
   }
 
   Future<void> _showConflict(String diskContent, String pendingText) async {
-    final l10n = AppLocalizations.of(context);
+    final g11n = AppGlobalizations.of(context);
     final theme = Theme.of(context);
     final action = await showDialog<_ConflictChoice>(
       context: context,
       builder: (dialogContext) => AlertDialog(
-        title: Text(l10n.editorSaveConflictTitle),
+        title: Text(g11n.editorSaveConflictTitle),
         content: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           mainAxisSize: MainAxisSize.min,
           children: [
-            Text(l10n.editorSaveConflictMessage),
+            Text(g11n.editorSaveConflictMessage),
             Padding(
               padding: const EdgeInsets.only(top: Spacing.sm),
               child: ConstrainedBox(
                 constraints: const BoxConstraints(maxHeight: 240),
                 child: SingleChildScrollView(
                   child: Text(
-                    l10n.editorSaveConflictDiff(LineDiff.toUnified(diskContent, pendingText)),
+                    g11n.editorSaveConflictDiff(LineDiff.toUnified(diskContent, pendingText)),
                     style: theme.textTheme.bodySmall?.copyWith(fontFamily: 'monospace'),
                   ),
                 ),
@@ -470,9 +470,9 @@ class _EditorPageState extends ConsumerState<EditorPage> {
           ],
         ),
         actions: [
-          TextButton(onPressed: () => Navigator.pop(dialogContext), child: Text(l10n.editorSaveConflictCancel)),
-          TextButton(onPressed: () => Navigator.pop(dialogContext, _ConflictChoice.discard), child: Text(l10n.editorSaveConflictDiscard)),
-          TextButton(onPressed: () => Navigator.pop(dialogContext, _ConflictChoice.overwrite), child: Text(l10n.editorSaveConflictOverwrite)),
+          TextButton(onPressed: () => Navigator.pop(dialogContext), child: Text(g11n.editorSaveConflictCancel)),
+          TextButton(onPressed: () => Navigator.pop(dialogContext, _ConflictChoice.discard), child: Text(g11n.editorSaveConflictDiscard)),
+          TextButton(onPressed: () => Navigator.pop(dialogContext, _ConflictChoice.overwrite), child: Text(g11n.editorSaveConflictOverwrite)),
         ],
       ),
     );
@@ -482,7 +482,7 @@ class _EditorPageState extends ConsumerState<EditorPage> {
         await _writeThrough(pendingText);
       case _ConflictChoice.discard:
         await _reloadFromDisk();
-        if (mounted) _toast(l10n.editorSaveConflictDiscarded);
+        if (mounted) _toast(g11n.editorSaveConflictDiscarded);
       case null:
         break;
     }
@@ -560,21 +560,21 @@ class _EditorPageState extends ConsumerState<EditorPage> {
   }
 
   Future<void> _typeset() async {
-    final l10n = AppLocalizations.of(context);
+    final g11n = AppGlobalizations.of(context);
     final text = await _readEditorText();
     if (!mounted || text == null) return;
     final formatted = typesetText(text);
     if (formatted == text) return;
     await _invoke('replaceAll', {'text': formatted});
-    if (mounted) _toast(l10n.editorTypesetDone);
+    if (mounted) _toast(g11n.editorTypesetDone);
   }
 
   Future<void> _copyAll() async {
-    final l10n = AppLocalizations.of(context);
+    final g11n = AppGlobalizations.of(context);
     final text = await _readEditorText();
     if (!mounted || text == null) return;
     await Clipboard.setData(ClipboardData(text: text));
-    if (mounted) _toast(l10n.editorCopied);
+    if (mounted) _toast(g11n.editorCopied);
   }
 
   Future<void> _applyTheme() async {
@@ -592,7 +592,7 @@ class _EditorPageState extends ConsumerState<EditorPage> {
 
   @override
   Widget build(BuildContext context) {
-    final l10n = AppLocalizations.of(context);
+    final g11n = AppGlobalizations.of(context);
     final settings = ref.watch(editorSettingsProvider);
     ref.listen<EditorSettings>(editorSettingsProvider, (previous, next) {
       unawaited(_invoke('applySettings', {
@@ -612,23 +612,23 @@ class _EditorPageState extends ConsumerState<EditorPage> {
       },
       child: Scaffold(
         backgroundColor: context.semantic.pageBackground,
-        appBar: _writing ? _writingAppBar(l10n, fileName) : _codeAppBar(l10n, fileName),
+        appBar: _writing ? _writingAppBar(g11n, fileName) : _codeAppBar(g11n, fileName),
         body: Column(
           children: [
-            if (_searchOpen) _searchBar(l10n),
-            if (_editable && !_writing) _fileTitleBar(l10n, fileName),
+            if (_searchOpen) _searchBar(g11n),
+            if (_editable && !_writing) _fileTitleBar(g11n, fileName),
             if (_editable && !_writing) const Divider(height: 0.5, thickness: 0.5),
-            Expanded(child: _body(l10n, settings)),
+            Expanded(child: _body(g11n, settings)),
           ],
         ),
       ),
     );
   }
 
-  PreferredSizeWidget _writingAppBar(AppLocalizations l10n, String fileName) {
+  PreferredSizeWidget _writingAppBar(AppGlobalizations g11n, String fileName) {
     final theme = Theme.of(context);
     final canEdit = _editable;
-    final status = canEdit ? '${l10n.editorWordCount(countWords(_currentText))} · ${_dirty ? l10n.editorUnsavedState : l10n.editorSaved}' : null;
+    final status = canEdit ? '${g11n.editorWordCount(countWords(_currentText))} · ${_dirty ? g11n.editorUnsavedState : g11n.editorSaved}' : null;
     return AppBar(
       backgroundColor: context.semantic.cardSurface,
       surfaceTintColor: Colors.transparent,
@@ -637,7 +637,7 @@ class _EditorPageState extends ConsumerState<EditorPage> {
       titleSpacing: 0,
       leading: IconButton(
         onPressed: _handleBack,
-        tooltip: widget.embedded ? l10n.close : l10n.back,
+        tooltip: widget.embedded ? g11n.close : g11n.back,
         icon: Icon(widget.embedded ? Iconfont.x : Iconfont.arrowLeft, size: 20),
       ),
       title: Row(
@@ -657,18 +657,18 @@ class _EditorPageState extends ConsumerState<EditorPage> {
         ],
       ),
       actions: [
-        _actionIcon(tooltip: l10n.editorUndo, icon: Iconfont.undo2, onTap: canEdit && _canUndo ? () => _invoke('undo') : null),
-        _actionIcon(tooltip: l10n.editorRedo, icon: Iconfont.redo2, onTap: canEdit && _canRedo ? () => _invoke('redo') : null),
-        if (_isMarkdown && canEdit) _actionIcon(tooltip: _previewMode ? l10n.editorMdShowSource : l10n.editorMdPreview, icon: _previewMode ? Iconfont.code : Iconfont.eye, onTap: _togglePreview),
-        _actionIcon(tooltip: l10n.editorSearch, icon: Iconfont.search, onTap: canEdit ? (_searchOpen ? _closeSearch : _openSearch) : null),
-        _actionIcon(tooltip: l10n.editorTypeset, icon: Iconfont.type, onTap: canEdit ? _typeset : null),
-        _actionIcon(tooltip: l10n.editorCopy, icon: Iconfont.copy, onTap: canEdit ? _copyAll : null),
+        _actionIcon(tooltip: g11n.editorUndo, icon: Iconfont.undo2, onTap: canEdit && _canUndo ? () => _invoke('undo') : null),
+        _actionIcon(tooltip: g11n.editorRedo, icon: Iconfont.redo2, onTap: canEdit && _canRedo ? () => _invoke('redo') : null),
+        if (_isMarkdown && canEdit) _actionIcon(tooltip: _previewMode ? g11n.editorMdShowSource : g11n.editorMdPreview, icon: _previewMode ? Iconfont.code : Iconfont.eye, onTap: _togglePreview),
+        _actionIcon(tooltip: g11n.editorSearch, icon: Iconfont.search, onTap: canEdit ? (_searchOpen ? _closeSearch : _openSearch) : null),
+        _actionIcon(tooltip: g11n.editorTypeset, icon: Iconfont.type, onTap: canEdit ? _typeset : null),
+        _actionIcon(tooltip: g11n.editorCopy, icon: Iconfont.copy, onTap: canEdit ? _copyAll : null),
         const SizedBox(width: Spacing.xs),
       ],
     );
   }
 
-  PreferredSizeWidget _codeAppBar(AppLocalizations l10n, String fileName) {
+  PreferredSizeWidget _codeAppBar(AppGlobalizations g11n, String fileName) {
     return AppBar(
       backgroundColor: context.semantic.cardSurface,
       surfaceTintColor: Colors.transparent,
@@ -677,15 +677,15 @@ class _EditorPageState extends ConsumerState<EditorPage> {
       titleSpacing: 0,
       leading: IconButton(
         onPressed: _handleBack,
-        tooltip: widget.embedded ? l10n.close : l10n.back,
+        tooltip: widget.embedded ? g11n.close : g11n.back,
         icon: Icon(widget.embedded ? Iconfont.x : Iconfont.arrowLeft, size: 18),
       ),
       actions: [
-        if (_isMarkdown && _editable) IconButton(onPressed: _togglePreview, tooltip: _previewMode ? l10n.editorMdShowSource : l10n.editorMdPreview, icon: Icon(_previewMode ? Iconfont.code : Iconfont.eye, size: 18)),
-        IconButton(onPressed: _editable && _canUndo ? () => _invoke('undo') : null, tooltip: l10n.editorUndo, icon: const Icon(Iconfont.undo2, size: 18)),
-        IconButton(onPressed: _editable && _canRedo ? () => _invoke('redo') : null, tooltip: l10n.editorRedo, icon: const Icon(Iconfont.redo2, size: 18)),
-        IconButton(onPressed: _editable && _dirty && !_saving ? _requestSave : null, tooltip: l10n.save, icon: _saving ? SizedBox(height: 18, width: 18, child: CircularProgressIndicator(strokeWidth: 2)) : const Icon(Iconfont.save, size: 18)),
-        IconButton(onPressed: _editable ? () => Navigator.of(context).push(MaterialPageRoute(builder: (_) => const EditorSettingsPage())) : null, tooltip: l10n.editorSettings, icon: const Icon(Iconfont.slidersHorizontal, size: 18)),
+        if (_isMarkdown && _editable) IconButton(onPressed: _togglePreview, tooltip: _previewMode ? g11n.editorMdShowSource : g11n.editorMdPreview, icon: Icon(_previewMode ? Iconfont.code : Iconfont.eye, size: 18)),
+        IconButton(onPressed: _editable && _canUndo ? () => _invoke('undo') : null, tooltip: g11n.editorUndo, icon: const Icon(Iconfont.undo2, size: 18)),
+        IconButton(onPressed: _editable && _canRedo ? () => _invoke('redo') : null, tooltip: g11n.editorRedo, icon: const Icon(Iconfont.redo2, size: 18)),
+        IconButton(onPressed: _editable && _dirty && !_saving ? _requestSave : null, tooltip: g11n.save, icon: _saving ? SizedBox(height: 18, width: 18, child: CircularProgressIndicator(strokeWidth: 2)) : const Icon(Iconfont.save, size: 18)),
+        IconButton(onPressed: _editable ? () => Navigator.of(context).push(MaterialPageRoute(builder: (_) => const EditorSettingsPage())) : null, tooltip: g11n.editorSettings, icon: const Icon(Iconfont.slidersHorizontal, size: 18)),
       ],
     );
   }
@@ -693,7 +693,7 @@ class _EditorPageState extends ConsumerState<EditorPage> {
   Widget _actionIcon({required String tooltip, required IconData icon, required VoidCallback? onTap}) =>
       IconButton(onPressed: onTap, tooltip: tooltip, visualDensity: VisualDensity.compact, padding: EdgeInsets.zero, constraints: const BoxConstraints(minWidth: 38, minHeight: 38), icon: Icon(icon, size: 18));
 
-  Widget _searchBar(AppLocalizations l10n) {
+  Widget _searchBar(AppGlobalizations g11n) {
     final theme = Theme.of(context);
     final counter = _matchCount == 0 ? '0/0' : '$_matchIndex/$_matchCount';
     return Container(
@@ -712,7 +712,7 @@ class _EditorPageState extends ConsumerState<EditorPage> {
               style: theme.textTheme.bodyMedium,
               decoration: InputDecoration(
                 isDense: true,
-                hintText: l10n.editorSearchHint,
+                hintText: g11n.editorSearchHint,
                 prefixIcon: const Icon(Iconfont.search, size: 16),
                 prefixIconConstraints: const BoxConstraints(minWidth: 32),
                 border: InputBorder.none,
@@ -720,15 +720,15 @@ class _EditorPageState extends ConsumerState<EditorPage> {
             ),
           ),
           Text(counter, style: theme.textTheme.bodySmall?.copyWith(color: context.semantic.subtleText)),
-          _actionIcon(tooltip: l10n.editorSearchPrev, icon: Iconfont.chevronUp, onTap: _matchCount == 0 ? null : () => _goToMatch(next: false)),
-          _actionIcon(tooltip: l10n.editorSearchNext, icon: Iconfont.chevronDown, onTap: _matchCount == 0 ? null : () => _goToMatch(next: true)),
-          _actionIcon(tooltip: l10n.close, icon: Iconfont.x, onTap: _closeSearch),
+          _actionIcon(tooltip: g11n.editorSearchPrev, icon: Iconfont.chevronUp, onTap: _matchCount == 0 ? null : () => _goToMatch(next: false)),
+          _actionIcon(tooltip: g11n.editorSearchNext, icon: Iconfont.chevronDown, onTap: _matchCount == 0 ? null : () => _goToMatch(next: true)),
+          _actionIcon(tooltip: g11n.close, icon: Iconfont.x, onTap: _closeSearch),
         ],
       ),
     );
   }
 
-  Widget _fileTitleBar(AppLocalizations l10n, String fileName) {
+  Widget _fileTitleBar(AppGlobalizations g11n, String fileName) {
     final theme = Theme.of(context);
     final style = theme.textTheme.labelMedium?.copyWith(fontFamily: 'monospace');
     return Container(
@@ -739,24 +739,24 @@ class _EditorPageState extends ConsumerState<EditorPage> {
         children: [
           if (_dirty) Padding(padding: const EdgeInsets.only(right: 2), child: Text('*', style: style?.copyWith(color: theme.colorScheme.primary))),
           Expanded(child: Text(fileName, maxLines: 1, overflow: TextOverflow.ellipsis, style: style)),
-          Padding(padding: const EdgeInsets.only(left: Spacing.sm), child: Text(l10n.editorLineColumn(_cursorLine, _cursorColumn), style: style?.copyWith(color: context.semantic.subtleText))),
+          Padding(padding: const EdgeInsets.only(left: Spacing.sm), child: Text(g11n.editorLineColumn(_cursorLine, _cursorColumn), style: style?.copyWith(color: context.semantic.subtleText))),
           Padding(padding: const EdgeInsets.only(left: Spacing.md), child: Text('UTF-8', style: style?.copyWith(color: context.semantic.subtleText))),
         ],
       ),
     );
   }
 
-  Widget _body(AppLocalizations l10n, EditorSettings settings) {
+  Widget _body(AppGlobalizations g11n, EditorSettings settings) {
     final fileName = widget.path.contains('/') ? widget.path.substring(widget.path.lastIndexOf('/') + 1) : widget.path;
     if (_loading) return const Center(child: CircularProgressIndicator());
     switch (_kind) {
       case EditorLoadKind.tooLarge:
-        return _hint(l10n.editorFileTooLarge(_tooLargeBytes ~/ 1024 ~/ 1024));
+        return _hint(g11n.editorFileTooLarge(_tooLargeBytes ~/ 1024 ~/ 1024));
       case EditorLoadKind.binary:
         if (_imageBytes != null) return Center(child: InteractiveViewer(child: Image.memory(_imageBytes!, fit: BoxFit.contain)));
         if (_audioBytes != null) return _AudioPlayerWidget(bytes: _audioBytes!, fileName: fileName);
         if (_videoBytes != null) return _VideoPlayerWidget(bytes: _videoBytes!, fileName: fileName);
-        return _hint(l10n.editorBinaryUnsupported, action: ref.watch(currentProjectProvider)?.kind == ProjectKind.reverse ? FilledButton.tonal(onPressed: () => Navigator.of(context).push(MaterialPageRoute(builder: (_) => HexEditorPage(path: widget.path))), child: Text(l10n.reverseOpenAsHex)) : null);
+        return _hint(g11n.editorBinaryUnsupported, action: ref.watch(currentProjectProvider)?.kind == ProjectKind.reverse ? FilledButton.tonal(onPressed: () => Navigator.of(context).push(MaterialPageRoute(builder: (_) => HexEditorPage(path: widget.path))), child: Text(g11n.reverseOpenAsHex)) : null);
       case EditorLoadKind.editable:
         return Stack(
           children: [
@@ -783,7 +783,7 @@ class _EditorPageState extends ConsumerState<EditorPage> {
           ],
         );
       case null:
-        return _hint(_error ?? l10n.editorLoadFailed);
+        return _hint(_error ?? g11n.editorLoadFailed);
     }
   }
 

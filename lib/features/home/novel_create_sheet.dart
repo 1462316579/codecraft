@@ -4,7 +4,7 @@ import '../../core/theme/semantic_colors.dart';
 import '../../core/theme/tokens.dart';
 import '../../core/util/ids.dart';
 import '../../data/novel_project.dart';
-import '../../l10n/app_localizations.dart';
+import '../../g11n/app_globalizations.dart';
 
 /// 写作项目入口:新建小说(向导收集设定)或选择写作根下已有的小说。
 Future<NovelSelection?> showNovelCreateSheet(
@@ -142,7 +142,7 @@ class _NovelCreateSheetState extends State<NovelCreateSheet> {
 
   @override
   Widget build(BuildContext context) {
-    final l10n = AppLocalizations.of(context);
+    final g11n = AppGlobalizations.of(context);
     final theme = Theme.of(context);
     return SafeArea(
       top: false,
@@ -152,7 +152,7 @@ class _NovelCreateSheetState extends State<NovelCreateSheet> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
-              l10n.projectKindWriting,
+              g11n.projectKindWriting,
               style: theme.textTheme.titleLarge?.copyWith(
                     fontWeight: FontWeight.bold,
                   ),
@@ -162,11 +162,11 @@ class _NovelCreateSheetState extends State<NovelCreateSheet> {
               segments: [
                 ButtonSegment(
                   value: _NovelSheetMode.create,
-                  label: Text(l10n.novelNew),
+                  label: Text(g11n.novelNew),
                 ),
                 ButtonSegment(
                   value: _NovelSheetMode.existing,
-                  label: Text(l10n.novelPickExisting),
+                  label: Text(g11n.novelPickExisting),
                 ),
               ],
               selected: {_mode},
@@ -185,15 +185,15 @@ class _NovelCreateSheetState extends State<NovelCreateSheet> {
               children: [
                 TextButton(
                   onPressed: () => Navigator.pop(context),
-                  child: Text(l10n.commonCancel),
+                  child: Text(g11n.commonCancel),
                 ),
                 const Spacer(),
                 FilledButton(
                   onPressed: _canConfirm ? _confirm : null,
                   child: Text(
                     _mode == _NovelSheetMode.create
-                        ? l10n.novelCreate
-                        : l10n.novelOpen,
+                        ? g11n.novelCreate
+                        : g11n.novelOpen,
                   ),
                 ),
               ],
@@ -205,11 +205,11 @@ class _NovelCreateSheetState extends State<NovelCreateSheet> {
   }
 
   List<Widget> _buildCreateForm(BuildContext context) {
-    final l10n = AppLocalizations.of(context);
+    final g11n = AppGlobalizations.of(context);
     final theme = Theme.of(context);
     return [
       // 书名
-      Text(l10n.novelFieldName, style: theme.textTheme.labelLarge),
+      Text(g11n.novelFieldName, style: theme.textTheme.labelLarge),
       const SizedBox(height: Spacing.xs),
       TextField(
         controller: _title,
@@ -217,7 +217,7 @@ class _NovelCreateSheetState extends State<NovelCreateSheet> {
         maxLength: 40,
         onChanged: (_) => setState(() {}),
         decoration: InputDecoration(
-          hintText: l10n.novelFieldNameHint,
+          hintText: g11n.novelFieldNameHint,
           border: const OutlineInputBorder(),
           isDense: true,
         ),
@@ -225,28 +225,28 @@ class _NovelCreateSheetState extends State<NovelCreateSheet> {
       const SizedBox(height: Spacing.lg),
 
       // 小说类型:男频 / 女频单选
-      Text(l10n.novelFieldGender, style: theme.textTheme.labelLarge),
+      Text(g11n.novelFieldGender, style: theme.textTheme.labelLarge),
       const SizedBox(height: Spacing.xs),
       Wrap(
         spacing: Spacing.xs,
         runSpacing: Spacing.xs,
         children: [
           FilterChip(
-            label: Text(l10n.novelGenderMale),
-            selected: _gender == l10n.novelGenderMale,
-            onSelected: (v) => setState(() => _gender = v ? l10n.novelGenderMale : null),
+            label: Text(g11n.novelGenderMale),
+            selected: _gender == g11n.novelGenderMale,
+            onSelected: (v) => setState(() => _gender = v ? g11n.novelGenderMale : null),
           ),
           FilterChip(
-            label: Text(l10n.novelGenderFemale),
-            selected: _gender == l10n.novelGenderFemale,
-            onSelected: (v) => setState(() => _gender = v ? l10n.novelGenderFemale : null),
+            label: Text(g11n.novelGenderFemale),
+            selected: _gender == g11n.novelGenderFemale,
+            onSelected: (v) => setState(() => _gender = v ? g11n.novelGenderFemale : null),
           ),
         ],
       ),
       const SizedBox(height: Spacing.lg),
 
       // 标签:预设多选 + 自定义
-      Text(l10n.novelFieldTags, style: theme.textTheme.labelLarge),
+      Text(g11n.novelFieldTags, style: theme.textTheme.labelLarge),
       const SizedBox(height: Spacing.xs),
       Wrap(
         spacing: Spacing.xs,
@@ -278,7 +278,7 @@ class _NovelCreateSheetState extends State<NovelCreateSheet> {
             child: TextField(
               controller: _customTag,
               decoration: InputDecoration(
-                hintText: l10n.novelCustomTagHint,
+                hintText: g11n.novelCustomTagHint,
                 border: const OutlineInputBorder(),
                 isDense: true,
               ),
@@ -288,14 +288,14 @@ class _NovelCreateSheetState extends State<NovelCreateSheet> {
           const SizedBox(width: Spacing.sm),
           FilledButton.tonal(
             onPressed: _addCustomTag,
-            child: Text(l10n.commonAdd),
+            child: Text(g11n.commonAdd),
           ),
         ],
       ),
       const SizedBox(height: Spacing.lg),
 
       // 每章字数:预设单选 + 自定义
-      Text(l10n.novelFieldWordsPerChapter, style: theme.textTheme.labelLarge),
+      Text(g11n.novelFieldWordsPerChapter, style: theme.textTheme.labelLarge),
       const SizedBox(height: Spacing.xs),
       Wrap(
         spacing: Spacing.xs,
@@ -320,7 +320,7 @@ class _NovelCreateSheetState extends State<NovelCreateSheet> {
               controller: _customWords,
               keyboardType: TextInputType.number,
               decoration: InputDecoration(
-                hintText: l10n.novelFieldWordsHint,
+                hintText: g11n.novelFieldWordsHint,
                 border: const OutlineInputBorder(),
                 isDense: true,
               ),
@@ -330,7 +330,7 @@ class _NovelCreateSheetState extends State<NovelCreateSheet> {
           const SizedBox(width: Spacing.sm),
           FilledButton.tonal(
             onPressed: _setCustomWords,
-            child: Text(l10n.commonAdd),
+            child: Text(g11n.commonAdd),
           ),
         ],
       ),
@@ -338,7 +338,7 @@ class _NovelCreateSheetState extends State<NovelCreateSheet> {
   }
 
   List<Widget> _buildNovelList(BuildContext context) {
-    final l10n = AppLocalizations.of(context);
+    final g11n = AppGlobalizations.of(context);
     final theme = Theme.of(context);
     if (_loadingNovels) {
       return [
@@ -351,7 +351,7 @@ class _NovelCreateSheetState extends State<NovelCreateSheet> {
     if (_novelsError != null) {
       return [
         Text(
-          '${l10n.novelExistingFailed}: $_novelsError',
+          '${g11n.novelExistingFailed}: $_novelsError',
           style: theme.textTheme.bodySmall?.copyWith(
             color: theme.colorScheme.error,
           ),
@@ -359,7 +359,7 @@ class _NovelCreateSheetState extends State<NovelCreateSheet> {
         const SizedBox(height: Spacing.sm),
         FilledButton.tonal(
           onPressed: _loadNovels,
-          child: Text(l10n.fileBrowserRefresh),
+          child: Text(g11n.fileBrowserRefresh),
         ),
       ];
     }
@@ -373,13 +373,13 @@ class _NovelCreateSheetState extends State<NovelCreateSheet> {
               Icon(Icons.menu_book_outlined, size: 40, color: theme.colorScheme.onSurfaceVariant),
               const SizedBox(height: Spacing.sm),
               Text(
-                l10n.novelExistingEmpty,
+                g11n.novelExistingEmpty,
                 textAlign: TextAlign.center,
                 style: theme.textTheme.bodyMedium,
               ),
               const SizedBox(height: Spacing.xs),
               Text(
-                l10n.novelExistingEmptyHint,
+                g11n.novelExistingEmptyHint,
                 textAlign: TextAlign.center,
                 style: theme.textTheme.bodySmall?.copyWith(
                   color: context.semantic.subtleText,

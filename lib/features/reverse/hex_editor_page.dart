@@ -7,7 +7,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../core/theme/semantic_colors.dart';
 import '../../core/theme/tokens.dart';
 import '../../data/workspace_files.dart';
-import '../../l10n/app_localizations.dart';
+import '../../g11n/app_globalizations.dart';
 import '../../reverse/hex/hex_dump.dart';
 import 'hex_view.dart';
 import 'reverse_widgets.dart';
@@ -67,7 +67,7 @@ class _HexEditorPageState extends ConsumerState<HexEditorPage> {
   Future<void> _save() async {
     final bytes = _bytes;
     if (bytes == null || _saving) return;
-    final l10n = AppLocalizations.of(context);
+    final g11n = AppGlobalizations.of(context);
     setState(() => _saving = true);
     try {
       final files = await ref.read(workspaceFilesProvider.future);
@@ -78,7 +78,7 @@ class _HexEditorPageState extends ConsumerState<HexEditorPage> {
         _dirty = false;
         _modified.clear();
       });
-      _toast(l10n.editorSaved);
+      _toast(g11n.editorSaved);
     } catch (error) {
       if (!mounted) return;
       setState(() => _saving = false);
@@ -94,14 +94,14 @@ class _HexEditorPageState extends ConsumerState<HexEditorPage> {
   Future<void> _editByte(int offset) async {
     final bytes = _bytes;
     if (bytes == null) return;
-    final l10n = AppLocalizations.of(context);
+    final g11n = AppGlobalizations.of(context);
     final current = bytes[offset];
     final input = await showStringEditDialog(
       context,
-      title: l10n.reverseEditByte,
+      title: g11n.reverseEditByte,
       initial: current.toRadixString(16).padLeft(2, '0'),
-      helper: l10n.reverseEditByteHint,
-      validate: (value) => parseHexByte(value) == null ? l10n.reverseInvalidByte : null,
+      helper: g11n.reverseEditByteHint,
+      validate: (value) => parseHexByte(value) == null ? g11n.reverseInvalidByte : null,
     );
     if (input == null || !mounted) return;
     final value = parseHexByte(input);
@@ -125,7 +125,7 @@ class _HexEditorPageState extends ConsumerState<HexEditorPage> {
 
   @override
   Widget build(BuildContext context) {
-    final l10n = AppLocalizations.of(context);
+    final g11n = AppGlobalizations.of(context);
     final bytes = _bytes;
     return Scaffold(
       appBar: AppBar(
@@ -144,7 +144,7 @@ class _HexEditorPageState extends ConsumerState<HexEditorPage> {
           if (bytes != null)
             HexJumpButton(onJump: _jump),
           IconButton(
-            tooltip: l10n.save,
+            tooltip: g11n.save,
             onPressed: _dirty && !_saving ? _save : null,
             icon: _saving
                 ? const SizedBox(
@@ -159,7 +159,7 @@ class _HexEditorPageState extends ConsumerState<HexEditorPage> {
       body: _loading
           ? const Center(child: CircularProgressIndicator())
           : _error != null
-              ? ReverseHint(text: '${l10n.reverseLoadFailed}\n$_error')
+              ? ReverseHint(text: '${g11n.reverseLoadFailed}\n$_error')
               : HexView(
                   bytes: bytes!,
                   scrollController: _scroll,
@@ -175,7 +175,7 @@ class _HexEditorPageState extends ConsumerState<HexEditorPage> {
               ),
               color: context.semantic.cardSurface,
               child: Text(
-                l10n.reverseHexByteCount(bytes.length),
+                g11n.reverseHexByteCount(bytes.length),
                 style: TextStyle(
                   fontSize: 11,
                   color: context.semantic.subtleText,

@@ -7,7 +7,7 @@ import '../../core/theme/semantic_colors.dart';
 import '../../core/theme/tokens.dart';
 import '../../core/ui/settings_group.dart';
 import '../../data/prompts.dart';
-import '../../l10n/app_localizations.dart';
+import '../../g11n/app_globalizations.dart';
 import 'prompts_viewmodel.dart';
 
 import '../../agent/models/project.dart';
@@ -95,7 +95,7 @@ class _PromptEditPageState extends ConsumerState<PromptEditPage> {
 
   Future<void> _save() async {
     if (!_canSave) return;
-    final l10n = AppLocalizations.of(context);
+    final g11n = AppGlobalizations.of(context);
     final vm = ref.read(promptsViewModelProvider);
     bool ok;
     try {
@@ -119,7 +119,7 @@ class _PromptEditPageState extends ConsumerState<PromptEditPage> {
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
-            content: Text('${l10n.promptsSaveFailed}: $e'),
+            content: Text('${g11n.promptsSaveFailed}: $e'),
             backgroundColor: Theme.of(context).colorScheme.error,
           ),
         );
@@ -129,7 +129,7 @@ class _PromptEditPageState extends ConsumerState<PromptEditPage> {
     if (!ok && mounted) {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
-          content: Text(l10n.promptsSaveFailed),
+          content: Text(g11n.promptsSaveFailed),
           backgroundColor: Theme.of(context).colorScheme.error,
         ),
       );
@@ -140,13 +140,13 @@ class _PromptEditPageState extends ConsumerState<PromptEditPage> {
 
   @override
   Widget build(BuildContext context) {
-    final l10n = AppLocalizations.of(context);
+    final g11n = AppGlobalizations.of(context);
     final theme = Theme.of(context);
 
     return Scaffold(
       extendBodyBehindAppBar: true,
       appBar: AppBar(
-        title: Text(_isNew ? l10n.promptsEditorNew : l10n.promptsEditorEdit),
+        title: Text(_isNew ? g11n.promptsEditorNew : g11n.promptsEditorEdit),
         backgroundColor: Colors.transparent,
         surfaceTintColor: Colors.transparent,
         elevation: 0,
@@ -158,7 +158,7 @@ class _PromptEditPageState extends ConsumerState<PromptEditPage> {
         actions: [
           TextButton(
             onPressed: _canSave ? _save : null,
-            child: Text(l10n.commonSave),
+            child: Text(g11n.commonSave),
           ),
         ],
       ),
@@ -182,7 +182,7 @@ class _PromptEditPageState extends ConsumerState<PromptEditPage> {
           ),
           physics: const AlwaysScrollableScrollPhysics(),
         children: [
-          SettingsGroupHeader(text: l10n.promptsFieldBasic),
+          SettingsGroupHeader(text: g11n.promptsFieldBasic),
           SettingsGroup(
             children: [
               Padding(
@@ -193,8 +193,8 @@ class _PromptEditPageState extends ConsumerState<PromptEditPage> {
                     if (!widget.isScenario)
                       _buildTextField(
                         controller: _numberController,
-                        label: l10n.promptsFieldNumber,
-                        placeholder: l10n.promptsFieldNumberPlaceholder,
+                        label: g11n.promptsFieldNumber,
+                        placeholder: g11n.promptsFieldNumberPlaceholder,
                         keyboardType: TextInputType.number,
                         maxLength: 2,
                       ),
@@ -208,7 +208,7 @@ class _PromptEditPageState extends ConsumerState<PromptEditPage> {
                             const SizedBox(width: Spacing.sm),
                             Expanded(
                               child: Text(
-                                '${l10n.promptsFieldType}: ${widget.kind!.name}',
+                                '${g11n.promptsFieldType}: ${widget.kind!.name}',
                                 style: Theme.of(context).textTheme.bodyMedium?.copyWith(
                                   color: context.semantic.subtleText,
                                 ),
@@ -221,8 +221,8 @@ class _PromptEditPageState extends ConsumerState<PromptEditPage> {
                     ],
                     _buildTextField(
                       controller: _titleController,
-                      label: l10n.promptsFieldTitle,
-                      placeholder: l10n.promptsFieldTitlePlaceholder,
+                      label: g11n.promptsFieldTitle,
+                      placeholder: g11n.promptsFieldTitlePlaceholder,
                     ),
                     const SizedBox(height: Spacing.md),
                   ],
@@ -239,14 +239,14 @@ class _PromptEditPageState extends ConsumerState<PromptEditPage> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text(l10n.promptsFieldSummary, style: Theme.of(context).textTheme.labelLarge),
+                    Text(g11n.promptsFieldSummary, style: Theme.of(context).textTheme.labelLarge),
                     const SizedBox(height: Spacing.xs),
                     TextField(
                       controller: _descriptionController,
                       minLines: 1,
                       maxLines: 3,
                       decoration: InputDecoration(
-                        hintText: l10n.promptsFieldSummaryPlaceholder,
+                        hintText: g11n.promptsFieldSummaryPlaceholder,
                         border: const OutlineInputBorder(),
                         isDense: true,
                       ),
@@ -265,14 +265,14 @@ class _PromptEditPageState extends ConsumerState<PromptEditPage> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text(l10n.promptsFieldContent, style: Theme.of(context).textTheme.labelLarge),
+                    Text(g11n.promptsFieldContent, style: Theme.of(context).textTheme.labelLarge),
                     const SizedBox(height: Spacing.xs),
                     TextField(
                       controller: _contentController,
                       minLines: 8,
                       maxLines: 12,
                       decoration: InputDecoration(
-                        hintText: l10n.promptsFieldContentPlaceholder,
+                        hintText: g11n.promptsFieldContentPlaceholder,
                         border: const OutlineInputBorder(),
                         isDense: true,
                       ),

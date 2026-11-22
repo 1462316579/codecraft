@@ -6,7 +6,7 @@ import '../../../core/icons/iconfont.dart';
 import '../../../core/theme/semantic_colors.dart';
 import '../../../core/theme/tokens.dart';
 import '../../../data/todos.dart';
-import '../../../l10n/app_localizations.dart';
+import '../../../g11n/app_globalizations.dart';
 
 /// 位于输入框上方的待办任务常驻面板(对齐上游 TodoDashboardBar):
 /// 仅在当前会话有待办项时显示;折叠为单行摘要,展开可看完整列表。
@@ -42,7 +42,7 @@ class _TodoDashboardBarState extends ConsumerState<TodoDashboardBar> {
         ref.watch(sessionTodosProvider(widget.sessionId)).valueOrNull ?? const <TodoItem>[];
     if (items.isEmpty) return const SizedBox.shrink();
 
-    final l10n = AppLocalizations.of(context);
+    final g11n = AppGlobalizations.of(context);
     final theme = Theme.of(context);
     final expanded = _expanded && !widget.forceCollapse;
     final completed = items.where((item) => item.status == TodoStatus.completed).length;
@@ -78,7 +78,7 @@ class _TodoDashboardBarState extends ConsumerState<TodoDashboardBar> {
                     Icon(Iconfont.checkSquare, size: 15, color: theme.colorScheme.primary),
                     const SizedBox(width: Spacing.xs),
                     Text(
-                      l10n.todoDashboardTitle,
+                      g11n.todoDashboardTitle,
                       style: theme.textTheme.titleSmall
                           ?.copyWith(fontSize: 13, fontWeight: FontWeight.bold),
                     ),
@@ -93,8 +93,8 @@ class _TodoDashboardBarState extends ConsumerState<TodoDashboardBar> {
                       padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
                       child: Text(
                         allDone
-                            ? l10n.todoDashboardAllDone
-                            : l10n.todoDashboardProgress(completed, items.length),
+                            ? g11n.todoDashboardAllDone
+                            : g11n.todoDashboardProgress(completed, items.length),
                         style: theme.textTheme.labelSmall
                             ?.copyWith(color: theme.colorScheme.onSurfaceVariant),
                       ),
@@ -180,7 +180,7 @@ class TodoItemRow extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final l10n = AppLocalizations.of(context);
+    final g11n = AppGlobalizations.of(context);
     final theme = Theme.of(context);
     final semantic = context.semantic;
     final isCompleted = item.status == TodoStatus.completed;
@@ -196,7 +196,7 @@ class TodoItemRow extends StatelessWidget {
                 Iconfont.check,
                 size: 16,
                 color: semantic.diffAdd,
-                semanticLabel: l10n.todoCompleted,
+                semanticLabel: g11n.todoCompleted,
               )
             else if (isInProgress)
               const _PulsingDot()
@@ -232,7 +232,7 @@ class TodoItemRow extends StatelessWidget {
                 ),
                 padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 1),
                 child: Text(
-                  l10n.todoInProgress,
+                  g11n.todoInProgress,
                   style: theme.textTheme.labelSmall
                       ?.copyWith(color: theme.colorScheme.onPrimaryContainer),
                 ),

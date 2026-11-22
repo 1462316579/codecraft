@@ -5,7 +5,7 @@ import '../../core/theme/semantic_colors.dart';
 import '../../core/theme/tokens.dart';
 import '../../core/ui/settings_group.dart';
 import '../../data/providers/provider_config.dart';
-import '../../l10n/app_localizations.dart';
+import '../../g11n/app_globalizations.dart';
 
 /// 多 Key 管理页(对齐上游 ProviderKeysPage):候选 Key 列表(掩码预览、权重、删除)、
 /// 追加 Key、轮换策略、冷却时长与「命中即切换」状态码。
@@ -44,10 +44,10 @@ class _ProviderKeysPageState extends State<ProviderKeysPage> {
 
   @override
   Widget build(BuildContext context) {
-    final l10n = AppLocalizations.of(context);
+    final g11n = AppGlobalizations.of(context);
     return Scaffold(
       appBar: AppBar(
-        title: Text(l10n.providerMultiKeyManage),
+        title: Text(g11n.providerMultiKeyManage),
         backgroundColor: Colors.transparent,
         surfaceTintColor: Colors.transparent,
         elevation: 0,
@@ -63,19 +63,19 @@ class _ProviderKeysPageState extends State<ProviderKeysPage> {
                 keySwitchStatusCodes: _parseCodes(),
               ),
             ),
-            child: Text(l10n.save),
+            child: Text(g11n.save),
           ),
         ],
       ),
       body: ListView(
         padding: const EdgeInsets.fromLTRB(Spacing.lg, 0, Spacing.lg, Spacing.xxl),
         children: [
-          SettingsGroupHeader(text: l10n.providerMultiKeyList),
+          SettingsGroupHeader(text: g11n.providerMultiKeyList),
           SettingsGroup(
             children: [
               for (var index = 0; index < _keys.length; index++) ...[
                 if (index > 0) const SettingsDivider(),
-                _keyRow(context, l10n, index),
+                _keyRow(context, g11n, index),
               ],
             ],
           ),
@@ -86,18 +86,18 @@ class _ProviderKeysPageState extends State<ProviderKeysPage> {
               _keyInputs.add(TextEditingController());
             }),
             icon: const Icon(Icons.add, size: 18),
-            label: Text(l10n.providerMultiKeyAdd),
+            label: Text(g11n.providerMultiKeyAdd),
           ),
-          SettingsGroupHeader(text: l10n.providerMultiKeyStrategy),
+          SettingsGroupHeader(text: g11n.providerMultiKeyStrategy),
           SettingsGroup(
             children: [
               SettingsRow(
-                title: l10n.providerMultiKeyStrategy,
-                subtitle: l10n.providerMultiKeyWeightHint,
+                title: g11n.providerMultiKeyStrategy,
+                subtitle: g11n.providerMultiKeyWeightHint,
                 trailing: Text(
                   _strategy == KeyRotationStrategy.sequential
-                      ? l10n.providerMultiKeyStrategySequential
-                      : l10n.providerMultiKeyStrategyRoundRobin,
+                      ? g11n.providerMultiKeyStrategySequential
+                      : g11n.providerMultiKeyStrategyRoundRobin,
                   style: Theme.of(context)
                       .textTheme
                       .bodyMedium
@@ -108,7 +108,7 @@ class _ProviderKeysPageState extends State<ProviderKeysPage> {
               const SettingsDivider(),
               _stepperRow(
                 context,
-                l10n.providerMultiKeyCooldown,
+                g11n.providerMultiKeyCooldown,
                 _cooldown,
                 (value) => setState(() => _cooldown = value.clamp(0, 1440)),
                 suffix: ' 分钟',
@@ -119,10 +119,10 @@ class _ProviderKeysPageState extends State<ProviderKeysPage> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text(l10n.providerMultiKeyStatusCodes,
+                    Text(g11n.providerMultiKeyStatusCodes,
                         style: Theme.of(context).textTheme.bodyLarge),
                     Text(
-                      l10n.providerMultiKeyStatusCodesHint,
+                      g11n.providerMultiKeyStatusCodesHint,
                       style: Theme.of(context)
                           .textTheme
                           .bodySmall
@@ -153,7 +153,7 @@ class _ProviderKeysPageState extends State<ProviderKeysPage> {
           if (int.tryParse(part) != null) int.parse(part),
       ];
 
-  Widget _keyRow(BuildContext context, AppLocalizations l10n, int index) {
+  Widget _keyRow(BuildContext context, AppGlobalizations g11n, int index) {
     final theme = Theme.of(context);
     final key = _keys[index];
     return Padding(
@@ -195,7 +195,7 @@ class _ProviderKeysPageState extends State<ProviderKeysPage> {
             icon: const Icon(Iconfont.plus),
           ),
           IconButton(
-            tooltip: l10n.delete,
+            tooltip: g11n.delete,
             onPressed: () => setState(() {
               _keys.removeAt(index);
               _keyInputs.removeAt(index).dispose();
@@ -240,7 +240,7 @@ class _ProviderKeysPageState extends State<ProviderKeysPage> {
   }
 
   Future<void> _pickStrategy() async {
-    final l10n = AppLocalizations.of(context);
+    final g11n = AppGlobalizations.of(context);
     final selected = await showModalBottomSheet<KeyRotationStrategy>(
       context: context,
       showDragHandle: true,
@@ -249,16 +249,16 @@ class _ProviderKeysPageState extends State<ProviderKeysPage> {
           mainAxisSize: MainAxisSize.min,
           children: [
             ListTile(
-              title: Text(l10n.providerMultiKeyStrategySequential),
-              subtitle: Text(l10n.providerMultiKeyStrategySequentialDesc),
+              title: Text(g11n.providerMultiKeyStrategySequential),
+              subtitle: Text(g11n.providerMultiKeyStrategySequentialDesc),
               trailing: _strategy == KeyRotationStrategy.sequential
                   ? const Icon(Icons.check, size: 20)
                   : null,
               onTap: () => Navigator.pop(sheetContext, KeyRotationStrategy.sequential),
             ),
             ListTile(
-              title: Text(l10n.providerMultiKeyStrategyRoundRobin),
-              subtitle: Text(l10n.providerMultiKeyStrategyRoundRobinDesc),
+              title: Text(g11n.providerMultiKeyStrategyRoundRobin),
+              subtitle: Text(g11n.providerMultiKeyStrategyRoundRobinDesc),
               trailing: _strategy == KeyRotationStrategy.roundRobin
                   ? const Icon(Icons.check, size: 20)
                   : null,

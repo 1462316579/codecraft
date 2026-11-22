@@ -15,7 +15,7 @@ import '../../data/model_api_service.dart';
 import '../../data/model_catalog.dart';
 import '../../data/model_metadata_store.dart';
 import '../../data/providers/provider_config.dart';
-import '../../l10n/app_localizations.dart';
+import '../../g11n/app_globalizations.dart';
 
 /// 模型能力 / 窗口标签(对齐上游 ModelMetadataTags):
 /// 「图片」「工具」胶囊在前,输入(窗口或输入上限)与输出上限合并的胶囊在后。
@@ -170,7 +170,7 @@ class _FetchModelsSheetState extends ConsumerState<_FetchModelsSheet> {
   }
 
   Future<void> _fetch() async {
-    final l10n = AppLocalizations.of(context);
+    final g11n = AppGlobalizations.of(context);
     setState(() {
       _loading = true;
       _error = null;
@@ -179,9 +179,9 @@ class _FetchModelsSheetState extends ConsumerState<_FetchModelsSheet> {
       final result = await ref.read(modelApiProvider).fetchModels(
             provider: widget.provider,
             apiKey: widget.provider.firstUsableApiKey,
-            messageForKeyMissing: l10n.providerApiKeyRequired,
-            messageMissingFields: l10n.providerFetchMissingFields,
-            messageFailed: l10n.providerFetchFailed,
+            messageForKeyMissing: g11n.providerApiKeyRequired,
+            messageMissingFields: g11n.providerFetchMissingFields,
+            messageFailed: g11n.providerFetchFailed,
           );
       if (!mounted) return;
       // 服务端在 /models 里声明的窗口落盘,模型行才能显示真实 ↑/↓;
@@ -249,7 +249,7 @@ class _FetchModelsSheetState extends ConsumerState<_FetchModelsSheet> {
 
   @override
   Widget build(BuildContext context) {
-    final l10n = AppLocalizations.of(context);
+    final g11n = AppGlobalizations.of(context);
     final existing = [...widget.provider.models, ..._added];
     final available = [
       for (final model in _models ?? const <String>[])
@@ -271,7 +271,7 @@ class _FetchModelsSheetState extends ConsumerState<_FetchModelsSheet> {
               children: [
                 Expanded(
                   child: Text(
-                    l10n.providerFetchModels,
+                    g11n.providerFetchModels,
                     style: Theme.of(context)
                         .textTheme
                         .titleMedium
@@ -280,9 +280,9 @@ class _FetchModelsSheetState extends ConsumerState<_FetchModelsSheet> {
                 ),
                 if (available.isNotEmpty)
                   TextButton.icon(
-                    onPressed: () => _addAll(l10n, available),
+                    onPressed: () => _addAll(g11n, available),
                     icon: const Icon(Icons.add, size: 16),
-                    label: Text(l10n.providerAddAllModels),
+                    label: Text(g11n.providerAddAllModels),
                   ),
               ],
             ),
@@ -290,7 +290,7 @@ class _FetchModelsSheetState extends ConsumerState<_FetchModelsSheet> {
             TextField(
               controller: _search,
               decoration: InputDecoration(
-                hintText: l10n.providerFilterModelsHint,
+                hintText: g11n.providerFilterModelsHint,
                 prefixIcon: const Icon(Iconfont.search, size: 16),
                 isDense: true,
                 border: const OutlineInputBorder(),
@@ -299,7 +299,7 @@ class _FetchModelsSheetState extends ConsumerState<_FetchModelsSheet> {
             const SizedBox(height: Spacing.sm),
             SizedBox(
               height: 380,
-              child: _body(context, l10n, filtered),
+              child: _body(context, g11n, filtered),
             ),
           ],
         ),
@@ -307,12 +307,12 @@ class _FetchModelsSheetState extends ConsumerState<_FetchModelsSheet> {
     );
   }
 
-  Widget _body(BuildContext context, AppLocalizations l10n, List<String> filtered) {
+  Widget _body(BuildContext context, AppGlobalizations g11n, List<String> filtered) {
     if (_loading) return const _FetchSkeleton();
     if (_error != null) {
       final code = _debug?.responseCode ?? 0;
       final message = code > 0
-          ? l10n.providerFetchHttpError(code, _debug?.latencyMs ?? 0)
+          ? g11n.providerFetchHttpError(code, _debug?.latencyMs ?? 0)
           : _error!;
       return Center(
         child: TextButton.icon(
@@ -320,7 +320,7 @@ class _FetchModelsSheetState extends ConsumerState<_FetchModelsSheet> {
               ? null
               : () => showModelTestSheet(
                     context,
-                    title: l10n.providerFetchModels,
+                    title: g11n.providerFetchModels,
                     result: _debug!,
                   ),
           icon: Icon(Iconfont.alertCircle, size: 16, color: Theme.of(context).colorScheme.error),
@@ -337,7 +337,7 @@ class _FetchModelsSheetState extends ConsumerState<_FetchModelsSheet> {
     if (filtered.isEmpty) {
       return Center(
         child: Text(
-          l10n.providerNoMatchingModels,
+          g11n.providerNoMatchingModels,
           style: Theme.of(context)
               .textTheme
               .bodyMedium
@@ -367,7 +367,7 @@ class _FetchModelsSheetState extends ConsumerState<_FetchModelsSheet> {
             children: [
               for (var index = 0; index < grouped[key]!.length; index++) ...[
                 if (index > 0) const SettingsDivider(),
-                _fetchRow(context, l10n, grouped[key]![index]),
+                _fetchRow(context, g11n, grouped[key]![index]),
               ],
             ],
           ),
@@ -376,7 +376,7 @@ class _FetchModelsSheetState extends ConsumerState<_FetchModelsSheet> {
     );
   }
 
-  Widget _fetchRow(BuildContext context, AppLocalizations l10n, String model) {
+  Widget _fetchRow(BuildContext context, AppGlobalizations g11n, String model) {
     final theme = Theme.of(context);
     // 拉取结果同样解析能力标签(对齐上游 FetchModelRow:目录 + 自定义元数据)。
     final catalog = ref.watch(modelCatalogProvider).valueOrNull ?? ModelCatalog.empty;
@@ -389,7 +389,7 @@ class _FetchModelsSheetState extends ConsumerState<_FetchModelsSheet> {
       type: widget.provider.type,
     );
     return InkWell(
-      onTap: () => _add(l10n, model),
+      onTap: () => _add(g11n, model),
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: Spacing.lg, vertical: 10),
         child: Row(
@@ -412,9 +412,9 @@ class _FetchModelsSheetState extends ConsumerState<_FetchModelsSheet> {
               ),
             ),
             IconButton(
-              onPressed: () => _add(l10n, model),
+              onPressed: () => _add(g11n, model),
               icon: Icon(Icons.add, size: 18, color: theme.colorScheme.primary),
-              tooltip: l10n.commonAdd,
+              tooltip: g11n.commonAdd,
             ),
           ],
         ),
@@ -422,27 +422,27 @@ class _FetchModelsSheetState extends ConsumerState<_FetchModelsSheet> {
     );
   }
 
-  Future<void> _add(AppLocalizations l10n, String model) async {
+  Future<void> _add(AppGlobalizations g11n, String model) async {
     await _addModels([model]);
     if (!mounted) return;
     ScaffoldMessenger.of(context)
-        .showSnackBar(SnackBar(content: Text(l10n.providerModelAdded(model))));
+        .showSnackBar(SnackBar(content: Text(g11n.providerModelAdded(model))));
   }
 
-  Future<void> _addAll(AppLocalizations l10n, List<String> models) async {
+  Future<void> _addAll(AppGlobalizations g11n, List<String> models) async {
     final confirmed = await showDialog<bool>(
       context: context,
       builder: (dialogContext) => AlertDialog(
-        title: Text(l10n.providerAddAllModelsTitle),
-        content: Text(l10n.providerAddAllModelsConfirm(models.length)),
+        title: Text(g11n.providerAddAllModelsTitle),
+        content: Text(g11n.providerAddAllModelsConfirm(models.length)),
         actions: [
           TextButton(
             onPressed: () => Navigator.pop(dialogContext, false),
-            child: Text(l10n.cancel),
+            child: Text(g11n.cancel),
           ),
           TextButton(
             onPressed: () => Navigator.pop(dialogContext, true),
-            child: Text(l10n.providerAddAllModels),
+            child: Text(g11n.providerAddAllModels),
           ),
         ],
       ),
@@ -626,7 +626,7 @@ class _ModelEditSheetState extends State<_ModelEditSheet> {
 
   @override
   Widget build(BuildContext context) {
-    final l10n = AppLocalizations.of(context);
+    final g11n = AppGlobalizations.of(context);
     final theme = Theme.of(context);
     return SafeArea(
       child: Padding(
@@ -645,7 +645,7 @@ class _ModelEditSheetState extends State<_ModelEditSheet> {
                 const SizedBox(width: 36),
                 Expanded(
                   child: Text(
-                    widget.title ?? l10n.providerAddModel,
+                    widget.title ?? g11n.providerAddModel,
                     textAlign: TextAlign.center,
                     style: theme.textTheme.titleMedium?.copyWith(
                       fontWeight: FontWeight.bold,
@@ -663,65 +663,65 @@ class _ModelEditSheetState extends State<_ModelEditSheet> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     _field(
-                      label: l10n.providerModelName,
+                      label: g11n.providerModelName,
                       controller: _name,
                       enabled: widget.canEditName,
                     ),
                     if (_duplicate)
                       Text(
-                        l10n.providerModelAlreadyAdded,
+                        g11n.providerModelAlreadyAdded,
                         style: theme.textTheme.bodySmall?.copyWith(
                           color: theme.colorScheme.error,
                         ),
                       ),
                     const SizedBox(height: Spacing.sm),
                     _field(
-                      label: l10n.providerModelContext,
+                      label: g11n.providerModelContext,
                       controller: _context,
                       keyboardType: TextInputType.number,
                       isError: _contextError,
                     ),
                     const SizedBox(height: Spacing.sm),
                     _field(
-                      label: l10n.providerModelContextInput,
+                      label: g11n.providerModelContextInput,
                       controller: _input,
                       keyboardType: TextInputType.number,
                       isError: _inputError,
                     ),
                     const SizedBox(height: Spacing.sm),
                     _field(
-                      label: l10n.providerModelContextOutput,
+                      label: g11n.providerModelContextOutput,
                       controller: _output,
                       keyboardType: TextInputType.number,
                       isError: _outputError,
                     ),
                     const SizedBox(height: Spacing.md),
-                    _sectionLabel(context, l10n.providerModelSectionPrice),
+                    _sectionLabel(context, g11n.providerModelSectionPrice),
                     _field(
-                      label: l10n.providerModelPriceInput,
+                      label: g11n.providerModelPriceInput,
                       controller: _priceIn,
                       keyboardType: const TextInputType.numberWithOptions(decimal: true),
                     ),
                     const SizedBox(height: Spacing.sm),
                     _field(
-                      label: l10n.providerModelPriceOutput,
+                      label: g11n.providerModelPriceOutput,
                       controller: _priceOut,
                       keyboardType: const TextInputType.numberWithOptions(decimal: true),
                     ),
                     const SizedBox(height: Spacing.sm),
                     _field(
-                      label: l10n.providerModelPriceCacheRead,
+                      label: g11n.providerModelPriceCacheRead,
                       controller: _priceCacheRead,
                       keyboardType: const TextInputType.numberWithOptions(decimal: true),
                     ),
                     const SizedBox(height: Spacing.sm),
                     _field(
-                      label: l10n.providerModelPriceCacheWrite,
+                      label: g11n.providerModelPriceCacheWrite,
                       controller: _priceCacheWrite,
                       keyboardType: const TextInputType.numberWithOptions(decimal: true),
                     ),
                     const SizedBox(height: Spacing.md),
-                    _sectionLabel(context, l10n.providerModelCapabilities),
+                    _sectionLabel(context, g11n.providerModelCapabilities),
                     // 能力开关卡片(对齐上游:mutedSurface 圆角 12,避免 surfaceVariant 偏蓝)。
                     Container(
                       width: double.infinity,
@@ -731,25 +731,25 @@ class _ModelEditSheetState extends State<_ModelEditSheet> {
                       ),
                       child: Column(
                         children: [
-                          _capability(l10n.providerModelCapVision, _vision,
+                          _capability(g11n.providerModelCapVision, _vision,
                               (v) => setState(() => _vision = v)),
                           const SettingsDivider(),
-                          _capability(l10n.providerModelCapImageOutput, _imageOutput,
+                          _capability(g11n.providerModelCapImageOutput, _imageOutput,
                               (v) => setState(() => _imageOutput = v)),
                           const SettingsDivider(),
-                          _capability(l10n.providerModelCapTools, _tools,
+                          _capability(g11n.providerModelCapTools, _tools,
                               (v) => setState(() => _tools = v)),
                           const SettingsDivider(),
-                          _capability(l10n.providerModelCapReasoning, _reasoning,
+                          _capability(g11n.providerModelCapReasoning, _reasoning,
                               (v) => setState(() => _reasoning = v)),
                         ],
                       ),
                     ),
                     if (_reasoning) ...[
                       const SizedBox(height: Spacing.md),
-                      _sectionLabel(context, l10n.providerModelSectionReasoning),
+                      _sectionLabel(context, g11n.providerModelSectionReasoning),
                       Text(
-                        l10n.providerModelReasoningHint,
+                        g11n.providerModelReasoningHint,
                         style: theme.textTheme.bodySmall?.copyWith(
                           color: theme.colorScheme.onSurfaceVariant,
                         ),
@@ -765,13 +765,13 @@ class _ModelEditSheetState extends State<_ModelEditSheet> {
                         child: Column(
                           children: [
                             _capability(
-                              l10n.providerModelReasoningCanDisable,
+                              g11n.providerModelReasoningCanDisable,
                               _reasoningCanDisable,
                               (v) => setState(() => _reasoningCanDisable = v),
                             ),
                             for (final level in _editableLevels) ...[
                               const SettingsDivider(),
-                              _levelRow(l10n, level),
+                              _levelRow(g11n, level),
                             ],
                           ],
                         ),
@@ -793,7 +793,7 @@ class _ModelEditSheetState extends State<_ModelEditSheet> {
                     const Icon(Iconfont.check, size: 18),
                     const SizedBox(width: Spacing.xs),
                     Text(
-                      widget.confirmLabel ?? l10n.save,
+                      widget.confirmLabel ?? g11n.save,
                       style: theme.textTheme.titleMedium?.copyWith(
                         fontWeight: FontWeight.bold,
                       ),
@@ -841,7 +841,7 @@ class _ModelEditSheetState extends State<_ModelEditSheet> {
   }
 
   /// 思考档位勾选行(对齐上游 ReasoningLevelRow):标题 + 勾选图标,点击切换。
-  Widget _levelRow(AppLocalizations l10n, ReasoningEffort level) {
+  Widget _levelRow(AppGlobalizations g11n, ReasoningEffort level) {
     final checked = _reasoningLevels.contains(level.apiValue);
     return InkWell(
       onTap: () => setState(() {
@@ -857,7 +857,7 @@ class _ModelEditSheetState extends State<_ModelEditSheet> {
           children: [
             Expanded(
               child: Text(
-                l10n.commonLabelWithApi(_levelLabel(l10n, level), level.apiValue),
+                g11n.commonLabelWithApi(_levelLabel(g11n, level), level.apiValue),
                 style: Theme.of(context).textTheme.bodyLarge,
               ),
             ),
@@ -869,13 +869,13 @@ class _ModelEditSheetState extends State<_ModelEditSheet> {
     );
   }
 
-  String _levelLabel(AppLocalizations l10n, ReasoningEffort level) => switch (level) {
-        ReasoningEffort.minimal => l10n.chatEffortMinimal,
-        ReasoningEffort.low => l10n.chatEffortLow,
-        ReasoningEffort.medium => l10n.chatEffortMedium,
-        ReasoningEffort.high => l10n.chatEffortHigh,
-        ReasoningEffort.xhigh => l10n.chatEffortXHigh,
-        ReasoningEffort.max => l10n.chatEffortMax,
+  String _levelLabel(AppGlobalizations g11n, ReasoningEffort level) => switch (level) {
+        ReasoningEffort.minimal => g11n.chatEffortMinimal,
+        ReasoningEffort.low => g11n.chatEffortLow,
+        ReasoningEffort.medium => g11n.chatEffortMedium,
+        ReasoningEffort.high => g11n.chatEffortHigh,
+        ReasoningEffort.xhigh => g11n.chatEffortXHigh,
+        ReasoningEffort.max => g11n.chatEffortMax,
         _ => level.apiValue,
       };
 
@@ -923,7 +923,7 @@ class _ModelEditSheetState extends State<_ModelEditSheet> {
           labelText: label,
           border: const OutlineInputBorder(),
           isDense: true,
-          errorText: isError ? AppLocalizations.of(context).providerModelWindowInvalid : null,
+          errorText: isError ? AppGlobalizations.of(context).providerModelWindowInvalid : null,
         ),
       );
 }
@@ -950,7 +950,7 @@ class _ModelTestSheet extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final l10n = AppLocalizations.of(context);
+    final g11n = AppGlobalizations.of(context);
     final theme = Theme.of(context);
     final statusColor = result.success ? context.semantic.success : theme.colorScheme.error;
     return SafeArea(
@@ -980,10 +980,10 @@ class _ModelTestSheet extends StatelessWidget {
                       ?.copyWith(color: context.semantic.subtleText),
                 ),
                 IconButton(
-                  tooltip: l10n.copy,
+                  tooltip: g11n.copy,
                   visualDensity: VisualDensity.compact,
                   icon: const Icon(Iconfont.copy, size: 18),
-                  onPressed: () => _copyAll(context, l10n),
+                  onPressed: () => _copyAll(context, g11n),
                 ),
               ],
             ),
@@ -999,21 +999,21 @@ class _ModelTestSheet extends StatelessWidget {
                         style: theme.textTheme.bodySmall?.copyWith(color: statusColor),
                       ),
                     const SizedBox(height: Spacing.sm),
-                    _section(context, l10n.providerTestRequestUrl, result.requestUrl),
+                    _section(context, g11n.providerTestRequestUrl, result.requestUrl),
                     _section(
                       context,
-                      l10n.providerTestRequestHeaders,
+                      g11n.providerTestRequestHeaders,
                       _requestHeadersText,
                     ),
                     if (result.requestBody.isNotEmpty)
-                      _section(context, l10n.providerTestRequestBody, result.requestBody),
+                      _section(context, g11n.providerTestRequestBody, result.requestBody),
                     _section(
                       context,
-                      l10n.providerTestResponse,
+                      g11n.providerTestResponse,
                       'HTTP ${result.responseCode}\n${result.responseBody}',
                     ),
                     if (result.errorDetail.isNotEmpty)
-                      _section(context, l10n.providerTestError, result.errorDetail),
+                      _section(context, g11n.providerTestError, result.errorDetail),
                   ],
                 ),
               ),
@@ -1029,17 +1029,17 @@ class _ModelTestSheet extends StatelessWidget {
 
   /// 整份调试信息(复制按钮用):标题、状态码、耗时与各分节拼成纯文本,
   /// 方便直接贴到 issue / 聊天里排查。
-  String _debugText(AppLocalizations l10n) {
+  String _debugText(AppGlobalizations g11n) {
     final buffer = StringBuffer()
       ..writeln(title)
       ..write('HTTP ${result.responseCode} · ${result.latencyMs}ms');
     if (result.message.isNotEmpty) buffer.write('\n${result.message}');
     final sections = <(String, String)>[
-      (l10n.providerTestRequestUrl, result.requestUrl),
-      (l10n.providerTestRequestHeaders, _requestHeadersText),
-      if (result.requestBody.isNotEmpty) (l10n.providerTestRequestBody, result.requestBody),
-      (l10n.providerTestResponse, 'HTTP ${result.responseCode}\n${result.responseBody}'),
-      if (result.errorDetail.isNotEmpty) (l10n.providerTestError, result.errorDetail),
+      (g11n.providerTestRequestUrl, result.requestUrl),
+      (g11n.providerTestRequestHeaders, _requestHeadersText),
+      if (result.requestBody.isNotEmpty) (g11n.providerTestRequestBody, result.requestBody),
+      (g11n.providerTestResponse, 'HTTP ${result.responseCode}\n${result.responseBody}'),
+      if (result.errorDetail.isNotEmpty) (g11n.providerTestError, result.errorDetail),
     ];
     for (final (label, content) in sections) {
       if (content.trim().isEmpty) continue;
@@ -1048,11 +1048,11 @@ class _ModelTestSheet extends StatelessWidget {
     return buffer.toString();
   }
 
-  Future<void> _copyAll(BuildContext context, AppLocalizations l10n) async {
-    await Clipboard.setData(ClipboardData(text: _debugText(l10n)));
+  Future<void> _copyAll(BuildContext context, AppGlobalizations g11n) async {
+    await Clipboard.setData(ClipboardData(text: _debugText(g11n)));
     if (!context.mounted) return;
     ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(content: Text(l10n.copied), duration: const Duration(seconds: 2)),
+      SnackBar(content: Text(g11n.copied), duration: const Duration(seconds: 2)),
     );
   }
 

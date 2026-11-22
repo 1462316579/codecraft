@@ -11,7 +11,7 @@ import '../../core/ui/swipe_to_delete_row.dart';
 import '../../data/providers/provider_config.dart';
 import '../../data/providers/provider_presets.dart';
 import '../../data/providers/provider_store.dart';
-import '../../l10n/app_localizations.dart';
+import '../../g11n/app_globalizations.dart';
 
 /// 供应商列表(对齐上游 ProvidersSection):圆角 14 卡片列表、左侧品牌 logo、
 /// 名称 + 类型/模型数 pills、右侧状态 pill + 箭头;左滑删除、长按拖拽排序。
@@ -20,13 +20,13 @@ class ProvidersPage extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final l10n = AppLocalizations.of(context);
+    final g11n = AppGlobalizations.of(context);
     final providers = ref.watch(providersProvider);
     final theme = Theme.of(context);
     return Scaffold(
       extendBodyBehindAppBar: true,
       appBar: AppBar(
-        title: Text(l10n.providers),
+        title: Text(g11n.providers),
         backgroundColor: Colors.transparent,
         surfaceTintColor: Colors.transparent,
         elevation: 0,
@@ -34,7 +34,7 @@ class ProvidersPage extends ConsumerWidget {
         actions: [
           IconButton(
             icon: const Icon(Icons.add),
-            tooltip: l10n.addProvider,
+            tooltip: g11n.addProvider,
             onPressed: () => _addProvider(context, ref),
           ),
         ],
@@ -51,14 +51,14 @@ class ProvidersPage extends ConsumerWidget {
         ),
         child: providers.when(
         loading: () => const Center(child: CircularProgressIndicator()),
-        error: (error, _) => Center(child: Text('${l10n.errorGeneric}: $error')),
+        error: (error, _) => Center(child: Text('${g11n.errorGeneric}: $error')),
         data: (list) {
           if (list.isEmpty) {
             return Center(
               child: Padding(
                 padding: const EdgeInsets.all(Spacing.xl),
                 child: Text(
-                  l10n.emptyProviders,
+                  g11n.emptyProviders,
                   style: Theme.of(context)
                       .textTheme
                       .bodyMedium
@@ -122,20 +122,20 @@ class ProvidersPage extends ConsumerWidget {
     WidgetRef ref,
     ProviderConfig provider,
   ) async {
-    final l10n = AppLocalizations.of(context);
+    final g11n = AppGlobalizations.of(context);
     final confirmed = await showDialog<bool>(
       context: context,
       builder: (dialogContext) => AlertDialog(
-        title: Text(l10n.deleteProviderConfirm),
+        title: Text(g11n.deleteProviderConfirm),
         content: Text(provider.name),
         actions: [
           TextButton(
             onPressed: () => Navigator.pop(dialogContext, false),
-            child: Text(l10n.cancel),
+            child: Text(g11n.cancel),
           ),
           TextButton(
             onPressed: () => Navigator.pop(dialogContext, true),
-            child: Text(l10n.delete),
+            child: Text(g11n.delete),
           ),
         ],
       ),
@@ -147,7 +147,7 @@ class ProvidersPage extends ConsumerWidget {
   /// 添加供应商(对齐上游 ProviderPresetSheet):自定义排在最前,其后是官方预设,
   /// 每行 28dp 品牌 logo + 名称 + 协议 pill + 标签 + 官网入口。
   Future<void> _addProvider(BuildContext context, WidgetRef ref) async {
-    final l10n = AppLocalizations.of(context);
+    final g11n = AppGlobalizations.of(context);
     await showModalBottomSheet<void>(
       context: context,
       showDragHandle: true,
@@ -162,7 +162,7 @@ class ProvidersPage extends ConsumerWidget {
               Padding(
                 padding: const EdgeInsets.fromLTRB(Spacing.lg, 0, Spacing.lg, Spacing.md),
                 child: Text(
-                  l10n.addProvider,
+                  g11n.addProvider,
                   style: Theme.of(sheetContext)
                       .textTheme
                       .titleMedium
@@ -175,7 +175,7 @@ class ProvidersPage extends ConsumerWidget {
                   padding: const EdgeInsets.fromLTRB(Spacing.lg, 0, Spacing.lg, Spacing.xs),
                   children: [
                     _PresetRow(
-                      name: l10n.customProvider,
+                      name: g11n.customProvider,
                       typeLabel: ProviderType.openai.shortLabel,
                       logo: const ModelLogoIcon(modelName: 'openai', size: 28),
                       onTap: () => _create(context, sheetContext, ref, instantiateCustomProvider()),
@@ -331,7 +331,7 @@ class _ProviderCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final l10n = AppLocalizations.of(context);
+    final g11n = AppGlobalizations.of(context);
     final theme = Theme.of(context);
     final semantic = context.semantic;
     final statusColor = provider.isEnabled
@@ -391,7 +391,7 @@ class _ProviderCard extends StatelessWidget {
                         const SizedBox(width: 6),
                         Flexible(
                           child: ProviderPill(
-                            text: l10n.providerModelsCountTag(provider.models.length),
+                            text: g11n.providerModelsCountTag(provider.models.length),
                           ),
                         ),
                       ],
@@ -401,7 +401,7 @@ class _ProviderCard extends StatelessWidget {
               ),
               const SizedBox(width: Spacing.sm),
               ProviderPill(
-                text: provider.isEnabled ? l10n.enabled : l10n.disabled,
+                text: provider.isEnabled ? g11n.enabled : g11n.disabled,
                 color: statusColor,
                 background: statusColor.withValues(alpha: 0.12),
               ),

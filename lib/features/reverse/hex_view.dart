@@ -5,7 +5,7 @@ import '../../core/icons/iconfont.dart';
 
 import '../../core/theme/semantic_colors.dart';
 import '../../core/theme/tokens.dart';
-import '../../l10n/app_localizations.dart';
+import '../../g11n/app_globalizations.dart';
 import '../../reverse/hex/hex_dump.dart';
 
 /// 可复用的十六进制视图:偏移 + 十六进制 + ASCII 三栏。
@@ -38,11 +38,11 @@ class HexView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
-    final l10n = AppLocalizations.of(context);
+    final g11n = AppGlobalizations.of(context);
     if (bytes.isEmpty) {
       return Center(
         child: Text(
-          l10n.reverseEmptyFile,
+          g11n.reverseEmptyFile,
           style: theme.textTheme.bodyMedium?.copyWith(color: context.semantic.subtleText),
         ),
       );
@@ -147,9 +147,9 @@ class HexJumpButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final l10n = AppLocalizations.of(context);
+    final g11n = AppGlobalizations.of(context);
     return IconButton(
-      tooltip: l10n.reverseJumpToOffset,
+      tooltip: g11n.reverseJumpToOffset,
       icon: const Icon(Iconfont.crosshair, size: 18),
       onPressed: () async {
         final offset = await showDialog<int>(
@@ -181,9 +181,9 @@ class _JumpDialogState extends State<_JumpDialog> {
 
   @override
   Widget build(BuildContext context) {
-    final l10n = AppLocalizations.of(context);
+    final g11n = AppGlobalizations.of(context);
     return AlertDialog(
-      title: Text(l10n.reverseJumpToOffset),
+      title: Text(g11n.reverseJumpToOffset),
       content: TextField(
         controller: _controller,
         autofocus: true,
@@ -196,11 +196,11 @@ class _JumpDialogState extends State<_JumpDialog> {
       actions: [
         TextButton(
           onPressed: () => Navigator.pop(context),
-          child: Text(l10n.cancel),
+          child: Text(g11n.cancel),
         ),
         TextButton(
           onPressed: _submit,
-          child: Text(l10n.confirm),
+          child: Text(g11n.confirm),
         ),
       ],
     );
@@ -213,7 +213,7 @@ class _JumpDialogState extends State<_JumpDialog> {
       radix: 16,
     );
     if (value == null || value < 0) {
-      setState(() => _error = AppLocalizations.of(context).reverseOffsetInvalid);
+      setState(() => _error = AppGlobalizations.of(context).reverseOffsetInvalid);
       return;
     }
     Navigator.pop(context, value);

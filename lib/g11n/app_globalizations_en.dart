@@ -1,12 +1,12 @@
 // ignore: unused_import
 import 'package:intl/intl.dart' as intl;
-import 'app_localizations.dart';
+import 'app_globalizations.dart';
 
 // ignore_for_file: type=lint
 
 /// The translations for English (`en`).
-class AppLocalizationsEn extends AppLocalizations {
-  AppLocalizationsEn([String locale = 'en']) : super(locale);
+class AppGlobalizationsEn extends AppGlobalizations {
+  AppGlobalizationsEn([String locale = 'en']) : super(locale);
 
   @override
   String get appName => 'CodeCraft';

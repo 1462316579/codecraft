@@ -11,7 +11,7 @@ import '../../../core/theme/semantic_colors.dart';
 import '../../../core/theme/tokens.dart';
 import '../../../core/util/window_size.dart';
 import '../../../data/workbench.dart';
-import '../../../l10n/app_localizations.dart';
+import '../../../g11n/app_globalizations.dart';
 
 /// 聊天页顶栏(移植自上游 ChatHeaderComponents.kt 的视觉结构):
 /// 左:抽屉菜单(窄屏);中:会话标题 + 模型名两行;右:新建会话 + Git 入口。
@@ -35,7 +35,7 @@ class ChatHeader extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final l10n = AppLocalizations.of(context);
+    final g11n = AppGlobalizations.of(context);
     final semantic = context.semantic;
     return ClipRRect(
       child: BackdropFilter(
@@ -70,7 +70,7 @@ class ChatHeader extends ConsumerWidget {
           if (onOpenDrawer != null)
             IconButton(
               icon: Icon(Icons.menu, color: semantic.subtleText),
-              tooltip: l10n.openSidebar,
+              tooltip: g11n.openSidebar,
               onPressed: onOpenDrawer,
             )
           else
@@ -91,7 +91,7 @@ class ChatHeader extends ConsumerWidget {
                     const SizedBox(width: Spacing.xs),
                     Expanded(
                       child: Text(
-                        modelName?.isNotEmpty == true ? modelName! : l10n.noModelSelected,
+                        modelName?.isNotEmpty == true ? modelName! : g11n.noModelSelected,
                         style: Theme.of(context)
                             .textTheme
                             .bodySmall
@@ -108,7 +108,7 @@ class ChatHeader extends ConsumerWidget {
           if (onNewChat != null)
             IconButton(
               icon: Icon(Icons.add, color: semantic.subtleText),
-              tooltip: l10n.newSession,
+              tooltip: g11n.newSession,
               onPressed: onNewChat,
             ),
           // 写作模式不显示这两个入口;Git 对逆向项目也没有意义(看的是别人装好的 APK)。
@@ -122,7 +122,7 @@ class ChatHeader extends ConsumerWidget {
                   ? Theme.of(context).colorScheme.primary
                   : semantic.subtleText,
             ),
-            tooltip: l10n.chatOpenGit,
+            tooltip: g11n.chatOpenGit,
             onPressed: () => openWorkbench(
               context,
               ref,
@@ -139,7 +139,7 @@ class ChatHeader extends ConsumerWidget {
                   ? Theme.of(context).colorScheme.primary
                   : semantic.subtleText,
             ),
-            tooltip: l10n.chatOpenTerminal,
+            tooltip: g11n.chatOpenTerminal,
             onPressed: () => openWorkbench(
               context,
               ref,

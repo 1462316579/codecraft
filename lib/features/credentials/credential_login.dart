@@ -5,7 +5,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../core/theme/semantic_colors.dart';
 import '../../core/theme/tokens.dart';
 import '../../data/credentials.dart';
-import '../../l10n/app_localizations.dart';
+import '../../g11n/app_globalizations.dart';
 
 /// 令牌登录弹层:只填访问令牌(PAT),主机与用户名由推送/拉取时按远端自动决定。
 Future<void> showTokenLoginSheet(BuildContext context) {
@@ -38,7 +38,7 @@ class _TokenLoginSheetState extends ConsumerState<_TokenLoginSheet> {
   Future<void> _save() async {
     final token = _controller.text.trim();
     if (token.isEmpty || _saving) return;
-    final l10n = AppLocalizations.of(context);
+    final g11n = AppGlobalizations.of(context);
     final messenger = ScaffoldMessenger.of(context);
     final navigator = Navigator.of(context);
     setState(() => _saving = true);
@@ -47,12 +47,12 @@ class _TokenLoginSheetState extends ConsumerState<_TokenLoginSheet> {
         );
     if (!mounted) return;
     navigator.pop();
-    messenger.showSnackBar(SnackBar(content: Text(l10n.credentialTokenSaved)));
+    messenger.showSnackBar(SnackBar(content: Text(g11n.credentialTokenSaved)));
   }
 
   @override
   Widget build(BuildContext context) {
-    final l10n = AppLocalizations.of(context);
+    final g11n = AppGlobalizations.of(context);
     final theme = Theme.of(context);
     return SafeArea(
       child: Padding(
@@ -67,12 +67,12 @@ class _TokenLoginSheetState extends ConsumerState<_TokenLoginSheet> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
-              l10n.credentialTokenLogin,
+              g11n.credentialTokenLogin,
               style: theme.textTheme.titleMedium?.copyWith(fontWeight: FontWeight.bold),
             ),
             const SizedBox(height: Spacing.xs),
             Text(
-              l10n.credentialTokenLoginDesc,
+              g11n.credentialTokenLoginDesc,
               style: theme.textTheme.bodySmall?.copyWith(color: context.semantic.subtleText),
             ),
             const SizedBox(height: Spacing.md),
@@ -82,12 +82,12 @@ class _TokenLoginSheetState extends ConsumerState<_TokenLoginSheet> {
               obscureText: _obscure,
               keyboardType: TextInputType.visiblePassword,
               decoration: InputDecoration(
-                labelText: l10n.credentialToken,
+                labelText: g11n.credentialToken,
                 border: const OutlineInputBorder(),
                 isDense: true,
                 suffixIcon: IconButton(
                   icon: Icon(_obscure ? Iconfont.eyeOff : Iconfont.eye),
-                  tooltip: _obscure ? l10n.commonShow : l10n.commonHide,
+                  tooltip: _obscure ? g11n.commonShow : g11n.commonHide,
                   onPressed: () => setState(() => _obscure = !_obscure),
                 ),
               ),
@@ -100,7 +100,7 @@ class _TokenLoginSheetState extends ConsumerState<_TokenLoginSheet> {
                 width: double.infinity,
                 child: FilledButton(
                   onPressed: value.text.trim().isEmpty || _saving ? null : _save,
-                  child: Text(l10n.save),
+                  child: Text(g11n.save),
                 ),
               ),
             ),
@@ -109,7 +109,7 @@ class _TokenLoginSheetState extends ConsumerState<_TokenLoginSheet> {
               width: double.infinity,
               child: TextButton(
                 onPressed: () => Navigator.pop(context),
-                child: Text(l10n.cancel),
+                child: Text(g11n.cancel),
               ),
             ),
           ],

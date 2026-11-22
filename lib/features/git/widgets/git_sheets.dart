@@ -8,7 +8,7 @@ import '../../../agent/models/git_models.dart';
 import '../../../core/theme/semantic_colors.dart';
 import '../../../core/theme/tokens.dart';
 import '../../../core/ui/text_input_dialog.dart';
-import '../../../l10n/app_localizations.dart';
+import '../../../g11n/app_globalizations.dart';
 import 'git_common.dart';
 
 /// 长按文件行弹出的菜单项。
@@ -218,7 +218,7 @@ class _CommitDialogState extends State<CommitDialog> {
 
   @override
   Widget build(BuildContext context) {
-    final l10n = AppLocalizations.of(context);
+    final g11n = AppGlobalizations.of(context);
     final theme = Theme.of(context);
     final canCommit = _controller.text.trim().isNotEmpty && !widget.isGenerating;
     return AlertDialog(
@@ -226,7 +226,7 @@ class _CommitDialogState extends State<CommitDialog> {
         children: [
           Expanded(
             child: Text(
-              l10n.gitCommitDialogTitle,
+              g11n.gitCommitDialogTitle,
               style: theme.textTheme.titleMedium?.copyWith(fontWeight: FontWeight.w600),
             ),
           ),
@@ -260,7 +260,7 @@ class _CommitDialogState extends State<CommitDialog> {
                     Icon(Iconfont.zap, size: 13, color: theme.colorScheme.primary),
                   const SizedBox(width: 4),
                   Text(
-                    widget.isGenerating ? l10n.gitCommitGenerating : l10n.gitCommitAiGenerate,
+                    widget.isGenerating ? g11n.gitCommitGenerating : g11n.gitCommitAiGenerate,
                     style: theme.textTheme.labelSmall?.copyWith(
                       color: theme.colorScheme.primary,
                       fontWeight: FontWeight.w500,
@@ -303,7 +303,7 @@ class _CommitDialogState extends State<CommitDialog> {
                 maxLines: 6,
                 onChanged: (_) => setState(() {}),
                 decoration: InputDecoration(
-                  labelText: l10n.gitCommitMessage,
+                  labelText: g11n.gitCommitMessage,
                   border: const OutlineInputBorder(),
                 ),
               ),
@@ -321,7 +321,7 @@ class _CommitDialogState extends State<CommitDialog> {
                     children: [
                       Expanded(
                         child: Text(
-                          l10n.gitCommitAmend,
+                          g11n.gitCommitAmend,
                           style: theme.textTheme.bodySmall?.copyWith(fontWeight: FontWeight.w500),
                         ),
                       ),
@@ -340,13 +340,13 @@ class _CommitDialogState extends State<CommitDialog> {
       actions: [
         TextButton(
           onPressed: () => Navigator.of(context).pop(),
-          child: Text(l10n.cancel),
+          child: Text(g11n.cancel),
         ),
         TextButton(
           onPressed: canCommit
               ? () => Navigator.of(context).pop((_controller.text.trim(), _amend))
               : null,
-          child: Text(l10n.gitActionCommit),
+          child: Text(g11n.gitActionCommit),
         ),
       ],
     );
@@ -434,7 +434,7 @@ class _StashSheetState extends State<StashSheet> {
 
   @override
   Widget build(BuildContext context) {
-    final l10n = AppLocalizations.of(context);
+    final g11n = AppGlobalizations.of(context);
     final theme = Theme.of(context);
     return SafeArea(
       child: Padding(
@@ -451,7 +451,7 @@ class _StashSheetState extends State<StashSheet> {
               children: [
                 Expanded(
                   child: Text(
-                    l10n.gitStashTitle,
+                    g11n.gitStashTitle,
                     style: theme.textTheme.titleMedium?.copyWith(fontWeight: FontWeight.w600),
                   ),
                 ),
@@ -459,7 +459,7 @@ class _StashSheetState extends State<StashSheet> {
                   TextButton(
                     onPressed: widget.busy ? null : widget.onClear,
                     child: Text(
-                      l10n.gitStashClear,
+                      g11n.gitStashClear,
                       style: theme.textTheme.labelMedium?.copyWith(color: theme.colorScheme.error),
                     ),
                   ),
@@ -478,7 +478,7 @@ class _StashSheetState extends State<StashSheet> {
                   TextField(
                     controller: _message,
                     decoration: InputDecoration(
-                      labelText: l10n.gitStashMessageHint,
+                      labelText: g11n.gitStashMessageHint,
                       border: const OutlineInputBorder(),
                     ),
                   ),
@@ -487,7 +487,7 @@ class _StashSheetState extends State<StashSheet> {
                     children: [
                       Expanded(
                         child: Text(
-                          l10n.gitStashIncludeUntracked,
+                          g11n.gitStashIncludeUntracked,
                           style: theme.textTheme.bodySmall?.copyWith(
                             color: theme.colorScheme.onSurfaceVariant,
                           ),
@@ -521,7 +521,7 @@ class _StashSheetState extends State<StashSheet> {
                         children: [
                           const Icon(Iconfont.archive, size: 16),
                           const SizedBox(width: Spacing.xs),
-                          Text(l10n.gitActionStash),
+                          Text(g11n.gitActionStash),
                         ],
                       ),
                     ),
@@ -531,7 +531,7 @@ class _StashSheetState extends State<StashSheet> {
             ),
             const SizedBox(height: Spacing.md),
             Text(
-              l10n.gitStashCount(widget.stashes.length),
+              g11n.gitStashCount(widget.stashes.length),
               style: theme.textTheme.labelLarge?.copyWith(
                 fontSize: 13,
                 color: context.semantic.subtleText,
@@ -542,7 +542,7 @@ class _StashSheetState extends State<StashSheet> {
                 padding: const EdgeInsets.symmetric(vertical: Spacing.xl),
                 child: Center(
                   child: Text(
-                    l10n.gitStashEmpty,
+                    g11n.gitStashEmpty,
                     style: theme.textTheme.bodyMedium?.copyWith(
                       color: theme.colorScheme.onSurfaceVariant,
                     ),
@@ -591,7 +591,7 @@ class _StashItemRow extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final l10n = AppLocalizations.of(context);
+    final g11n = AppGlobalizations.of(context);
     final theme = Theme.of(context);
     return Container(
       padding: const EdgeInsets.all(Spacing.sm),
@@ -638,7 +638,7 @@ class _StashItemRow extends StatelessWidget {
                   padding: const EdgeInsets.symmetric(horizontal: Spacing.sm, vertical: 2),
                   minimumSize: Size.zero,
                 ),
-                child: Text(l10n.gitStashPop, style: theme.textTheme.labelSmall),
+                child: Text(g11n.gitStashPop, style: theme.textTheme.labelSmall),
               ),
               TextButton(
                 onPressed: busy ? null : onApply,
@@ -646,7 +646,7 @@ class _StashItemRow extends StatelessWidget {
                   padding: const EdgeInsets.symmetric(horizontal: Spacing.sm, vertical: 2),
                   minimumSize: Size.zero,
                 ),
-                child: Text(l10n.gitStashApply, style: theme.textTheme.labelSmall),
+                child: Text(g11n.gitStashApply, style: theme.textTheme.labelSmall),
               ),
               SizedBox(
                 width: 28,
@@ -654,7 +654,7 @@ class _StashItemRow extends StatelessWidget {
                 child: IconButton(
                   padding: EdgeInsets.zero,
                   onPressed: busy ? null : onDrop,
-                  tooltip: l10n.gitStashDrop,
+                  tooltip: g11n.gitStashDrop,
                   icon: Icon(Iconfont.trash2, size: 15, color: theme.colorScheme.error),
                 ),
               ),
@@ -697,7 +697,7 @@ class RepoPickerSheet extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final l10n = AppLocalizations.of(context);
+    final g11n = AppGlobalizations.of(context);
     final theme = Theme.of(context);
     final entries = [
       if (workspaceRoot.isNotEmpty) workspaceRoot,
@@ -713,7 +713,7 @@ class RepoPickerSheet extends StatelessWidget {
             Padding(
               padding: const EdgeInsets.only(bottom: Spacing.md),
               child: Text(
-                l10n.gitRepoSelectorTitle,
+                g11n.gitRepoSelectorTitle,
                 style: theme.textTheme.titleMedium,
               ),
             ),
@@ -721,7 +721,7 @@ class RepoPickerSheet extends StatelessWidget {
               Padding(
                 padding: const EdgeInsets.symmetric(vertical: Spacing.md),
                 child: Text(
-                  l10n.gitPickRepoEmpty,
+                  g11n.gitPickRepoEmpty,
                   style: theme.textTheme.bodyMedium?.copyWith(
                     color: theme.colorScheme.onSurfaceVariant,
                   ),
@@ -771,7 +771,7 @@ class RepoPickerSheet extends StatelessWidget {
                             ),
                             if (!isRepo)
                               Text(
-                                l10n.gitRepoNotRepo,
+                                g11n.gitRepoNotRepo,
                                 style: theme.textTheme.labelSmall?.copyWith(
                                   color: theme.colorScheme.onSurfaceVariant,
                                 ),
@@ -809,11 +809,11 @@ class _CloneRepoDialogState extends State<CloneRepoDialog> {
 
   @override
   Widget build(BuildContext context) {
-    final l10n = AppLocalizations.of(context);
+    final g11n = AppGlobalizations.of(context);
     final theme = Theme.of(context);
     return AlertDialog(
       title: Text(
-        l10n.gitCloneDialogTitle,
+        g11n.gitCloneDialogTitle,
         style: theme.textTheme.titleMedium?.copyWith(fontWeight: FontWeight.w600),
       ),
       content: Column(
@@ -821,7 +821,7 @@ class _CloneRepoDialogState extends State<CloneRepoDialog> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            l10n.gitCloneDesc,
+            g11n.gitCloneDesc,
             style: theme.textTheme.bodySmall?.copyWith(
               color: theme.colorScheme.onSurfaceVariant,
             ),
@@ -832,8 +832,8 @@ class _CloneRepoDialogState extends State<CloneRepoDialog> {
             autocorrect: false,
             onChanged: (_) => setState(() {}),
             decoration: InputDecoration(
-              labelText: l10n.gitCloneUrlLabel,
-              hintText: l10n.gitCloneUrlHint,
+              labelText: g11n.gitCloneUrlLabel,
+              hintText: g11n.gitCloneUrlHint,
               border: const OutlineInputBorder(),
             ),
           ),
@@ -843,13 +843,13 @@ class _CloneRepoDialogState extends State<CloneRepoDialog> {
       actions: [
         TextButton(
           onPressed: () => Navigator.of(context).pop(),
-          child: Text(l10n.cancel),
+          child: Text(g11n.cancel),
         ),
         TextButton(
           onPressed: _url.text.trim().isEmpty
               ? null
               : () => Navigator.of(context).pop(_url.text.trim()),
-          child: Text(l10n.gitActionClone),
+          child: Text(g11n.gitActionClone),
         ),
       ],
     );
@@ -893,10 +893,10 @@ class _CommitDetailSheetState extends State<CommitDetailSheet> {
   }
 
   Future<void> _promptBranch() async {
-    final l10n = AppLocalizations.of(context);
+    final g11n = AppGlobalizations.of(context);
     final name = await _promptName(
-      title: l10n.gitCreateBranchFromCommit,
-      label: l10n.gitBranchName,
+      title: g11n.gitCreateBranchFromCommit,
+      label: g11n.gitBranchName,
     );
     if (name != null) {
       widget.onCreateBranch(name);
@@ -905,10 +905,10 @@ class _CommitDetailSheetState extends State<CommitDetailSheet> {
   }
 
   Future<void> _promptTag() async {
-    final l10n = AppLocalizations.of(context);
+    final g11n = AppGlobalizations.of(context);
     final name = await _promptName(
-      title: l10n.gitCreateTagAtCommit,
-      label: l10n.gitTagName,
+      title: g11n.gitCreateTagAtCommit,
+      label: g11n.gitTagName,
     );
     if (name != null) widget.onCreateTag(name);
   }
@@ -917,23 +917,23 @@ class _CommitDetailSheetState extends State<CommitDetailSheet> {
     return showTextInputDialog(
       context,
       title: title,
-      confirmLabel: AppLocalizations.of(context).create,
+      confirmLabel: AppGlobalizations.of(context).create,
       labelText: label,
     );
   }
 
   Future<void> _promptReset() async {
-    final l10n = AppLocalizations.of(context);
+    final g11n = AppGlobalizations.of(context);
     final confirmed = await showDialog<bool>(
       context: context,
       builder: (dialogContext) => AlertDialog(
-        title: Text(l10n.gitResetToCommit),
+        title: Text(g11n.gitResetToCommit),
         content: StatefulBuilder(
           builder: (context, setDialogState) => Column(
             mainAxisSize: MainAxisSize.min,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text(l10n.gitResetConfirm(widget.commit.shortHash)),
+              Text(g11n.gitResetConfirm(widget.commit.shortHash)),
               for (final mode in ['soft', 'mixed'])
                 RadioListTile<String>(
                   value: mode,
@@ -941,7 +941,7 @@ class _CommitDetailSheetState extends State<CommitDetailSheet> {
                   dense: true,
                   contentPadding: EdgeInsets.zero,
                   title: Text(
-                    mode == 'soft' ? l10n.gitResetSoft : l10n.gitResetMixed,
+                    mode == 'soft' ? g11n.gitResetSoft : g11n.gitResetMixed,
                     style: Theme.of(context).textTheme.bodySmall,
                   ),
                   onChanged: (value) {
@@ -955,12 +955,12 @@ class _CommitDetailSheetState extends State<CommitDetailSheet> {
         actions: [
           TextButton(
             onPressed: () => Navigator.of(dialogContext).pop(false),
-            child: Text(l10n.cancel),
+            child: Text(g11n.cancel),
           ),
           TextButton(
             onPressed: () => Navigator.of(dialogContext).pop(true),
             child: Text(
-              l10n.gitResetToCommit,
+              g11n.gitResetToCommit,
               style: TextStyle(color: Theme.of(dialogContext).colorScheme.error),
             ),
           ),
@@ -975,7 +975,7 @@ class _CommitDetailSheetState extends State<CommitDetailSheet> {
 
   @override
   Widget build(BuildContext context) {
-    final l10n = AppLocalizations.of(context);
+    final g11n = AppGlobalizations.of(context);
     final theme = Theme.of(context);
     final commit = widget.commit;
     return SafeArea(
@@ -1022,12 +1022,12 @@ class _CommitDetailSheetState extends State<CommitDetailSheet> {
                   ),
                 ),
                 TextButton(
-                  onPressed: () => _copy(context, commit.shortHash, l10n.gitPathCopied),
-                  child: Text(l10n.gitCopyShortHash, style: theme.textTheme.labelMedium),
+                  onPressed: () => _copy(context, commit.shortHash, g11n.gitPathCopied),
+                  child: Text(g11n.gitCopyShortHash, style: theme.textTheme.labelMedium),
                 ),
                 TextButton(
-                  onPressed: () => _copy(context, commit.hash, l10n.gitPathCopied),
-                  child: Text(l10n.gitCopyFullHash, style: theme.textTheme.labelMedium),
+                  onPressed: () => _copy(context, commit.hash, g11n.gitPathCopied),
+                  child: Text(g11n.gitCopyFullHash, style: theme.textTheme.labelMedium),
                 ),
               ],
             ),
@@ -1037,7 +1037,7 @@ class _CommitDetailSheetState extends State<CommitDetailSheet> {
                 Expanded(
                   child: _DetailAction(
                     icon: Iconfont.gitBranch,
-                    label: l10n.gitTabBranches,
+                    label: g11n.gitTabBranches,
                     onPressed: _promptBranch,
                   ),
                 ),
@@ -1045,7 +1045,7 @@ class _CommitDetailSheetState extends State<CommitDetailSheet> {
                 Expanded(
                   child: _DetailAction(
                     icon: Iconfont.tag,
-                    label: l10n.gitTags,
+                    label: g11n.gitTags,
                     onPressed: _promptTag,
                   ),
                 ),
@@ -1062,7 +1062,7 @@ class _CommitDetailSheetState extends State<CommitDetailSheet> {
             if (commit.isMerge) ...[
               const SizedBox(height: Spacing.sm),
               Text(
-                l10n.gitMergeCommit,
+                g11n.gitMergeCommit,
                 style: theme.textTheme.labelSmall?.copyWith(
                   color: theme.colorScheme.tertiary,
                 ),
@@ -1079,7 +1079,7 @@ class _CommitDetailSheetState extends State<CommitDetailSheet> {
                   ),
                   const SizedBox(width: Spacing.sm),
                   Text(
-                    l10n.gitLoadingFiles,
+                    g11n.gitLoadingFiles,
                     style: theme.textTheme.labelSmall?.copyWith(
                       color: theme.colorScheme.onSurfaceVariant,
                     ),
@@ -1089,14 +1089,14 @@ class _CommitDetailSheetState extends State<CommitDetailSheet> {
             else if (widget.files != null) ...[
               if (widget.files!.isEmpty)
                 Text(
-                  l10n.gitNoFilesChanged,
+                  g11n.gitNoFilesChanged,
                   style: theme.textTheme.labelSmall?.copyWith(
                     color: theme.colorScheme.onSurfaceVariant,
                   ),
                 )
               else ...[
                 Text(
-                  l10n.gitFilesChanged(widget.files!.length),
+                  g11n.gitFilesChanged(widget.files!.length),
                   style: theme.textTheme.labelSmall?.copyWith(
                     color: theme.colorScheme.onSurfaceVariant,
                   ),

@@ -13,7 +13,7 @@ import '../../data/capture/capture_manager.dart';
 import '../../data/capture/capture_pip.dart';
 import '../../data/capture/capture_channel.dart';
 import '../../data/capture/capture_models.dart';
-import '../../l10n/app_localizations.dart';
+import '../../g11n/app_globalizations.dart';
 import 'capture_detail_page.dart';
 
 class CapturePage extends ConsumerStatefulWidget {
@@ -39,7 +39,7 @@ class _CapturePageState extends ConsumerState<CapturePage> {
   }
 
   Future<void> _downloadCa(BuildContext context) async {
-    final l10n = AppLocalizations.of(context);
+    final g11n = AppGlobalizations.of(context);
     final manager = ref.read(captureManagerProvider);
     final info = await manager.caInfo();
     final path = info['certPath'] as String?;
@@ -55,10 +55,10 @@ class _CapturePageState extends ConsumerState<CapturePage> {
       await src.copy(target.path);
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text('${l10n.captureCaPath}: ${target.path}')),
+          SnackBar(content: Text('${g11n.captureCaPath}: ${target.path}')),
         );
       }
-      await Share.shareXFiles([XFile(target.path)], text: l10n.captureCaTitle);
+      await Share.shareXFiles([XFile(target.path)], text: g11n.captureCaTitle);
     } catch (e) {
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
@@ -72,34 +72,34 @@ class _CapturePageState extends ConsumerState<CapturePage> {
     final manager = ref.read(captureManagerProvider);
     final info = await manager.caInfo();
     final path = info['certPath'] as String?;
-    final l10n = AppLocalizations.of(context);
+    final g11n = AppGlobalizations.of(context);
     if (path == null) return;
     if (!mounted) return;
     await showDialog<void>(
       context: context,
       builder: (ctx) => AlertDialog(
-        title: Text(l10n.captureCaTitle),
+        title: Text(g11n.captureCaTitle),
         content: SelectableText(
-          '${l10n.captureCaPath}: $path\n\n${l10n.captureCaGuide}',
+          '${g11n.captureCaPath}: $path\n\n${g11n.captureCaGuide}',
         ),
         actions: [
           TextButton(
             onPressed: () => Navigator.pop(ctx),
-            child: Text(l10n.close),
+            child: Text(g11n.close),
           ),
           TextButton(
             onPressed: () async {
               await CaptureChannel.openSecuritySettings();
               if (ctx.mounted) Navigator.pop(ctx);
             },
-            child: Text(l10n.captureOpenSecurity),
+            child: Text(g11n.captureOpenSecurity),
           ),
           TextButton(
             onPressed: () async {
               if (ctx.mounted) Navigator.pop(ctx);
               await _downloadCa(context);
             },
-            child: Text(l10n.captureDownloadCa),
+            child: Text(g11n.captureDownloadCa),
           ),
           FilledButton.tonal(
             onPressed: () async {
@@ -108,11 +108,11 @@ class _CapturePageState extends ConsumerState<CapturePage> {
               if (ctx.mounted) Navigator.pop(ctx);
               if (mounted && !ok) {
                 ScaffoldMessenger.of(context).showSnackBar(
-                  SnackBar(content: Text(l10n.captureCaInstallFail)),
+                  SnackBar(content: Text(g11n.captureCaInstallFail)),
                 );
               }
             },
-            child: Text(l10n.captureInstallCa),
+            child: Text(g11n.captureInstallCa),
           ),
         ],
       ),
@@ -134,12 +134,12 @@ class _CapturePageState extends ConsumerState<CapturePage> {
     if (_pipBusy) return;
     setState(() => _pipBusy = true);
     try {
-      final l10n = AppLocalizations.of(context);
+      final g11n = AppGlobalizations.of(context);
       final manager = ref.read(captureManagerProvider);
       final ok = await CapturePictureInPicture.enter(running: manager.status().running);
       if (!ok && mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(content: Text(l10n.capturePipUnsupported)));
+            SnackBar(content: Text(g11n.capturePipUnsupported)));
       }
     } finally {
       if (mounted) setState(() => _pipBusy = false);
@@ -147,15 +147,15 @@ class _CapturePageState extends ConsumerState<CapturePage> {
   }
 
   Future<void> _clearWithConfirm() async {
-    final l10n = AppLocalizations.of(context);
+    final g11n = AppGlobalizations.of(context);
     final confirmed = await showDialog<bool?>(
       context: context,
       builder: (ctx) => AlertDialog(
-        title: Text(l10n.captureClear),
-        content: Text(l10n.captureClearConfirm),
+        title: Text(g11n.captureClear),
+        content: Text(g11n.captureClearConfirm),
         actions: [
-          TextButton(onPressed: () => Navigator.pop(ctx, false), child: Text(l10n.cancel)),
-          FilledButton(onPressed: () => Navigator.pop(ctx, true), child: Text(l10n.confirm)),
+          TextButton(onPressed: () => Navigator.pop(ctx, false), child: Text(g11n.cancel)),
+          FilledButton(onPressed: () => Navigator.pop(ctx, true), child: Text(g11n.confirm)),
         ],
       ),
     );
@@ -166,7 +166,7 @@ class _CapturePageState extends ConsumerState<CapturePage> {
 
   @override
   Widget build(BuildContext context) {
-    final l10n = AppLocalizations.of(context);
+    final g11n = AppGlobalizations.of(context);
     final manager = ref.watch(captureManagerProvider);
     final s = manager.status();
 
@@ -184,29 +184,29 @@ class _CapturePageState extends ConsumerState<CapturePage> {
 
           return Scaffold(
             appBar: AppBar(
-              title: Text(l10n.captureTitle),
+              title: Text(g11n.captureTitle),
               actions: [
                 if (CapturePictureInPicture.supported)
                   IconButton(
-                    tooltip: l10n.capturePip,
+                    tooltip: g11n.capturePip,
                     icon: _pipBusy
                         ? const SizedBox(width: 20, height: 20, child: CircularProgressIndicator(strokeWidth: 2))
                         : const Icon(Iconfont.pictureInPicture, size: 20),
                     onPressed: _pipBusy ? null : _enterPip,
                   ),
                 IconButton(
-                  tooltip: l10n.captureCaTitle,
+                  tooltip: g11n.captureCaTitle,
                   icon: const Icon(Iconfont.shield),
                   onPressed: () => _installCa(context),
                 ),
                 IconButton(
-                  tooltip: l10n.captureClear,
+                  tooltip: g11n.captureClear,
                   icon: const Icon(Iconfont.trash2),
                   onPressed: s.flowCount == 0 ? null : _clearWithConfirm,
                 ),
               ],
               bottom: TabBar(
-                tabs: [Tab(text: l10n.captureSequence), Tab(text: l10n.captureDomains)],
+                tabs: [Tab(text: g11n.captureSequence), Tab(text: g11n.captureDomains)],
               ),
             ),
             body: Column(
@@ -216,7 +216,7 @@ class _CapturePageState extends ConsumerState<CapturePage> {
                   child: TextField(
                     controller: _searchController,
                     decoration: InputDecoration(
-                      hintText: l10n.captureSearchHint,
+                      hintText: g11n.captureSearchHint,
                       prefixIcon: const Icon(Iconfont.search, size: 18),
                       suffixIcon: _query.isEmpty
                           ? null
@@ -247,16 +247,16 @@ class _CapturePageState extends ConsumerState<CapturePage> {
                 Expanded(
                   child: TabBarView(
                     children: [
-                      _FlowList(flows: flows, l10n: l10n),
+                      _FlowList(flows: flows, g11n: g11n),
                       _HostList(
                         hosts: hosts,
-                        l10n: l10n,
+                        g11n: g11n,
                         onSelect: (host) => setState(() => _hostFilter = host),
                       ),
                     ],
                   ),
                 ),
-                _StatusBar(state: s, l10n: l10n),
+                _StatusBar(state: s, g11n: g11n),
               ],
             ),
             floatingActionButton: FloatingActionButton(
@@ -286,17 +286,17 @@ class _CapturePageState extends ConsumerState<CapturePage> {
 
 /// 底部状态栏:运行中显示监听地址与记录数。
 class _StatusBar extends StatelessWidget {
-  const _StatusBar({required this.state, required this.l10n});
+  const _StatusBar({required this.state, required this.g11n});
 
   final CaptureState state;
-  final AppLocalizations l10n;
+  final AppGlobalizations g11n;
 
   @override
   Widget build(BuildContext context) {
     final text = state.running
-        ? '${l10n.captureRunning}: 127.0.0.1:${state.port} · ${state.flowCount} flows'
+        ? '${g11n.captureRunning}: 127.0.0.1:${state.port} · ${state.flowCount} flows'
             '${state.caReady ? '' : ' · CA 未就绪'}'
-        : '${l10n.captureStopped} · ${state.flowCount} flows';
+        : '${g11n.captureStopped} · ${state.flowCount} flows';
     return SafeArea(
       top: false,
       child: Padding(
@@ -326,10 +326,10 @@ class _StatusBar extends StatelessWidget {
 
 /// 请求序列:最新的在最上面,每行「方法 URL」+「#序号 时间 [状态码] 类型 大小 耗时」。
 class _FlowList extends StatelessWidget {
-  const _FlowList({required this.flows, required this.l10n});
+  const _FlowList({required this.flows, required this.g11n});
 
   final List<CaptureFlow> flows;
-  final AppLocalizations l10n;
+  final AppGlobalizations g11n;
 
   @override
   Widget build(BuildContext context) {
@@ -338,7 +338,7 @@ class _FlowList extends StatelessWidget {
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: Spacing.xl),
           child: Text(
-            l10n.captureEmpty,
+            g11n.captureEmpty,
             textAlign: TextAlign.center,
             style: TextStyle(color: context.semantic.subtleText, fontSize: 13),
           ),
@@ -484,17 +484,17 @@ class _FlowList extends StatelessWidget {
 
 /// 按域名聚合:显示域名、最近请求时间与条数。
 class _HostList extends StatelessWidget {
-  const _HostList({required this.hosts, required this.l10n, required this.onSelect});
+  const _HostList({required this.hosts, required this.g11n, required this.onSelect});
 
   final List<CaptureHostSummary> hosts;
-  final AppLocalizations l10n;
+  final AppGlobalizations g11n;
   final ValueChanged<String> onSelect;
 
   @override
   Widget build(BuildContext context) {
     if (hosts.isEmpty) {
       return Center(
-        child: Text(l10n.captureNoDomains, style: TextStyle(color: context.semantic.subtleText)),
+        child: Text(g11n.captureNoDomains, style: TextStyle(color: context.semantic.subtleText)),
       );
     }
     return ListView.separated(
@@ -506,7 +506,7 @@ class _HostList extends StatelessWidget {
           dense: true,
           title: Text(e.host, style: const TextStyle(fontSize: 14), maxLines: 1, overflow: TextOverflow.ellipsis),
           subtitle: Text(
-            l10n.captureDomainSubtitle(
+            g11n.captureDomainSubtitle(
               '${e.lastAt.hour.toString().padLeft(2, '0')}:'
                   '${e.lastAt.minute.toString().padLeft(2, '0')}:'
                   '${e.lastAt.second.toString().padLeft(2, '0')}',

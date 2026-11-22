@@ -4,7 +4,7 @@ import '../../../agent/checkpoint_manager.dart';
 import '../../../core/icons/iconfont.dart';
 import '../../../core/theme/semantic_colors.dart';
 import '../../../core/theme/tokens.dart';
-import '../../../l10n/app_localizations.dart';
+import '../../../g11n/app_globalizations.dart';
 
 /// 回退选项弹层(对齐上游 RewindOptionsBottomSheet):三选一 + 目标提示词摘要。
 Future<RewindOption?> showRewindOptionsSheet(
@@ -17,7 +17,7 @@ Future<RewindOption?> showRewindOptionsSheet(
     isScrollControlled: true,
     backgroundColor: context.semantic.cardSurface,
     builder: (sheetContext) {
-      final l10n = AppLocalizations.of(sheetContext);
+      final g11n = AppGlobalizations.of(sheetContext);
       final theme = Theme.of(sheetContext);
       return SafeArea(
         child: Padding(
@@ -27,13 +27,13 @@ Future<RewindOption?> showRewindOptionsSheet(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                l10n.checkpointRewindTitle,
+                g11n.checkpointRewindTitle,
                 style: theme.textTheme.titleMedium?.copyWith(fontWeight: FontWeight.bold),
               ),
               if (promptSnippet.isNotEmpty) ...[
                 const SizedBox(height: 4),
                 Text(
-                  l10n.checkpointTargetPrompt(promptSnippet),
+                  g11n.checkpointTargetPrompt(promptSnippet),
                   maxLines: 2,
                   overflow: TextOverflow.ellipsis,
                   style: theme.textTheme.bodySmall?.copyWith(
@@ -44,20 +44,20 @@ Future<RewindOption?> showRewindOptionsSheet(
               const SizedBox(height: Spacing.md),
               _OptionRow(
                 icon: Iconfont.rotateCcw,
-                title: l10n.checkpointRestoreCodeAndConversation,
-                description: l10n.checkpointRestoreCodeAndConversationDesc,
+                title: g11n.checkpointRestoreCodeAndConversation,
+                description: g11n.checkpointRestoreCodeAndConversationDesc,
                 onTap: () => Navigator.pop(sheetContext, RewindOption.codeAndConversation),
               ),
               _OptionRow(
                 icon: Iconfont.messageSquare,
-                title: l10n.checkpointRestoreConversation,
-                description: l10n.checkpointRestoreConversationDesc,
+                title: g11n.checkpointRestoreConversation,
+                description: g11n.checkpointRestoreConversationDesc,
                 onTap: () => Navigator.pop(sheetContext, RewindOption.conversation),
               ),
               _OptionRow(
                 icon: Iconfont.fileText,
-                title: l10n.checkpointRestoreCode,
-                description: l10n.checkpointRestoreCodeDesc,
+                title: g11n.checkpointRestoreCode,
+                description: g11n.checkpointRestoreCodeDesc,
                 onTap: () => Navigator.pop(sheetContext, RewindOption.code),
               ),
             ],

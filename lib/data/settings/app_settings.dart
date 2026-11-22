@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-import '../../l10n/app_localizations.dart';
+import '../../g11n/app_globalizations.dart';
 
 enum AppThemeMode {
   system,
@@ -43,9 +43,9 @@ final sharedPreferencesProvider = Provider<SharedPreferences>(
 );
 
 /// 当前语言下的文案(控制器等没有 BuildContext 的地方使用)。
-final appLocalizationsProvider = Provider<AppLocalizations>((ref) {
+final appGlobalizationsProvider = Provider<AppGlobalizations>((ref) {
   final locale = ref.watch(settingsProvider).locale ?? PlatformDispatcher.instance.locale;
-  return lookupAppLocalizations(Locale(locale.languageCode == 'zh' ? 'zh' : 'en'));
+  return lookupAppGlobalizations(Locale(locale.languageCode == 'zh' ? 'zh' : 'en'));
 });
 
 final settingsProvider =

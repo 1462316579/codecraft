@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../../l10n/app_localizations.dart';
+import '../../g11n/app_globalizations.dart';
 
 /// 单行文本输入弹窗:确定返回去空白后的内容,取消返回 null。
 ///
@@ -72,7 +72,7 @@ class _TextInputDialogState extends State<_TextInputDialog> {
 
   @override
   Widget build(BuildContext context) {
-    final l10n = AppLocalizations.of(context);
+    final g11n = AppGlobalizations.of(context);
     return AlertDialog(
       title: Text(widget.title),
       content: TextField(
@@ -87,7 +87,7 @@ class _TextInputDialogState extends State<_TextInputDialog> {
       actions: [
         TextButton(
           onPressed: () => Navigator.pop(context),
-          child: Text(l10n.cancel),
+          child: Text(g11n.cancel),
         ),
         TextButton(
           onPressed: _confirm,

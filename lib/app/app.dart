@@ -3,7 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../core/theme/app_theme.dart';
 import '../data/settings/app_settings.dart';
-import '../l10n/app_localizations.dart';
+import '../g11n/app_globalizations.dart';
 import 'router.dart';
 import 'permissions_gate.dart';
 
@@ -14,13 +14,13 @@ class CodecraftApp extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final settings = ref.watch(settingsProvider);
     return MaterialApp.router(
-      onGenerateTitle: (context) => AppLocalizations.of(context).appName,
+      onGenerateTitle: (context) => AppGlobalizations.of(context).appName,
       theme: buildAppTheme(Brightness.light),
       darkTheme: buildAppTheme(Brightness.dark),
       themeMode: settings.themeMode.material,
       locale: settings.locale,
-      localizationsDelegates: AppLocalizations.localizationsDelegates,
-      supportedLocales: AppLocalizations.supportedLocales,
+      localizationsDelegates: AppGlobalizations.localizationsDelegates,
+      supportedLocales: AppGlobalizations.supportedLocales,
       routerConfig: ref.watch(routerProvider),
       debugShowCheckedModeBanner: false,
       // 权限引导挂在 MaterialApp 内部,保证首帧渲染完再弹系统授权框。

@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../../core/theme/semantic_colors.dart';
 import '../../core/theme/tokens.dart';
-import '../../l10n/app_localizations.dart';
+import '../../g11n/app_globalizations.dart';
 
 /// 居中欢迎文案(上游 WelcomeState 的「有什么可以帮你的?」):
 /// 空会话的聊天页展示;应用启动即保证有一个当前会话,因此不再需要独立的欢迎页。
@@ -18,7 +18,7 @@ class ChatWelcomeMessage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final l10n = AppLocalizations.of(context);
+    final g11n = AppGlobalizations.of(context);
     final subtle = context.semantic.subtleText;
     return LayoutBuilder(
       builder: (context, constraints) {
@@ -42,12 +42,12 @@ class ChatWelcomeMessage extends StatelessWidget {
                 mainAxisSize: MainAxisSize.min,
                 children: [
                   Text(
-                    l10n.chatPlaceholder,
+                    g11n.chatPlaceholder,
                     style: Theme.of(context).textTheme.headlineSmall,
                   ),
                   const SizedBox(height: Spacing.sm),
                   Text(
-                    l10n.chatInputHint,
+                    g11n.chatInputHint,
                     textAlign: TextAlign.center,
                     style: Theme.of(context).textTheme.bodyMedium?.copyWith(color: subtle),
                   ),

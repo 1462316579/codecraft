@@ -7,7 +7,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../core/theme/semantic_colors.dart';
 import '../../core/theme/tokens.dart';
 import '../../data/workspace_files.dart';
-import '../../l10n/app_localizations.dart';
+import '../../g11n/app_globalizations.dart';
 import '../../reverse/axml/axml_file.dart';
 import 'hex_view.dart';
 import 'reverse_widgets.dart';
@@ -81,7 +81,7 @@ class _AXmlEditorPageState extends ConsumerState<AXmlEditorPage> {
 
   @override
   Widget build(BuildContext context) {
-    final l10n = AppLocalizations.of(context);
+    final g11n = AppGlobalizations.of(context);
     final theme = Theme.of(context);
     final bytes = _bytes;
     return Scaffold(
@@ -103,7 +103,7 @@ class _AXmlEditorPageState extends ConsumerState<AXmlEditorPage> {
           ? const Center(child: CircularProgressIndicator())
           : _showHex
               ? (bytes == null
-                  ? ReverseHint(text: '${l10n.reverseLoadFailed}\n$_error')
+                  ? ReverseHint(text: '${g11n.reverseLoadFailed}\n$_error')
                   : HexView(
                       bytes: bytes,
                       scrollController: _hexScroll,

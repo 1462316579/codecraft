@@ -9,7 +9,7 @@ import '../../core/theme/tokens.dart';
 import '../../core/ui/settings_group.dart';
 import '../../data/db/llm_call_records.dart';
 import '../../data/token_stats.dart';
-import '../../l10n/app_localizations.dart';
+import '../../g11n/app_globalizations.dart';
 
 /// Token 统计页(对照上游 `SettingsScreen` 的 `SettingsSection.TokenStats` / `TokenStatsSection.kt`):
 /// 周期切换 → 汇总卡片 → 消耗趋势 → 供应商/模型统计 → 调用记录表。
@@ -36,22 +36,22 @@ class _TokenStatsPageState extends ConsumerState<TokenStatsPage> {
 
   @override
   Widget build(BuildContext context) {
-    final l10n = AppLocalizations.of(context);
+    final g11n = AppGlobalizations.of(context);
     final state = ref.watch(tokenStatsProvider);
     final controller = ref.read(tokenStatsProvider.notifier);
     final theme = Theme.of(context);
     return Scaffold(
       extendBodyBehindAppBar: true,
       appBar: AppBar(
-        title: Text(l10n.tokenStatsTitle),
+        title: Text(g11n.tokenStatsTitle),
         backgroundColor: Colors.transparent,
         surfaceTintColor: Colors.transparent,
         elevation: 0,
         scrolledUnderElevation: 0,
         actions: [
           IconButton(
-            onPressed: () => _confirmReset(context, l10n, controller),
-            tooltip: l10n.tokenStatsReset,
+            onPressed: () => _confirmReset(context, g11n, controller),
+            tooltip: g11n.tokenStatsReset,
             icon: const Icon(Iconfont.trash2, size: 20),
           ),
         ],
@@ -78,21 +78,21 @@ class _TokenStatsPageState extends ConsumerState<TokenStatsPage> {
                   140,
                 ),
               children: [
-                _periodSelector(context, l10n, state, controller),
+                _periodSelector(context, g11n, state, controller),
                 const SizedBox(height: Spacing.md),
-                _filterBar(context, l10n, state, controller),
+                _filterBar(context, g11n, state, controller),
                 const SizedBox(height: Spacing.md),
-                _summaryCards(context, l10n, state),
+                _summaryCards(context, g11n, state),
                 if (state.trend.length > 1) ...[
-                  SettingsGroupHeader(text: l10n.tokenStatsTrend),
-                  _trendCard(context, l10n, state),
+                  SettingsGroupHeader(text: g11n.tokenStatsTrend),
+                  _trendCard(context, g11n, state),
                 ],
-                SettingsGroupHeader(text: l10n.tokenStatsProvider),
-                _providerStats(context, l10n, state, controller),
-                SettingsGroupHeader(text: l10n.tokenStatsModel),
-                _modelStats(context, l10n, state, controller),
-                SettingsGroupHeader(text: l10n.tokenStatsRecentCalls),
-                _callsTable(context, l10n, state, controller),
+                SettingsGroupHeader(text: g11n.tokenStatsProvider),
+                _providerStats(context, g11n, state, controller),
+                SettingsGroupHeader(text: g11n.tokenStatsModel),
+                _modelStats(context, g11n, state, controller),
+                SettingsGroupHeader(text: g11n.tokenStatsRecentCalls),
+                _callsTable(context, g11n, state, controller),
               ],
             ),
         ),
@@ -101,22 +101,22 @@ class _TokenStatsPageState extends ConsumerState<TokenStatsPage> {
 
   Future<void> _confirmReset(
     BuildContext context,
-    AppLocalizations l10n,
+    AppGlobalizations g11n,
     TokenStatsController controller,
   ) async {
     final confirmed = await showDialog<bool>(
       context: context,
       builder: (dialogContext) => AlertDialog(
-        title: Text(l10n.tokenStatsResetTitle),
-        content: Text(l10n.tokenStatsResetConfirm),
+        title: Text(g11n.tokenStatsResetTitle),
+        content: Text(g11n.tokenStatsResetConfirm),
         actions: [
           TextButton(
             onPressed: () => Navigator.of(dialogContext).pop(false),
-            child: Text(l10n.cancel),
+            child: Text(g11n.cancel),
           ),
           TextButton(
             onPressed: () => Navigator.of(dialogContext).pop(true),
-            child: Text(l10n.confirm),
+            child: Text(g11n.confirm),
           ),
         ],
       ),
@@ -126,15 +126,15 @@ class _TokenStatsPageState extends ConsumerState<TokenStatsPage> {
 
   Widget _periodSelector(
     BuildContext context,
-    AppLocalizations l10n,
+    AppGlobalizations g11n,
     TokenStatsState state,
     TokenStatsController controller,
   ) {
     final labels = {
-      TokenStatsPeriod.today: l10n.tokenStatsPeriodToday,
-      TokenStatsPeriod.last7Days: l10n.tokenStatsPeriod7d,
-      TokenStatsPeriod.last30Days: l10n.tokenStatsPeriod30d,
-      TokenStatsPeriod.all: l10n.tokenStatsPeriodAll,
+      TokenStatsPeriod.today: g11n.tokenStatsPeriodToday,
+      TokenStatsPeriod.last7Days: g11n.tokenStatsPeriod7d,
+      TokenStatsPeriod.last30Days: g11n.tokenStatsPeriod30d,
+      TokenStatsPeriod.all: g11n.tokenStatsPeriodAll,
     };
     // 截图实测:四个按钮等宽(各 270px / 间距 28px),对应上游每个 chip 的 weight(1f)。
     // 用自绘胶囊而非 FilterChip:后者的 Material 3 点击区域会把高度压成 48dp 且边框不可控。
@@ -158,7 +158,7 @@ class _TokenStatsPageState extends ConsumerState<TokenStatsPage> {
 
   Widget _filterBar(
     BuildContext context,
-    AppLocalizations l10n,
+    AppGlobalizations g11n,
     TokenStatsState state,
     TokenStatsController controller,
   ) {
@@ -170,12 +170,12 @@ class _TokenStatsPageState extends ConsumerState<TokenStatsPage> {
             context,
             selectedValue: state.filterProviderId,
             label: state.filterProviderId == null
-                ? l10n.tokenStatsFilterAllProviders
-                : l10n.tokenStatsFilterProvider(
+                ? g11n.tokenStatsFilterAllProviders
+                : g11n.tokenStatsFilterProvider(
                     _providerName(state, state.filterProviderId!) ??
                         state.filterProviderId!),
             options: [
-              (null, l10n.tokenStatsFilterAllProviders),
+              (null, g11n.tokenStatsFilterAllProviders),
               for (final id in state.availableProviders)
                 (id, _providerName(state, id) ?? id),
             ],
@@ -188,10 +188,10 @@ class _TokenStatsPageState extends ConsumerState<TokenStatsPage> {
             context,
             selectedValue: state.filterModel,
             label: state.filterModel == null
-                ? l10n.tokenStatsFilterAllModels
-                : l10n.tokenStatsFilterModel(state.filterModel!),
+                ? g11n.tokenStatsFilterAllModels
+                : g11n.tokenStatsFilterModel(state.filterModel!),
             options: [
-              (null, l10n.tokenStatsFilterAllModels),
+              (null, g11n.tokenStatsFilterAllModels),
               for (final model in state.availableModels) (model, model),
             ],
             onSelected: controller.selectFilterModel,
@@ -201,7 +201,7 @@ class _TokenStatsPageState extends ConsumerState<TokenStatsPage> {
           const SizedBox(width: Spacing.xs),
           IconButton(
             onPressed: controller.clearFilters,
-            tooltip: l10n.tokenStatsFilterClear,
+            tooltip: g11n.tokenStatsFilterClear,
             icon: const Icon(Iconfont.x, size: 18),
           ),
         ],
@@ -291,7 +291,7 @@ class _TokenStatsPageState extends ConsumerState<TokenStatsPage> {
 
   Widget _summaryCards(
     BuildContext context,
-    AppLocalizations l10n,
+    AppGlobalizations g11n,
     TokenStatsState state,
   ) {
     final summary = state.summary;
@@ -303,7 +303,7 @@ class _TokenStatsPageState extends ConsumerState<TokenStatsPage> {
             Expanded(
               child: _summaryCard(
                 context,
-                label: l10n.tokenStatsTotal,
+                label: g11n.tokenStatsTotal,
                 value: hasData ? formatTokenCount(summary.totalTokens) : '-',
               ),
             ),
@@ -311,7 +311,7 @@ class _TokenStatsPageState extends ConsumerState<TokenStatsPage> {
             Expanded(
               child: _summaryCard(
                 context,
-                label: l10n.tokenStatsRequests,
+                label: g11n.tokenStatsRequests,
                 value: hasData ? '${summary.calls}' : '-',
               ),
             ),
@@ -323,7 +323,7 @@ class _TokenStatsPageState extends ConsumerState<TokenStatsPage> {
             Expanded(
               child: _summaryCard(
                 context,
-                label: l10n.tokenStatsCost,
+                label: g11n.tokenStatsCost,
                 value: formatCostUsd(state.totalCostUsd),
               ),
             ),
@@ -331,7 +331,7 @@ class _TokenStatsPageState extends ConsumerState<TokenStatsPage> {
             Expanded(
               child: _summaryCard(
                 context,
-                label: l10n.tokenStatsCacheHitRate,
+                label: g11n.tokenStatsCacheHitRate,
                 value: hasData ? _formatCacheHitRate(summary) : '-',
                 sub: hasData
                     ? _formatCache(
@@ -365,7 +365,7 @@ class _TokenStatsPageState extends ConsumerState<TokenStatsPage> {
   /// 缓存读写摘要(对齐上游 `formatCache`):两者都为 0 时为空串。
   String _formatCache(int cachedRead, int cachedWrite) =>
       (cachedRead > 0 || cachedWrite > 0)
-          ? AppLocalizations.of(context).tokenStatsCacheReadWrite(
+          ? AppGlobalizations.of(context).tokenStatsCacheReadWrite(
               formatTokenCount(cachedRead),
               formatTokenCount(cachedWrite),
             )
@@ -439,7 +439,7 @@ class _TokenStatsPageState extends ConsumerState<TokenStatsPage> {
   /// 趋势区(对齐上游):图在上(高 200dp,上内边距 md),分隔线后是图例行(h-lg / v-10)。
   Widget _trendCard(
     BuildContext context,
-    AppLocalizations l10n,
+    AppGlobalizations g11n,
     TokenStatsState state,
   ) {
     final theme = Theme.of(context);
@@ -459,7 +459,7 @@ class _TokenStatsPageState extends ConsumerState<TokenStatsPage> {
                 gridColor: theme.dividerColor,
                 labelColor: theme.colorScheme.onSurfaceVariant,
                 textStyle: const TextStyle(fontSize: 10),
-                hourSuffix: l10n.tokenStatsHourSuffix,
+                hourSuffix: g11n.tokenStatsHourSuffix,
               ),
               child: const SizedBox.expand(),
             ),
@@ -473,11 +473,11 @@ class _TokenStatsPageState extends ConsumerState<TokenStatsPage> {
           ),
           child: Row(
             children: [
-              _legendDot(context, inputColor, l10n.tokenStatsLegendInput),
+              _legendDot(context, inputColor, g11n.tokenStatsLegendInput),
               const SizedBox(width: Spacing.lg),
-              _legendDot(context, outputColor, l10n.tokenStatsLegendOutput),
+              _legendDot(context, outputColor, g11n.tokenStatsLegendOutput),
               const SizedBox(width: Spacing.lg),
-              _legendDot(context, cacheColor, l10n.tokenStatsLegendCached),
+              _legendDot(context, cacheColor, g11n.tokenStatsLegendCached),
             ],
           ),
         ),
@@ -506,12 +506,12 @@ class _TokenStatsPageState extends ConsumerState<TokenStatsPage> {
 
   Widget _providerStats(
     BuildContext context,
-    AppLocalizations l10n,
+    AppGlobalizations g11n,
     TokenStatsState state,
     TokenStatsController controller,
   ) {
     if (state.providers.isEmpty) {
-      return SettingsGroup(children: [_emptyPlaceholder(context, l10n)]);
+      return SettingsGroup(children: [_emptyPlaceholder(context, g11n)]);
     }
     final page = state.providerPage.clamp(0, state.providerPageCount - 1);
     final start = page * TokenStatsState.statsPageSize;
@@ -523,11 +523,11 @@ class _TokenStatsPageState extends ConsumerState<TokenStatsPage> {
       children: [
         for (var index = 0; index < items.length; index++) ...[
           if (index > 0) const SettingsDivider(),
-          _providerRow(context, l10n, state, items[index], controller),
+          _providerRow(context, g11n, state, items[index], controller),
         ],
         if (state.providerPageCount > 1) ...[
           const SettingsDivider(),
-          _pagination(context, l10n, page, state.providerPageCount,
+          _pagination(context, g11n, page, state.providerPageCount,
               controller.selectProviderPage),
         ],
       ],
@@ -537,7 +537,7 @@ class _TokenStatsPageState extends ConsumerState<TokenStatsPage> {
   /// 供应商统计行(对齐上游 ProviderStatsRow):渠道名 + 调用大字 + 密钥数/成功率 + 成功率细条,点击联动筛选。
   Widget _providerRow(
     BuildContext context,
-    AppLocalizations l10n,
+    AppGlobalizations g11n,
     TokenStatsState state,
     ProviderCallStats stats,
     TokenStatsController controller,
@@ -570,7 +570,7 @@ class _TokenStatsPageState extends ConsumerState<TokenStatsPage> {
                   child: Text(
                     stats.providerName ??
                         stats.providerId ??
-                        l10n.tokenStatsUnknown,
+                        g11n.tokenStatsUnknown,
                     maxLines: 1,
                     overflow: TextOverflow.ellipsis,
                     style: theme.textTheme.titleMedium?.copyWith(
@@ -590,7 +590,7 @@ class _TokenStatsPageState extends ConsumerState<TokenStatsPage> {
                       ),
                     ),
                     Text(
-                      l10n.tokenStatsRequestsUnit,
+                      g11n.tokenStatsRequestsUnit,
                       style: theme.textTheme.labelSmall
                           ?.copyWith(color: theme.colorScheme.onSurfaceVariant),
                     ),
@@ -604,7 +604,7 @@ class _TokenStatsPageState extends ConsumerState<TokenStatsPage> {
                 if (keyCount != null) ...[
                   Flexible(
                     child: Text(
-                      l10n.tokenStatsProviderKeys(keyCount),
+                      g11n.tokenStatsProviderKeys(keyCount),
                       maxLines: 1,
                       overflow: TextOverflow.ellipsis,
                       style: theme.textTheme.bodySmall
@@ -668,12 +668,12 @@ class _TokenStatsPageState extends ConsumerState<TokenStatsPage> {
 
   Widget _modelStats(
     BuildContext context,
-    AppLocalizations l10n,
+    AppGlobalizations g11n,
     TokenStatsState state,
     TokenStatsController controller,
   ) {
     if (state.models.isEmpty) {
-      return SettingsGroup(children: [_emptyPlaceholder(context, l10n)]);
+      return SettingsGroup(children: [_emptyPlaceholder(context, g11n)]);
     }
     final page = state.modelPage.clamp(0, state.modelPageCount - 1);
     final start = page * TokenStatsState.statsPageSize;
@@ -683,11 +683,11 @@ class _TokenStatsPageState extends ConsumerState<TokenStatsPage> {
       children: [
         for (var index = 0; index < items.length; index++) ...[
           if (index > 0) const SettingsDivider(),
-          _modelRow(context, l10n, state, items[index], controller),
+          _modelRow(context, g11n, state, items[index], controller),
         ],
         if (state.modelPageCount > 1) ...[
           const SettingsDivider(),
-          _pagination(context, l10n, page, state.modelPageCount,
+          _pagination(context, g11n, page, state.modelPageCount,
               controller.selectModelPage),
         ],
       ],
@@ -696,7 +696,7 @@ class _TokenStatsPageState extends ConsumerState<TokenStatsPage> {
 
   Widget _modelRow(
     BuildContext context,
-    AppLocalizations l10n,
+    AppGlobalizations g11n,
     TokenStatsState state,
     ModelCallStats stats,
     TokenStatsController controller,
@@ -721,7 +721,7 @@ class _TokenStatsPageState extends ConsumerState<TokenStatsPage> {
               children: [
                 Expanded(
                   child: Text(
-                    stats.model ?? l10n.tokenStatsUnknown,
+                    stats.model ?? g11n.tokenStatsUnknown,
                     maxLines: 1,
                     overflow: TextOverflow.ellipsis,
                     style: theme.textTheme.titleMedium?.copyWith(
@@ -743,13 +743,13 @@ class _TokenStatsPageState extends ConsumerState<TokenStatsPage> {
             Row(
               children: [
                 Text(
-                  l10n.tokenStatsCallsSuffix2(stats.calls),
+                  g11n.tokenStatsCallsSuffix2(stats.calls),
                   style: theme.textTheme.bodySmall
                       ?.copyWith(color: theme.colorScheme.onSurfaceVariant),
                 ),
                 const SizedBox(width: Spacing.md),
                 Text(
-                  l10n.tokenStatsSuccessRate(successRate),
+                  g11n.tokenStatsSuccessRate(successRate),
                   style: theme.textTheme.bodySmall
                       ?.copyWith(color: theme.colorScheme.onSurfaceVariant),
                 ),
@@ -789,12 +789,12 @@ class _TokenStatsPageState extends ConsumerState<TokenStatsPage> {
 
   Widget _callsTable(
     BuildContext context,
-    AppLocalizations l10n,
+    AppGlobalizations g11n,
     TokenStatsState state,
     TokenStatsController controller,
   ) {
     if (state.calls.isEmpty) {
-      return SettingsGroup(children: [_emptyPlaceholder(context, l10n)]);
+      return SettingsGroup(children: [_emptyPlaceholder(context, g11n)]);
     }
     final theme = Theme.of(context);
     final muted = theme.colorScheme.onSurfaceVariant;
@@ -808,30 +808,30 @@ class _TokenStatsPageState extends ConsumerState<TokenStatsPage> {
               _tableRow(
                 context,
                 [
-                  _cell(l10n.tokenStatsColTime, muted, 120, medium: true),
-                  _cell(l10n.tokenStatsColProvider, muted, 100, medium: true),
-                  _cell(l10n.tokenStatsColModel, muted, 150, medium: true),
-                  _cell(l10n.tokenStatsColReasoningEffort, muted, 72, medium: true),
-                  _cell(l10n.tokenStatsColStatus, muted, 70, medium: true),
-                  _cell(l10n.tokenStatsColInput, muted, 60, medium: true),
-                  _cell(l10n.tokenStatsColOutput, muted, 60, medium: true),
-                  _cell(l10n.tokenStatsColCachedRead, muted, 60, medium: true),
-                  _cell(l10n.tokenStatsColCachedWrite, muted, 60, medium: true),
-                  _cell(l10n.tokenStatsColCacheHitRate, muted, 60, medium: true),
-                  _cell(l10n.tokenStatsColTtfb, muted, 62, medium: true),
-                  _cell(l10n.tokenStatsColDuration, muted, 62, medium: true),
-                  _cell(l10n.tokenStatsColCost, muted, 80, medium: true),
+                  _cell(g11n.tokenStatsColTime, muted, 120, medium: true),
+                  _cell(g11n.tokenStatsColProvider, muted, 100, medium: true),
+                  _cell(g11n.tokenStatsColModel, muted, 150, medium: true),
+                  _cell(g11n.tokenStatsColReasoningEffort, muted, 72, medium: true),
+                  _cell(g11n.tokenStatsColStatus, muted, 70, medium: true),
+                  _cell(g11n.tokenStatsColInput, muted, 60, medium: true),
+                  _cell(g11n.tokenStatsColOutput, muted, 60, medium: true),
+                  _cell(g11n.tokenStatsColCachedRead, muted, 60, medium: true),
+                  _cell(g11n.tokenStatsColCachedWrite, muted, 60, medium: true),
+                  _cell(g11n.tokenStatsColCacheHitRate, muted, 60, medium: true),
+                  _cell(g11n.tokenStatsColTtfb, muted, 62, medium: true),
+                  _cell(g11n.tokenStatsColDuration, muted, 62, medium: true),
+                  _cell(g11n.tokenStatsColCost, muted, 80, medium: true),
                 ],
                 vertical: 8,
               ),
               for (final row in state.calls)
-                _tableRow(context, _cellsFor(context, l10n, state, row)),
+                _tableRow(context, _cellsFor(context, g11n, state, row)),
             ],
           ),
         ),
         if (state.callsPageCount > 1) ...[
           const SettingsDivider(),
-          _pagination(context, l10n, state.callsPage, state.callsPageCount,
+          _pagination(context, g11n, state.callsPage, state.callsPageCount,
               controller.selectCallsPage),
         ],
       ],
@@ -840,7 +840,7 @@ class _TokenStatsPageState extends ConsumerState<TokenStatsPage> {
 
   List<Widget> _cellsFor(
     BuildContext context,
-    AppLocalizations l10n,
+    AppGlobalizations g11n,
     TokenStatsState state,
     LlmCallRecordRow row,
   ) {
@@ -856,8 +856,8 @@ class _TokenStatsPageState extends ConsumerState<TokenStatsPage> {
     };
     return [
       _cell(_formatCallTime(record.createdAt), muted, 120),
-      _cell(row.providerName ?? record.providerId ?? l10n.tokenStatsUnknown, text, 100),
-      _cell(record.model ?? l10n.tokenStatsUnknown, text, 150),
+      _cell(row.providerName ?? record.providerId ?? g11n.tokenStatsUnknown, text, 100),
+      _cell(record.model ?? g11n.tokenStatsUnknown, text, 150),
       _cell(record.reasoningEffort ?? '-', muted, 72),
       _cell(record.status, statusColor, 70, medium: true),
       _cell('${record.inputTokens}', text, 60),
@@ -904,7 +904,7 @@ class _TokenStatsPageState extends ConsumerState<TokenStatsPage> {
 
   Widget _pagination(
     BuildContext context,
-    AppLocalizations l10n,
+    AppGlobalizations g11n,
     int page,
     int pageCount,
     ValueChanged<int> onSelect,
@@ -919,28 +919,28 @@ class _TokenStatsPageState extends ConsumerState<TokenStatsPage> {
           children: [
             TextButton(
               onPressed: page > 0 ? () => onSelect(page - 1) : null,
-              child: Text(l10n.tokenStatsPrevPage),
+              child: Text(g11n.tokenStatsPrevPage),
             ),
             Text(
-              l10n.tokenStatsPage(page + 1, pageCount),
+              g11n.tokenStatsPage(page + 1, pageCount),
               style: Theme.of(context).textTheme.bodySmall?.copyWith(
                     color: Theme.of(context).colorScheme.onSurfaceVariant,
                   ),
             ),
             TextButton(
               onPressed: page < pageCount - 1 ? () => onSelect(page + 1) : null,
-              child: Text(l10n.tokenStatsNextPage),
+              child: Text(g11n.tokenStatsNextPage),
             ),
           ],
         ),
       );
 
-  Widget _emptyPlaceholder(BuildContext context, AppLocalizations l10n) => SizedBox(
+  Widget _emptyPlaceholder(BuildContext context, AppGlobalizations g11n) => SizedBox(
         width: double.infinity,
         height: 72,
         child: Center(
           child: Text(
-            l10n.tokenStatsNoData,
+            g11n.tokenStatsNoData,
             style: Theme.of(context).textTheme.bodyMedium?.copyWith(
                   color: Theme.of(context).colorScheme.onSurfaceVariant,
                 ),

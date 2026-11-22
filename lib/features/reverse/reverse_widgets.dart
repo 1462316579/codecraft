@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../../core/theme/tokens.dart';
-import '../../l10n/app_localizations.dart';
+import '../../g11n/app_globalizations.dart';
 
 /// 字符串等长替换的编辑弹窗。
 ///
@@ -66,7 +66,7 @@ class _StringEditDialogState extends State<_StringEditDialog> {
 
   @override
   Widget build(BuildContext context) {
-    final l10n = AppLocalizations.of(context);
+    final g11n = AppGlobalizations.of(context);
     return AlertDialog(
       title: Text(widget.title),
       content: Column(
@@ -90,13 +90,13 @@ class _StringEditDialogState extends State<_StringEditDialog> {
       actions: [
         TextButton(
           onPressed: () => Navigator.pop(context),
-          child: Text(l10n.cancel),
+          child: Text(g11n.cancel),
         ),
         TextButton(
           onPressed: _error == null
               ? () => Navigator.pop(context, _controller.text)
               : null,
-          child: Text(l10n.save),
+          child: Text(g11n.save),
         ),
       ],
     );

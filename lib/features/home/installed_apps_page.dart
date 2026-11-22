@@ -8,7 +8,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../core/theme/semantic_colors.dart';
 import '../../core/theme/tokens.dart';
 import '../../data/installed_apps.dart';
-import '../../l10n/app_localizations.dart';
+import '../../g11n/app_globalizations.dart';
 
 /// 「应用逆向」新建流程第二步:从已安装应用里选目标。
 ///
@@ -26,7 +26,7 @@ class _InstalledAppsPageState extends ConsumerState<InstalledAppsPage> {
 
   @override
   Widget build(BuildContext context) {
-    final l10n = AppLocalizations.of(context);
+    final g11n = AppGlobalizations.of(context);
     final appsAsync = ref.watch(installedAppsProvider);
     return Scaffold(
       backgroundColor: context.semantic.pageBackground,
@@ -34,7 +34,7 @@ class _InstalledAppsPageState extends ConsumerState<InstalledAppsPage> {
         backgroundColor: context.semantic.pageBackground,
         surfaceTintColor: Colors.transparent,
         elevation: 0,
-        title: Text(l10n.installedAppsTitle),
+        title: Text(g11n.installedAppsTitle),
         bottom: PreferredSize(
           preferredSize: const Size.fromHeight(52),
           child: Padding(
@@ -44,7 +44,7 @@ class _InstalledAppsPageState extends ConsumerState<InstalledAppsPage> {
               decoration: InputDecoration(
                 isDense: true,
                 prefixIcon: const Icon(Iconfont.search, size: 18),
-                hintText: l10n.installedAppsSearch,
+                hintText: g11n.installedAppsSearch,
                 border: OutlineInputBorder(borderRadius: BorderRadius.circular(12)),
               ),
             ),
@@ -53,7 +53,7 @@ class _InstalledAppsPageState extends ConsumerState<InstalledAppsPage> {
       ),
       body: appsAsync.when(
         loading: () => const Center(child: CircularProgressIndicator()),
-        error: (error, _) => Center(child: Text('${l10n.errorGeneric}: $error')),
+        error: (error, _) => Center(child: Text('${g11n.errorGeneric}: $error')),
         data: (apps) {
           final filtered = _query.isEmpty
               ? apps
@@ -65,7 +65,7 @@ class _InstalledAppsPageState extends ConsumerState<InstalledAppsPage> {
           if (filtered.isEmpty) {
             return Center(
               child: Text(
-                l10n.installedAppsEmpty,
+                g11n.installedAppsEmpty,
                 style: TextStyle(color: context.semantic.subtleText),
               ),
             );

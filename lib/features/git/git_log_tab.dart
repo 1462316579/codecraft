@@ -6,7 +6,7 @@ import '../../core/theme/semantic_colors.dart';
 import '../../core/theme/tokens.dart';
 import '../../data/git/git_graph_models.dart';
 import '../../data/git_controller.dart';
-import '../../l10n/app_localizations.dart';
+import '../../g11n/app_globalizations.dart';
 import 'widgets/git_common.dart';
 import 'widgets/git_sheets.dart';
 
@@ -138,13 +138,13 @@ class _GitLogTabState extends State<GitLogTab> {
 
   @override
   Widget build(BuildContext context) {
-    final l10n = AppLocalizations.of(context);
+    final g11n = AppGlobalizations.of(context);
     final theme = Theme.of(context);
     final allCommits = _state.graph.commits;
     if (allCommits.isEmpty) {
       return Center(
         child: Text(
-          l10n.gitNoCommits,
+          g11n.gitNoCommits,
           style: theme.textTheme.bodyMedium?.copyWith(
             color: theme.colorScheme.onSurfaceVariant,
           ),
@@ -170,7 +170,7 @@ class _GitLogTabState extends State<GitLogTab> {
             controller: _searchController,
             onChanged: (value) => setState(() => _query = value),
             decoration: InputDecoration(
-              hintText: l10n.gitSearchCommitsHint,
+              hintText: g11n.gitSearchCommitsHint,
               isDense: true,
               prefixIcon: const Icon(Iconfont.search, size: 16),
               suffixIcon: _query.isEmpty
@@ -186,7 +186,7 @@ class _GitLogTabState extends State<GitLogTab> {
             ),
           ),
         ),
-        GitSectionHeader(text: l10n.gitCommitCount(commits.length)),
+        GitSectionHeader(text: g11n.gitCommitCount(commits.length)),
         Expanded(
           child: ListView.builder(
             controller: widget.scrollController,
@@ -238,7 +238,7 @@ class _GitLogTabState extends State<GitLogTab> {
   }
 
   Widget _buildFooter(BuildContext context, GitGraph graph) {
-    final l10n = AppLocalizations.of(context);
+    final g11n = AppGlobalizations.of(context);
     final theme = Theme.of(context);
     return Container(
       padding: const EdgeInsets.symmetric(vertical: Spacing.md),
@@ -257,13 +257,13 @@ class _GitLogTabState extends State<GitLogTab> {
                         child: CircularProgressIndicator(strokeWidth: 2),
                       )
                     : Text(
-                        l10n.gitLoadMoreCommits,
+                        g11n.gitLoadMoreCommits,
                         style: theme.textTheme.labelSmall?.copyWith(
                           color: theme.colorScheme.onSurfaceVariant,
                         ),
                       ))
                 : Text(
-                    l10n.gitNoMoreCommits,
+                    g11n.gitNoMoreCommits,
                     style: theme.textTheme.labelSmall?.copyWith(
                       color: theme.colorScheme.onSurfaceVariant,
                     ),

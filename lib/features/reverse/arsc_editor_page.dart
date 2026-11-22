@@ -7,7 +7,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../core/theme/semantic_colors.dart';
 import '../../core/theme/tokens.dart';
 import '../../data/workspace_files.dart';
-import '../../l10n/app_localizations.dart';
+import '../../g11n/app_globalizations.dart';
 import '../../reverse/arsc/arsc_editor.dart';
 import '../../reverse/arsc/arsc_file.dart';
 import '../../reverse/dex/dex_editor.dart' show EditOutcome;
@@ -98,7 +98,7 @@ class _ArscEditorPageState extends ConsumerState<ArscEditorPage>
   Future<void> _save() async {
     final bytes = _bytes;
     if (bytes == null || _saving) return;
-    final l10n = AppLocalizations.of(context);
+    final g11n = AppGlobalizations.of(context);
     setState(() => _saving = true);
     try {
       final files = await ref.read(workspaceFilesProvider.future);
@@ -109,7 +109,7 @@ class _ArscEditorPageState extends ConsumerState<ArscEditorPage>
         _dirty = false;
         _modified.clear();
       });
-      _toast(l10n.editorSaved);
+      _toast(g11n.editorSaved);
     } catch (error) {
       if (!mounted) return;
       setState(() => _saving = false);
@@ -125,14 +125,14 @@ class _ArscEditorPageState extends ConsumerState<ArscEditorPage>
   Future<void> _editString(int index) async {
     final arsc = _arsc;
     if (arsc == null) return;
-    final l10n = AppLocalizations.of(context);
+    final g11n = AppGlobalizations.of(context);
     final editor = ArscEditor(arsc);
     final original = arsc.globalStrings.at(index);
     final value = await showStringEditDialog(
       context,
-      title: l10n.reverseEditString,
+      title: g11n.reverseEditString,
       initial: original,
-      helper: l10n.reverseEqualLengthHint,
+      helper: g11n.reverseEqualLengthHint,
       validate: (input) => editor.validateReplace(index, input),
     );
     if (value == null || !mounted || value == original) return;
@@ -147,7 +147,7 @@ class _ArscEditorPageState extends ConsumerState<ArscEditorPage>
 
   @override
   Widget build(BuildContext context) {
-    final l10n = AppLocalizations.of(context);
+    final g11n = AppGlobalizations.of(context);
     final arsc = _arsc;
     return Scaffold(
       appBar: AppBar(
@@ -159,7 +159,7 @@ class _ArscEditorPageState extends ConsumerState<ArscEditorPage>
         actions: [
           if (arsc != null) HexJumpButton(onJump: _jump),
           IconButton(
-            tooltip: l10n.save,
+            tooltip: g11n.save,
             onPressed: _dirty && !_saving ? _save : null,
             icon: _saving
                 ? const SizedBox(
@@ -176,23 +176,23 @@ class _ArscEditorPageState extends ConsumerState<ArscEditorPage>
           unselectedLabelColor: context.semantic.subtleText,
           indicatorColor: Theme.of(context).colorScheme.primary,
           tabs: [
-            Tab(text: l10n.reverseTabResources),
-            Tab(text: l10n.reverseTabStrings),
-            Tab(text: l10n.reverseTabHex),
+            Tab(text: g11n.reverseTabResources),
+            Tab(text: g11n.reverseTabStrings),
+            Tab(text: g11n.reverseTabHex),
           ],
         ),
       ),
       body: _loading
           ? const Center(child: CircularProgressIndicator())
           : _error != null
-              ? ReverseHint(text: '${l10n.reverseParseFailed}\n$_error')
+              ? ReverseHint(text: '${g11n.reverseParseFailed}\n$_error')
               : TabBarView(
                   controller: _tabs,
                   children: [
                     // 首次非空断言之后,flow analysis 会把 arsc 提升为非空。
-                    _resourcesTab(l10n, arsc!),
-                    _stringsTab(l10n, arsc),
-                    _hexTab(l10n),
+                    _resourcesTab(g11n, arsc!),
+                    _stringsTab(g11n, arsc),
+                    _hexTab(g11n),
                   ],
                 ),
     );
@@ -217,7 +217,7 @@ class _ArscEditorPageState extends ConsumerState<ArscEditorPage>
     });
   }
 
-  Widget _resourcesTab(AppLocalizations l10n, ArscFile arsc) {
+  Widget _resourcesTab(AppGlobalizations g11n, ArscFile arsc) {
     final query = _resourceQuery.text.trim().toLowerCase();
     final resources = arsc.resources;
     final matched = query.isEmpty
@@ -236,7 +236,7 @@ class _ArscEditorPageState extends ConsumerState<ArscEditorPage>
             controller: _resourceQuery,
             decoration: InputDecoration(
               isDense: true,
-              hintText: l10n.reverseSearchResourceHint,
+              hintText: g11n.reverseSearchResourceHint,
               prefixIcon: const Icon(Iconfont.search, size: 16),
               border: const OutlineInputBorder(),
             ),
@@ -245,7 +245,7 @@ class _ArscEditorPageState extends ConsumerState<ArscEditorPage>
         ),
         Expanded(
           child: matched.isEmpty
-              ? ReverseHint(text: l10n.reverseNoMatch)
+              ? ReverseHint(text: g11n.reverseNoMatch)
               : ListView.builder(
                   itemCount: matched.length,
                   itemBuilder: (context, index) {
@@ -281,7 +281,7 @@ class _ArscEditorPageState extends ConsumerState<ArscEditorPage>
                         '${resource.values.length}',
                         style: TextStyle(fontSize: 11, color: context.semantic.subtleText),
                       ),
-                      onTap: () => _showResourceSheet(l10n, arsc, resource),
+                      onTap: () => _showResourceSheet(g11n, arsc, resource),
                     );
                   },
                 ),
@@ -291,7 +291,7 @@ class _ArscEditorPageState extends ConsumerState<ArscEditorPage>
   }
 
   /// 一个资源在全部配置下的取值:多语言包动辄几十个配置,单独一页看。
-  void _showResourceSheet(AppLocalizations l10n, ArscFile arsc, ResResource resource) {
+  void _showResourceSheet(AppGlobalizations g11n, ArscFile arsc, ResResource resource) {
     showModalBottomSheet<void>(
       context: context,
       showDragHandle: true,
@@ -357,7 +357,7 @@ class _ArscEditorPageState extends ConsumerState<ArscEditorPage>
     );
   }
 
-  Widget _stringsTab(AppLocalizations l10n, ArscFile arsc) {
+  Widget _stringsTab(AppGlobalizations g11n, ArscFile arsc) {
     final query = _stringQuery.text.trim().toLowerCase();
     final pool = arsc.globalStrings;
     final indexes = <int>[];
@@ -372,7 +372,7 @@ class _ArscEditorPageState extends ConsumerState<ArscEditorPage>
             controller: _stringQuery,
             decoration: InputDecoration(
               isDense: true,
-              hintText: l10n.reverseSearchStringHint,
+              hintText: g11n.reverseSearchStringHint,
               prefixIcon: const Icon(Iconfont.search, size: 16),
               border: const OutlineInputBorder(),
             ),
@@ -381,7 +381,7 @@ class _ArscEditorPageState extends ConsumerState<ArscEditorPage>
         ),
         Expanded(
           child: indexes.isEmpty
-              ? ReverseHint(text: l10n.reverseNoMatch)
+              ? ReverseHint(text: g11n.reverseNoMatch)
               : ListView.builder(
                   itemCount: indexes.length,
                   itemBuilder: (context, position) {
@@ -411,9 +411,9 @@ class _ArscEditorPageState extends ConsumerState<ArscEditorPage>
     );
   }
 
-  Widget _hexTab(AppLocalizations l10n) {
+  Widget _hexTab(AppGlobalizations g11n) {
     final bytes = _bytes;
-    if (bytes == null) return ReverseHint(text: l10n.reverseEmptyFile);
+    if (bytes == null) return ReverseHint(text: g11n.reverseEmptyFile);
     return HexView(
       bytes: bytes,
       scrollController: _hexScroll,
@@ -426,14 +426,14 @@ class _ArscEditorPageState extends ConsumerState<ArscEditorPage>
     final arsc = _arsc;
     final bytes = _bytes;
     if (arsc == null || bytes == null) return;
-    final l10n = AppLocalizations.of(context);
+    final g11n = AppGlobalizations.of(context);
     final current = bytes[offset];
     final input = await showStringEditDialog(
       context,
-      title: l10n.reverseEditByte,
+      title: g11n.reverseEditByte,
       initial: current.toRadixString(16).padLeft(2, '0'),
-      helper: l10n.reverseEditByteHint,
-      validate: (value) => parseHexByte(value) == null ? l10n.reverseInvalidByte : null,
+      helper: g11n.reverseEditByteHint,
+      validate: (value) => parseHexByte(value) == null ? g11n.reverseInvalidByte : null,
     );
     if (input == null || !mounted) return;
     final value = parseHexByte(input);

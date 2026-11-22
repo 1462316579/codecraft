@@ -6,7 +6,7 @@ import '../../core/theme/semantic_colors.dart';
 import '../../core/theme/tokens.dart';
 import '../../core/ui/settings_group.dart';
 import '../../data/git_controller.dart';
-import '../../l10n/app_localizations.dart';
+import '../../g11n/app_globalizations.dart';
 import 'widgets/git_common.dart';
 import 'widgets/git_sheets.dart';
 
@@ -91,18 +91,18 @@ class _GitBranchesTabState extends State<GitBranchesTab> {
 
   /// 分支行副标题:当前分支标记 + 跟踪关系 + 同步数量。
   String? _branchSubtitle(GitBranch branch) {
-    final l10n = AppLocalizations.of(context);
+    final g11n = AppGlobalizations.of(context);
     final parts = <String>[];
-    if (branch.current) parts.add(l10n.gitCheckedOut);
+    if (branch.current) parts.add(g11n.gitCheckedOut);
     final upstream = branch.upstream;
     if (upstream != null) {
       final sync = [
-        if (branch.ahead > 0) l10n.gitAheadCount(branch.ahead),
-        if (branch.behind > 0) l10n.gitBehindCount(branch.behind),
+        if (branch.ahead > 0) g11n.gitAheadCount(branch.ahead),
+        if (branch.behind > 0) g11n.gitBehindCount(branch.behind),
       ].join(' · ');
-      parts.add(sync.isEmpty ? '$upstream ${l10n.gitBranchSynced}' : '$upstream $sync');
+      parts.add(sync.isEmpty ? '$upstream ${g11n.gitBranchSynced}' : '$upstream $sync');
     } else {
-      parts.add(l10n.gitNoUpstream);
+      parts.add(g11n.gitNoUpstream);
     }
     return parts.join(' · ');
   }
@@ -114,7 +114,7 @@ class _GitBranchesTabState extends State<GitBranchesTab> {
     bool destructive = true,
     required VoidCallback onConfirm,
   }) async {
-    final l10n = AppLocalizations.of(context);
+    final g11n = AppGlobalizations.of(context);
     final confirmed = await showDialog<bool>(
       context: context,
       builder: (dialogContext) => AlertDialog(
@@ -123,7 +123,7 @@ class _GitBranchesTabState extends State<GitBranchesTab> {
         actions: [
           TextButton(
             onPressed: () => Navigator.of(dialogContext).pop(false),
-            child: Text(l10n.cancel),
+            child: Text(g11n.cancel),
           ),
           TextButton(
             onPressed: () => Navigator.of(dialogContext).pop(true),
@@ -142,73 +142,73 @@ class _GitBranchesTabState extends State<GitBranchesTab> {
 
   /// 检出确认:标签 → 分离头指针警告;远程分支 → 建跟踪分支;其余 → 普通切换确认。
   Future<void> _confirmCheckout(String ref, {required bool isRemote}) async {
-    final l10n = AppLocalizations.of(context);
+    final g11n = AppGlobalizations.of(context);
     final isTag = _state.tags.any((tag) => tag.name == ref);
     await _confirm(
-      title: l10n.gitSwitchBranch,
+      title: g11n.gitSwitchBranch,
       message: isTag
-          ? l10n.gitDetachedHeadWarning(ref)
+          ? g11n.gitDetachedHeadWarning(ref)
           : isRemote
-              ? l10n.gitCreateTrackingBranch(ref)
-              : l10n.gitSwitchConfirm(ref),
-      confirmLabel: l10n.switchLabel,
+              ? g11n.gitCreateTrackingBranch(ref)
+              : g11n.gitSwitchConfirm(ref),
+      confirmLabel: g11n.switchLabel,
       destructive: false,
       onConfirm: () => _controller.checkout(ref, isRemote: isRemote),
     );
   }
 
   Future<void> _openRefMenu(GitBranch branch, {required bool isRemote}) async {
-    final l10n = AppLocalizations.of(context);
+    final g11n = AppGlobalizations.of(context);
     final actions = <RefMenuItem>[
       if (isRemote) ...[
         RefMenuItem(
-          label: l10n.switchLabel,
+          label: g11n.switchLabel,
           icon: Iconfont.gitCommit,
           onSelected: () => _confirmCheckout(branch.name, isRemote: true),
         ),
         RefMenuItem(
-          label: l10n.gitActionMerge,
+          label: g11n.gitActionMerge,
           icon: Iconfont.gitMerge,
           onSelected: () => _confirmMerge(branch.name),
         ),
         RefMenuItem(
-          label: l10n.delete,
+          label: g11n.delete,
           icon: Iconfont.trash2,
           destructive: true,
           onSelected: () => _confirm(
-            title: l10n.gitDeleteRemoteBranch,
-            message: l10n.gitDeleteRemoteBranchConfirm(branch.name),
-            confirmLabel: l10n.delete,
+            title: g11n.gitDeleteRemoteBranch,
+            message: g11n.gitDeleteRemoteBranchConfirm(branch.name),
+            confirmLabel: g11n.delete,
             onConfirm: () => _controller.deleteRemoteBranch(branch.name),
           ),
         ),
       ] else ...[
         if (!branch.current) ...[
           RefMenuItem(
-            label: l10n.switchLabel,
+            label: g11n.switchLabel,
             icon: Iconfont.gitCommit,
             onSelected: () => _confirmCheckout(branch.name, isRemote: false),
           ),
           RefMenuItem(
-            label: l10n.gitActionMerge,
+            label: g11n.gitActionMerge,
             icon: Iconfont.gitMerge,
             onSelected: () => _confirmMerge(branch.name),
           ),
         ],
         RefMenuItem(
-          label: l10n.rename,
+          label: g11n.rename,
           icon: Iconfont.pencil,
           onSelected: () => _promptRename(branch.name),
         ),
         if (!branch.current)
           RefMenuItem(
-            label: l10n.delete,
+            label: g11n.delete,
             icon: Iconfont.trash2,
             destructive: true,
             onSelected: () => _confirm(
-              title: l10n.gitDeleteBranch,
-              message: l10n.gitDeleteLocalBranchConfirm(branch.name),
-              confirmLabel: l10n.delete,
+              title: g11n.gitDeleteBranch,
+              message: g11n.gitDeleteLocalBranchConfirm(branch.name),
+              confirmLabel: g11n.delete,
               onConfirm: () => _controller.deleteBranch(branch.name),
             ),
           ),
@@ -219,24 +219,24 @@ class _GitBranchesTabState extends State<GitBranchesTab> {
   }
 
   Future<void> _confirmMerge(String branch) async {
-    final l10n = AppLocalizations.of(context);
-    final current = _state.status?.branch ?? l10n.gitNoCheckedOutBranch;
+    final g11n = AppGlobalizations.of(context);
+    final current = _state.status?.branch ?? g11n.gitNoCheckedOutBranch;
     var noFf = false;
     final confirmed = await showDialog<bool>(
       context: context,
       builder: (dialogContext) => StatefulBuilder(
         builder: (dialogContext, setDialogState) => AlertDialog(
-          title: Text(l10n.gitActionMerge),
+          title: Text(g11n.gitActionMerge),
           content: Column(
             mainAxisSize: MainAxisSize.min,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text(l10n.gitMergeConfirm(branch, current)),
+              Text(g11n.gitMergeConfirm(branch, current)),
               Row(
                 children: [
                   Expanded(
                     child: Text(
-                      l10n.gitMergeNoFf,
+                      g11n.gitMergeNoFf,
                       style: Theme.of(dialogContext).textTheme.bodyMedium,
                     ),
                   ),
@@ -251,11 +251,11 @@ class _GitBranchesTabState extends State<GitBranchesTab> {
           actions: [
             TextButton(
               onPressed: () => Navigator.of(dialogContext).pop(false),
-              child: Text(l10n.cancel),
+              child: Text(g11n.cancel),
             ),
             TextButton(
               onPressed: () => Navigator.of(dialogContext).pop(true),
-              child: Text(l10n.gitActionMerge),
+              child: Text(g11n.gitActionMerge),
             ),
           ],
         ),
@@ -267,23 +267,23 @@ class _GitBranchesTabState extends State<GitBranchesTab> {
   }
 
   Future<void> _promptRename(String oldName) async {
-    final l10n = AppLocalizations.of(context);
+    final g11n = AppGlobalizations.of(context);
     final controller = TextEditingController(text: oldName);
     final result = await showDialog<String>(
       context: context,
       builder: (dialogContext) => AlertDialog(
-        title: Text(l10n.gitRenameBranch),
+        title: Text(g11n.gitRenameBranch),
         content: Column(
           mainAxisSize: MainAxisSize.min,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text(l10n.gitRenameTo(oldName)),
+            Text(g11n.gitRenameTo(oldName)),
             const SizedBox(height: Spacing.sm),
             TextField(
               controller: controller,
               autofocus: true,
               decoration: InputDecoration(
-                labelText: l10n.gitNewBranchName,
+                labelText: g11n.gitNewBranchName,
                 border: const OutlineInputBorder(),
               ),
             ),
@@ -292,11 +292,11 @@ class _GitBranchesTabState extends State<GitBranchesTab> {
         actions: [
           TextButton(
             onPressed: () => Navigator.of(dialogContext).pop(),
-            child: Text(l10n.cancel),
+            child: Text(g11n.cancel),
           ),
           TextButton(
             onPressed: () => Navigator.of(dialogContext).pop(controller.text.trim()),
-            child: Text(l10n.rename),
+            child: Text(g11n.rename),
           ),
         ],
       ),
@@ -308,7 +308,7 @@ class _GitBranchesTabState extends State<GitBranchesTab> {
   }
 
   Future<void> _promptCreateBranch() async {
-    final l10n = AppLocalizations.of(context);
+    final g11n = AppGlobalizations.of(context);
     final current = _state.status?.branch ?? '';
     final localNames = _state.branches.where((b) => !b.remote).map((b) => b.name).toList();
     final nameController = TextEditingController();
@@ -319,7 +319,7 @@ class _GitBranchesTabState extends State<GitBranchesTab> {
       context: context,
       builder: (dialogContext) => StatefulBuilder(
         builder: (dialogContext, setDialogState) => AlertDialog(
-          title: Text(l10n.gitNewBranch),
+          title: Text(g11n.gitNewBranch),
           content: SizedBox(
             width: 380,
             child: Column(
@@ -331,7 +331,7 @@ class _GitBranchesTabState extends State<GitBranchesTab> {
                   autofocus: true,
                   onChanged: (_) => setDialogState(() {}),
                   decoration: InputDecoration(
-                    labelText: l10n.gitBranchName,
+                    labelText: g11n.gitBranchName,
                     border: const OutlineInputBorder(),
                   ),
                 ),
@@ -339,7 +339,7 @@ class _GitBranchesTabState extends State<GitBranchesTab> {
                 DropdownButtonFormField<String>(
                   value: startPoint.isEmpty ? null : startPoint,
                   decoration: InputDecoration(
-                    labelText: l10n.gitBaseBranch,
+                    labelText: g11n.gitBaseBranch,
                     border: const OutlineInputBorder(),
                   ),
                   items: [
@@ -351,7 +351,7 @@ class _GitBranchesTabState extends State<GitBranchesTab> {
                 const SizedBox(height: Spacing.sm),
                 Row(
                   children: [
-                    Expanded(child: Text(l10n.gitCreateAndSwitch)),
+                    Expanded(child: Text(g11n.gitCreateAndSwitch)),
                     Switch(
                       value: checkoutAfter,
                       onChanged: (value) => setDialogState(() => checkoutAfter = value),
@@ -364,11 +364,11 @@ class _GitBranchesTabState extends State<GitBranchesTab> {
           actions: [
             TextButton(
               onPressed: () => Navigator.of(dialogContext).pop(false),
-              child: Text(l10n.cancel),
+              child: Text(g11n.cancel),
             ),
             TextButton(
               onPressed: () => Navigator.of(dialogContext).pop(true),
-              child: Text(l10n.create),
+              child: Text(g11n.create),
             ),
           ],
         ),
@@ -386,19 +386,19 @@ class _GitBranchesTabState extends State<GitBranchesTab> {
   }
 
   Future<void> _promptCreateTag() async {
-    final l10n = AppLocalizations.of(context);
-    final current = _state.status?.branch ?? l10n.gitNoCheckedOutBranch;
+    final g11n = AppGlobalizations.of(context);
+    final current = _state.status?.branch ?? g11n.gitNoCheckedOutBranch;
     final controller = TextEditingController();
     final confirmed = await showDialog<bool>(
       context: context,
       builder: (dialogContext) => AlertDialog(
-        title: Text(l10n.gitCreateTagTitle),
+        title: Text(g11n.gitCreateTagTitle),
         content: Column(
           mainAxisSize: MainAxisSize.min,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
-              l10n.gitCreateTagDesc(current),
+              g11n.gitCreateTagDesc(current),
               style: Theme.of(dialogContext).textTheme.bodySmall,
             ),
             const SizedBox(height: Spacing.sm),
@@ -406,7 +406,7 @@ class _GitBranchesTabState extends State<GitBranchesTab> {
               controller: controller,
               autofocus: true,
               decoration: InputDecoration(
-                labelText: l10n.gitTagName,
+                labelText: g11n.gitTagName,
                 border: const OutlineInputBorder(),
               ),
             ),
@@ -415,11 +415,11 @@ class _GitBranchesTabState extends State<GitBranchesTab> {
         actions: [
           TextButton(
             onPressed: () => Navigator.of(dialogContext).pop(false),
-            child: Text(l10n.cancel),
+            child: Text(g11n.cancel),
           ),
           TextButton(
             onPressed: () => Navigator.of(dialogContext).pop(true),
-            child: Text(l10n.create),
+            child: Text(g11n.create),
           ),
         ],
       ),
@@ -433,7 +433,7 @@ class _GitBranchesTabState extends State<GitBranchesTab> {
 
   @override
   Widget build(BuildContext context) {
-    final l10n = AppLocalizations.of(context);
+    final g11n = AppGlobalizations.of(context);
     final theme = Theme.of(context);
 
     if (_state.branchesLoading ||
@@ -449,7 +449,7 @@ class _GitBranchesTabState extends State<GitBranchesTab> {
             ),
             const SizedBox(height: Spacing.sm),
             Text(
-              l10n.gitLoadingBranches,
+              g11n.gitLoadingBranches,
               style: theme.textTheme.labelSmall?.copyWith(
                 color: theme.colorScheme.onSurfaceVariant,
               ),
@@ -461,7 +461,7 @@ class _GitBranchesTabState extends State<GitBranchesTab> {
     if (_state.branches.isEmpty && _state.tags.isEmpty) {
       return Center(
         child: Text(
-          l10n.gitNoBranches,
+          g11n.gitNoBranches,
           style: theme.textTheme.bodyMedium?.copyWith(
             color: theme.colorScheme.onSurfaceVariant,
           ),
@@ -470,7 +470,7 @@ class _GitBranchesTabState extends State<GitBranchesTab> {
     }
 
     final currentBranch = _state.branches.where((b) => b.current).firstOrNull?.name ??
-        l10n.gitNoCheckedOutBranch;
+        g11n.gitNoCheckedOutBranch;
     final hasCurrentBranch = _state.branches.any((b) => b.current);
     final localBranches = _state.branches.where((b) => !b.remote).toList();
     final remoteBranches = _state.branches.where((b) => b.remote).toList();
@@ -500,7 +500,7 @@ class _GitBranchesTabState extends State<GitBranchesTab> {
             children: [
               RefRow(
                 name: currentBranch,
-                subtitle: l10n.gitCheckedOut,
+                subtitle: g11n.gitCheckedOut,
                 icon: Iconfont.gitCommit,
                 isCurrent: true,
               ),
@@ -508,11 +508,11 @@ class _GitBranchesTabState extends State<GitBranchesTab> {
           ),
         if (localBranches.isNotEmpty) ...[
           RefSectionHeader(
-            title: '${l10n.commonLocal} (${localBranches.length})',
+            title: '${g11n.commonLocal} (${localBranches.length})',
             expanded: _isExpanded('local'),
             onToggle: () => setState(() => _expanded['local'] = !_isExpanded('local')),
             onAdd: _promptCreateBranch,
-            addTooltip: l10n.gitNewBranch,
+            addTooltip: g11n.gitNewBranch,
           ),
           if (_isExpanded('local'))
             SettingsGroup(
@@ -521,7 +521,7 @@ class _GitBranchesTabState extends State<GitBranchesTab> {
         ],
         if (remoteBranches.isNotEmpty) ...[
           RefSectionHeader(
-            title: '${l10n.gitRemote} (${remoteBranches.length})',
+            title: '${g11n.gitRemote} (${remoteBranches.length})',
             expanded: _isExpanded('remote'),
             onToggle: () => setState(() => _expanded['remote'] = !_isExpanded('remote')),
           ),
@@ -532,11 +532,11 @@ class _GitBranchesTabState extends State<GitBranchesTab> {
         ],
         if (_state.tags.isNotEmpty) ...[
           RefSectionHeader(
-            title: '${l10n.gitTags} (${_state.tags.length})',
+            title: '${g11n.gitTags} (${_state.tags.length})',
             expanded: _isExpanded('tags'),
             onToggle: () => setState(() => _expanded['tags'] = !_isExpanded('tags')),
             onAdd: _promptCreateTag,
-            addTooltip: l10n.gitCreateTagTitle,
+            addTooltip: g11n.gitCreateTagTitle,
           ),
           if (_isExpanded('tags'))
             SettingsGroup(
@@ -553,18 +553,18 @@ class _GitBranchesTabState extends State<GitBranchesTab> {
                       final tag = _state.tags[i].name;
                       final actions = [
                         RefMenuItem(
-                          label: l10n.switchLabel,
+                          label: g11n.switchLabel,
                           icon: Iconfont.gitCommit,
                           onSelected: () => _confirmCheckout(tag, isRemote: false),
                         ),
                         RefMenuItem(
-                          label: l10n.delete,
+                          label: g11n.delete,
                           icon: Iconfont.trash2,
                           destructive: true,
                           onSelected: () => _confirm(
-                            title: l10n.gitDeleteTag,
-                            message: l10n.gitDeleteTagConfirm(tag),
-                            confirmLabel: l10n.delete,
+                            title: g11n.gitDeleteTag,
+                            message: g11n.gitDeleteTagConfirm(tag),
+                            confirmLabel: g11n.delete,
                             onConfirm: () => _controller.deleteTag(tag),
                           ),
                         ),
@@ -635,7 +635,7 @@ class _BranchesOverview extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final l10n = AppLocalizations.of(context);
+    final g11n = AppGlobalizations.of(context);
     final theme = Theme.of(context);
     return Container(
       width: double.infinity,
@@ -656,7 +656,7 @@ class _BranchesOverview extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      l10n.gitCurrentBranch,
+                      g11n.gitCurrentBranch,
                       style: theme.textTheme.labelMedium?.copyWith(
                         color: theme.colorScheme.onSurfaceVariant,
                       ),
@@ -669,7 +669,7 @@ class _BranchesOverview extends StatelessWidget {
                     ),
                     if (!hasCurrentBranch)
                       Text(
-                        l10n.gitDetachedHeadLabel,
+                        g11n.gitDetachedHeadLabel,
                         style: theme.textTheme.labelSmall?.copyWith(
                           color: theme.colorScheme.error,
                         ),
@@ -684,7 +684,7 @@ class _BranchesOverview extends StatelessWidget {
             children: [
               Expanded(
                 child: StatusMetric(
-                  label: l10n.commonLocal,
+                  label: g11n.commonLocal,
                   count: localCount,
                   color: theme.colorScheme.primary,
                 ),
@@ -692,7 +692,7 @@ class _BranchesOverview extends StatelessWidget {
               const SizedBox(width: Spacing.sm),
               Expanded(
                 child: StatusMetric(
-                  label: l10n.gitRemote,
+                  label: g11n.gitRemote,
                   count: remoteCount,
                   color: theme.colorScheme.secondary,
                 ),
@@ -700,7 +700,7 @@ class _BranchesOverview extends StatelessWidget {
               const SizedBox(width: Spacing.sm),
               Expanded(
                 child: StatusMetric(
-                  label: l10n.gitTags,
+                  label: g11n.gitTags,
                   count: tagCount,
                   color: theme.colorScheme.tertiary,
                 ),

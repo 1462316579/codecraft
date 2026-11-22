@@ -9,7 +9,7 @@ import '../../core/theme/semantic_colors.dart';
 import '../../core/theme/tokens.dart';
 import '../../data/capture/capture_manager.dart';
 import '../../data/capture/capture_models.dart';
-import '../../l10n/app_localizations.dart';
+import '../../g11n/app_globalizations.dart';
 
 /// 请求详情:概览 / 请求 / 响应 / Cookies 四个分区。
 class CaptureDetailPage extends ConsumerWidget {
@@ -19,13 +19,13 @@ class CaptureDetailPage extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final l10n = AppLocalizations.of(context);
+    final g11n = AppGlobalizations.of(context);
     ref.watch(captureManagerProvider);
     final flow = ref.read(captureManagerProvider).get(flowId);
     if (flow == null) {
       return Scaffold(
-        appBar: AppBar(title: Text(l10n.captureDetail)),
-        body: Center(child: Text(l10n.captureNotFound)),
+        appBar: AppBar(title: Text(g11n.captureDetail)),
+        body: Center(child: Text(g11n.captureNotFound)),
       );
     }
 
@@ -33,36 +33,36 @@ class CaptureDetailPage extends ConsumerWidget {
       length: 4,
       child: Scaffold(
         appBar: AppBar(
-          title: _TitleBar(flow: flow, l10n: l10n),
+          title: _TitleBar(flow: flow, g11n: g11n),
           titleSpacing: Spacing.md,
           actions: [
             IconButton(
               icon: const Icon(Iconfont.copy, size: 18),
-              tooltip: l10n.captureCopyUrl,
+              tooltip: g11n.captureCopyUrl,
               onPressed: () async {
                 await Clipboard.setData(ClipboardData(text: flow.url));
                 if (context.mounted) {
-                  ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(l10n.copied)));
+                  ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(g11n.copied)));
                 }
               },
             ),
           ],
           bottom: TabBar(
             tabs: [
-              Tab(text: l10n.captureOverview),
-              Tab(text: l10n.captureRequest),
-              Tab(text: l10n.captureResponse),
-              Tab(text: l10n.captureCookies),
+              Tab(text: g11n.captureOverview),
+              Tab(text: g11n.captureRequest),
+              Tab(text: g11n.captureResponse),
+              Tab(text: g11n.captureCookies),
             ],
           ),
         ),
         body: TabBarView(
           children: [
-            _Overview(flow: flow, l10n: l10n),
+            _Overview(flow: flow, g11n: g11n),
             _MessageSection(
-              l10n: l10n,
+              g11n: g11n,
               leadingRows: [
-                (l10n.capturePath, Uri.decodeFull(flow.path)),
+                (g11n.capturePath, Uri.decodeFull(flow.path)),
               ],
               headers: flow.requestHeaders,
               body: flow.requestBody,
@@ -70,9 +70,9 @@ class CaptureDetailPage extends ConsumerWidget {
               isRequest: true,
             ),
             _MessageSection(
-              l10n: l10n,
+              g11n: g11n,
               leadingRows: [
-                (l10n.captureStatusCode, flow.statusCode?.toString() ?? '-'),
+                (g11n.captureStatusCode, flow.statusCode?.toString() ?? '-'),
               ],
               headers: flow.responseHeaders,
               body: flow.responseBody,
@@ -80,7 +80,7 @@ class CaptureDetailPage extends ConsumerWidget {
               isRequest: false,
               error: flow.error,
             ),
-            _Cookies(flow: flow, l10n: l10n),
+            _Cookies(flow: flow, g11n: g11n),
           ],
         ),
       ),
@@ -90,10 +90,10 @@ class CaptureDetailPage extends ConsumerWidget {
 
 /// 标题:方法 + 主机,第二行完整 URL。
 class _TitleBar extends StatelessWidget {
-  const _TitleBar({required this.flow, required this.l10n});
+  const _TitleBar({required this.flow, required this.g11n});
 
   final CaptureFlow flow;
-  final AppLocalizations l10n;
+  final AppGlobalizations g11n;
 
   @override
   Widget build(BuildContext context) {
@@ -120,10 +120,10 @@ class _TitleBar extends StatelessWidget {
 
 /// 概览:卡片式键值行,与抓包工具的 General 分区一致。
 class _Overview extends StatelessWidget {
-  const _Overview({required this.flow, required this.l10n});
+  const _Overview({required this.flow, required this.g11n});
 
   final CaptureFlow flow;
-  final AppLocalizations l10n;
+  final AppGlobalizations g11n;
 
   @override
   Widget build(BuildContext context) {
@@ -133,15 +133,15 @@ class _Overview extends StatelessWidget {
         _kv(context, 'URL', flow.url),
         _kv(
           context,
-          l10n.captureStatusCode,
+          g11n.captureStatusCode,
           flow.statusCode?.toString() ?? (flow.error == null ? '-' : 'ERR'),
           valueColor: _statusColor(context),
         ),
-        _kv(context, l10n.captureProtocol, flow.protocolVersion),
-        _kv(context, l10n.captureDuration, flow.durationMs == null ? '-' : '${flow.durationMs} ms'),
-        _kv(context, l10n.captureSize, _sizeText(flow)),
-        _kv(context, l10n.captureRemoteAddress, flow.remoteAddress ?? '-'),
-        _kv(context, l10n.captureRequestTime, _timeText(flow.startedAt)),
+        _kv(context, g11n.captureProtocol, flow.protocolVersion),
+        _kv(context, g11n.captureDuration, flow.durationMs == null ? '-' : '${flow.durationMs} ms'),
+        _kv(context, g11n.captureSize, _sizeText(flow)),
+        _kv(context, g11n.captureRemoteAddress, flow.remoteAddress ?? '-'),
+        _kv(context, g11n.captureRequestTime, _timeText(flow.startedAt)),
         if (flow.host.isNotEmpty) _kv(context, 'Host', flow.host),
         if (flow.error != null)
           Padding(
@@ -209,7 +209,7 @@ class _Overview extends StatelessWidget {
 /// 请求 / 响应分区:首行关键信息 + 可折叠 Headers + Body。
 class _MessageSection extends StatefulWidget {
   const _MessageSection({
-    required this.l10n,
+    required this.g11n,
     required this.leadingRows,
     required this.headers,
     required this.body,
@@ -218,7 +218,7 @@ class _MessageSection extends StatefulWidget {
     this.error,
   });
 
-  final AppLocalizations l10n;
+  final AppGlobalizations g11n;
   final List<(String, String)> leadingRows;
   final Map<String, String> headers;
   final String body;
@@ -286,7 +286,7 @@ class _MessageSectionState extends State<_MessageSection> {
             child: Row(
               children: [
                 Text(
-                  widget.isRequest ? widget.l10n.captureRequestHeaders : widget.l10n.captureResponseHeaders,
+                  widget.isRequest ? widget.g11n.captureRequestHeaders : widget.g11n.captureResponseHeaders,
                   style: TextStyle(fontSize: 13, color: context.semantic.subtleText),
                 ),
                 const SizedBox(width: 2),
@@ -305,12 +305,12 @@ class _MessageSectionState extends State<_MessageSection> {
                   IconButton(
                     visualDensity: VisualDensity.compact,
                     iconSize: 15,
-                    tooltip: widget.l10n.copy,
+                    tooltip: widget.g11n.copy,
                     onPressed: () async {
                       await Clipboard.setData(ClipboardData(text: _rawHeaders()));
                       if (context.mounted) {
                         ScaffoldMessenger.of(context).showSnackBar(
-                          SnackBar(content: Text(widget.l10n.copied)),
+                          SnackBar(content: Text(widget.g11n.copied)),
                         );
                       }
                     },
@@ -339,7 +339,7 @@ class _MessageSectionState extends State<_MessageSection> {
           child: Row(
             children: [
               Text(
-                widget.isRequest ? widget.l10n.captureRequestBody : widget.l10n.captureResponseBody,
+                widget.isRequest ? widget.g11n.captureRequestBody : widget.g11n.captureResponseBody,
                 style: TextStyle(fontSize: 13, color: context.semantic.subtleText),
               ),
               const SizedBox(width: Spacing.sm),
@@ -357,7 +357,7 @@ class _MessageSectionState extends State<_MessageSection> {
                   ),
                   onPressed: () => setState(() => _showRawBody = !_showRawBody),
                   child: Text(
-                    _showRawBody ? widget.l10n.captureFormatted : widget.l10n.captureRaw,
+                    _showRawBody ? widget.g11n.captureFormatted : widget.g11n.captureRaw,
                     style: const TextStyle(fontSize: 12),
                   ),
                 ),
@@ -369,7 +369,7 @@ class _MessageSectionState extends State<_MessageSection> {
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: Spacing.md),
             child: Text(
-              widget.l10n.captureBodyTruncated,
+              widget.g11n.captureBodyTruncated,
               style: TextStyle(fontSize: 11, color: Theme.of(context).colorScheme.tertiary),
             ),
           ),
@@ -401,10 +401,10 @@ class _MessageSectionState extends State<_MessageSection> {
 
 /// Cookies:请求侧 Cookie 与响应侧 Set-Cookie 分两组列出。
 class _Cookies extends StatelessWidget {
-  const _Cookies({required this.flow, required this.l10n});
+  const _Cookies({required this.flow, required this.g11n});
 
   final CaptureFlow flow;
-  final AppLocalizations l10n;
+  final AppGlobalizations g11n;
 
   @override
   Widget build(BuildContext context) {
@@ -413,7 +413,7 @@ class _Cookies extends StatelessWidget {
     if (req.isEmpty && res.isEmpty) {
       return Center(
         child: Text(
-          l10n.captureNoCookies,
+          g11n.captureNoCookies,
           style: TextStyle(color: context.semantic.subtleText, fontSize: 13),
         ),
       );
@@ -422,12 +422,12 @@ class _Cookies extends StatelessWidget {
       padding: const EdgeInsets.all(Spacing.md),
       children: [
         if (req.isNotEmpty) ...[
-          _sectionTitle(context, l10n.captureRequestCookies),
+          _sectionTitle(context, g11n.captureRequestCookies),
           for (final c in req) _cookieRow(context, c),
           const SizedBox(height: Spacing.md),
         ],
         if (res.isNotEmpty) ...[
-          _sectionTitle(context, l10n.captureResponseCookies),
+          _sectionTitle(context, g11n.captureResponseCookies),
           for (final c in res) _cookieRow(context, c),
         ],
       ],

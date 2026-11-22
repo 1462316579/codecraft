@@ -5,7 +5,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../agent/commit_message_generator.dart';
 import '../agent/models/git_models.dart';
-import '../l10n/app_localizations.dart';
+import '../g11n/app_globalizations.dart';
 import 'git/container_git.dart';
 import 'git/diff_data.dart';
 import 'git/git_error_message.dart';
@@ -237,7 +237,7 @@ class GitController extends StateNotifier<GitUiState> {
       return;
     }
     state = state.copyWith(loading: true, toast: () => null);
-    final l10n = _ref.read(appLocalizationsProvider);
+    final g11n = _ref.read(appGlobalizationsProvider);
     try {
       final root = _root;
       final repos = await _cgit.discoverRepos(root).timeout(
@@ -290,7 +290,7 @@ class GitController extends StateNotifier<GitUiState> {
     } on GitException catch (error) {
       state = state.copyWith(
         loading: false,
-        toast: () => l10n.gitToastRefreshFailed(GitErrorMessage.friendly(error.message)),
+        toast: () => g11n.gitToastRefreshFailed(GitErrorMessage.friendly(error.message)),
       );
     }
   }
@@ -349,7 +349,7 @@ class GitController extends StateNotifier<GitUiState> {
     final repoPath = state.repoPath;
     if (repoPath == null) return;
     state = state.copyWith(branchesLoading: true);
-    final l10n = _ref.read(appLocalizationsProvider);
+    final g11n = _ref.read(appGlobalizationsProvider);
     try {
       final allRefs = await _cgit.loadAllRefs(repoPath);
       final graph = await _cgit.graphAppend(
@@ -368,7 +368,7 @@ class GitController extends StateNotifier<GitUiState> {
     } on GitException catch (error) {
       state = state.copyWith(
         branchesLoading: false,
-        toast: () => l10n.gitToastLoadBranchesFailed(GitErrorMessage.friendly(error.message)),
+        toast: () => g11n.gitToastLoadBranchesFailed(GitErrorMessage.friendly(error.message)),
       );
     }
   }
@@ -391,7 +391,7 @@ class GitController extends StateNotifier<GitUiState> {
     final repoPath = state.repoPath;
     if (repoPath == null || state.graphLoadingMore || !state.graph.hasMore) return;
     state = state.copyWith(graphLoadingMore: true);
-    final l10n = _ref.read(appLocalizationsProvider);
+    final g11n = _ref.read(appGlobalizationsProvider);
     try {
       final graph = await _cgit.graphAppend(
         repoPath,
@@ -406,7 +406,7 @@ class GitController extends StateNotifier<GitUiState> {
     } on GitException catch (error) {
       state = state.copyWith(
         graphLoadingMore: false,
-        toast: () => l10n.gitToastLoadMoreFailed(GitErrorMessage.friendly(error.message)),
+        toast: () => g11n.gitToastLoadMoreFailed(GitErrorMessage.friendly(error.message)),
       );
     }
   }
@@ -419,17 +419,17 @@ class GitController extends StateNotifier<GitUiState> {
   Future<void> switchRepo(String path) async {
     if (state.busy) return;
     state = state.copyWith(repoPickerVisible: false);
-    final l10n = _ref.read(appLocalizationsProvider);
+    final g11n = _ref.read(appGlobalizationsProvider);
     try {
       if (!await _cgit.isRepository(path)) {
-        state = state.copyWith(toast: () => l10n.gitToastNotRepo);
+        state = state.copyWith(toast: () => g11n.gitToastNotRepo);
         return;
       }
       state = state.copyWith(repoPath: () => path);
       await refresh();
     } on GitException catch (error) {
       state = state.copyWith(
-        toast: () => l10n.gitToastSwitchRepoFailed(GitErrorMessage.friendly(error.message)),
+        toast: () => g11n.gitToastSwitchRepoFailed(GitErrorMessage.friendly(error.message)),
       );
     }
   }
@@ -437,50 +437,50 @@ class GitController extends StateNotifier<GitUiState> {
   // ── 仓库操作 ──
 
   Future<void> initRepo() => _runAction(
-        (l10n) => l10n.gitActionInit,
+        (g11n) => g11n.gitActionInit,
         () => _cgit.init(_root),
       );
 
   Future<void> cloneRepo(String url) => _runAction(
-        (l10n) => l10n.gitActionClone,
+        (g11n) => g11n.gitActionClone,
         () => _cgit.clone(_root, url),
       );
 
   // ── 状态页操作 ──
 
   Future<void> stage(String path) =>
-      _repoAction((l10n) => l10n.gitStage, (repo) => _cgit.stage(repo, path));
+      _repoAction((g11n) => g11n.gitStage, (repo) => _cgit.stage(repo, path));
 
   Future<void> unstage(String path) =>
-      _repoAction((l10n) => l10n.gitUnstage, (repo) => _cgit.unstage(repo, path));
+      _repoAction((g11n) => g11n.gitUnstage, (repo) => _cgit.unstage(repo, path));
 
   Future<void> stageAll() =>
-      _repoAction((l10n) => l10n.gitActionStageAll, (repo) => _cgit.stageAll(repo));
+      _repoAction((g11n) => g11n.gitActionStageAll, (repo) => _cgit.stageAll(repo));
 
   Future<void> unstageAll() =>
-      _repoAction((l10n) => l10n.gitUnstageAll, (repo) => _cgit.unstageAll(repo));
+      _repoAction((g11n) => g11n.gitUnstageAll, (repo) => _cgit.unstageAll(repo));
 
   /// 回退单个文件的改动。[staged] 为 true 时连已暂存内容一起还原到上次提交,
   /// 否则只回退未暂存改动(被删除的文件由此取回)。
   Future<void> revertFile(String path, {bool staged = false}) => _repoAction(
-        (l10n) => l10n.gitRevert,
+        (g11n) => g11n.gitRevert,
         (repo) => staged
             ? _cgit.revertToHead(repo, path)
             : _cgit.revertWorktree(repo, path),
       );
 
   Future<void> revertAllUnstaged() => _repoAction(
-        (l10n) => l10n.gitActionRevertAll,
+        (g11n) => g11n.gitActionRevertAll,
         (repo) => _cgit.revertAllWorktree(repo),
       );
 
   Future<void> deleteUntracked(String path) => _repoAction(
-        (l10n) => path.endsWith('/') ? l10n.gitActionDeleteDir : l10n.gitActionDeleteFile,
+        (g11n) => path.endsWith('/') ? g11n.gitActionDeleteDir : g11n.gitActionDeleteFile,
         (repo) => _cgit.deleteUntracked(repo, path),
       );
 
   Future<void> addToGitignore(String pattern) => _repoAction(
-        (l10n) => l10n.gitAddToGitignore,
+        (g11n) => g11n.gitAddToGitignore,
         (repo) => _cgit.addToGitignore(repo, pattern),
       );
 
@@ -511,7 +511,7 @@ class GitController extends StateNotifier<GitUiState> {
   }
 
   Future<void> commit(String message, {bool amend = false}) => _repoAction(
-        (l10n) => l10n.gitActionCommit,
+        (g11n) => g11n.gitActionCommit,
         (repo) => _cgit.commit(repo, message, amend: amend),
       );
 
@@ -520,14 +520,14 @@ class GitController extends StateNotifier<GitUiState> {
     if (state.generatingCommitMessage) return;
     final repoPath = state.repoPath;
     if (repoPath == null) return;
-    final l10n = _ref.read(appLocalizationsProvider);
+    final g11n = _ref.read(appGlobalizationsProvider);
     state = state.copyWith(generatingCommitMessage: true);
     try {
       final diff = await _cgit.diffForCommitMessage(repoPath);
       if (diff.trim().isEmpty) {
         state = state.copyWith(
           generatingCommitMessage: false,
-          toast: () => l10n.gitToastNoDiffForCommit,
+          toast: () => g11n.gitToastNoDiffForCommit,
         );
         return;
       }
@@ -536,12 +536,12 @@ class GitController extends StateNotifier<GitUiState> {
       if (message != null && message.trim().isNotEmpty) {
         onResult(message);
       } else {
-        state = state.copyWith(toast: () => l10n.gitToastGenerateCommitFailed);
+        state = state.copyWith(toast: () => g11n.gitToastGenerateCommitFailed);
       }
     } catch (_) {
       state = state.copyWith(
         generatingCommitMessage: false,
-        toast: () => l10n.gitToastGenerateCommitFailed,
+        toast: () => g11n.gitToastGenerateCommitFailed,
       );
     }
   }
@@ -562,31 +562,31 @@ class GitController extends StateNotifier<GitUiState> {
 
   Future<void> stashSave({String? message, bool includeUntracked = false}) =>
       _repoAction(
-        (l10n) => l10n.gitActionStash,
+        (g11n) => g11n.gitActionStash,
         (repo) => _cgit.stashSave(repo, message: message, includeUntracked: includeUntracked),
         onDone: loadStashes,
       );
 
   Future<void> stashPop(String index) => _repoAction(
-        (l10n) => l10n.gitStashPop,
+        (g11n) => g11n.gitStashPop,
         (repo) => _cgit.stashPop(repo, index: index),
         onDone: loadStashes,
       );
 
   Future<void> stashApply(String index) => _repoAction(
-        (l10n) => l10n.gitStashApply,
+        (g11n) => g11n.gitStashApply,
         (repo) => _cgit.stashApply(repo, index: index),
         onDone: loadStashes,
       );
 
   Future<void> stashDrop(String index) => _repoAction(
-        (l10n) => l10n.gitStashDrop,
+        (g11n) => g11n.gitStashDrop,
         (repo) => _cgit.stashDrop(repo, index: index),
         onDone: loadStashes,
       );
 
   Future<void> stashClear() => _repoAction(
-        (l10n) => l10n.gitStashClear,
+        (g11n) => g11n.gitStashClear,
         (repo) => _cgit.stashClear(repo),
         onDone: loadStashes,
       );
@@ -645,7 +645,7 @@ class GitController extends StateNotifier<GitUiState> {
       diffPath: () => path,
       diffData: () => null,
     );
-    final l10n = _ref.read(appLocalizationsProvider);
+    final g11n = _ref.read(appGlobalizationsProvider);
     final dark = _isDarkTheme();
     try {
       final old = await oldContent(repoPath);
@@ -673,7 +673,7 @@ class GitController extends StateNotifier<GitUiState> {
       state = state.copyWith(
         diffVisible: false,
         diffData: () => null,
-        toast: () => l10n.gitToastDiffFailed,
+        toast: () => g11n.gitToastDiffFailed,
       );
     }
   }
@@ -716,14 +716,14 @@ class GitController extends StateNotifier<GitUiState> {
     if (state.busy || state.checkoutLoading != null) return;
     final repoPath = state.repoPath;
     if (repoPath == null) return;
-    final l10n = _ref.read(appLocalizationsProvider);
+    final g11n = _ref.read(appGlobalizationsProvider);
     state = state.copyWith(checkoutLoading: () => ref, toast: () => null);
     String toast;
     try {
       await _cgit.checkout(repoPath, ref, isRemote: isRemote);
-      toast = l10n.gitCheckoutSuccess(ref);
+      toast = g11n.gitCheckoutSuccess(ref);
     } on GitException catch (error) {
-      toast = l10n.gitToastCheckoutFailed(GitErrorMessage.friendly(error.message));
+      toast = g11n.gitToastCheckoutFailed(GitErrorMessage.friendly(error.message));
     }
     try {
       final snapshot = await _loadSnapshot(repoPath, includeIdentity: false);
@@ -740,7 +740,7 @@ class GitController extends StateNotifier<GitUiState> {
     } on GitException catch (error) {
       state = state.copyWith(
         checkoutLoading: () => null,
-        toast: () => l10n.gitToastActionRefreshFailed(
+        toast: () => g11n.gitToastActionRefreshFailed(
           GitErrorMessage.friendly(error.message),
         ),
       );
@@ -750,7 +750,7 @@ class GitController extends StateNotifier<GitUiState> {
   Future<void> createBranch(String name, {String? startPoint, bool checkoutAfter = true}) {
     if (name.trim().isEmpty) return Future.value();
     return _branchAction(
-      (l10n) => l10n.gitActionCreateBranch,
+      (g11n) => g11n.gitActionCreateBranch,
       (repo) => _cgit.createBranch(
         repo,
         name,
@@ -763,7 +763,7 @@ class GitController extends StateNotifier<GitUiState> {
   Future<void> deleteBranch(String name) {
     if (name.trim().isEmpty) return Future.value();
     return _branchAction(
-      (l10n) => l10n.gitDeleteBranch,
+      (g11n) => g11n.gitDeleteBranch,
       (repo) => _cgit.deleteBranch(repo, name),
     );
   }
@@ -771,7 +771,7 @@ class GitController extends StateNotifier<GitUiState> {
   Future<void> deleteRemoteBranch(String name) {
     if (name.trim().isEmpty) return Future.value();
     return _branchAction(
-      (l10n) => l10n.gitDeleteRemoteBranch,
+      (g11n) => g11n.gitDeleteRemoteBranch,
       (repo) => _cgit.deleteRemoteBranch(repo, name),
     );
   }
@@ -779,7 +779,7 @@ class GitController extends StateNotifier<GitUiState> {
   Future<void> renameBranch(String oldName, String newName) {
     if (oldName.trim().isEmpty || newName.trim().isEmpty) return Future.value();
     return _branchAction(
-      (l10n) => l10n.gitRenameBranch,
+      (g11n) => g11n.gitRenameBranch,
       (repo) => _cgit.renameBranch(repo, oldName, newName),
     );
   }
@@ -787,7 +787,7 @@ class GitController extends StateNotifier<GitUiState> {
   Future<void> createTag(String name, {String? commitHash}) {
     if (name.trim().isEmpty) return Future.value();
     return _branchAction(
-      (l10n) => l10n.gitActionCreateTag,
+      (g11n) => g11n.gitActionCreateTag,
       (repo) => _cgit.createTag(repo, name, commitHash: commitHash),
     );
   }
@@ -795,7 +795,7 @@ class GitController extends StateNotifier<GitUiState> {
   Future<void> deleteTag(String name) {
     if (name.trim().isEmpty) return Future.value();
     return _branchAction(
-      (l10n) => l10n.gitDeleteTag,
+      (g11n) => g11n.gitDeleteTag,
       (repo) => _cgit.deleteTag(repo, name),
     );
   }
@@ -803,13 +803,13 @@ class GitController extends StateNotifier<GitUiState> {
   Future<void> mergeBranch(String name, {bool noFf = false}) {
     if (name.trim().isEmpty) return Future.value();
     return _branchAction(
-      (l10n) => l10n.gitActionMerge,
+      (g11n) => g11n.gitActionMerge,
       (repo) => _cgit.mergeBranch(repo, name, noFf: noFf),
     );
   }
 
   Future<void> abortMerge() => _repoAction(
-        (l10n) => l10n.gitActionAbortMerge,
+        (g11n) => g11n.gitActionAbortMerge,
         (repo) => _cgit.abortMerge(repo),
       );
 
@@ -817,7 +817,7 @@ class GitController extends StateNotifier<GitUiState> {
   Future<void> resetToCommit(String hash, {String mode = 'mixed'}) {
     if (hash.trim().isEmpty) return Future.value();
     return _repoAction(
-      (l10n) => l10n.gitResetToCommit,
+      (g11n) => g11n.gitResetToCommit,
       (repo) => _cgit.resetToCommit(repo, hash, mode: mode),
     );
   }
@@ -827,13 +827,13 @@ class GitController extends StateNotifier<GitUiState> {
   /// 拉取:凭据由容器 credential.helper 链注入,不在 app 侧预查。
   Future<void> pull() async {
     if (!state.hasRemote) {
-      state = state.copyWith(toast: () => _ref.read(appLocalizationsProvider).gitNoRemotePull);
+      state = state.copyWith(toast: () => _ref.read(appGlobalizationsProvider).gitNoRemotePull);
       return;
     }
     final repoPath = state.repoPath;
     if (repoPath == null) return;
     await _runAction(
-      (l10n) => l10n.gitPull,
+      (g11n) => g11n.gitPull,
       () => _cgit.pull(repoPath),
       onDone: () async {
         await loadBranches();
@@ -844,7 +844,7 @@ class GitController extends StateNotifier<GitUiState> {
   /// 推送:首次推送 master 时先询问是否改名为 main。
   Future<void> push({void Function()? onPromptRenameMaster}) async {
     if (!state.hasRemote) {
-      state = state.copyWith(toast: () => _ref.read(appLocalizationsProvider).gitNoRemotePush);
+      state = state.copyWith(toast: () => _ref.read(appGlobalizationsProvider).gitNoRemotePush);
       return;
     }
     final repoPath = state.repoPath;
@@ -859,7 +859,7 @@ class GitController extends StateNotifier<GitUiState> {
 
   /// 用户选择重命名为 main 并推送。
   Future<void> pushRenameMasterToMain() => _runAction(
-        (l10n) => l10n.gitPush,
+        (g11n) => g11n.gitPush,
         () async {
           final repoPath = state.repoPath;
           if (repoPath != null) await _cgit.renameMasterToMainAndPush(repoPath);
@@ -868,7 +868,7 @@ class GitController extends StateNotifier<GitUiState> {
 
   /// 用户选择保留 master 直接推送。
   Future<void> pushDirectly() => _runAction(
-        (l10n) => l10n.gitPush,
+        (g11n) => g11n.gitPush,
         () async {
           final repoPath = state.repoPath;
           if (repoPath != null) await _cgit.push(repoPath);
@@ -897,7 +897,7 @@ class GitController extends StateNotifier<GitUiState> {
 
   /// 仓库动作:执行 + 刷新状态,失败把 git 的报错经 GitErrorMessage 转成友好文案。
   Future<void> _repoAction(
-    String Function(AppLocalizations l10n) name,
+    String Function(AppGlobalizations g11n) name,
     FutureOr<void> Function(String repoPath) action, {
     Future<void> Function()? onDone,
   }) async {
@@ -908,7 +908,7 @@ class GitController extends StateNotifier<GitUiState> {
 
   /// 分支动作:执行后刷新分支与提交列表。
   Future<void> _branchAction(
-    String Function(AppLocalizations l10n) name,
+    String Function(AppGlobalizations g11n) name,
     FutureOr<void> Function(String repoPath) action,
   ) async {
     final repoPath = state.repoPath;
@@ -925,25 +925,25 @@ class GitController extends StateNotifier<GitUiState> {
 
   /// 执行一个写操作:置 busy → 跑命令 → 刷新 → toast 反馈。操作间互斥。
   Future<void> _runAction(
-    String Function(AppLocalizations l10n) name,
+    String Function(AppGlobalizations g11n) name,
     Future<void> Function() action, {
     Future<void> Function()? onDone,
   }) async {
     if (state.busy) return;
-    final l10n = _ref.read(appLocalizationsProvider);
-    final actionName = name(l10n);
+    final g11n = _ref.read(appGlobalizationsProvider);
+    final actionName = name(g11n);
     state = state.copyWith(busy: true, toast: () => null);
     String toast;
     try {
       await action();
-      toast = l10n.gitActionDone(actionName);
+      toast = g11n.gitActionDone(actionName);
     } on GitException catch (error) {
-      toast = l10n.gitActionFailed(
+      toast = g11n.gitActionFailed(
         actionName,
         GitErrorMessage.friendly(error.message),
       );
     } catch (error) {
-      toast = l10n.gitActionFailed(actionName, '$error');
+      toast = g11n.gitActionFailed(actionName, '$error');
     }
     // 刷新以反映新状态;失败也刷新,让 UI 与仓库一致。
     final repoPath = state.repoPath;
@@ -969,7 +969,7 @@ class GitController extends StateNotifier<GitUiState> {
     } on GitException catch (error) {
       state = state.copyWith(
         busy: false,
-        toast: () => l10n.gitToastActionRefreshFailed(
+        toast: () => g11n.gitToastActionRefreshFailed(
           GitErrorMessage.friendly(error.message),
         ),
       );

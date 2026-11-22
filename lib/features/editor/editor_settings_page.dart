@@ -5,7 +5,7 @@ import '../../core/theme/semantic_colors.dart';
 import '../../core/theme/tokens.dart';
 import '../../core/ui/settings_group.dart';
 import '../../data/settings/editor_settings.dart';
-import '../../l10n/app_localizations.dart';
+import '../../g11n/app_globalizations.dart';
 
 /// 编辑器设置页(对齐上游 EditorSettingsScreen):字号滑杆 + 自动换行、
 /// 缩进参考线、换行箭头、空白符号四个开关。改动即时生效并持久化。
@@ -14,7 +14,7 @@ class EditorSettingsPage extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final l10n = AppLocalizations.of(context);
+    final g11n = AppGlobalizations.of(context);
     final settings = ref.watch(editorSettingsProvider);
     final notifier = ref.read(editorSettingsProvider.notifier);
     final theme = Theme.of(context);
@@ -22,7 +22,7 @@ class EditorSettingsPage extends ConsumerWidget {
     return Scaffold(
       backgroundColor: context.semantic.pageBackground,
       appBar: AppBar(
-        title: Text(l10n.editorSettings),
+        title: Text(g11n.editorSettings),
         backgroundColor: context.semantic.pageBackground,
         surfaceTintColor: Colors.transparent,
         elevation: 0,
@@ -46,10 +46,10 @@ class EditorSettingsPage extends ConsumerWidget {
                     Row(
                       children: [
                         Expanded(
-                          child: Text(l10n.editorFontSize, style: theme.textTheme.bodyLarge),
+                          child: Text(g11n.editorFontSize, style: theme.textTheme.bodyLarge),
                         ),
                         Text(
-                          l10n.editorFontSizeValue(settings.fontSizeSp),
+                          g11n.editorFontSizeValue(settings.fontSizeSp),
                           style: theme.textTheme.bodyMedium?.copyWith(
                             color: context.semantic.subtleText,
                           ),
@@ -69,7 +69,7 @@ class EditorSettingsPage extends ConsumerWidget {
               ),
               const SettingsDivider(indent: Spacing.lg),
               SettingsRow(
-                title: l10n.editorWordWrap,
+                title: g11n.editorWordWrap,
                 trailing: Switch(
                   value: settings.wordWrap,
                   onChanged: notifier.setWordWrap,
@@ -77,7 +77,7 @@ class EditorSettingsPage extends ConsumerWidget {
               ),
               const SettingsDivider(indent: Spacing.lg),
               SettingsRow(
-                title: l10n.editorShowIndentGuide,
+                title: g11n.editorShowIndentGuide,
                 trailing: Switch(
                   value: settings.showIndentGuide,
                   onChanged: notifier.setShowIndentGuide,
@@ -85,7 +85,7 @@ class EditorSettingsPage extends ConsumerWidget {
               ),
               const SettingsDivider(indent: Spacing.lg),
               SettingsRow(
-                title: l10n.editorShowWhitespace,
+                title: g11n.editorShowWhitespace,
                 trailing: Switch(
                   value: settings.showWhitespace,
                   onChanged: notifier.setShowWhitespace,

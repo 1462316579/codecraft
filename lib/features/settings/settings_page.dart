@@ -5,7 +5,7 @@ import 'package:go_router/go_router.dart';
 
 import '../../core/theme/tokens.dart';
 import '../../core/ui/settings_group.dart';
-import '../../l10n/app_localizations.dart';
+import '../../g11n/app_globalizations.dart';
 
 /// 设置页(样式对齐新版设置页:大标题 + 副标题、内容卡片、圆角色块图标行、行尾箭头):
 /// 首组为 AI 提供商 / Skill 管理 / 主题;「账户与数据」组为 关于。
@@ -14,7 +14,7 @@ class SettingsPage extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final l10n = AppLocalizations.of(context);
+    final g11n = AppGlobalizations.of(context);
     final theme = Theme.of(context);
     return Scaffold(
       backgroundColor: Colors.transparent,
@@ -53,72 +53,72 @@ class SettingsPage extends ConsumerWidget {
                       children: [
                         SettingsRow(
                           icon: Iconfont.slidersHorizontal,
-                          title: l10n.settingsGeneral,
+                          title: g11n.settingsGeneral,
                           onTap: () => context.push('/settings/general'),
                         ),
                         const SettingsDivider(indent: SettingsRow.textIndent),
                         SettingsRow(
                           icon: Iconfont.server,
-                          title: l10n.providers,
-                          subtitle: l10n.providersSubtitle,
+                          title: g11n.providers,
+                          subtitle: g11n.providersSubtitle,
                           onTap: () => context.push('/settings/providers'),
                         ),
                         const SettingsDivider(indent: SettingsRow.textIndent),
                         SettingsRow(
                           icon: Iconfont.puzzle,
-                          title: l10n.skillsTitle,
-                          subtitle: l10n.skillsSubtitle,
+                          title: g11n.skillsTitle,
+                          subtitle: g11n.skillsSubtitle,
                           onTap: () => context.push('/settings/skills'),
                         ),
                         const SettingsDivider(indent: SettingsRow.textIndent),
                         SettingsRow(
                           icon: Iconfont.messageSquare,
-                          title: l10n.promptsTitle,
-                          subtitle: l10n.promptsSubtitle,
+                          title: g11n.promptsTitle,
+                          subtitle: g11n.promptsSubtitle,
                           onTap: () => context.push('/settings/prompts'),
                         ),
                         const SettingsDivider(indent: SettingsRow.textIndent),
                         SettingsRow(
                           icon: Iconfont.plug,
-                          title: l10n.mcpTitle,
-                          subtitle: l10n.mcpSubtitle,
+                          title: g11n.mcpTitle,
+                          subtitle: g11n.mcpSubtitle,
                           onTap: () => context.push('/settings/mcp'),
                         ),
                         SettingsRow(
                           icon: Iconfont.shield,
-                          title: l10n.permissionsTitle,
-                          subtitle: l10n.permissionsSubtitle,
+                          title: g11n.permissionsTitle,
+                          subtitle: g11n.permissionsSubtitle,
                           onTap: () => context.push('/settings/permissions'),
                         ),
                         const SettingsDivider(indent: SettingsRow.textIndent),
                         SettingsRow(
                           icon: Iconfont.smartphone,
-                          title: l10n.softwarePermissionsTitle,
-                          subtitle: l10n.softwarePermissionsSubtitle,
+                          title: g11n.softwarePermissionsTitle,
+                          subtitle: g11n.softwarePermissionsSubtitle,
                           onTap: () => context.push('/permissions-system'),
                         ),
                         const SettingsDivider(indent: SettingsRow.textIndent),
                         SettingsRow(
                           icon: Iconfont.palette,
-                          title: l10n.themeTitle,
-                          subtitle: l10n.themeSubtitle,
+                          title: g11n.themeTitle,
+                          subtitle: g11n.themeSubtitle,
                           onTap: () => context.push('/settings/theme'),
                         ),
                         const SettingsDivider(indent: SettingsRow.textIndent),
                         SettingsRow(
                           icon: Iconfont.box,
-                          title: l10n.settingsContainer,
-                          subtitle: l10n.settingsContainerSubtitle,
+                          title: g11n.settingsContainer,
+                          subtitle: g11n.settingsContainerSubtitle,
                           onTap: () => context.push('/settings/container'),
                         ),
                       ],
                     ),
-                    SettingsGroupHeader(text: l10n.settingsCategoryData),
+                    SettingsGroupHeader(text: g11n.settingsCategoryData),
                     SettingsGroup(
                       children: [
                         SettingsRow(
                           icon: Iconfont.barChart,
-                          title: l10n.tokenStatsTitle,
+                          title: g11n.tokenStatsTitle,
                           onTap: () => context.push('/settings/token-stats'),
                         ),
                         const SettingsDivider(indent: SettingsRow.textIndent),
@@ -130,25 +130,25 @@ class SettingsPage extends ConsumerWidget {
                         const SettingsDivider(indent: SettingsRow.textIndent),
                         SettingsRow(
                           icon: Iconfont.fileText,
-                          title: l10n.settingsLog,
-                          subtitle: l10n.settingsLogSubtitle,
+                          title: g11n.settingsLog,
+                          subtitle: g11n.settingsLogSubtitle,
                           onTap: () => context.push('/settings/logs'),
                         ),
                       ],
                     ),
-                    SettingsGroupHeader(text: l10n.accountAndData),
+                    SettingsGroupHeader(text: g11n.accountAndData),
                     SettingsGroup(
                       children: [
                         SettingsRow(
                           icon: Iconfont.info,
-                          title: l10n.about,
-                          subtitle: l10n.aboutSubtitle,
+                          title: g11n.about,
+                          subtitle: g11n.aboutSubtitle,
                           onTap: () => context.push('/settings/about'),
                         ),
                         const SettingsDivider(indent: SettingsRow.textIndent),
                         SettingsRow(
                           icon: Iconfont.download,
-                          title: l10n.backupAndRestore,
+                          title: g11n.backupAndRestore,
                           onTap: () => context.push('/settings/backup-restore'),
                         ),
                       ],

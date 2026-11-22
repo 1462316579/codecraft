@@ -5,7 +5,7 @@ import '../../core/theme/semantic_colors.dart';
 import '../../core/theme/tokens.dart';
 import '../../core/util/line_diff.dart';
 import '../../data/git/diff_data.dart';
-import '../../l10n/app_localizations.dart';
+import '../../g11n/app_globalizations.dart';
 
 /// 差异查看器(对齐上游 `DiffViewerScreen`):独立全屏页,不叠加在 Git 页顶栏之下。
 class DiffViewerScreen extends StatelessWidget {
@@ -24,14 +24,14 @@ class DiffViewerScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final l10n = AppLocalizations.of(context);
+    final g11n = AppGlobalizations.of(context);
     final theme = Theme.of(context);
     final path = diffData?.filePath ?? filePath;
     return Scaffold(
       appBar: AppBar(
         title: path == null
             ? Text(
-                l10n.gitComputingDiff,
+                g11n.gitComputingDiff,
                 maxLines: 1,
                 overflow: TextOverflow.ellipsis,
                 style: theme.textTheme.titleSmall,
@@ -59,7 +59,7 @@ class DiffViewerScreen extends StatelessWidget {
               ),
         leading: IconButton(
           onPressed: onBack,
-          tooltip: l10n.back,
+          tooltip: g11n.back,
           icon: const Icon(Iconfont.arrowLeft),
         ),
         actions: [
@@ -69,7 +69,7 @@ class DiffViewerScreen extends StatelessWidget {
                 onBack();
                 onOpenInEditor!(path);
               },
-              tooltip: l10n.gitOpenInEditor,
+              tooltip: g11n.gitOpenInEditor,
               icon: const Icon(Iconfont.pencil, size: 18),
             ),
         ],
@@ -93,7 +93,7 @@ class DiffViewerScreen extends StatelessWidget {
 class _DiffLoading extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    final l10n = AppLocalizations.of(context);
+    final g11n = AppGlobalizations.of(context);
     return Center(
       child: Column(
         mainAxisSize: MainAxisSize.min,
@@ -101,7 +101,7 @@ class _DiffLoading extends StatelessWidget {
           const CircularProgressIndicator(),
           const SizedBox(height: Spacing.sm),
           Text(
-            l10n.gitComputingDiff,
+            g11n.gitComputingDiff,
             style: TextStyle(color: Theme.of(context).colorScheme.onSurfaceVariant),
           ),
         ],
@@ -120,7 +120,7 @@ class _DiffHint extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final l10n = AppLocalizations.of(context);
+    final g11n = AppGlobalizations.of(context);
     final theme = Theme.of(context);
     final subtle = theme.colorScheme.onSurfaceVariant;
     return Center(
@@ -133,16 +133,16 @@ class _DiffHint extends StatelessWidget {
           ],
           Text(
             switch (messageKey) {
-              _DiffHintKind.binary => l10n.diffBinaryFile,
-              _DiffHintKind.large => l10n.diffFileTooLarge,
-              _DiffHintKind.empty => l10n.diffNoChanges,
+              _DiffHintKind.binary => g11n.diffBinaryFile,
+              _DiffHintKind.large => g11n.diffFileTooLarge,
+              _DiffHintKind.empty => g11n.diffNoChanges,
             },
             style: theme.textTheme.bodyMedium?.copyWith(color: subtle),
           ),
           if (messageKey == _DiffHintKind.large) ...[
             const SizedBox(height: Spacing.xs),
             Text(
-              l10n.diffFileTooLargeDesc,
+              g11n.diffFileTooLargeDesc,
               style: theme.textTheme.bodySmall?.copyWith(color: subtle),
             ),
           ],

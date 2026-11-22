@@ -5,7 +5,7 @@ import '../icons/iconfont.dart';
 
 import '../theme/semantic_colors.dart';
 import '../theme/tokens.dart';
-import '../../l10n/app_localizations.dart';
+import '../../g11n/app_globalizations.dart';
 
 /// 全项目统一的左滑删除行容器(逐值移植上游 core/ui/SwipeToDeleteRow.kt):
 /// 底层红色删除按钮固定在右端,随左滑露出(带缩放/透明度渐变),表层内容整体左滑,
@@ -153,7 +153,7 @@ class _SwipeToDeleteRowState extends State<SwipeToDeleteRow>
                                       const Icon(Iconfont.trash2, size: 20, color: Colors.white),
                                       const SizedBox(width: 8),
                                       Text(
-                                        AppLocalizations.of(context).delete,
+                                        AppGlobalizations.of(context).delete,
                                         style: const TextStyle(
                                           color: Colors.white,
                                           fontWeight: FontWeight.w600,

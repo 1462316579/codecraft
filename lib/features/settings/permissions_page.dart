@@ -8,7 +8,7 @@ import '../../core/ui/settings_group.dart';
 import '../../core/ui/swipe_to_delete_row.dart';
 import '../../data/permissions.dart';
 
-import '../../l10n/app_localizations.dart';
+import '../../g11n/app_globalizations.dart';
 
 /// 「工具授权」二级页(对齐上游 PermissionsSection):
 /// 顶部是「安全防护」开关(禁用安全拦截);其下按「当前项目 / 全局」分组列出已保存的授权规则
@@ -25,7 +25,7 @@ class _PermissionsPageState extends ConsumerState<PermissionsPage> {
 
   @override
   Widget build(BuildContext context) {
-    final l10n = AppLocalizations.of(context);
+    final g11n = AppGlobalizations.of(context);
     final semantic = context.semantic;
     final theme = Theme.of(context);
     final rulesAsync = ref.watch(permissionRulesProvider);
@@ -51,7 +51,7 @@ class _PermissionsPageState extends ConsumerState<PermissionsPage> {
         ),
         child: rulesAsync.when(
           loading: () => const Center(child: CircularProgressIndicator()),
-          error: (error, _) => Center(child: Text('${l10n.errorGeneric}: $error')),
+          error: (error, _) => Center(child: Text('${g11n.errorGeneric}: $error')),
           data: (rules) => ListView(
             physics: const AlwaysScrollableScrollPhysics(),
             padding: EdgeInsets.fromLTRB(
@@ -62,8 +62,8 @@ class _PermissionsPageState extends ConsumerState<PermissionsPage> {
             ),
           children: [
             SettingsPageHeader(
-              title: l10n.permissionsTitle,
-              subtitle: l10n.permissionsSubtitle,
+              title: g11n.permissionsTitle,
+              subtitle: g11n.permissionsSubtitle,
             ),
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: Spacing.lg),
@@ -71,16 +71,16 @@ class _PermissionsPageState extends ConsumerState<PermissionsPage> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   CollapsibleGroupHeader(
-                    text: l10n.permGlobal,
+                    text: g11n.permGlobal,
                     expanded: _globalExpanded,
                     onToggle: () => setState(() => _globalExpanded = !_globalExpanded),
                   ),
                   if (_globalExpanded)
                     SettingsGroup(
                       children: _rulesGroup(
-                        l10n,
+                        g11n,
                         rules.global,
-                        emptyHint: l10n.permNoGlobalRules,
+                        emptyHint: g11n.permNoGlobalRules,
                         onDelete: (rule) =>
                             ref.read(permissionRulesProvider.notifier).removeGlobal(rule),
                         onPromote: null,
@@ -89,7 +89,7 @@ class _PermissionsPageState extends ConsumerState<PermissionsPage> {
                   Padding(
                     padding: const EdgeInsets.fromLTRB(Spacing.md, Spacing.xs, 0, 0),
                     child: Text(
-                      l10n.permRulesShort,
+                      g11n.permRulesShort,
                       style: Theme.of(context)
                           .textTheme
                           .bodySmall
@@ -107,7 +107,7 @@ class _PermissionsPageState extends ConsumerState<PermissionsPage> {
   }
 
   List<Widget> _rulesGroup(
-    AppLocalizations l10n,
+    AppGlobalizations g11n,
     List<PermissionRule> rules, {
     required String emptyHint,
     required ValueChanged<PermissionRule> onDelete,
@@ -131,7 +131,7 @@ class _PermissionsPageState extends ConsumerState<PermissionsPage> {
       for (var index = 0; index < rules.length; index++) ...[
         if (index > 0) const SettingsDivider(),
         _RuleRow(
-          l10n: l10n,
+          g11n: g11n,
           rule: rules[index],
           onDelete: () => onDelete(rules[index]),
           onPromote: onPromote == null ? null : () => onPromote(rules[index]),
@@ -144,13 +144,13 @@ class _PermissionsPageState extends ConsumerState<PermissionsPage> {
 /// 单条规则行(对齐上游 RuleRow):判定图标 + 工具名 + 「匹配范围 · 允许/禁止」+ 可选「提升为全局」。
 class _RuleRow extends StatelessWidget {
   const _RuleRow({
-    required this.l10n,
+    required this.g11n,
     required this.rule,
     required this.onDelete,
     required this.onPromote,
   });
 
-  final AppLocalizations l10n;
+  final AppGlobalizations g11n;
   final PermissionRule rule;
   final VoidCallback onDelete;
   final VoidCallback? onPromote;
@@ -161,7 +161,7 @@ class _RuleRow extends StatelessWidget {
     final semantic = context.semantic;
     final allowed = rule.decision == PermissionDecision.allow;
     final tint = allowed ? theme.colorScheme.primary : theme.colorScheme.error;
-    final scopeText = rule.pattern == PermissionRule.wholeTool ? l10n.permEntireTool : rule.pattern;
+    final scopeText = rule.pattern == PermissionRule.wholeTool ? g11n.permEntireTool : rule.pattern;
 
     return SwipeToDeleteRow(
       onDelete: onDelete,
@@ -183,7 +183,7 @@ class _RuleRow extends StatelessWidget {
                     style: theme.textTheme.bodyLarge?.copyWith(fontWeight: FontWeight.w500),
                   ),
                   Text(
-                    '$scopeText · ${allowed ? l10n.allow : l10n.permDeny}',
+                    '$scopeText · ${allowed ? g11n.allow : g11n.permDeny}',
                     maxLines: 1,
                     overflow: TextOverflow.ellipsis,
                     style: theme.textTheme.bodyMedium?.copyWith(color: semantic.subtleText),
@@ -194,7 +194,7 @@ class _RuleRow extends StatelessWidget {
             if (onPromote != null)
               IconButton(
                 icon: Icon(Iconfont.plus, size: 18, color: tint),
-                tooltip: l10n.permPromoteToGlobal,
+                tooltip: g11n.permPromoteToGlobal,
                 onPressed: onPromote,
               ),
           ],

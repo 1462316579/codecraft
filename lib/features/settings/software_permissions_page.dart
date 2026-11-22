@@ -9,7 +9,7 @@ import '../../data/container/external_storage.dart';
 import '../../data/container/runtime_permissions.dart';
 import '../../data/container/software_permissions.dart';
 import '../../data/installed_apps.dart';
-import '../../l10n/app_localizations.dart';
+import '../../g11n/app_globalizations.dart';
 
 /// 「软件权限」页:逐项列出系统权限,点击时由**系统自己**弹授权框。
 ///
@@ -83,7 +83,7 @@ class _SoftwarePermissionsPageState extends ConsumerState<SoftwarePermissionsPag
 
   @override
   Widget build(BuildContext context) {
-    final l10n = AppLocalizations.of(context);
+    final g11n = AppGlobalizations.of(context);
     final theme = Theme.of(context);
     return Scaffold(
       extendBodyBehindAppBar: true,
@@ -113,54 +113,54 @@ class _SoftwarePermissionsPageState extends ConsumerState<SoftwarePermissionsPag
             padding: const EdgeInsets.only(top: 80, bottom: 140),
         children: [
           SettingsPageHeader(
-            title: l10n.softwarePermissionsTitle,
-            subtitle: l10n.softwarePermissionsSubtitle,
+            title: g11n.softwarePermissionsTitle,
+            subtitle: g11n.softwarePermissionsSubtitle,
           ),
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: Spacing.lg),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                SettingsGroupHeader(text: l10n.systemPermissionsGroup),
+                SettingsGroupHeader(text: g11n.systemPermissionsGroup),
                 SettingsGroup(
                   children: [
                     SettingsRow(
                       icon: Iconfont.folderOpen,
-                      title: l10n.permissionStorageTitle,
+                      title: g11n.permissionStorageTitle,
                       subtitle: '读写工作区文件',
-                      trailing: _statusText(_storage ? l10n.permissionAllowed : l10n.permissionNotAllowed),
+                      trailing: _statusText(_storage ? g11n.permissionAllowed : g11n.permissionNotAllowed),
                       onTap: _requestStorage,
                     ),
                     SettingsDivider(indent: SettingsRow.textIndent),
                     SettingsRow(
                       icon: Iconfont.appWindow,
-                      title: l10n.permissionAppsTitle,
-                      subtitle: l10n.permissionAppsDesc,
-                      trailing: _statusText(_appList ? l10n.permissionAllowed : l10n.permissionNotAllowed),
+                      title: g11n.permissionAppsTitle,
+                      subtitle: g11n.permissionAppsDesc,
+                      trailing: _statusText(_appList ? g11n.permissionAllowed : g11n.permissionNotAllowed),
                       onTap: _refresh,
                     ),
                     SettingsDivider(indent: SettingsRow.textIndent),
                     SettingsRow(
                       icon: Iconfont.zap,
-                      title: l10n.permissionBatteryTitle,
-                      subtitle: l10n.permissionBatteryDesc,
-                      trailing: _statusText(_status.battery ? l10n.permissionAllowed : l10n.permissionNotAllowed),
+                      title: g11n.permissionBatteryTitle,
+                      subtitle: g11n.permissionBatteryDesc,
+                      trailing: _statusText(_status.battery ? g11n.permissionAllowed : g11n.permissionNotAllowed),
                       onTap: _requestBattery,
                     ),
                     SettingsDivider(indent: SettingsRow.textIndent),
                     SettingsRow(
                       icon: Iconfont.power,
-                      title: l10n.permissionAutoStartTitle,
-                      subtitle: l10n.permissionAutoStartDesc,
+                      title: g11n.permissionAutoStartTitle,
+                      subtitle: g11n.permissionAutoStartDesc,
                       onTap: SoftwarePermissions.openAutoStart,
                     ),
                     SettingsDivider(indent: SettingsRow.textIndent),
                     SettingsRow(
                       icon: Iconfont.terminal,
-                      title: l10n.permissionShizukuTitle,
-                      subtitle: l10n.permissionShizukuDesc,
+                      title: g11n.permissionShizukuTitle,
+                      subtitle: g11n.permissionShizukuDesc,
                       trailing: _statusText(
-                        _status.shizuku ? l10n.permissionInstalled : l10n.permissionNotInstalled,
+                        _status.shizuku ? g11n.permissionInstalled : g11n.permissionNotInstalled,
                       ),
                       onTap: SoftwarePermissions.openShizuku,
                     ),

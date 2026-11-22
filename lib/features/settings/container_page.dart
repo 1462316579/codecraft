@@ -8,7 +8,7 @@ import '../../core/theme/tokens.dart';
 import '../../core/ui/settings_group.dart';
 import '../../data/container/container_launcher.dart';
 import '../../data/container/container_manager.dart';
-import '../../l10n/app_localizations.dart';
+import '../../g11n/app_globalizations.dart';
 
 /// 容器与镜像页：只展示已安装容器，镜像目录放在独立的下载页。
 class ContainerPage extends ConsumerStatefulWidget {
@@ -32,24 +32,24 @@ class _ContainerPageState extends ConsumerState<ContainerPage> {
     final state = ref.watch(containerProvider);
     final notifier = ref.read(containerProvider.notifier);
     final theme = Theme.of(context);
-    final l10n = AppLocalizations.of(context);
+    final g11n = AppGlobalizations.of(context);
 
     return Scaffold(
       extendBodyBehindAppBar: true,
       appBar: AppBar(
-        title: Text(l10n.containerPageTitle),
+        title: Text(g11n.containerPageTitle),
         backgroundColor: Colors.transparent,
         surfaceTintColor: Colors.transparent,
         elevation: 0,
         scrolledUnderElevation: 0,
         actions: [
           IconButton(
-            tooltip: l10n.containerDownloadTooltip,
+            tooltip: g11n.containerDownloadTooltip,
             icon: const Icon(Iconfont.download, size: 22),
             onPressed: () => context.push('/settings/container/download'),
           ),
           IconButton(
-            tooltip: l10n.containerRefreshTooltip,
+            tooltip: g11n.containerRefreshTooltip,
             icon: const Icon(Iconfont.refreshCw, size: 22),
             onPressed: state.busy ? null : notifier.refresh,
           ),
@@ -86,7 +86,7 @@ class _ContainerPageState extends ConsumerState<ContainerPage> {
                   Spacing.xl + 60,
                 ),
                 children: [
-                  SettingsGroupHeader(text: l10n.containerInstalledSection),
+                  SettingsGroupHeader(text: g11n.containerInstalledSection),
                   SettingsGroup(
                     children: [
                       for (var i = 0; i < state.containers.length; i++) ...[
@@ -97,13 +97,13 @@ class _ContainerPageState extends ConsumerState<ContainerPage> {
                           state,
                           notifier,
                           state.containers[i],
-                          l10n,
+                          g11n,
                         ),
                       ],
                     ],
                   ),
                   _FootNote(
-                    text: l10n.containerDeleteFootnote,
+                    text: g11n.containerDeleteFootnote,
                   ),
                 ],
               ),
@@ -116,7 +116,7 @@ class _ContainerPageState extends ConsumerState<ContainerPage> {
     ContainerState state,
     ContainerNotifier notifier,
     ContainerInfo container,
-    AppLocalizations l10n,
+    AppGlobalizations g11n,
   ) {
     final isDefault = state.defaultId == container.id ||
         (state.defaultId == null && state.containers.first.id == container.id);
@@ -125,7 +125,7 @@ class _ContainerPageState extends ConsumerState<ContainerPage> {
       icon: Iconfont.box,
       title: container.name,
       subtitle: isDefault
-          ? l10n.containerDefaultSubtitle(_formatBytes(container.sizeBytes))
+          ? g11n.containerDefaultSubtitle(_formatBytes(container.sizeBytes))
           : _formatBytes(container.sizeBytes),
       trailing: Row(
         mainAxisSize: MainAxisSize.min,
@@ -134,14 +134,14 @@ class _ContainerPageState extends ConsumerState<ContainerPage> {
             TextButton(
               onPressed:
                   state.busy ? null : () => notifier.setDefault(container.id),
-              child: Text(l10n.containerSetDefault),
+              child: Text(g11n.containerSetDefault),
             ),
           IconButton(
-            tooltip: l10n.containerDeleteTitle,
+            tooltip: g11n.containerDeleteTitle,
             icon: const Icon(Iconfont.trash, size: 18),
             onPressed: state.busy
                 ? null
-                : () => _confirmRemove(context, notifier, container, l10n),
+                : () => _confirmRemove(context, notifier, container, g11n),
           ),
         ],
       ),
@@ -152,21 +152,21 @@ class _ContainerPageState extends ConsumerState<ContainerPage> {
     BuildContext context,
     ContainerNotifier notifier,
     ContainerInfo container,
-    AppLocalizations l10n,
+    AppGlobalizations g11n,
   ) async {
     final confirmed = await showDialog<bool>(
       context: context,
       builder: (dialogContext) => AlertDialog(
-        title: Text(l10n.containerDeleteTitle),
-        content: Text(l10n.containerDeleteContent(container.name)),
+        title: Text(g11n.containerDeleteTitle),
+        content: Text(g11n.containerDeleteContent(container.name)),
         actions: [
           TextButton(
             onPressed: () => Navigator.of(dialogContext).pop(false),
-            child: Text(l10n.cancel),
+            child: Text(g11n.cancel),
           ),
           FilledButton(
             onPressed: () => Navigator.of(dialogContext).pop(true),
-            child: Text(l10n.delete),
+            child: Text(g11n.delete),
           ),
         ],
       ),
@@ -186,12 +186,12 @@ class ContainerDownloadPage extends ConsumerWidget {
     final state = ref.watch(containerProvider);
     final notifier = ref.read(containerProvider.notifier);
     final theme = Theme.of(context);
-    final l10n = AppLocalizations.of(context);
+    final g11n = AppGlobalizations.of(context);
 
     return Scaffold(
       extendBodyBehindAppBar: true,
       appBar: AppBar(
-        title: Text(l10n.containerDownloadPageTitle),
+        title: Text(g11n.containerDownloadPageTitle),
         backgroundColor: Colors.transparent,
         surfaceTintColor: Colors.transparent,
         elevation: 0,
@@ -225,12 +225,12 @@ class ContainerDownloadPage extends ConsumerWidget {
           ),
           children: [
             _HintCard(
-              text: l10n.containerDownloadHint,
+              text: g11n.containerDownloadHint,
             ),
             if (state.busy) ...[
               const SizedBox(height: Spacing.md),
               _ProgressCard(
-                label: state.busyStage ?? l10n.containerInstallingStage,
+                label: state.busyStage ?? g11n.containerInstallingStage,
                 progress: state.busyProgress,
               ),
             ],
@@ -241,7 +241,7 @@ class ContainerDownloadPage extends ConsumerWidget {
                 onDismiss: notifier.clearError,
               ),
             ],
-            SettingsGroupHeader(text: l10n.containerAvailableImages),
+            SettingsGroupHeader(text: g11n.containerAvailableImages),
             SettingsGroup(
               children: [
                 for (var i = 0; i < kContainerImages.length; i++) ...[
@@ -252,13 +252,13 @@ class ContainerDownloadPage extends ConsumerWidget {
                     state,
                     notifier,
                     kContainerImages[i],
-                    l10n,
+                    g11n,
                   ),
                 ],
               ],
             ),
             _FootNote(
-              text: l10n.containerDownloadAfter,
+              text: g11n.containerDownloadAfter,
             ),
           ],
         ),
@@ -272,7 +272,7 @@ Widget _buildImageRow(
   ContainerState state,
   ContainerNotifier notifier,
   ContainerImage image,
-  AppLocalizations l10n,
+  AppGlobalizations g11n,
 ) {
   final installing = state.busyImageId == image.id;
   final installedCount =
@@ -291,7 +291,7 @@ Widget _buildImageRow(
           )
         : FilledButton.tonal(
             onPressed: state.busy ? null : () => notifier.install(image),
-            child: Text(l10n.containerDownloadButton),
+            child: Text(g11n.containerDownloadButton),
           ),
   );
 }
@@ -303,7 +303,7 @@ class _EmptyContainers extends StatelessWidget {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     final color = context.semantic.subtleText;
-    final l10n = AppLocalizations.of(context);
+    final g11n = AppGlobalizations.of(context);
     return Center(
       child: Padding(
         padding: const EdgeInsets.all(Spacing.xl),
@@ -313,12 +313,12 @@ class _EmptyContainers extends StatelessWidget {
             Icon(Iconfont.box, size: 56, color: color),
             const SizedBox(height: Spacing.lg),
             Text(
-              l10n.containerNoContainers,
+              g11n.containerNoContainers,
               style: theme.textTheme.titleMedium?.copyWith(color: color),
             ),
             const SizedBox(height: Spacing.sm),
             Text(
-              l10n.containerNoContainersDesc,
+              g11n.containerNoContainersDesc,
               style: theme.textTheme.bodyMedium?.copyWith(color: color),
             ),
           ],

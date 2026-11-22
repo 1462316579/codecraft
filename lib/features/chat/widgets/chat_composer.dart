@@ -23,7 +23,7 @@ import '../../../data/workspace_files.dart';
 import '../../../data/workspaces.dart';
 import '../../../data/run_mode_provider.dart';
 import '../../../agent/models/run_mode.dart';
-import '../../../l10n/app_localizations.dart';
+import '../../../g11n/app_globalizations.dart';
 import 'image_preview.dart';
 import 'mention_controller.dart';
 import 'todo_views.dart';
@@ -171,7 +171,7 @@ class _ChatComposerState extends ConsumerState<ChatComposer> {
   ChatViewState get state => widget.state;
   ChatSession? get session => widget.session;
   TextEditingController get input => widget.input;
-  AppLocalizations get l10n => AppLocalizations.of(context);
+  AppGlobalizations get g11n => AppGlobalizations.of(context);
 
   @override
   Widget build(BuildContext context) {
@@ -277,7 +277,7 @@ class _ChatComposerState extends ConsumerState<ChatComposer> {
                   },
                   style: Theme.of(context).textTheme.bodyLarge,
                   decoration: InputDecoration(
-                    hintText: busy ? l10n.chatQueueHint : l10n.chatInputPlaceholder,
+                    hintText: busy ? g11n.chatQueueHint : g11n.chatInputPlaceholder,
                     hintStyle: Theme.of(context)
                         .textTheme
                         .bodyLarge
@@ -307,9 +307,9 @@ class _ChatComposerState extends ConsumerState<ChatComposer> {
                             AgentRunMode.build => semantic.onSuccessContainer,
                           };
                           final label = switch (current) {
-                            AgentRunMode.auto => l10n.runModeAuto,
-                            AgentRunMode.build => l10n.runModeBuild,
-                            AgentRunMode.plan => l10n.runModePlan,
+                            AgentRunMode.auto => g11n.runModeAuto,
+                            AgentRunMode.build => g11n.runModeBuild,
+                            AgentRunMode.plan => g11n.runModePlan,
                           };
                           return GestureDetector(
                             onTap: () {
@@ -359,25 +359,25 @@ class _ChatComposerState extends ConsumerState<ChatComposer> {
                           children: [
                             _IconAction(
                               icon: Iconfont.atSign,
-                              tooltip: l10n.chatMentionSkill,
+                              tooltip: g11n.chatMentionSkill,
                               onTap: () => _openMention('skill'),
                             ),
                             _IconAction(
                               icon: Iconfont.filePlus,
-                              tooltip: l10n.chatPickFile,
+                              tooltip: g11n.chatPickFile,
                               onTap: () => _openMention('file'),
                             ),
                             // 模型按钮显示当前模型的品牌 logo(对齐上游 ModelIconButton);
                             // Auto 时没有具体模型,用通用芯片图标。
                             _ModelIconAction(
                               modelName: _currentModelName(),
-                              tooltip: l10n.model,
+                              tooltip: g11n.model,
                               onTap: widget.onPickModel,
                             ),
                             // 思考强度:紧跟工作区按钮之后(对齐上游顺序),固定可见、不参与滚动。
                             _IconAction(
                               icon: Iconfont.zap,
-                              tooltip: l10n.reasoningEffort,
+                              tooltip: g11n.reasoningEffort,
                               enabled: !busy,
                               onTap: () => _pickEffort(
                                 context,
@@ -390,7 +390,7 @@ class _ChatComposerState extends ConsumerState<ChatComposer> {
                       ),
                       _IconAction(
                         icon: Iconfont.plus,
-                        tooltip: l10n.chatAddAttachment,
+                        tooltip: g11n.chatAddAttachment,
                         enabled: !busy,
                         onTap: () => _pickAttachment(context),
                       ),
@@ -475,7 +475,7 @@ class _ChatComposerState extends ConsumerState<ChatComposer> {
 
   /// 添加附件弹层(对齐上游 AttachmentSheet):标题 + 上传文件 / 上传图片 / 拍照。
   Future<void> _pickAttachment(BuildContext context) async {
-    final l10n = AppLocalizations.of(context);
+    final g11n = AppGlobalizations.of(context);
     await showModalBottomSheet<void>(
       context: context,
       showDragHandle: true,
@@ -489,7 +489,7 @@ class _ChatComposerState extends ConsumerState<ChatComposer> {
               Padding(
                 padding: const EdgeInsets.only(bottom: Spacing.sm),
                 child: Text(
-                  l10n.chatAddAttachment,
+                  g11n.chatAddAttachment,
                   style: Theme.of(sheetContext)
                       .textTheme
                       .titleMedium
@@ -498,7 +498,7 @@ class _ChatComposerState extends ConsumerState<ChatComposer> {
               ),
               _SheetItem(
                 icon: Iconfont.fileText,
-                title: l10n.chatUploadFile,
+                title: g11n.chatUploadFile,
                 onTap: () {
                   Navigator.pop(sheetContext);
                   widget.onUploadFile();
@@ -506,7 +506,7 @@ class _ChatComposerState extends ConsumerState<ChatComposer> {
               ),
               _SheetItem(
                 icon: Iconfont.image,
-                title: l10n.chatUploadImage,
+                title: g11n.chatUploadImage,
                 onTap: () {
                   Navigator.pop(sheetContext);
                   widget.onAttachImage();
@@ -514,7 +514,7 @@ class _ChatComposerState extends ConsumerState<ChatComposer> {
               ),
               _SheetItem(
                 icon: Iconfont.camera,
-                title: l10n.chatTakePhoto,
+                title: g11n.chatTakePhoto,
                 onTap: () {
                   Navigator.pop(sheetContext);
                   widget.onTakePhoto();
@@ -597,7 +597,7 @@ class _ChatComposerState extends ConsumerState<ChatComposer> {
   }
 
   Future<void> _pickEffort(BuildContext context, ReasoningEffort current) async {
-    final l10n = AppLocalizations.of(context);
+    final g11n = AppGlobalizations.of(context);
     final available = _availableEfforts();
     await showModalBottomSheet<void>(
       context: context,
@@ -614,7 +614,7 @@ class _ChatComposerState extends ConsumerState<ChatComposer> {
               Padding(
                 padding: const EdgeInsets.fromLTRB(Spacing.lg, 0, Spacing.lg, Spacing.sm),
                 child: Text(
-                  l10n.reasoningEffort,
+                  g11n.reasoningEffort,
                   style: Theme.of(sheetContext)
                       .textTheme
                       .titleMedium
@@ -628,7 +628,7 @@ class _ChatComposerState extends ConsumerState<ChatComposer> {
                   children: [
                     for (final effort in available)
                       _EffortRow(
-                        label: effortLabel(l10n, effort),
+                        label: effortLabel(g11n, effort),
                         selected: effort == _effectiveEffort(current, available),
                         onTap: () {
                           Navigator.pop(sheetContext);
@@ -647,14 +647,14 @@ class _ChatComposerState extends ConsumerState<ChatComposer> {
 }
 
 /// 思考强度档位文案(上游 chat_reasoning_effort_*)。
-String effortLabel(AppLocalizations l10n, ReasoningEffort effort) => switch (effort) {
-      ReasoningEffort.none => l10n.chatEffortNone,
-      ReasoningEffort.minimal => l10n.chatEffortMinimal,
-      ReasoningEffort.low => l10n.chatEffortLow,
-      ReasoningEffort.medium => l10n.chatEffortMedium,
-      ReasoningEffort.high => l10n.chatEffortHigh,
-      ReasoningEffort.xhigh => l10n.chatEffortXHigh,
-      ReasoningEffort.max => l10n.chatEffortMax,
+String effortLabel(AppGlobalizations g11n, ReasoningEffort effort) => switch (effort) {
+      ReasoningEffort.none => g11n.chatEffortNone,
+      ReasoningEffort.minimal => g11n.chatEffortMinimal,
+      ReasoningEffort.low => g11n.chatEffortLow,
+      ReasoningEffort.medium => g11n.chatEffortMedium,
+      ReasoningEffort.high => g11n.chatEffortHigh,
+      ReasoningEffort.xhigh => g11n.chatEffortXHigh,
+      ReasoningEffort.max => g11n.chatEffortMax,
     };
 
 /// 36dp 图标按钮(上游 ModelIconButton / ReasoningEffortSelector):图标 20dp、onSurfaceVariant。
@@ -714,7 +714,7 @@ class _SendButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final l10n = AppLocalizations.of(context);
+    final g11n = AppGlobalizations.of(context);
     final semantic = context.semantic;
     final showStop = busy;
     final canSend = !busy && hasContent;
@@ -751,7 +751,7 @@ class _SendButton extends StatelessWidget {
                 showStop ? Icons.square : Iconfont.arrowUp,
                 size: 18,
                 color: iconTint,
-                semanticLabel: showStop ? l10n.stop : l10n.send,
+                semanticLabel: showStop ? g11n.stop : g11n.send,
               ),
             ),
           ),
@@ -771,7 +771,7 @@ class _PendingAttachmentTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final l10n = AppLocalizations.of(context);
+    final g11n = AppGlobalizations.of(context);
     final theme = Theme.of(context);
     return SizedBox(
       width: 76,
@@ -800,7 +800,7 @@ class _PendingAttachmentTile extends StatelessWidget {
                   constraints: const BoxConstraints.tightFor(width: 24, height: 24),
                   iconSize: 14,
                   color: theme.colorScheme.onSurface,
-                  tooltip: l10n.removeAttachment,
+                  tooltip: g11n.removeAttachment,
                   icon: const Icon(Iconfont.x),
                 ),
               ),
@@ -876,7 +876,7 @@ class _UploadingBanner extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final l10n = AppLocalizations.of(context);
+    final g11n = AppGlobalizations.of(context);
     final theme = Theme.of(context);
     return Container(
       width: double.infinity,
@@ -895,7 +895,7 @@ class _UploadingBanner extends StatelessWidget {
           ),
           const SizedBox(width: Spacing.sm),
           Text(
-            l10n.attachmentUploading(count),
+            g11n.attachmentUploading(count),
             style: theme.textTheme.bodyMedium?.copyWith(color: theme.colorScheme.onSurface),
           ),
         ],
@@ -1000,11 +1000,11 @@ class _MentionPanel extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final l10n = AppLocalizations.of(context);
+    final g11n = AppGlobalizations.of(context);
     final theme = Theme.of(context);
     final filter = query?.filter ?? '';
 
-    final hint = kind == 'skill' ? l10n.mentionHintSkill : l10n.mentionHintFile;
+    final hint = kind == 'skill' ? g11n.mentionHintSkill : g11n.mentionHintFile;
     // 技能清单同步可得,按筛选词就地过滤;文件清单走远端引擎,按 filter 参数化。
     final itemsAsync = kind == 'skill'
         ? AsyncValue.data([
@@ -1060,8 +1060,8 @@ class _MentionPanel extends ConsumerWidget {
                           Expanded(
                             child: Text(
                               kind == 'skill'
-                                  ? l10n.chatMentionSkillEmpty
-                                  : l10n.chatPickFileEmpty,
+                                  ? g11n.chatMentionSkillEmpty
+                                  : g11n.chatPickFileEmpty,
                               style: theme.textTheme.bodySmall?.copyWith(
                                 color: theme.colorScheme.onSurfaceVariant,
                               ),
@@ -1069,7 +1069,7 @@ class _MentionPanel extends ConsumerWidget {
                           ),
                           TextButton(
                             onPressed: () => onClose(cancelToken: true),
-                            child: Text(l10n.cancel),
+                            child: Text(g11n.cancel),
                           ),
                         ],
                       ),

@@ -28,7 +28,7 @@ import '../../data/novel_project.dart';
 import '../../data/workspaces.dart';
 import 'installed_apps_page.dart';
 import 'novel_create_sheet.dart';
-import '../../l10n/app_localizations.dart';
+import '../../g11n/app_globalizations.dart';
 
 /// 「项目」页签:项目列表。默认为空,右上角加号新建。
 ///
@@ -130,7 +130,7 @@ class _ProjectsPageState extends ConsumerState<ProjectsPage> {
   }
   @override
   Widget build(BuildContext context) {
-    final l10n = AppLocalizations.of(context);
+    final g11n = AppGlobalizations.of(context);
     final projectsAsync = ref.watch(projectsProvider);
     final theme = Theme.of(context);
     return Scaffold(
@@ -141,10 +141,10 @@ class _ProjectsPageState extends ConsumerState<ProjectsPage> {
         surfaceTintColor: Colors.transparent,
         elevation: 0,
         scrolledUnderElevation: 0,
-        title: Text(l10n.tabProjects),
+        title: Text(g11n.tabProjects),
         actions: [
           IconButton(
-            tooltip: l10n.projectNew,
+            tooltip: g11n.projectNew,
             icon: const Icon(Iconfont.plus, size: 20),
             onPressed: () => _pickKind(context, ref),
           ),
@@ -166,7 +166,7 @@ class _ProjectsPageState extends ConsumerState<ProjectsPage> {
           ),
           projectsAsync.when(
             loading: () => const Center(child: CircularProgressIndicator()),
-            error: (error, _) => Center(child: Text('${l10n.errorGeneric}: $error')),
+            error: (error, _) => Center(child: Text('${g11n.errorGeneric}: $error')),
             data: (projects) {
               if (projects.isEmpty) {
                 return _EmptyState(onCreate: () => _pickKind(context, ref));
@@ -214,27 +214,27 @@ class _ProjectsPageState extends ConsumerState<ProjectsPage> {
       showDragHandle: true,
       backgroundColor: context.semantic.cardSurface,
       builder: (sheetContext) {
-        final l10n = AppLocalizations.of(sheetContext);
+        final g11n = AppGlobalizations.of(sheetContext);
         return SafeArea(
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
               _KindItem(
                 icon: Iconfont.code,
-                title: l10n.projectKindCoding,
-                description: l10n.projectKindCodingDesc,
+                title: g11n.projectKindCoding,
+                description: g11n.projectKindCodingDesc,
                 onTap: () => Navigator.pop(sheetContext, ProjectKind.coding),
               ),
               _KindItem(
                 icon: Iconfont.pencil,
-                title: l10n.projectKindWriting,
-                description: l10n.projectKindWritingDesc,
+                title: g11n.projectKindWriting,
+                description: g11n.projectKindWritingDesc,
                 onTap: () => Navigator.pop(sheetContext, ProjectKind.writing),
               ),
               _KindItem(
                 icon: Iconfont.binary,
-                title: l10n.projectKindReverse,
-                description: l10n.projectKindReverseDesc,
+                title: g11n.projectKindReverse,
+                description: g11n.projectKindReverseDesc,
                 onTap: () => Navigator.pop(sheetContext, ProjectKind.reverse),
               ),
               const SizedBox(height: Spacing.lg),
@@ -276,7 +276,7 @@ class _ProjectsPageState extends ConsumerState<ProjectsPage> {
   /// 之后在聊天页点加号只会在本项目内新增会话,不会再产生项目。
   /// 编程/写作项目不打断用户输入名称,按类型自动命名;要改可长按重命名。
   Future<void> _createProject(BuildContext context, WidgetRef ref, ProjectKind kind) async {
-    final l10n = AppLocalizations.of(context);
+    final g11n = AppGlobalizations.of(context);
     final projects = await ref.read(projectsProvider.future);
     if (!context.mounted) return;
     await _createProjectWithApp(
@@ -285,7 +285,7 @@ class _ProjectsPageState extends ConsumerState<ProjectsPage> {
       kind,
       null,
       null,
-      _autoProjectName(projects, kind, l10n),
+      _autoProjectName(projects, kind, g11n),
     );
   }
 
@@ -297,7 +297,7 @@ class _ProjectsPageState extends ConsumerState<ProjectsPage> {
     final selection = await showNovelCreateSheet(context, writingRoot: writingRoot);
     if (selection == null || !context.mounted) return;
 
-    final l10n = AppLocalizations.of(context);
+    final g11n = AppGlobalizations.of(context);
     final mode = AgentMode.write;
     final title = selection.title;
     // 先确保小说目录脚手架存在(角色关联/小说资料/小说章节),再建项目。
@@ -332,13 +332,13 @@ class _ProjectsPageState extends ConsumerState<ProjectsPage> {
     // 把新建小说时收集的设定作为首条消息发送给 AI;已有小说则提示先读资料再续写。
     final spec = selection.spec;
     final brief = spec == null
-        ? l10n.novelExistingBrief(title)
+        ? g11n.novelExistingBrief(title)
         : <String>[
-            l10n.novelBriefTitle(spec.title),
+            g11n.novelBriefTitle(spec.title),
             if (spec.gender != null && spec.gender!.isNotEmpty) spec.gender!,
-            if (spec.tags.isNotEmpty) l10n.novelBriefTags(spec.tags.join('、')),
+            if (spec.tags.isNotEmpty) g11n.novelBriefTags(spec.tags.join('、')),
             if (spec.wordsPerChapter != null)
-              l10n.novelBriefWords('${spec.wordsPerChapter}'),
+              g11n.novelBriefWords('${spec.wordsPerChapter}'),
           ].join('\n');
     // 异步发送,不阻塞打开聊天页;失败时用户仍可在输入框看到文本(由 controller 兜底)。
     unawaited(ref.read(chatControllerProvider(session.id).notifier).send(brief));
@@ -347,8 +347,8 @@ class _ProjectsPageState extends ConsumerState<ProjectsPage> {
   }
 
   /// 自动项目名:「编程 1」「写作 2」——按类型取第一个没被占用的序号。
-  String _autoProjectName(List<Project> projects, ProjectKind kind, AppLocalizations l10n) {
-    final base = kind == ProjectKind.writing ? l10n.projectKindWriting : l10n.projectKindCoding;
+  String _autoProjectName(List<Project> projects, ProjectKind kind, AppGlobalizations g11n) {
+    final base = kind == ProjectKind.writing ? g11n.projectKindWriting : g11n.projectKindCoding;
     final used = {for (final project in projects) project.name.trim()};
     var index = 1;
     while (used.contains('$base $index')) {
@@ -437,7 +437,7 @@ class _ProjectsPageState extends ConsumerState<ProjectsPage> {
 
   /// 长按项目:重命名 / 删除。
   Future<void> _showActions(BuildContext context, WidgetRef ref, Project project) async {
-    final l10n = AppLocalizations.of(context);
+    final g11n = AppGlobalizations.of(context);
     final action = await showModalBottomSheet<String>(
       context: context,
       showDragHandle: true,
@@ -448,13 +448,13 @@ class _ProjectsPageState extends ConsumerState<ProjectsPage> {
           children: [
             ListTile(
               leading: const Icon(Iconfont.pencil, size: 20),
-              title: Text(l10n.rename),
+              title: Text(g11n.rename),
               onTap: () => Navigator.pop(sheetContext, 'rename'),
             ),
             ListTile(
               leading: Icon(Iconfont.trash2, size: 20, color: Theme.of(context).colorScheme.error),
               title: Text(
-                l10n.delete,
+                g11n.delete,
                 style: TextStyle(color: Theme.of(context).colorScheme.error),
               ),
               onTap: () => Navigator.pop(sheetContext, 'delete'),
@@ -469,11 +469,11 @@ class _ProjectsPageState extends ConsumerState<ProjectsPage> {
       final name = await showDialog<String>(
         context: context,
         builder: (dialogContext) => _ProjectNameDialog(
-          title: l10n.rename,
-          hint: l10n.workspaceNameHint,
+          title: g11n.rename,
+          hint: g11n.workspaceNameHint,
           initial: project.name,
-          confirm: l10n.confirm,
-          cancel: l10n.cancel,
+          confirm: g11n.confirm,
+          cancel: g11n.cancel,
         ),
       );
       if (name == null || name.trim().isEmpty) return;
@@ -487,17 +487,17 @@ class _ProjectsPageState extends ConsumerState<ProjectsPage> {
       final confirmed = await showDialog<bool>(
         context: context,
         builder: (dialogContext) => AlertDialog(
-          title: Text(l10n.delete),
-          content: Text(l10n.projectDeleteConfirm(project.name)),
+          title: Text(g11n.delete),
+          content: Text(g11n.projectDeleteConfirm(project.name)),
           actions: [
             TextButton(
               onPressed: () => Navigator.pop(dialogContext, false),
-              child: Text(l10n.cancel),
+              child: Text(g11n.cancel),
             ),
             TextButton(
               onPressed: () => Navigator.pop(dialogContext, true),
               child: Text(
-                l10n.delete,
+                g11n.delete,
                 style: TextStyle(color: Theme.of(dialogContext).colorScheme.error),
               ),
             ),
@@ -636,7 +636,7 @@ class _GlassProjectRow extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
-    final l10n = AppLocalizations.of(context);
+    final g11n = AppGlobalizations.of(context);
     final semantic = context.semantic;
     final bright = theme.brightness == Brightness.light;
     final isReverse = project.kind == ProjectKind.reverse;
@@ -693,7 +693,7 @@ class _GlassProjectRow extends StatelessWidget {
                     ),
                   ),
             title: Text(
-              project.name.trim().isEmpty ? l10n.projectUntitled : project.name,
+              project.name.trim().isEmpty ? g11n.projectUntitled : project.name,
               style: const TextStyle(fontSize: 14, fontWeight: FontWeight.bold),
               maxLines: 1,
               overflow: TextOverflow.ellipsis,
@@ -724,7 +724,7 @@ class _GlassProjectRow extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        writing ? l10n.projectKindWriting : l10n.projectKindCoding,
+                        writing ? g11n.projectKindWriting : g11n.projectKindCoding,
                         style: TextStyle(
                           fontSize: 11,
                           color: theme.colorScheme.onSurface.withValues(alpha: 0.6),
@@ -758,7 +758,7 @@ class _EmptyState extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final l10n = AppLocalizations.of(context);
+    final g11n = AppGlobalizations.of(context);
     final theme = Theme.of(context);
     final bright = theme.brightness == Brightness.light;
     return Center(
@@ -796,11 +796,11 @@ class _EmptyState extends StatelessWidget {
                   Icon(Iconfont.folderOpen, size: 48, color: context.semantic.subtleText),
                   const SizedBox(height: 10),
                   Text(
-                    l10n.projectListEmpty,
+                    g11n.projectListEmpty,
                     style: TextStyle(fontSize: 14, color: context.semantic.subtleText),
                   ),
                   const SizedBox(height: Spacing.md),
-                  FilledButton.tonal(onPressed: onCreate, child: Text(l10n.projectNew)),
+                  FilledButton.tonal(onPressed: onCreate, child: Text(g11n.projectNew)),
                 ],
               ),
             ),

@@ -10,7 +10,7 @@ import '../../core/ui/floating_tab_bar.dart';
 import '../../core/ui/settings_group.dart';
 import '../../data/credentials.dart';
 import '../../data/git/container_git.dart';
-import '../../l10n/app_localizations.dart';
+import '../../g11n/app_globalizations.dart';
 
 /// 凭据与署名页(对齐上游 `CredentialScreen`):底部悬浮 tab 切「署名」与「凭据」两个标签页。
 /// 顶栏「+」新增凭据,编辑/新增用同一弹层。
@@ -43,7 +43,7 @@ class _CredentialPageState extends ConsumerState<CredentialPage> {
   }
 
   Future<void> _save(GitCredential credential) async {
-    final l10n = AppLocalizations.of(context);
+    final g11n = AppGlobalizations.of(context);
     await ref.read(credentialStoreProvider).save(credential);
     if (!mounted) return;
 
@@ -52,24 +52,24 @@ class _CredentialPageState extends ConsumerState<CredentialPage> {
     });
 
     ScaffoldMessenger.of(context)
-        .showSnackBar(SnackBar(content: Text(l10n.credentialToastSaved)));
+        .showSnackBar(SnackBar(content: Text(g11n.credentialToastSaved)));
   }
 
   Future<void> _delete(GitCredential credential) async {
-    final l10n = AppLocalizations.of(context);
+    final g11n = AppGlobalizations.of(context);
     await ref.read(credentialStoreProvider).delete(credential.id);
     if (!mounted) return;
 
     ref.invalidate(credentialsProvider);
 
     ScaffoldMessenger.of(context)
-        .showSnackBar(SnackBar(content: Text(l10n.credentialToastDeleted)));
+        .showSnackBar(SnackBar(content: Text(g11n.credentialToastDeleted)));
   }
 
   Future<void> _openEditorFromItem(GitCredential initial) => _openEditor(initial);
 
   Future<void> _openEditor(GitCredential? initial) async {
-    final l10n = AppLocalizations.of(context);
+    final g11n = AppGlobalizations.of(context);
     final hostController = TextEditingController(
       text: (initial == null || initial.host == defaultCredentialHost) ? '' : initial.host,
     );
@@ -83,7 +83,7 @@ class _CredentialPageState extends ConsumerState<CredentialPage> {
         hostController: hostController,
         usernameController: usernameController,
         tokenController: tokenController,
-        title: initial == null ? l10n.credentialAdd : l10n.credentialEdit,
+        title: initial == null ? g11n.credentialAdd : g11n.credentialEdit,
       ),
     );
     final host = hostText(hostController.text);
@@ -116,7 +116,7 @@ class _CredentialPageState extends ConsumerState<CredentialPage> {
 
   @override
   Widget build(BuildContext context) {
-    final l10n = AppLocalizations.of(context);
+    final g11n = AppGlobalizations.of(context);
     final credentialsAsync = ref.watch(credentialsProvider);
     final credentials = credentialsAsync.valueOrNull ?? const <GitCredential>[];
 
@@ -124,16 +124,16 @@ class _CredentialPageState extends ConsumerState<CredentialPage> {
       backgroundColor: context.semantic.pageBackground,
       appBar: AppBar(
         backgroundColor: context.semantic.pageBackground,
-        title: Text(l10n.gitCredentialsAndIdentity),
+        title: Text(g11n.gitCredentialsAndIdentity),
         leading: IconButton(
           onPressed: widget.onNavigateBack ?? () => Navigator.of(context).maybePop(),
-          tooltip: l10n.back,
+          tooltip: g11n.back,
           icon: const Icon(Iconfont.arrowLeft),
         ),
         actions: [
           IconButton(
             onPressed: () => _openEditor(null),
-            tooltip: l10n.credentialAdd,
+            tooltip: g11n.credentialAdd,
             icon: const Icon(Iconfont.plus),
           ),
         ],
@@ -160,8 +160,8 @@ class _CredentialPageState extends ConsumerState<CredentialPage> {
               controller: _pageController,
               page: _page,
               items: [
-                FloatingTabItem(icon: Iconfont.user, label: l10n.gitTabIdentity),
-                FloatingTabItem(icon: Iconfont.key, label: l10n.gitTabCredentials),
+                FloatingTabItem(icon: Iconfont.user, label: g11n.gitTabIdentity),
+                FloatingTabItem(icon: Iconfont.key, label: g11n.gitTabCredentials),
               ],
               maskColor: context.semantic.pageBackground,
               onSelect: (index) => _pageController.animateToPage(
@@ -198,7 +198,7 @@ class _IdentityTabState extends ConsumerState<_IdentityTab> {
   }
 
   Future<void> _save() async {
-    final l10n = AppLocalizations.of(context);
+    final g11n = AppGlobalizations.of(context);
     final git = ref.read(containerGitProvider);
     final workspace = ref.read(currentWorkspaceProvider).rootPath;
     await git.setUserIdentity(workspace, _name.text.trim(), _email.text.trim());
@@ -207,13 +207,13 @@ class _IdentityTabState extends ConsumerState<_IdentityTab> {
     }
     if (!mounted) return;
     ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(content: Text(l10n.credentialToastIdentitySaved)),
+      SnackBar(content: Text(g11n.credentialToastIdentitySaved)),
     );
   }
 
   @override
   Widget build(BuildContext context) {
-    final l10n = AppLocalizations.of(context);
+    final g11n = AppGlobalizations.of(context);
     final theme = Theme.of(context);
     final identityAsync = ref.watch(gitIdentityProvider);
     final identity = identityAsync.valueOrNull;
@@ -231,7 +231,7 @@ class _IdentityTabState extends ConsumerState<_IdentityTab> {
     return ListView(
       padding: const EdgeInsets.fromLTRB(Spacing.lg, Spacing.sm, Spacing.lg, 70),
       children: [
-        SettingsGroupHeader(text: l10n.gitIdentityTitle),
+        SettingsGroupHeader(text: g11n.gitIdentityTitle),
         if (identity?.globalName != null && identity!.globalName!.isNotEmpty)
           Padding(
             padding: const EdgeInsets.only(bottom: Spacing.xs),
@@ -253,11 +253,11 @@ class _IdentityTabState extends ConsumerState<_IdentityTab> {
           decoration: const InputDecoration(labelText: 'user.email', border: OutlineInputBorder()),
         ),
         const SizedBox(height: Spacing.xl),
-        SettingsGroupHeader(text: l10n.gitRepoUrlTitle),
+        SettingsGroupHeader(text: g11n.gitRepoUrlTitle),
         TextField(
           controller: _repoUrl,
           keyboardType: TextInputType.url,
-          decoration: InputDecoration(labelText: l10n.gitRemoteUrl, border: const OutlineInputBorder()),
+          decoration: InputDecoration(labelText: g11n.gitRemoteUrl, border: const OutlineInputBorder()),
         ),
         const SizedBox(height: Spacing.xs),
         SizedBox(
@@ -276,7 +276,7 @@ class _IdentityTabState extends ConsumerState<_IdentityTab> {
                 const Icon(Iconfont.check, size: 17),
                 const SizedBox(width: Spacing.sm),
                 Text(
-                  l10n.save,
+                  g11n.save,
                   style: theme.textTheme.labelLarge?.copyWith(fontWeight: FontWeight.w600),
                 ),
               ],
@@ -302,13 +302,13 @@ class _CredentialList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final l10n = AppLocalizations.of(context);
+    final g11n = AppGlobalizations.of(context);
     return ListView(
       padding: const EdgeInsets.fromLTRB(Spacing.lg, 0, Spacing.lg, 70),
       children: [
         const SizedBox(height: Spacing.sm),
         Text(
-          l10n.gitCredentialsCount(credentials.length),
+          g11n.gitCredentialsCount(credentials.length),
           style: Theme.of(context).textTheme.labelLarge?.copyWith(
                 fontSize: 13,
                 color: context.semantic.subtleText,
@@ -341,7 +341,7 @@ class _CredentialItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final l10n = AppLocalizations.of(context);
+    final g11n = AppGlobalizations.of(context);
     final theme = Theme.of(context);
     final subtle = theme.colorScheme.onSurfaceVariant;
     // 通用令牌(主机为 *)在列表里显示为「所有主机」,而不是一个星号。
@@ -380,7 +380,7 @@ class _CredentialItem extends StatelessWidget {
                           children: [
                             Flexible(
                               child: Text(
-                                universal ? l10n.credentialAllHosts : credential.host,
+                                universal ? g11n.credentialAllHosts : credential.host,
                                 maxLines: 1,
                                 overflow: TextOverflow.ellipsis,
                                 style: theme.textTheme.bodyLarge,
@@ -394,7 +394,7 @@ class _CredentialItem extends StatelessWidget {
                         ),
                         Text(
                           credential.username.isEmpty
-                              ? l10n.credentialUsernameAuto
+                              ? g11n.credentialUsernameAuto
                               : credential.username,
                           maxLines: 1,
                           overflow: TextOverflow.ellipsis,
@@ -472,7 +472,7 @@ class _EmptyCredentials extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final l10n = AppLocalizations.of(context);
+    final g11n = AppGlobalizations.of(context);
     final theme = Theme.of(context);
     return Center(
       child: Padding(
@@ -499,12 +499,12 @@ class _EmptyCredentials extends StatelessWidget {
               ),
               const SizedBox(height: Spacing.md),
               Text(
-                l10n.credentialEmptyTitle,
+                g11n.credentialEmptyTitle,
                 style: theme.textTheme.titleMedium?.copyWith(fontWeight: FontWeight.bold),
               ),
               const SizedBox(height: Spacing.xs),
               Text(
-                l10n.credentialEmptyDesc,
+                g11n.credentialEmptyDesc,
                 textAlign: TextAlign.center,
                 style: theme.textTheme.bodySmall?.copyWith(
                   color: theme.colorScheme.onSurfaceVariant,
@@ -527,7 +527,7 @@ class _EmptyCredentials extends StatelessWidget {
                       const Icon(Iconfont.pencil, size: 16),
                       const SizedBox(width: Spacing.sm),
                       Text(
-                        l10n.credentialAdd,
+                        g11n.credentialAdd,
                         style: theme.textTheme.bodyMedium?.copyWith(
                           fontWeight: FontWeight.w600,
                         ),
@@ -560,7 +560,7 @@ class _CredentialEditorSheet extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final l10n = AppLocalizations.of(context);
+    final g11n = AppGlobalizations.of(context);
     final theme = Theme.of(context);
     return SafeArea(
       child: Padding(
@@ -579,9 +579,9 @@ class _CredentialEditorSheet extends StatelessWidget {
               controller: hostController,
               autocorrect: false,
               decoration: InputDecoration(
-                labelText: l10n.credentialHostOptional,
-                hintText: l10n.credentialHostAny,
-                helperText: l10n.credentialHostHint,
+                labelText: g11n.credentialHostOptional,
+                hintText: g11n.credentialHostAny,
+                helperText: g11n.credentialHostHint,
                 border: const OutlineInputBorder(),
               ),
             ),
@@ -600,8 +600,8 @@ class _CredentialEditorSheet extends StatelessWidget {
               obscureText: true,
               autocorrect: false,
               decoration: InputDecoration(
-                labelText: l10n.credentialToken,
-                helperText: l10n.credentialTokenHint,
+                labelText: g11n.credentialToken,
+                helperText: g11n.credentialTokenHint,
                 border: const OutlineInputBorder(),
               ),
             ),
@@ -619,7 +619,7 @@ class _CredentialEditorSheet extends StatelessWidget {
                     borderRadius: BorderRadius.circular(Radii.mdLarge),
                   ),
                 ),
-                child: Text(l10n.save),
+                child: Text(g11n.save),
               ),
             ),
           ],

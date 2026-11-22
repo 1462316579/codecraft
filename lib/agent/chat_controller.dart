@@ -207,7 +207,7 @@ class ChatController extends StateNotifier<ChatViewState> {
           workdir: workspace.rootPath,
           onStart: (command) => _ref
               .read(terminalTabsProvider.notifier)
-              .mirrorCommand(_ref.read(appLocalizationsProvider).terminalAgentTab, command),
+              .mirrorCommand(_ref.read(appGlobalizationsProvider).terminalAgentTab, command),
           onFinish: (output, exitCode) => _ref
               .read(terminalTabsProvider.notifier)
               .mirrorOutput(output, exitCode: exitCode),
@@ -306,7 +306,7 @@ class ChatController extends StateNotifier<ChatViewState> {
     final content = appendAttachmentsToRequest(
       trimmed,
       attachments.where((attachment) => !attachment.isImage).toList(),
-      _ref.read(appLocalizationsProvider).attachmentPrefix,
+      _ref.read(appGlobalizationsProvider).attachmentPrefix,
     );
     final userMessage = AgentMessage(
       id: newId(),
@@ -957,7 +957,7 @@ class ChatController extends StateNotifier<ChatViewState> {
               tool.capabilities.contains(ToolCapability.writeWorkspace)) {
             // 计划模式:所有写操作被拦截,仅允许读取和分析。
             result = ToolError(
-              _ref.read(appLocalizationsProvider).runModePlanIntercept,
+              _ref.read(appGlobalizationsProvider).runModePlanIntercept,
               code: 'PLAN_MODE_INTERCEPT',
             );
           } else if (_ref.read(runModeProvider) == AgentRunMode.auto &&

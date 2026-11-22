@@ -16,7 +16,7 @@ import '../../data/model_metadata_store.dart';
 import '../../data/providers/provider_config.dart';
 import '../../data/providers/provider_store.dart';
 import '../../data/settings/general_settings.dart';
-import '../../l10n/app_localizations.dart';
+import '../../g11n/app_globalizations.dart';
 import 'model_sheets.dart';
 import 'provider_keys_page.dart';
 
@@ -98,7 +98,7 @@ class _ProviderEditPageState extends ConsumerState<ProviderEditPage> {
 
   @override
   Widget build(BuildContext context) {
-    final l10n = AppLocalizations.of(context);
+    final g11n = AppGlobalizations.of(context);
     final provider = _provider;
     if (provider == null) {
       return Scaffold(appBar: AppBar(), body: const Center(child: CircularProgressIndicator()));
@@ -119,7 +119,7 @@ class _ProviderEditPageState extends ConsumerState<ProviderEditPage> {
       child: Scaffold(
         extendBodyBehindAppBar: true,
         appBar: AppBar(
-          title: Text(l10n.providerEdit),
+          title: Text(g11n.providerEdit),
           backgroundColor: Colors.transparent,
           surfaceTintColor: Colors.transparent,
           elevation: 0,
@@ -127,7 +127,7 @@ class _ProviderEditPageState extends ConsumerState<ProviderEditPage> {
           actions: [
             if (_pageIndex == 1 && _models.isNotEmpty)
               IconButton(
-                tooltip: l10n.providerModelsSelect,
+                tooltip: g11n.providerModelsSelect,
                 icon: Icon(
                   Iconfont.checkSquare,
                   color: _selectionMode
@@ -140,7 +140,7 @@ class _ProviderEditPageState extends ConsumerState<ProviderEditPage> {
                 }),
               ),
             IconButton(
-              tooltip: l10n.providerAddModel,
+              tooltip: g11n.providerAddModel,
               icon: const Icon(Icons.add),
               onPressed: () {
                 if (_pageIndex != 1) {
@@ -180,8 +180,8 @@ class _ProviderEditPageState extends ConsumerState<ProviderEditPage> {
                 }
               }),
               children: [
-                _configPage(context, l10n, provider),
-                _modelsPage(context, l10n, provider),
+                _configPage(context, g11n, provider),
+                _modelsPage(context, g11n, provider),
               ],
             ),
             Positioned(
@@ -193,8 +193,8 @@ class _ProviderEditPageState extends ConsumerState<ProviderEditPage> {
                   controller: _page,
                   page: _pageIndex,
                   items: [
-                    FloatingTabItem(icon: Iconfont.sliders, label: l10n.providerConfig),
-                    FloatingTabItem(icon: Iconfont.cpu, label: l10n.model),
+                    FloatingTabItem(icon: Iconfont.sliders, label: g11n.providerConfig),
+                    FloatingTabItem(icon: Iconfont.cpu, label: g11n.model),
                   ],
                   maskColor: context.semantic.pageBackground,
                   onSelect: (index) => _page.animateToPage(
@@ -213,46 +213,46 @@ class _ProviderEditPageState extends ConsumerState<ProviderEditPage> {
   }
 
   /// 第 1 页:基本信息 / 选项。
-  Widget _configPage(BuildContext context, AppLocalizations l10n, ProviderConfig provider) {
+  Widget _configPage(BuildContext context, AppGlobalizations g11n, ProviderConfig provider) {
     final theme = Theme.of(context);
     return ListView(
       padding: const EdgeInsets.fromLTRB(Spacing.lg, 100, Spacing.lg, 90),
       children: [
-        SettingsGroupHeader(text: l10n.providerSectionBasic),
+        SettingsGroupHeader(text: g11n.providerSectionBasic),
         SettingsGroup(
           children: [
             _textFieldRow(
-              label: l10n.providerName,
+              label: g11n.providerName,
               controller: _name,
             ),
             const SettingsDivider(),
             if (!_multiKeyEnabled)
               _textFieldRow(
-                label: l10n.apiKey,
+                label: g11n.apiKey,
                 controller: _apiKey,
                 obscure: !_apiKeyVisible,
                 trailing: IconButton(
                   onPressed: () => setState(() => _apiKeyVisible = !_apiKeyVisible),
                   iconSize: 20,
                   color: theme.colorScheme.onSurfaceVariant,
-                  tooltip: _apiKeyVisible ? l10n.providerHideApiKey : l10n.providerShowApiKey,
+                  tooltip: _apiKeyVisible ? g11n.providerHideApiKey : g11n.providerShowApiKey,
                   icon: Icon(_apiKeyVisible ? Iconfont.eyeOff : Iconfont.eye),
                 ),
               ),
             if (!_multiKeyEnabled) const SettingsDivider(),
             _textFieldRow(
-              label: l10n.baseUrl,
+              label: g11n.baseUrl,
               controller: _baseUrl,
               hint: _type.defaultBaseUrl,
             ),
             const SettingsDivider(),
             SettingsRow(
-              title: l10n.providerHeadersTitle,
+              title: g11n.providerHeadersTitle,
               subtitle: _headers.isEmpty
-                  ? l10n.providerHeadersDesc
-                  : l10n.providerHeadersCount(_headers.length),
+                  ? g11n.providerHeadersDesc
+                  : g11n.providerHeadersCount(_headers.length),
               trailing: Text(
-                _headers.isEmpty ? l10n.providerHeadersAdd : l10n.providerHeadersManage,
+                _headers.isEmpty ? g11n.providerHeadersAdd : g11n.providerHeadersManage,
                 style: theme.textTheme.bodyMedium
                     ?.copyWith(color: theme.colorScheme.onSurfaceVariant),
               ),
@@ -260,7 +260,7 @@ class _ProviderEditPageState extends ConsumerState<ProviderEditPage> {
             ),
             const SettingsDivider(),
             SettingsRow(
-              title: l10n.providerSectionType,
+              title: g11n.providerSectionType,
               trailing: Text(
                 _type.shortLabel,
                 style: theme.textTheme.bodyMedium
@@ -270,25 +270,25 @@ class _ProviderEditPageState extends ConsumerState<ProviderEditPage> {
             ),
           ],
         ),
-        SettingsGroupHeader(text: l10n.providerSectionOptions),
+        SettingsGroupHeader(text: g11n.providerSectionOptions),
         SettingsGroup(
           children: [
             _switchRow(
-              title: l10n.enabled,
+              title: g11n.enabled,
               value: _isEnabled,
               onChanged: (value) => setState(() => _isEnabled = value),
             ),
             const SettingsDivider(),
             _switchRow(
-              title: l10n.providerFullUrl,
-              subtitle: l10n.providerFullUrlDesc,
+              title: g11n.providerFullUrl,
+              subtitle: g11n.providerFullUrlDesc,
               value: _useFullUrl,
               onChanged: (value) => setState(() => _useFullUrl = value),
             ),
             const SettingsDivider(),
             _switchRow(
-              title: l10n.providerMultiKeyTitle,
-              subtitle: l10n.providerMultiKeySubtitle,
+              title: g11n.providerMultiKeyTitle,
+              subtitle: g11n.providerMultiKeySubtitle,
               value: _multiKeyEnabled,
               onChanged: (value) => setState(() {
                 _multiKeyEnabled = value;
@@ -301,12 +301,12 @@ class _ProviderEditPageState extends ConsumerState<ProviderEditPage> {
             if (_multiKeyEnabled) ...[
               const SettingsDivider(),
               SettingsRow(
-                title: l10n.providerMultiKeyManage,
-                subtitle: l10n.providerMultiKeySummary(
+                title: g11n.providerMultiKeyManage,
+                subtitle: g11n.providerMultiKeySummary(
                   _apiKeys.where((key) => key.value.trim().isNotEmpty).length,
                   _keyStrategy == KeyRotationStrategy.sequential
-                      ? l10n.providerMultiKeyStrategySequential
-                      : l10n.providerMultiKeyStrategyRoundRobin,
+                      ? g11n.providerMultiKeyStrategySequential
+                      : g11n.providerMultiKeyStrategyRoundRobin,
                 ),
                 onTap: () => _editKeys(provider),
               ),
@@ -314,7 +314,7 @@ class _ProviderEditPageState extends ConsumerState<ProviderEditPage> {
             const SettingsDivider(),
             SettingsRow(
               icon: Iconfont.trash2,
-              title: l10n.delete,
+              title: g11n.delete,
               onTap: () => _delete(provider),
             ),
           ],
@@ -325,7 +325,7 @@ class _ProviderEditPageState extends ConsumerState<ProviderEditPage> {
 
   /// 第 2 页:模型列表(模型(N)标题 + 拉取模型;选择模式下换成批量操作条)。
   /// 行内能力标签、测试结果行、左滑删除,对齐上游 ProviderEditorScreen 的模型页。
-  Widget _modelsPage(BuildContext context, AppLocalizations l10n, ProviderConfig provider) {
+  Widget _modelsPage(BuildContext context, AppGlobalizations g11n, ProviderConfig provider) {
     final theme = Theme.of(context);
     final topInset = MediaQuery.of(context).padding.top + kToolbarHeight;
     return Column(
@@ -338,7 +338,7 @@ class _ProviderEditPageState extends ConsumerState<ProviderEditPage> {
               if (_selectionMode) ...[
                 Expanded(
                   child: Text(
-                    l10n.providerModelsSelectedCount(_selectedModels.length),
+                    g11n.providerModelsSelectedCount(_selectedModels.length),
                     style: theme.textTheme.labelLarge?.copyWith(
                       fontSize: 13,
                       color: theme.colorScheme.primary,
@@ -346,31 +346,31 @@ class _ProviderEditPageState extends ConsumerState<ProviderEditPage> {
                   ),
                 ),
                 _batchAction(
-                  label: _isAllSelected ? l10n.providerModelsDeselectAll : l10n.providerModelsSelectAll,
+                  label: _isAllSelected ? g11n.providerModelsDeselectAll : g11n.providerModelsSelectAll,
                   onTap: _toggleSelectAll,
                 ),
                 _batchAction(
-                  label: l10n.providerModelsBatchTest,
+                  label: g11n.providerModelsBatchTest,
                   icon: Iconfont.play,
                   color: theme.colorScheme.primary,
                   enabled: _selectedModels.isNotEmpty,
                   onTap: () => _testSelected(provider),
                 ),
                 _batchAction(
-                  label: l10n.providerModelsBatchDelete,
+                  label: g11n.providerModelsBatchDelete,
                   icon: Iconfont.trash2,
                   color: theme.colorScheme.error,
                   enabled: _selectedModels.isNotEmpty,
                   onTap: () => _batchDelete(provider),
                 ),
                 _batchAction(
-                  label: l10n.commonCancel,
+                  label: g11n.commonCancel,
                   onTap: _exitSelectionMode,
                 ),
               ] else ...[
                 Expanded(
                   child: Text(
-                    l10n.providerModelsCount('${_models.length}'),
+                    g11n.providerModelsCount('${_models.length}'),
                     style: theme.textTheme.labelLarge?.copyWith(
                       fontSize: 13,
                       color: context.semantic.subtleText,
@@ -380,7 +380,7 @@ class _ProviderEditPageState extends ConsumerState<ProviderEditPage> {
                 TextButton.icon(
                   onPressed: () => _fetchModels(provider),
                   icon: const Icon(Iconfont.download, size: 18),
-                  label: Text(l10n.providerFetchModels),
+                  label: Text(g11n.providerFetchModels),
                 ),
               ],
             ],
@@ -393,13 +393,13 @@ class _ProviderEditPageState extends ConsumerState<ProviderEditPage> {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Text(
-                        l10n.providerNoModels,
+                        g11n.providerNoModels,
                         style: theme.textTheme.bodyMedium?.copyWith(
                           color: context.semantic.subtleText,
                         ),
                       ),
                       Text(
-                        l10n.providerNoModelsHint,
+                        g11n.providerNoModelsHint,
                         style: theme.textTheme.bodySmall?.copyWith(
                           color: context.semantic.subtleText,
                         ),
@@ -407,7 +407,7 @@ class _ProviderEditPageState extends ConsumerState<ProviderEditPage> {
                     ],
                   ),
                 )
-              : _modelList(context, l10n, provider),
+              : _modelList(context, g11n, provider),
         ),
       ],
     );
@@ -439,8 +439,8 @@ class _ProviderEditPageState extends ConsumerState<ProviderEditPage> {
 
   /// 模型列表:长按拖拽排序(对齐上游 ProviderEditorScreen 的 ReorderableItem),
   /// 整列表套一层液态柔光玻璃面板,行本身透明(逐行模糊会让 471 行掉帧)。
-  Widget _modelList(BuildContext context, AppLocalizations l10n, ProviderConfig provider) {
-    Widget card(int index) => _modelCard(context, l10n, provider, _models[index], index);
+  Widget _modelList(BuildContext context, AppGlobalizations g11n, ProviderConfig provider) {
+    Widget card(int index) => _modelCard(context, g11n, provider, _models[index], index);
     const listPadding = EdgeInsets.only(top: Spacing.xs, bottom: 110);
     final list = _selectionMode
         // 选择模式禁用拖拽排序(对齐上游:选择模式下 dragModifier 置空)。
@@ -486,7 +486,7 @@ class _ProviderEditPageState extends ConsumerState<ProviderEditPage> {
   /// 单个模型卡片:行背景透明,由外层玻璃面板统一提供材质与圆角。
   Widget _modelCard(
     BuildContext context,
-    AppLocalizations l10n,
+    AppGlobalizations g11n,
     ProviderConfig provider,
     String model,
     int index,
@@ -496,7 +496,7 @@ class _ProviderEditPageState extends ConsumerState<ProviderEditPage> {
       child: Column(
         children: [
           if (index != 0) const SettingsDivider(),
-          _modelRow(context, l10n, provider, model),
+          _modelRow(context, g11n, provider, model),
         ],
       ),
     );
@@ -504,7 +504,7 @@ class _ProviderEditPageState extends ConsumerState<ProviderEditPage> {
 
   Widget _modelRow(
     BuildContext context,
-    AppLocalizations l10n,
+    AppGlobalizations g11n,
     ProviderConfig provider,
     String model,
   ) {
@@ -569,14 +569,14 @@ class _ProviderEditPageState extends ConsumerState<ProviderEditPage> {
                   metadata: metadata,
                   trailing: [
                     if (selected)
-                      ModelTagPill(texts: [l10n.providerModelCurrent]),
+                      ModelTagPill(texts: [g11n.providerModelCurrent]),
                   ],
                 ),
                 if (result != null) ModelTestResultLine(model: model, result: result),
               ],
             ),
           ),
-          _trailingAction(context, l10n, provider, model, testing, batchSelected),
+          _trailingAction(context, g11n, provider, model, testing, batchSelected),
         ],
       ),
     );
@@ -600,7 +600,7 @@ class _ProviderEditPageState extends ConsumerState<ProviderEditPage> {
   /// 选择模式显示勾选框;测试中显示转圈;默认是固定宽度的「测试」按钮。
   Widget _trailingAction(
     BuildContext context,
-    AppLocalizations l10n,
+    AppGlobalizations g11n,
     ProviderConfig provider,
     String model,
     bool testing,
@@ -642,7 +642,7 @@ class _ProviderEditPageState extends ConsumerState<ProviderEditPage> {
           tapTargetSize: MaterialTapTargetSize.shrinkWrap,
         ),
         onPressed: () => _testModel(provider, model),
-        child: Text(l10n.providerTestModel, style: theme.textTheme.labelMedium),
+        child: Text(g11n.providerTestModel, style: theme.textTheme.labelMedium),
       ),
     );
   }
@@ -681,7 +681,7 @@ class _ProviderEditPageState extends ConsumerState<ProviderEditPage> {
     // 弹层还开着时提示会被它挡住,关闭后再报清理结果。
     if (removed > 0 && mounted) {
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text(AppLocalizations.of(context).providerModelsAlignedRemoved(removed))),
+        SnackBar(content: Text(AppGlobalizations.of(context).providerModelsAlignedRemoved(removed))),
       );
     }
   }
@@ -689,7 +689,7 @@ class _ProviderEditPageState extends ConsumerState<ProviderEditPage> {
   /// 编辑模型元数据(对齐上游 AddModelSheet);改名时同时更新列表与选用项。
   /// 初始值用「目录 + 自定义」合并结果,与行内标签同源,思考档位预勾选目录识别值。
   Future<void> _editModel(ProviderConfig provider, String model) async {
-    final l10n = AppLocalizations.of(context);
+    final g11n = AppGlobalizations.of(context);
     final catalog = ref.read(modelCatalogProvider).valueOrNull ?? ModelCatalog.empty;
     final metadata = resolveModelMetadata(
       catalog,
@@ -702,7 +702,7 @@ class _ProviderEditPageState extends ConsumerState<ProviderEditPage> {
       context,
       model: model,
       metadata: metadata,
-      title: l10n.providerEditModel,
+      title: g11n.providerEditModel,
       existingModels: _models,
     );
     if (result == null || !mounted) return;
@@ -723,14 +723,14 @@ class _ProviderEditPageState extends ConsumerState<ProviderEditPage> {
   /// 点击行内结果行才打开调试详情弹层。
   Future<void> _testModel(ProviderConfig provider, String model) async {
     if (_testing.contains(model)) return;
-    final l10n = AppLocalizations.of(context);
+    final g11n = AppGlobalizations.of(context);
     setState(() => _testing.add(model));
     final draft = _draft(provider);
     final result = await ref.read(modelApiProvider).testModel(
           provider: draft,
           apiKey: draft.firstUsableApiKey,
           model: model,
-          messageForKeyMissing: l10n.providerApiKeyRequired,
+          messageForKeyMissing: g11n.providerApiKeyRequired,
         );
     if (!mounted) return;
     setState(() {
@@ -748,21 +748,21 @@ class _ProviderEditPageState extends ConsumerState<ProviderEditPage> {
 
   /// 批量删除选中模型:确认弹窗 → 移除模型与自定义元数据 → 退出选择模式并保存。
   Future<void> _batchDelete(ProviderConfig provider) async {
-    final l10n = AppLocalizations.of(context);
+    final g11n = AppGlobalizations.of(context);
     final confirmed = await showDialog<bool>(
       context: context,
       builder: (dialogContext) => AlertDialog(
-        title: Text(l10n.providerModelsBatchDeleteTitle),
-        content: Text(l10n.providerModelsBatchDeleteConfirm(_selectedModels.length)),
+        title: Text(g11n.providerModelsBatchDeleteTitle),
+        content: Text(g11n.providerModelsBatchDeleteConfirm(_selectedModels.length)),
         actions: [
           TextButton(
             onPressed: () => Navigator.pop(dialogContext, false),
-            child: Text(l10n.commonCancel),
+            child: Text(g11n.commonCancel),
           ),
           TextButton(
             onPressed: () => Navigator.pop(dialogContext, true),
             child: Text(
-              l10n.delete,
+              g11n.delete,
               style: TextStyle(color: Theme.of(context).colorScheme.error),
             ),
           ),
@@ -894,7 +894,7 @@ class _ProviderEditPageState extends ConsumerState<ProviderEditPage> {
 
   /// 上游格式选择(对齐上游 ProviderTypeSelectionSheet)。
   Future<void> _pickType() async {
-    final l10n = AppLocalizations.of(context);
+    final g11n = AppGlobalizations.of(context);
     final selected = await showModalBottomSheet<ProviderType>(
       context: context,
       showDragHandle: true,
@@ -907,7 +907,7 @@ class _ProviderEditPageState extends ConsumerState<ProviderEditPage> {
               child: Align(
                 alignment: Alignment.centerLeft,
                 child: Text(
-                  l10n.providerSectionType,
+                  g11n.providerSectionType,
                   style: Theme.of(sheetContext)
                       .textTheme
                       .titleMedium
@@ -956,12 +956,12 @@ class _ProviderEditPageState extends ConsumerState<ProviderEditPage> {
 
   /// 添加模型(对齐上游 AddModelSheet:含窗口、价格、能力与思考档位)。
   Future<void> _addModel(ProviderConfig provider) async {
-    final l10n = AppLocalizations.of(context);
+    final g11n = AppGlobalizations.of(context);
     final result = await showModelEditSheet(
       context,
       model: '',
-      title: l10n.providerAddModel,
-      confirmLabel: l10n.commonAdd,
+      title: g11n.providerAddModel,
+      confirmLabel: g11n.commonAdd,
       existingModels: _models,
     );
     if (result == null || !mounted) return;
@@ -1031,19 +1031,19 @@ class _ProviderEditPageState extends ConsumerState<ProviderEditPage> {
   }
 
   Future<void> _delete(ProviderConfig provider) async {
-    final l10n = AppLocalizations.of(context);
+    final g11n = AppGlobalizations.of(context);
     final confirmed = await showDialog<bool>(
       context: context,
       builder: (dialogContext) => AlertDialog(
-        title: Text(l10n.deleteProviderConfirm),
+        title: Text(g11n.deleteProviderConfirm),
         actions: [
           TextButton(
             onPressed: () => Navigator.pop(dialogContext, false),
-            child: Text(l10n.cancel),
+            child: Text(g11n.cancel),
           ),
           TextButton(
             onPressed: () => Navigator.pop(dialogContext, true),
-            child: Text(l10n.delete),
+            child: Text(g11n.delete),
           ),
         ],
       ),
@@ -1084,7 +1084,7 @@ class _HeadersSheetState extends State<_HeadersSheet> {
 
   @override
   Widget build(BuildContext context) {
-    final l10n = AppLocalizations.of(context);
+    final g11n = AppGlobalizations.of(context);
     final theme = Theme.of(context);
     return SafeArea(
       child: Padding(
@@ -1098,12 +1098,12 @@ class _HeadersSheetState extends State<_HeadersSheet> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
-              l10n.providerHeadersTitle,
+              g11n.providerHeadersTitle,
               style: theme.textTheme.titleMedium?.copyWith(fontWeight: FontWeight.bold),
             ),
             const SizedBox(height: Spacing.xs),
             Text(
-              l10n.providerHeadersDesc,
+              g11n.providerHeadersDesc,
               style: theme.textTheme.bodySmall?.copyWith(color: context.semantic.subtleText),
             ),
             const SizedBox(height: Spacing.md),
@@ -1157,7 +1157,7 @@ class _HeadersSheetState extends State<_HeadersSheet> {
                     (TextEditingController(), TextEditingController()),
                   )),
               icon: const Icon(Icons.add, size: 18),
-              label: Text(l10n.providerHeadersAdd),
+              label: Text(g11n.providerHeadersAdd),
             ),
             const SizedBox(height: Spacing.sm),
             SizedBox(
@@ -1167,7 +1167,7 @@ class _HeadersSheetState extends State<_HeadersSheet> {
                   for (final row in _rows)
                     if (row.$1.text.trim().isNotEmpty) row.$1.text.trim(): row.$2.text,
                 }),
-                child: Text(l10n.confirm),
+                child: Text(g11n.confirm),
               ),
             ),
           ],

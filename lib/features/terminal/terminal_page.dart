@@ -9,7 +9,7 @@ import '../../core/icons/iconfont.dart';
 import '../../core/terminal/terminal.dart';
 import '../../data/terminal/terminal_manager.dart';
 import '../../data/terminal/terminal_settings.dart';
-import '../../l10n/app_localizations.dart';
+import '../../g11n/app_globalizations.dart';
 import 'terminal_settings_sheet.dart';
 import 'widgets/extra_keys_row.dart';
 
@@ -34,7 +34,7 @@ class _TerminalPageState extends ConsumerState<TerminalPage> {
 
   @override
   Widget build(BuildContext context) {
-    final l10n = AppLocalizations.of(context);
+    final g11n = AppGlobalizations.of(context);
     final theme = Theme.of(context);
     final state = ref.watch(terminalTabsProvider);
     final notifier = ref.read(terminalTabsProvider.notifier);
@@ -46,7 +46,7 @@ class _TerminalPageState extends ConsumerState<TerminalPage> {
     final cursorColor = settings.theme.cursorFor(context);
 
     final active = state.active;
-    final title = active?.title ?? l10n.terminalTitle;
+    final title = active?.title ?? g11n.terminalTitle;
 
     return Scaffold(
       key: _scaffoldKey,
@@ -99,12 +99,12 @@ class _TerminalPageState extends ConsumerState<TerminalPage> {
                   ),
                   IconButton(
                     icon: Icon(Iconfont.plus, size: 20, color: fgColor),
-                    tooltip: l10n.terminalNewTab,
+                    tooltip: g11n.terminalNewTab,
                     onPressed: () => notifier.newTab(),
                   ),
                   IconButton(
                     icon: Icon(Iconfont.settings, size: 18, color: fgColor),
-                    tooltip: l10n.terminalSettingsTitle,
+                    tooltip: g11n.terminalSettingsTitle,
                     onPressed: () => showTerminalSettingsSheet(context),
                   ),
                 ],

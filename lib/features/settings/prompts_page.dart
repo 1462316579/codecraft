@@ -11,7 +11,7 @@ import '../../core/theme/tokens.dart';
 import '../../core/ui/settings_group.dart';
 import '../../core/ui/swipe_to_delete_row.dart';
 import '../../data/prompts.dart';
-import '../../l10n/app_localizations.dart';
+import '../../g11n/app_globalizations.dart';
 import 'prompts_viewmodel.dart';
 
 /// 提示词设置页:列出所有生效片段(按编号),支持查看详情、编辑、左滑删除、重置、禁用内置。
@@ -71,22 +71,22 @@ class _PromptsPageState extends ConsumerState<PromptsPage> {
   }
 
   Future<void> _confirmBatchDelete() async {
-    final l10n = AppLocalizations.of(context);
+    final g11n = AppGlobalizations.of(context);
     final vm = ref.read(promptsViewModelProvider);
     final confirmed = await showDialog<bool>(
       context: context,
       builder: (ctx) => AlertDialog(
-        title: Text(l10n.promptsBatchDeleteTitle),
-        content: Text(l10n.promptsBatchDeleteConfirm(_selectedNumbers.length)),
+        title: Text(g11n.promptsBatchDeleteTitle),
+        content: Text(g11n.promptsBatchDeleteConfirm(_selectedNumbers.length)),
         actions: [
           TextButton(
             onPressed: () => Navigator.pop(ctx, false),
-            child: Text(l10n.commonCancel),
+            child: Text(g11n.commonCancel),
           ),
           FilledButton(
             onPressed: () => Navigator.pop(ctx, true),
             style: FilledButton.styleFrom(backgroundColor: Theme.of(context).colorScheme.error),
-            child: Text(l10n.commonSave),
+            child: Text(g11n.commonSave),
           ),
         ],
       ),
@@ -98,22 +98,22 @@ class _PromptsPageState extends ConsumerState<PromptsPage> {
   }
 
   Future<void> _confirmReset() async {
-    final l10n = AppLocalizations.of(context);
+    final g11n = AppGlobalizations.of(context);
     final vm = ref.read(promptsViewModelProvider);
     final confirmed = await showDialog<bool>(
       context: context,
       builder: (ctx) => AlertDialog(
-        title: Text(l10n.promptsResetCustom),
-        content: Text(l10n.promptsResetConfirm),
+        title: Text(g11n.promptsResetCustom),
+        content: Text(g11n.promptsResetConfirm),
         actions: [
           TextButton(
             onPressed: () => Navigator.pop(ctx, false),
-            child: Text(l10n.commonCancel),
+            child: Text(g11n.commonCancel),
           ),
           FilledButton(
             onPressed: () => Navigator.pop(ctx, true),
             style: FilledButton.styleFrom(backgroundColor: Theme.of(context).colorScheme.error),
-            child: Text(l10n.commonSave),
+            child: Text(g11n.commonSave),
           ),
         ],
       ),
@@ -125,14 +125,14 @@ class _PromptsPageState extends ConsumerState<PromptsPage> {
 
   @override
   Widget build(BuildContext context) {
-    final l10n = AppLocalizations.of(context);
+    final g11n = AppGlobalizations.of(context);
     final theme = Theme.of(context);
     final state = ref.watch(promptsViewModelProvider).state;
 
     return Scaffold(
       extendBodyBehindAppBar: true,
       appBar: AppBar(
-        title: Text(l10n.promptsTitle),
+        title: Text(g11n.promptsTitle),
         backgroundColor: Colors.transparent,
         surfaceTintColor: Colors.transparent,
         elevation: 0,
@@ -142,14 +142,14 @@ class _PromptsPageState extends ConsumerState<PromptsPage> {
             Padding(
               padding: const EdgeInsets.only(right: Spacing.sm),
               child: Text(
-                l10n.promptsSelectedCount(_selectedNumbers.length),
+                g11n.promptsSelectedCount(_selectedNumbers.length),
                 style: Theme.of(context).textTheme.bodyMedium,
               ),
             ),
 
           if (!_selectionMode)
             IconButton(
-              tooltip: l10n.promptsResetCustom,
+              tooltip: g11n.promptsResetCustom,
               icon: const Icon(Iconfont.rotateCcw),
               onPressed: _confirmReset,
             ),
@@ -157,27 +157,27 @@ class _PromptsPageState extends ConsumerState<PromptsPage> {
           if (_selectionMode) ...[
             IconButton(
               tooltip: _selectedNumbers.length == state.fragments.length && state.fragments.isNotEmpty
-                  ? l10n.promptsDeselectAll
-                  : l10n.promptsSelectAll,
+                  ? g11n.promptsDeselectAll
+                  : g11n.promptsSelectAll,
               icon: const Icon(Iconfont.checkSquare),
               onPressed: () => _selectAll(state.fragments),
             ),
             IconButton(
-              tooltip: l10n.commonBatchDelete,
+              tooltip: g11n.commonBatchDelete,
               icon: const Icon(Iconfont.trash2),
               onPressed: _selectedNumbers.isNotEmpty ? _confirmBatchDelete : null,
               color: Theme.of(context).colorScheme.error,
             ),
           ] else
             IconButton(
-              tooltip: l10n.promptsSelectMode,
+              tooltip: g11n.promptsSelectMode,
               icon: const Icon(Iconfont.checkSquare),
               onPressed: _toggleSelectionMode,
             ),
 
           if (_selectionMode)
             IconButton(
-              tooltip: l10n.commonClose, 
+              tooltip: g11n.commonClose, 
               icon: const Icon(Icons.close),
               onPressed: _exitSelection,
             ),
@@ -198,13 +198,13 @@ class _PromptsPageState extends ConsumerState<PromptsPage> {
         ),
         child: (state.loading && state.fragments.isEmpty && state.scenarios.isEmpty)
             ? const Center(child: CircularProgressIndicator())
-            : _buildBody(context, l10n, state),
+            : _buildBody(context, g11n, state),
       ),
       floatingActionButton: _selectionMode
           ? null
           : FloatingActionButton(
               onPressed: () => context.push('/settings/prompts/edit'),
-              tooltip: l10n.promptsAddPrompt,
+              tooltip: g11n.promptsAddPrompt,
               child: const Icon(Iconfont.plus),
             ),
     );
@@ -212,7 +212,7 @@ class _PromptsPageState extends ConsumerState<PromptsPage> {
 
   Widget _buildBody(
     BuildContext context,
-    AppLocalizations l10n,
+    AppGlobalizations g11n,
     PromptsUiState state,
   ) {
     return ListView(
@@ -231,8 +231,8 @@ class _PromptsPageState extends ConsumerState<PromptsPage> {
             children: [
               SettingsRow(
                 icon: null,
-                title: l10n.promptsDisableBuiltin,
-                subtitle: l10n.promptsDisableBuiltinHint,
+                title: g11n.promptsDisableBuiltin,
+                subtitle: g11n.promptsDisableBuiltinHint,
                 trailing: Switch(
                   value: state.builtinDisabled,
                   onChanged: (v) => ref.read(promptsViewModelProvider).setBuiltinDisabled(v),
@@ -245,7 +245,7 @@ class _PromptsPageState extends ConsumerState<PromptsPage> {
         const SizedBox(height: Spacing.lg),
 
         // 场景提示词:按项目类型注入(编程 / 写作 / 应用逆向)
-        SettingsGroupHeader(text: l10n.promptsScenarioSection),
+        SettingsGroupHeader(text: g11n.promptsScenarioSection),
         SettingsGroup(
           children: [
             for (var i = 0; i < state.scenarios.length; i++) ...[
@@ -265,7 +265,7 @@ class _PromptsPageState extends ConsumerState<PromptsPage> {
               children: [
                 Icon(Iconfont.fileText, size: 48, color: context.semantic.subtleText),
                 const SizedBox(height: Spacing.md),
-                Text(l10n.promptsEmpty, style: Theme.of(context).textTheme.titleMedium),
+                Text(g11n.promptsEmpty, style: Theme.of(context).textTheme.titleMedium),
               ],
             ),
           )
@@ -290,7 +290,7 @@ class _PromptsPageState extends ConsumerState<PromptsPage> {
                       if (!context.mounted) return;
                       if (!ok) {
                         ScaffoldMessenger.of(context).showSnackBar(
-                          SnackBar(content: Text(l10n.promptsNoOverrideToDelete)),
+                          SnackBar(content: Text(g11n.promptsNoOverrideToDelete)),
                         );
                         return;
                       }
@@ -454,10 +454,10 @@ class _ScenarioRow extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final l10n = AppLocalizations.of(context);
+    final g11n = AppGlobalizations.of(context);
     return SettingsRow(
       icon: _scenarioIcon(scenario.kind),
-      title: _scenarioTitle(l10n, scenario.kind),
+      title: _scenarioTitle(g11n, scenario.kind),
       subtitle: scenario.description,
       trailing: _SourceBadge(source: scenario.source),
       onTap: () => context.push('/settings/prompts/detail?kind=${scenario.kind.name}'),
@@ -470,10 +470,10 @@ class _ScenarioRow extends StatelessWidget {
         ProjectKind.reverse => Iconfont.binary,
       };
 
-  String _scenarioTitle(AppLocalizations l10n, ProjectKind kind) => switch (kind) {
-        ProjectKind.coding => l10n.projectKindCoding,
-        ProjectKind.writing => l10n.projectKindWriting,
-        ProjectKind.reverse => l10n.projectKindReverse,
+  String _scenarioTitle(AppGlobalizations g11n, ProjectKind kind) => switch (kind) {
+        ProjectKind.coding => g11n.projectKindCoding,
+        ProjectKind.writing => g11n.projectKindWriting,
+        ProjectKind.reverse => g11n.projectKindReverse,
       };
 }
 
@@ -486,12 +486,12 @@ class _SourceBadge extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
-    final l10n = AppLocalizations.of(context);
+    final g11n = AppGlobalizations.of(context);
     final (text, color) = switch (source) {
-      PromptFragmentSource.project => (l10n.promptsSourceProject, theme.colorScheme.primary),
-      PromptFragmentSource.global => (l10n.promptsSourceGlobal, theme.colorScheme.tertiary),
-      PromptFragmentSource.local => (l10n.promptsSourceLocal, theme.colorScheme.secondary),
-      PromptFragmentSource.builtin => (l10n.promptsSourceBuiltin, context.semantic.subtleText),
+      PromptFragmentSource.project => (g11n.promptsSourceProject, theme.colorScheme.primary),
+      PromptFragmentSource.global => (g11n.promptsSourceGlobal, theme.colorScheme.tertiary),
+      PromptFragmentSource.local => (g11n.promptsSourceLocal, theme.colorScheme.secondary),
+      PromptFragmentSource.builtin => (g11n.promptsSourceBuiltin, context.semantic.subtleText),
     };
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 2),

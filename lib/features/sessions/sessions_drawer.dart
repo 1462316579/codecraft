@@ -25,7 +25,7 @@ import '../../core/ui/segmented_tabs.dart';
 import '../../core/ui/settings_group.dart';
 import '../../data/workbench.dart';
 import '../../core/ui/text_input_dialog.dart';
-import '../../l10n/app_localizations.dart';
+import '../../g11n/app_globalizations.dart';
 import 'file_tree_tab.dart';
 
 /// 多选模式下已勾选的会话 id。
@@ -69,7 +69,7 @@ class _SessionsDrawerState extends ConsumerState<SessionsDrawer> {
   }
 
   /// 批量操作条:已选数量 + 全选 + 取消 + 删除。
-  Widget _buildSelectionBar(AppLocalizations l10n, List<ChatSession> sessions) {
+  Widget _buildSelectionBar(AppGlobalizations g11n, List<ChatSession> sessions) {
     final selected = ref.watch(sessionSelectionProvider);
     return Padding(
       padding: const EdgeInsets.fromLTRB(Spacing.lg, Spacing.xs, Spacing.sm, Spacing.sm),
@@ -77,7 +77,7 @@ class _SessionsDrawerState extends ConsumerState<SessionsDrawer> {
         children: [
           Expanded(
             child: Text(
-              l10n.sessionSelectedCount("${selected.length}"),
+              g11n.sessionSelectedCount("${selected.length}"),
               style: Theme.of(context).textTheme.labelLarge?.copyWith(
                     color: context.semantic.subtleText,
                   ),
@@ -87,10 +87,10 @@ class _SessionsDrawerState extends ConsumerState<SessionsDrawer> {
             onPressed: () => ref
                 .read(sessionSelectionProvider.notifier)
                 .setAll(sessions.map((session) => session.id)),
-            child: Text(l10n.sessionSelectAll),
+            child: Text(g11n.sessionSelectAll),
           ),
           IconButton(
-            tooltip: l10n.sessionDeleteSelected,
+            tooltip: g11n.sessionDeleteSelected,
             onPressed: selected.isEmpty ? null : () => _deleteSelected(),
             icon: Icon(
               Iconfont.trash2,
@@ -101,7 +101,7 @@ class _SessionsDrawerState extends ConsumerState<SessionsDrawer> {
             ),
           ),
           IconButton(
-            tooltip: l10n.sessionCancelSelect,
+            tooltip: g11n.sessionCancelSelect,
             onPressed: () => setState(() {
               _selectionMode = false;
               ref.read(sessionSelectionProvider.notifier).clear();
@@ -115,23 +115,23 @@ class _SessionsDrawerState extends ConsumerState<SessionsDrawer> {
 
   /// 批量删除已勾选的会话。
   Future<void> _deleteSelected() async {
-    final l10n = AppLocalizations.of(context);
+    final g11n = AppGlobalizations.of(context);
     final ids = ref.read(sessionSelectionProvider).toList();
     if (ids.isEmpty) return;
     final confirmed = await showDialog<bool>(
       context: context,
       builder: (dialogContext) => AlertDialog(
-        title: Text(l10n.sessionDeleteSelected),
-        content: Text(l10n.sessionDeleteConfirm),
+        title: Text(g11n.sessionDeleteSelected),
+        content: Text(g11n.sessionDeleteConfirm),
         actions: [
           TextButton(
             onPressed: () => Navigator.pop(dialogContext, false),
-            child: Text(l10n.cancel),
+            child: Text(g11n.cancel),
           ),
           TextButton(
             onPressed: () => Navigator.pop(dialogContext, true),
             child: Text(
-              l10n.delete,
+              g11n.delete,
               style: TextStyle(color: Theme.of(dialogContext).colorScheme.error),
             ),
           ),
@@ -149,7 +149,7 @@ class _SessionsDrawerState extends ConsumerState<SessionsDrawer> {
 
   /// 长按菜单(对齐上游 SessionActionSheet):置顶 / 重命名 / 导出 / 批量选择 / 删除。
   Future<void> _showActions(ChatSession session) async {
-    final l10n = AppLocalizations.of(context);
+    final g11n = AppGlobalizations.of(context);
     final notifier = ref.read(sessionsProvider.notifier);
     final action = await showModalBottomSheet<String>(
       context: context,
@@ -164,7 +164,7 @@ class _SessionsDrawerState extends ConsumerState<SessionsDrawer> {
               Padding(
                 padding: const EdgeInsets.fromLTRB(Spacing.lg, 0, Spacing.lg, Spacing.md),
                 child: Text(
-                  session.title.trim().isEmpty ? l10n.untitled : session.title,
+                  session.title.trim().isEmpty ? g11n.untitled : session.title,
                   style: Theme.of(sheetContext).textTheme.titleSmall?.copyWith(
                         color: Theme.of(sheetContext).colorScheme.onSurfaceVariant,
                       ),
@@ -174,27 +174,27 @@ class _SessionsDrawerState extends ConsumerState<SessionsDrawer> {
               ),
               _SheetAction(
                 icon: session.isPinned ? Iconfont.pinOff : Iconfont.pin,
-                label: session.isPinned ? l10n.unpin : l10n.pin,
+                label: session.isPinned ? g11n.unpin : g11n.pin,
                 onTap: () => Navigator.pop(sheetContext, 'pin'),
               ),
               _SheetAction(
                 icon: Iconfont.edit2,
-                label: l10n.rename,
+                label: g11n.rename,
                 onTap: () => Navigator.pop(sheetContext, 'rename'),
               ),
               _SheetAction(
                 icon: Iconfont.download,
-                label: l10n.sessionExport,
+                label: g11n.sessionExport,
                 onTap: () => Navigator.pop(sheetContext, 'export'),
               ),
               _SheetAction(
                 icon: Iconfont.checkSquare,
-                label: l10n.sessionBatchSelect,
+                label: g11n.sessionBatchSelect,
                 onTap: () => Navigator.pop(sheetContext, 'batch'),
               ),
               _SheetAction(
                 icon: Iconfont.trash2,
-                label: l10n.delete,
+                label: g11n.delete,
                 color: Theme.of(sheetContext).colorScheme.error,
                 onTap: () => Navigator.pop(sheetContext, 'delete'),
               ),
@@ -222,11 +222,11 @@ class _SessionsDrawerState extends ConsumerState<SessionsDrawer> {
   }
 
   Future<void> _rename(ChatSession session) async {
-    final l10n = AppLocalizations.of(context);
+    final g11n = AppGlobalizations.of(context);
     final name = await showTextInputDialog(
       context,
-      title: l10n.rename,
-      confirmLabel: l10n.rename,
+      title: g11n.rename,
+      confirmLabel: g11n.rename,
       initial: session.title,
     );
     if (name == null || name.isEmpty) return;
@@ -234,21 +234,21 @@ class _SessionsDrawerState extends ConsumerState<SessionsDrawer> {
   }
 
   Future<void> _delete(ChatSession session) async {
-    final l10n = AppLocalizations.of(context);
+    final g11n = AppGlobalizations.of(context);
     final confirmed = await showDialog<bool>(
       context: context,
       builder: (dialogContext) => AlertDialog(
-        title: Text(l10n.delete),
-        content: Text(l10n.sessionDeleteConfirm),
+        title: Text(g11n.delete),
+        content: Text(g11n.sessionDeleteConfirm),
         actions: [
           TextButton(
             onPressed: () => Navigator.pop(dialogContext, false),
-            child: Text(l10n.cancel),
+            child: Text(g11n.cancel),
           ),
           TextButton(
             onPressed: () => Navigator.pop(dialogContext, true),
             child: Text(
-              l10n.delete,
+              g11n.delete,
               style: TextStyle(color: Theme.of(dialogContext).colorScheme.error),
             ),
           ),
@@ -261,7 +261,7 @@ class _SessionsDrawerState extends ConsumerState<SessionsDrawer> {
 
   /// 导出会话为 Markdown 文件,落在 `<配置目录>/exports/`。
   Future<void> _export(ChatSession session) async {
-    final l10n = AppLocalizations.of(context);
+    final g11n = AppGlobalizations.of(context);
     try {
       final db = ref.read(databaseProvider);
       final messages = await db.messageDao.listBySession(session.id);
@@ -271,17 +271,17 @@ class _SessionsDrawerState extends ConsumerState<SessionsDrawer> {
       final path = await exporter.export(session, messages);
       if (!mounted) return;
       ScaffoldMessenger.of(context)
-          .showSnackBar(SnackBar(content: Text(l10n.sessionExportDone(path))));
+          .showSnackBar(SnackBar(content: Text(g11n.sessionExportDone(path))));
     } catch (_) {
       if (!mounted) return;
       ScaffoldMessenger.of(context)
-          .showSnackBar(SnackBar(content: Text(l10n.sessionExportFailed)));
+          .showSnackBar(SnackBar(content: Text(g11n.sessionExportFailed)));
     }
   }
 
   @override
   Widget build(BuildContext context) {
-    final l10n = AppLocalizations.of(context);
+    final g11n = AppGlobalizations.of(context);
     final sessions = ref.watch(sessionsProvider);
     final selectedId = ref.watch(selectedSessionProvider);
     final theme = Theme.of(context);
@@ -297,26 +297,26 @@ class _SessionsDrawerState extends ConsumerState<SessionsDrawer> {
             padding: const EdgeInsets.fromLTRB(Spacing.lg, Spacing.md, Spacing.lg, Spacing.sm),
             child: SegmentedTabs(
               selected: _tab,
-              labels: [l10n.tabSessions, l10n.tabFiles],
+              labels: [g11n.tabSessions, g11n.tabFiles],
               onSelect: (index) => setState(() => _tab = index),
             ),
           ),
           // 多选模式:搜索框换成批量操作条(对齐上游选中态的顶部工具条)。
           if (_tab == 0 && _selectionMode)
-            _buildSelectionBar(l10n, sessions.valueOrNull ?? const [])
+            _buildSelectionBar(g11n, sessions.valueOrNull ?? const [])
           else if (_tab == 0)
             Padding(
               padding: const EdgeInsets.fromLTRB(Spacing.lg, Spacing.xs, Spacing.lg, Spacing.sm),
               child: CapsuleSearchField(
                 controller: _searchController,
-                hint: l10n.searchSessions,
+                hint: g11n.searchSessions,
                 onChanged: (value) => setState(() => _query = value.trim()),
               ),
             ),
           Expanded(
             child: _tab == 1 ? const FileTreeTab() : sessions.when(
               loading: () => const Center(child: CircularProgressIndicator()),
-              error: (error, _) => Center(child: Text('${l10n.errorGeneric}: $error')),
+              error: (error, _) => Center(child: Text('${g11n.errorGeneric}: $error')),
               data: (list) {
                 // 侧栏只列当前项目下的会话:写作项目里不该出现代码会话,反之亦然。
                 // 未打开项目时(理论上只在极端时序下出现)退回按模式过滤。
@@ -334,7 +334,7 @@ class _SessionsDrawerState extends ConsumerState<SessionsDrawer> {
                 if (filtered.isEmpty) {
                   return Center(
                     child: Text(
-                      l10n.noSessions,
+                      g11n.noSessions,
                       style: TextStyle(color: context.semantic.subtleText),
                     ),
                   );
@@ -345,7 +345,7 @@ class _SessionsDrawerState extends ConsumerState<SessionsDrawer> {
                     for (final group in groupSessions(filtered, DateTime.now()))
                       ...[
                         SettingsGroupHeader(
-                          text: groupLabel(l10n, group.key, group.sessions.first.updatedAt),
+                          text: groupLabel(g11n, group.key, group.sessions.first.updatedAt),
                         ),
                         for (var index = 0; index < group.sessions.length; index++) ...[
                           // 置顶组内用间距分隔,其余组用与设置页一致的分隔线(对齐上游)。
@@ -382,14 +382,14 @@ class _SessionsDrawerState extends ConsumerState<SessionsDrawer> {
                   children: [
                     SettingsRow(
                       icon: Iconfont.radio,
-                      title: l10n.captureTitle,
+                      title: g11n.captureTitle,
                       onTap: () => context.push('/capture'),
                     ),
                     if (showCodingTools) ...[
                       const SettingsDivider(),
                       SettingsRow(
                         icon: Icons.public,
-                        title: l10n.browserTitle,
+                        title: g11n.browserTitle,
                         onTap: () => openWorkbench(
                           context,
                           ref,
@@ -448,9 +448,9 @@ class _SessionRowState extends ConsumerState<_SessionRow>
 
   @override
   Widget build(BuildContext context) {
-    final l10n = AppLocalizations.of(context);
+    final g11n = AppGlobalizations.of(context);
     final semantic = context.semantic;
-    final title = widget.session.title.trim().isEmpty ? l10n.untitled : widget.session.title;
+    final title = widget.session.title.trim().isEmpty ? g11n.untitled : widget.session.title;
     // 状态来自该会话自己的控制器(provider 非 autoDispose,非当前会话也能读到)。
     final state = ref.watch(chatControllerProvider(widget.session.id));
     final awaitingPermission = state.pendingPermission != null;
@@ -619,12 +619,12 @@ String _groupKey(int updatedAt, DateTime now) {
   return '${dt.year}-${dt.month.toString().padLeft(2, '0')}';
 }
 
-String groupLabel(AppLocalizations l10n, String key, int anchorMs) => switch (key) {
-      'pinned' => l10n.sessionGroupPinned,
-      'today' => l10n.sessionGroupToday,
-      'yesterday' => l10n.sessionGroupYesterday,
-      '7d' => l10n.sessionGroupLast7Days,
-      '30d' => l10n.sessionGroupLast30Days,
-      _ => DateFormat(l10n.sessionGroupMonthFormat)
+String groupLabel(AppGlobalizations g11n, String key, int anchorMs) => switch (key) {
+      'pinned' => g11n.sessionGroupPinned,
+      'today' => g11n.sessionGroupToday,
+      'yesterday' => g11n.sessionGroupYesterday,
+      '7d' => g11n.sessionGroupLast7Days,
+      '30d' => g11n.sessionGroupLast30Days,
+      _ => DateFormat(g11n.sessionGroupMonthFormat)
           .format(DateTime.fromMillisecondsSinceEpoch(anchorMs)),
     };

@@ -7,7 +7,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../core/theme/semantic_colors.dart';
 import '../../core/theme/tokens.dart';
 import '../../data/workspace_files.dart';
-import '../../l10n/app_localizations.dart';
+import '../../g11n/app_globalizations.dart';
 import '../../reverse/binary/byte_reader.dart';
 import '../../reverse/dex/dalvik_disassembler.dart';
 import '../../reverse/dex/dex_editor.dart';
@@ -107,7 +107,7 @@ class _DexEditorPageState extends ConsumerState<DexEditorPage>
   Future<void> _save() async {
     final bytes = _bytes;
     if (bytes == null || _saving) return;
-    final l10n = AppLocalizations.of(context);
+    final g11n = AppGlobalizations.of(context);
     setState(() => _saving = true);
     try {
       final files = await ref.read(workspaceFilesProvider.future);
@@ -118,7 +118,7 @@ class _DexEditorPageState extends ConsumerState<DexEditorPage>
         _dirty = false;
         _modified.clear();
       });
-      _toast(l10n.editorSaved);
+      _toast(g11n.editorSaved);
     } catch (error) {
       if (!mounted) return;
       setState(() => _saving = false);
@@ -135,14 +135,14 @@ class _DexEditorPageState extends ConsumerState<DexEditorPage>
     final dex = _dex;
     final bytes = _bytes;
     if (dex == null || bytes == null) return;
-    final l10n = AppLocalizations.of(context);
+    final g11n = AppGlobalizations.of(context);
     final editor = DexEditor(dex);
     final original = dex.stringAt(index);
     final value = await showStringEditDialog(
       context,
-      title: l10n.reverseEditString,
+      title: g11n.reverseEditString,
       initial: original,
-      helper: l10n.reverseEqualLengthHint,
+      helper: g11n.reverseEqualLengthHint,
       validate: (input) => editor.validateReplace(index, input),
     );
     if (value == null || !mounted || value == original) return;
@@ -159,7 +159,7 @@ class _DexEditorPageState extends ConsumerState<DexEditorPage>
 
   @override
   Widget build(BuildContext context) {
-    final l10n = AppLocalizations.of(context);
+    final g11n = AppGlobalizations.of(context);
     final dex = _dex;
     return Scaffold(
       appBar: AppBar(
@@ -171,7 +171,7 @@ class _DexEditorPageState extends ConsumerState<DexEditorPage>
         actions: [
           if (dex != null) HexJumpButton(onJump: _jump),
           IconButton(
-            tooltip: l10n.save,
+            tooltip: g11n.save,
             onPressed: _dirty && !_saving ? _save : null,
             icon: _saving
                 ? const SizedBox(
@@ -188,24 +188,24 @@ class _DexEditorPageState extends ConsumerState<DexEditorPage>
           unselectedLabelColor: context.semantic.subtleText,
           indicatorColor: Theme.of(context).colorScheme.primary,
           tabs: [
-            Tab(text: l10n.reverseTabClasses),
-            Tab(text: l10n.reverseTabStrings),
-            Tab(text: l10n.reverseTabHex),
+            Tab(text: g11n.reverseTabClasses),
+            Tab(text: g11n.reverseTabStrings),
+            Tab(text: g11n.reverseTabHex),
           ],
         ),
       ),
       body: _loading
           ? const Center(child: CircularProgressIndicator())
           : _error != null
-              ? ReverseHint(text: '${l10n.reverseParseFailed}\n$_error')
+              ? ReverseHint(text: '${g11n.reverseParseFailed}\n$_error')
               : TabBarView(
                   controller: _tabs,
                   children: [
                     // 首次非空断言之后,flow analysis 会把 dex 提升为非空,
                     // 后续再用无需重复加 `!`。
-                    _classesTab(l10n, dex!),
-                    _stringsTab(l10n, dex),
-                    _hexTab(l10n),
+                    _classesTab(g11n, dex!),
+                    _stringsTab(g11n, dex),
+                    _hexTab(g11n),
                   ],
                 ),
     );
@@ -233,18 +233,18 @@ class _DexEditorPageState extends ConsumerState<DexEditorPage>
     });
   }
 
-  Widget _classesTab(AppLocalizations l10n, DexFile dex) {
+  Widget _classesTab(AppGlobalizations g11n, DexFile dex) {
     final query = _classQuery.text.trim().toLowerCase();
     return Column(
       children: [
-        _searchField(_classQuery, l10n.reverseSearchClassHint),
+        _searchField(_classQuery, g11n.reverseSearchClassHint),
         Expanded(
           child: Builder(builder: (context) {
             final classes = dex.classes;
             final matched = query.isEmpty
                 ? classes
                 : classes.where((c) => c.name.toLowerCase().contains(query)).toList();
-            if (matched.isEmpty) return ReverseHint(text: l10n.reverseNoMatch);
+            if (matched.isEmpty) return ReverseHint(text: g11n.reverseNoMatch);
             return ListView.builder(
               itemCount: matched.length,
               itemBuilder: (context, index) {
@@ -258,8 +258,8 @@ class _DexEditorPageState extends ConsumerState<DexEditorPage>
                     style: const TextStyle(fontSize: 13, fontFamily: 'monospace'),
                   ),
                   subtitle: Text(
-                    '${l10n.reverseMethodCount(type.methods.length)} · '
-                    '${l10n.reverseFieldCount(type.fields.length)}',
+                    '${g11n.reverseMethodCount(type.methods.length)} · '
+                    '${g11n.reverseFieldCount(type.fields.length)}',
                     style: const TextStyle(fontSize: 11),
                   ),
                   trailing: const Icon(Iconfont.chevronRight, size: 16),
@@ -277,11 +277,11 @@ class _DexEditorPageState extends ConsumerState<DexEditorPage>
     );
   }
 
-  Widget _stringsTab(AppLocalizations l10n, DexFile dex) {
+  Widget _stringsTab(AppGlobalizations g11n, DexFile dex) {
     final query = _stringQuery.text.trim().toLowerCase();
     return Column(
       children: [
-        _searchField(_stringQuery, l10n.reverseSearchStringHint),
+        _searchField(_stringQuery, g11n.reverseSearchStringHint),
         Expanded(
           child: Builder(builder: (context) {
             final indexes = <int>[];
@@ -292,7 +292,7 @@ class _DexEditorPageState extends ConsumerState<DexEditorPage>
               }
               if (dex.stringAt(i).toLowerCase().contains(query)) indexes.add(i);
             }
-            if (indexes.isEmpty) return ReverseHint(text: l10n.reverseNoMatch);
+            if (indexes.isEmpty) return ReverseHint(text: g11n.reverseNoMatch);
             return ListView.builder(
               itemCount: indexes.length,
               itemBuilder: (context, position) {
@@ -323,9 +323,9 @@ class _DexEditorPageState extends ConsumerState<DexEditorPage>
     );
   }
 
-  Widget _hexTab(AppLocalizations l10n) {
+  Widget _hexTab(AppGlobalizations g11n) {
     final bytes = _bytes;
-    if (bytes == null) return ReverseHint(text: l10n.reverseEmptyFile);
+    if (bytes == null) return ReverseHint(text: g11n.reverseEmptyFile);
     return HexView(
       bytes: bytes,
       scrollController: _hexScroll,
@@ -338,14 +338,14 @@ class _DexEditorPageState extends ConsumerState<DexEditorPage>
     final dex = _dex;
     final bytes = _bytes;
     if (dex == null || bytes == null) return;
-    final l10n = AppLocalizations.of(context);
+    final g11n = AppGlobalizations.of(context);
     final current = bytes[offset];
     final input = await showStringEditDialog(
       context,
-      title: l10n.reverseEditByte,
+      title: g11n.reverseEditByte,
       initial: current.toRadixString(16).padLeft(2, '0'),
-      helper: l10n.reverseEditByteHint,
-      validate: (value) => parseHexByte(value) == null ? l10n.reverseInvalidByte : null,
+      helper: g11n.reverseEditByteHint,
+      validate: (value) => parseHexByte(value) == null ? g11n.reverseInvalidByte : null,
     );
     if (input == null || !mounted) return;
     final value = parseHexByte(input);
@@ -382,20 +382,20 @@ class DexClassPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final l10n = AppLocalizations.of(context);
+    final g11n = AppGlobalizations.of(context);
     final theme = Theme.of(context);
     return Scaffold(
       appBar: AppBar(title: Text(type.name, maxLines: 1, overflow: TextOverflow.ellipsis)),
       body: ListView(
         children: [
           if (type.superclass != null)
-            _kv(context, l10n.reverseSuperclass, type.superclass!),
+            _kv(context, g11n.reverseSuperclass, type.superclass!),
           if (type.interfaces.isNotEmpty)
-            _kv(context, l10n.reverseInterfaces, type.interfaces.join('\n')),
-          _kv(context, l10n.reverseAccessFlags,
+            _kv(context, g11n.reverseInterfaces, type.interfaces.join('\n')),
+          _kv(context, g11n.reverseAccessFlags,
               DexAccess.describe(type.accessFlags, forClass: true).join(' ')),
           if (type.fields.isNotEmpty) ...[
-            ReverseSectionHeader(title: l10n.reverseFields, trailing: '${type.fields.length}'),
+            ReverseSectionHeader(title: g11n.reverseFields, trailing: '${type.fields.length}'),
             for (final field in type.fields)
               ListTile(
                 dense: true,
@@ -410,7 +410,7 @@ class DexClassPage extends StatelessWidget {
               ),
           ],
           ReverseSectionHeader(
-            title: l10n.reverseMethods,
+            title: g11n.reverseMethods,
             trailing: '${type.methods.length}',
           ),
           for (final method in type.methods)
@@ -427,7 +427,7 @@ class DexClassPage extends StatelessWidget {
               trailing: method.hasCode
                   ? const Icon(Iconfont.chevronRight, size: 16)
                   : Text(
-                      l10n.reverseAbstractMethod,
+                      g11n.reverseAbstractMethod,
                       style: theme.textTheme.bodySmall?.copyWith(
                         color: theme.colorScheme.outline,
                       ),
@@ -491,7 +491,7 @@ class DexMethodPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
-    final l10n = AppLocalizations.of(context);
+    final g11n = AppGlobalizations.of(context);
     final code = dex.codeAt(method.codeOff);
     final insns = DalvikDisassembler(dex).disassemble(code);
     final header = StringBuffer()
@@ -553,7 +553,7 @@ class DexMethodPage extends StatelessWidget {
         padding: const EdgeInsets.all(Spacing.sm),
         color: theme.colorScheme.surfaceContainerHighest,
         child: Text(
-          l10n.reverseSmaliHint,
+          g11n.reverseSmaliHint,
           style: theme.textTheme.bodySmall?.copyWith(color: theme.colorScheme.outline),
         ),
       ),

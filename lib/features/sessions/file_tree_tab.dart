@@ -20,7 +20,7 @@ import '../reverse/reverse_routes.dart';
 import '../../data/workbench.dart';
 import '../../data/workspaces.dart';
 import '../../data/novel_project.dart';
-import '../../l10n/app_localizations.dart';
+import '../../g11n/app_globalizations.dart';
 import 'file_type_icon.dart';
 
 /// 文件树只有一个根:当前工作区(编程 = 项目目录,写作 = AI小说/<小说名>)。
@@ -113,18 +113,18 @@ class _FileTreeTabState extends ConsumerState<FileTreeTab> with WidgetsBindingOb
 
   @override
   Widget build(BuildContext context) {
-    final l10n = AppLocalizations.of(context);
+    final g11n = AppGlobalizations.of(context);
     // 逆向项目的工作区就是目标 APK 解出来的目录(与 Agent 工具同一来源)。
     final project = ref.watch(currentProjectProvider);
     final reverse = project?.kind == ProjectKind.reverse;
     if (reverse) {
       final apkPath = project!.appApkPath;
       if (apkPath == null || apkPath.isEmpty) {
-        return _hint(l10n.apkPathUnavailable);
+        return _hint(g11n.apkPathUnavailable);
       }
       final ready = ref.watch(apkWorkspaceReadyProvider(project.id)).valueOrNull;
       if (ready != true) {
-        return _apkPrompt(l10n, project);
+        return _apkPrompt(g11n, project);
       }
       _workspaceLabel = 'APK';
     } else {
@@ -153,7 +153,7 @@ class _FileTreeTabState extends ConsumerState<FileTreeTab> with WidgetsBindingOb
             const SizedBox(height: Spacing.xs),
             // 外部工作区缺「所有文件访问权限」时可能只列出目录、看不到文件,
             // 这里给一条常驻提示(而不是等到读目录失败才出现)。
-            if (_externalNoAccess && _error == null) _permissionBanner(l10n, root),
+            if (_externalNoAccess && _error == null) _permissionBanner(g11n, root),
             Expanded(
               child: _error != null
                   ? Center(
@@ -172,7 +172,7 @@ class _FileTreeTabState extends ConsumerState<FileTreeTab> with WidgetsBindingOb
                             if (_needsStoragePermission(root)) ...[
                               const SizedBox(height: Spacing.sm),
                               Text(
-                                l10n.fileBrowserNeedPermission,
+                                g11n.fileBrowserNeedPermission,
                                 textAlign: TextAlign.center,
                                 style: Theme.of(context).textTheme.bodySmall?.copyWith(
                                       color: context.semantic.subtleText,
@@ -185,7 +185,7 @@ class _FileTreeTabState extends ConsumerState<FileTreeTab> with WidgetsBindingOb
                                   if (!mounted) return;
                                   await _refresh(root);
                                 },
-                                child: Text(l10n.storagePermissionGrant),
+                                child: Text(g11n.storagePermissionGrant),
                               ),
                             ],
                           ],
@@ -208,8 +208,8 @@ class _FileTreeTabState extends ConsumerState<FileTreeTab> with WidgetsBindingOb
               if (_clipboard != null)
                 _ClipboardIndicator(
                   clipboardLabel: _clipboard!.isCut
-                      ? l10n.fileBrowserClipboardCut
-                      : l10n.fileBrowserClipboardCopy,
+                      ? g11n.fileBrowserClipboardCut
+                      : g11n.fileBrowserClipboardCopy,
                   name: _clipboard!.name,
                   onClear: () => setState(() => _clipboard = null),
                 ),
@@ -229,7 +229,7 @@ class _FileTreeTabState extends ConsumerState<FileTreeTab> with WidgetsBindingOb
                 iconSize: 16,
                 visualDensity: VisualDensity.compact,
                 color: context.semantic.subtleText,
-                tooltip: l10n.fileBrowserRefresh,
+                tooltip: g11n.fileBrowserRefresh,
                 icon: const Icon(Iconfont.refreshCw),
                 onPressed: () => _refresh(root),
               ),
@@ -452,8 +452,8 @@ class _FileTreeTabState extends ConsumerState<FileTreeTab> with WidgetsBindingOb
       if (dir == _loadedRoot) {
         final detail = '$error'.trim();
         setState(() => _error = detail.isEmpty
-            ? AppLocalizations.of(context).fileBrowserError
-            : '${AppLocalizations.of(context).fileBrowserError}\n$detail');
+            ? AppGlobalizations.of(context).fileBrowserError
+            : '${AppGlobalizations.of(context).fileBrowserError}\n$detail');
       }
     }
   }
@@ -462,7 +462,7 @@ class _FileTreeTabState extends ConsumerState<FileTreeTab> with WidgetsBindingOb
   String? _apkError;
 
   /// 逆向项目的 APK 还没解压:给出说明与解压入口。
-  Widget _apkPrompt(AppLocalizations l10n, Project project) {
+  Widget _apkPrompt(AppGlobalizations g11n, Project project) {
     return Center(
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: Spacing.lg),
@@ -472,7 +472,7 @@ class _FileTreeTabState extends ConsumerState<FileTreeTab> with WidgetsBindingOb
             Icon(Iconfont.package, size: 32, color: context.semantic.subtleText),
             const SizedBox(height: Spacing.md),
             Text(
-              l10n.apkExtractHint,
+              g11n.apkExtractHint,
               textAlign: TextAlign.center,
               style: Theme.of(context).textTheme.bodySmall?.copyWith(
                     color: context.semantic.subtleText,
@@ -486,16 +486,16 @@ class _FileTreeTabState extends ConsumerState<FileTreeTab> with WidgetsBindingOb
                 child: CircularProgressIndicator(strokeWidth: 2),
               ),
               const SizedBox(height: Spacing.sm),
-              Text(l10n.apkExtracting, style: Theme.of(context).textTheme.bodySmall),
+              Text(g11n.apkExtracting, style: Theme.of(context).textTheme.bodySmall),
             ] else
               FilledButton(
                 onPressed: () => _extractApk(project),
-                child: Text(l10n.apkExtractAction),
+                child: Text(g11n.apkExtractAction),
               ),
             if (_apkError != null) ...[
               const SizedBox(height: Spacing.sm),
               Text(
-                l10n.apkExtractFailed,
+                g11n.apkExtractFailed,
                 textAlign: TextAlign.center,
                 style: Theme.of(context).textTheme.bodySmall?.copyWith(
                       color: Theme.of(context).colorScheme.error,
@@ -569,7 +569,7 @@ class _FileTreeTabState extends ConsumerState<FileTreeTab> with WidgetsBindingOb
   }
 
   /// 外部工作区缺少「所有文件访问权限」时的顶部提示条。
-  Widget _permissionBanner(AppLocalizations l10n, String root) {
+  Widget _permissionBanner(AppGlobalizations g11n, String root) {
     final theme = Theme.of(context);
     return Container(
       margin: const EdgeInsets.symmetric(horizontal: Spacing.sm),
@@ -582,7 +582,7 @@ class _FileTreeTabState extends ConsumerState<FileTreeTab> with WidgetsBindingOb
         children: [
           Expanded(
             child: Text(
-              l10n.fileBrowserNeedPermission,
+              g11n.fileBrowserNeedPermission,
               style: theme.textTheme.bodySmall?.copyWith(
                 color: context.semantic.subtleText,
               ),
@@ -594,7 +594,7 @@ class _FileTreeTabState extends ConsumerState<FileTreeTab> with WidgetsBindingOb
               if (!mounted) return;
               await _refresh(root);
             },
-            child: Text(l10n.storagePermissionGrant),
+            child: Text(g11n.storagePermissionGrant),
           ),
         ],
       ),
@@ -647,7 +647,7 @@ class _FileTreeTabState extends ConsumerState<FileTreeTab> with WidgetsBindingOb
 
   /// 长按菜单:顺序与上游一致——粘贴到此处(有剪贴板且是目录)→ 新建 → 复制/剪切/重命名/删除。
   Future<void> _showActions(_Node node) async {
-    final l10n = AppLocalizations.of(context);
+    final g11n = AppGlobalizations.of(context);
     final theme = Theme.of(context);
     final action = await showModalBottomSheet<String>(
       context: context,
@@ -673,20 +673,20 @@ class _FileTreeTabState extends ConsumerState<FileTreeTab> with WidgetsBindingOb
               ),
             ),
             if (_clipboard != null && node.isDirectory)
-              _actionRow(sheetContext, Iconfont.clipboard, l10n.fileBrowserPasteHere,
+              _actionRow(sheetContext, Iconfont.clipboard, g11n.fileBrowserPasteHere,
                   'paste', tint: theme.colorScheme.primary),
             if (node.isDirectory) ...[
-              _actionRow(sheetContext, Iconfont.filePlus, l10n.fileBrowserNewFile, 'newFile'),
+              _actionRow(sheetContext, Iconfont.filePlus, g11n.fileBrowserNewFile, 'newFile'),
               _actionRow(
-                  sheetContext, Iconfont.folderPlus, l10n.fileBrowserNewFolder, 'newFolder'),
+                  sheetContext, Iconfont.folderPlus, g11n.fileBrowserNewFolder, 'newFolder'),
             ],
             if (!node.isDirectory && supportsArchiveExtraction(node.path))
-              _actionRow(sheetContext, Iconfont.packageOpen, l10n.fileBrowserExtract, 'extract'),
+              _actionRow(sheetContext, Iconfont.packageOpen, g11n.fileBrowserExtract, 'extract'),
             if (!node.isRoot) ...[
-              _actionRow(sheetContext, Iconfont.copy, l10n.commonCopy, 'copy'),
-              _actionRow(sheetContext, Iconfont.scissors, l10n.commonCut, 'cut'),
-              _actionRow(sheetContext, Iconfont.edit2, l10n.rename, 'rename'),
-              _actionRow(sheetContext, Iconfont.trash2, l10n.delete, 'delete',
+              _actionRow(sheetContext, Iconfont.copy, g11n.commonCopy, 'copy'),
+              _actionRow(sheetContext, Iconfont.scissors, g11n.commonCut, 'cut'),
+              _actionRow(sheetContext, Iconfont.edit2, g11n.rename, 'rename'),
+              _actionRow(sheetContext, Iconfont.trash2, g11n.delete, 'delete',
                   destructive: true),
             ],
           ],
@@ -743,13 +743,13 @@ class _FileTreeTabState extends ConsumerState<FileTreeTab> with WidgetsBindingOb
   }
 
   Future<void> _create(_Node node, {required bool isFile}) async {
-    final l10n = AppLocalizations.of(context);
+    final g11n = AppGlobalizations.of(context);
     if (!_expanded.contains(node.path)) {
       setState(() => _expanded.add(node.path));
     }
     final name = await _promptName(
-      title: isFile ? l10n.fileBrowserNewFile : l10n.fileBrowserNewFolder,
-      confirmLabel: l10n.create,
+      title: isFile ? g11n.fileBrowserNewFile : g11n.fileBrowserNewFolder,
+      confirmLabel: g11n.create,
     );
     if (name == null) return;
     final target = node.path == '/' ? '/$name' : p.join(node.path, name);
@@ -762,14 +762,14 @@ class _FileTreeTabState extends ConsumerState<FileTreeTab> with WidgetsBindingOb
         await files.createDir(target);
       }
       return true;
-    }, failMessage: l10n.fileBrowserCreateFailed, parent: node.path);
+    }, failMessage: g11n.fileBrowserCreateFailed, parent: node.path);
   }
 
   Future<void> _rename(_Node node) async {
-    final l10n = AppLocalizations.of(context);
+    final g11n = AppGlobalizations.of(context);
     final name = await _promptName(
-      title: l10n.rename,
-      confirmLabel: l10n.rename,
+      title: g11n.rename,
+      confirmLabel: g11n.rename,
       initial: node.name,
     );
     if (name == null || name == node.name) return;
@@ -780,12 +780,12 @@ class _FileTreeTabState extends ConsumerState<FileTreeTab> with WidgetsBindingOb
       if (await files.exists(target)) return false;
       await files.rename(node.path, target);
       return true;
-    }, failMessage: l10n.fileBrowserRenameFailed, parent: parent);
+    }, failMessage: g11n.fileBrowserRenameFailed, parent: parent);
   }
 
   /// 解压:解到同目录下的同名文件夹(去掉压缩后缀)。目标已存在时先确认覆盖。
   Future<void> _extractArchive(_Node node) async {
-    final l10n = AppLocalizations.of(context);
+    final g11n = AppGlobalizations.of(context);
     final parent = node.path == '/' ? '/' : p.dirname(node.path);
     final name = archiveTargetName(node.name);
     final dest = parent == '/' ? '/$name' : p.join(parent, name);
@@ -797,16 +797,16 @@ class _FileTreeTabState extends ConsumerState<FileTreeTab> with WidgetsBindingOb
         final confirmed = await showDialog<bool>(
           context: context,
           builder: (dialogContext) => AlertDialog(
-            title: Text(l10n.fileBrowserExtractConflictTitle),
-            content: Text(l10n.fileBrowserExtractConflict(name)),
+            title: Text(g11n.fileBrowserExtractConflictTitle),
+            content: Text(g11n.fileBrowserExtractConflict(name)),
             actions: [
               TextButton(
                 onPressed: () => Navigator.pop(dialogContext, false),
-                child: Text(l10n.cancel),
+                child: Text(g11n.cancel),
               ),
               TextButton(
                 onPressed: () => Navigator.pop(dialogContext, true),
-                child: Text(l10n.fileBrowserExtractOverwrite),
+                child: Text(g11n.fileBrowserExtractOverwrite),
               ),
             ],
           ),
@@ -827,7 +827,7 @@ class _FileTreeTabState extends ConsumerState<FileTreeTab> with WidgetsBindingOb
     } catch (error) {
       if (!mounted) return;
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('${l10n.fileBrowserExtractFailed}: $error')),
+        SnackBar(content: Text('${g11n.fileBrowserExtractFailed}: $error')),
       );
     } finally {
       if (mounted) setState(() => _busy.remove(node.path));
@@ -835,25 +835,25 @@ class _FileTreeTabState extends ConsumerState<FileTreeTab> with WidgetsBindingOb
   }
 
   Future<void> _delete(_Node node) async {
-    final l10n = AppLocalizations.of(context);
+    final g11n = AppGlobalizations.of(context);
     final confirmed = await showDialog<bool>(
       context: context,
       builder: (dialogContext) => AlertDialog(
-        title: Text(l10n.delete),
+        title: Text(g11n.delete),
         content: Text(
           node.isDirectory
-              ? l10n.fileBrowserDeleteFolderConfirm(node.name)
-              : l10n.fileBrowserDeleteFileConfirm(node.name),
+              ? g11n.fileBrowserDeleteFolderConfirm(node.name)
+              : g11n.fileBrowserDeleteFileConfirm(node.name),
         ),
         actions: [
           TextButton(
             onPressed: () => Navigator.pop(dialogContext, false),
-            child: Text(l10n.cancel),
+            child: Text(g11n.cancel),
           ),
           TextButton(
             onPressed: () => Navigator.pop(dialogContext, true),
             child: Text(
-              l10n.delete,
+              g11n.delete,
               style: TextStyle(color: Theme.of(dialogContext).colorScheme.error),
             ),
           ),
@@ -866,12 +866,12 @@ class _FileTreeTabState extends ConsumerState<FileTreeTab> with WidgetsBindingOb
       final files = await ref.read(workspaceFilesProvider.future);
       await files.delete(node.path, recursive: node.isDirectory);
       return true;
-    }, failMessage: l10n.fileBrowserDeleteFailed, parent: parent);
+    }, failMessage: g11n.fileBrowserDeleteFailed, parent: parent);
   }
 
   /// 粘贴:目标已存在同名项时弹窗询问是否覆盖;禁止粘到自身或其子孙。
   Future<void> _paste(_Node node) async {
-    final l10n = AppLocalizations.of(context);
+    final g11n = AppGlobalizations.of(context);
     final clip = _clipboard;
     if (clip == null || !node.isDirectory) return;
     final target = node.path == '/' ? '/${clip.name}' : p.join(node.path, clip.name);
@@ -886,16 +886,16 @@ class _FileTreeTabState extends ConsumerState<FileTreeTab> with WidgetsBindingOb
         final confirmed = await showDialog<bool>(
           context: context,
           builder: (dialogContext) => AlertDialog(
-            title: Text(l10n.fileBrowserPasteConflictTitle),
-            content: Text(l10n.fileBrowserPasteConflictMessage(clip.name)),
+            title: Text(g11n.fileBrowserPasteConflictTitle),
+            content: Text(g11n.fileBrowserPasteConflictMessage(clip.name)),
             actions: [
               TextButton(
                 onPressed: () => Navigator.pop(dialogContext, false),
-                child: Text(l10n.cancel),
+                child: Text(g11n.cancel),
               ),
               TextButton(
                 onPressed: () => Navigator.pop(dialogContext, true),
-                child: Text(l10n.delete),
+                child: Text(g11n.delete),
               ),
             ],
           ),
@@ -915,7 +915,7 @@ class _FileTreeTabState extends ConsumerState<FileTreeTab> with WidgetsBindingOb
         await files.copy(clip.sourcePath, target, overwrite: overwrite);
       }
       return true;
-    }, failMessage: l10n.errorGeneric, parent: node.path);
+    }, failMessage: g11n.errorGeneric, parent: node.path);
     // 粘贴成功即清空剪贴板(无论复制还是剪切,一次粘贴后失效);失败保留供重试。
     if (success && mounted) setState(() => _clipboard = null);
   }
@@ -956,7 +956,7 @@ class _FileTreeTabState extends ConsumerState<FileTreeTab> with WidgetsBindingOb
       title: title,
       confirmLabel: confirmLabel,
       initial: initial,
-      labelText: AppLocalizations.of(context).fileBrowserNameLabel,
+      labelText: AppGlobalizations.of(context).fileBrowserNameLabel,
       // 文件名不能带路径分隔符,否则会写到预期之外的目录。
       isAcceptable: (value) => !value.contains('/') && !value.contains('\\'),
     );

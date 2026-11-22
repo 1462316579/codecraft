@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import '../../../core/icons/iconfont.dart';
 import '../../../core/theme/semantic_colors.dart';
 import '../../../core/theme/tokens.dart';
-import '../../../l10n/app_localizations.dart';
+import '../../../g11n/app_globalizations.dart';
 
 /// 「更多选项」弹层的动作。复制已在气泡下方常驻,这里不再重复提供。
 enum MessageAction { edit, delete, retry }
@@ -15,7 +15,7 @@ Future<MessageAction?> showMessageActionsSheet(BuildContext context) {
     showDragHandle: true,
     backgroundColor: context.semantic.cardSurface,
     builder: (sheetContext) {
-      final l10n = AppLocalizations.of(sheetContext);
+      final g11n = AppGlobalizations.of(sheetContext);
       final theme = Theme.of(sheetContext);
       return SafeArea(
         child: Column(
@@ -26,7 +26,7 @@ Future<MessageAction?> showMessageActionsSheet(BuildContext context) {
               child: Padding(
                 padding: const EdgeInsets.fromLTRB(Spacing.md, 0, Spacing.md, Spacing.sm),
                 child: Text(
-                  l10n.chatMoreOptions,
+                  g11n.chatMoreOptions,
                   style: theme.textTheme.titleMedium?.copyWith(fontWeight: FontWeight.bold),
                 ),
               ),
@@ -34,17 +34,17 @@ Future<MessageAction?> showMessageActionsSheet(BuildContext context) {
             const SizedBox(height: Spacing.xs),
             _ActionItem(
               icon: Iconfont.pencil,
-              title: l10n.chatActionEdit,
+              title: g11n.chatActionEdit,
               onTap: () => Navigator.pop(sheetContext, MessageAction.edit),
             ),
             _ActionItem(
               icon: Iconfont.refreshCw,
-              title: l10n.retry,
+              title: g11n.retry,
               onTap: () => Navigator.pop(sheetContext, MessageAction.retry),
             ),
             _ActionItem(
               icon: Iconfont.trash2,
-              title: l10n.chatActionDelete,
+              title: g11n.chatActionDelete,
               isDestructive: true,
               onTap: () => Navigator.pop(sheetContext, MessageAction.delete),
             ),

@@ -17,7 +17,7 @@ import '../../core/ui/swipe_to_delete_row.dart';
 import '../../data/browser/browser_manager.dart';
 import '../../data/browser/browser_models.dart';
 import '../../core/ui/text_input_dialog.dart';
-import '../../l10n/app_localizations.dart';
+import '../../g11n/app_globalizations.dart';
 
 /// 浏览器页(对照上游 `feature/browser/presentation/BrowserScreen.kt`)。
 ///
@@ -52,7 +52,7 @@ class _BrowserPageState extends ConsumerState<BrowserPage> {
 
   @override
   Widget build(BuildContext context) {
-    final l10n = AppLocalizations.of(context);
+    final g11n = AppGlobalizations.of(context);
     final manager = ref.watch(browserManagerProvider);
     final state = manager.state;
     final tab = state.activeTab;
@@ -60,7 +60,7 @@ class _BrowserPageState extends ConsumerState<BrowserPage> {
     // 夜间模式:整页套用深色主题,顶栏/底栏/空态/弹层一次性全变黑。
     // 逐个改颜色会漏(顶栏、底栏、各类 sheet 各有一套配色),换主题最彻底。
     if (!state.nightMode) {
-      return _buildPage(context, l10n, manager, state, tab);
+      return _buildPage(context, g11n, manager, state, tab);
     }
     // Builder 取 Theme 内部的 context:弹层用 showModalBottomSheet 打开时
     // 取的是调用方 context 的主题,用外层 context 会拿到浅色主题。
@@ -68,14 +68,14 @@ class _BrowserPageState extends ConsumerState<BrowserPage> {
       data: buildAppTheme(Brightness.dark),
       child: Builder(
         builder: (themedContext) =>
-            _buildPage(themedContext, l10n, manager, state, tab),
+            _buildPage(themedContext, g11n, manager, state, tab),
       ),
     );
   }
 
   Widget _buildPage(
     BuildContext context,
-    AppLocalizations l10n,
+    AppGlobalizations g11n,
     BrowserManager manager,
     BrowserState state,
     BrowserTabState? tab,
@@ -110,8 +110,8 @@ class _BrowserPageState extends ConsumerState<BrowserPage> {
         onGoBack: () => manager.goBack(),
         onGoForward: () => manager.goForward(),
         onNewTab: () => manager.newTab(),
-        onOpenTabs: () => _openTabsSheet(context, l10n, manager),
-        onOpenMenu: () => _openMenuSheet(context, l10n, manager),
+        onOpenTabs: () => _openTabsSheet(context, g11n, manager),
+        onOpenMenu: () => _openMenuSheet(context, g11n, manager),
       ),
       body: Stack(
         children: [
@@ -174,7 +174,7 @@ class _BrowserPageState extends ConsumerState<BrowserPage> {
                       ),
                       const SizedBox(height: Spacing.md),
                       Text(
-                        l10n.browserEmptyClickHint,
+                        g11n.browserEmptyClickHint,
                         style: Theme.of(context).textTheme.bodyMedium?.copyWith(
                               color: Theme.of(context).colorScheme.onSurfaceVariant,
                             ),
@@ -202,7 +202,7 @@ class _BrowserPageState extends ConsumerState<BrowserPage> {
 
   Future<void> _openTabsSheet(
     BuildContext context,
-    AppLocalizations l10n,
+    AppGlobalizations g11n,
     BrowserManager manager,
   ) async {
     await showModalBottomSheet<void>(
@@ -224,7 +224,7 @@ class _BrowserPageState extends ConsumerState<BrowserPage> {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Text(
-                          l10n.browserTabsCount(current.tabs.length),
+                          g11n.browserTabsCount(current.tabs.length),
                           style: Theme.of(sheetContext)
                               .textTheme
                               .titleMedium
@@ -239,7 +239,7 @@ class _BrowserPageState extends ConsumerState<BrowserPage> {
                             Iconfont.plus,
                             color: Theme.of(sheetContext).colorScheme.primary,
                           ),
-                          tooltip: l10n.browserNewTab,
+                          tooltip: g11n.browserNewTab,
                         ),
                       ],
                     ),
@@ -250,7 +250,7 @@ class _BrowserPageState extends ConsumerState<BrowserPage> {
                         if (index > 0) const SettingsDivider(),
                         _tabRow(
                           sheetContext,
-                          l10n,
+                          g11n,
                           manager,
                           current,
                           current.tabs[index],
@@ -270,7 +270,7 @@ class _BrowserPageState extends ConsumerState<BrowserPage> {
   /// 标签行(对齐上游 BrowserTabItemRow):左滑删除,行尾 X 关闭,选中项主题色。
   Widget _tabRow(
     BuildContext context,
-    AppLocalizations l10n,
+    AppGlobalizations g11n,
     BrowserManager manager,
     BrowserState state,
     BrowserTabState tab,
@@ -281,7 +281,7 @@ class _BrowserPageState extends ConsumerState<BrowserPage> {
         ? tab.title
         : (tab.url.isNotEmpty
             ? tab.url.replaceFirst(RegExp(r'^https?://'), '')
-            : l10n.browserTabDefaultTitle);
+            : g11n.browserTabDefaultTitle);
     return SwipeToDeleteRow(
       onDelete: () => manager.closeTab(tab.id),
       onTap: () {
@@ -324,7 +324,7 @@ class _BrowserPageState extends ConsumerState<BrowserPage> {
             ),
             IconButton(
               onPressed: () => manager.closeTab(tab.id),
-              tooltip: l10n.browserCloseTab,
+              tooltip: g11n.browserCloseTab,
               icon: Icon(
                 Iconfont.close,
                 size: 16,
@@ -339,7 +339,7 @@ class _BrowserPageState extends ConsumerState<BrowserPage> {
 
   Future<void> _openMenuSheet(
     BuildContext context,
-    AppLocalizations l10n,
+    AppGlobalizations g11n,
     BrowserManager manager,
   ) async {
     await showModalBottomSheet<void>(
@@ -347,7 +347,7 @@ class _BrowserPageState extends ConsumerState<BrowserPage> {
       showDragHandle: true,
       isScrollControlled: true,
       backgroundColor: context.semantic.pageBackground,
-      builder: (sheetContext) => _BrowserMenuSheet(l10n: l10n, manager: manager),
+      builder: (sheetContext) => _BrowserMenuSheet(g11n: g11n, manager: manager),
     );
   }
 }
@@ -355,9 +355,9 @@ class _BrowserPageState extends ConsumerState<BrowserPage> {
 /// 浏览器菜单弹层(对齐上游 BrowserMenuSheet):主菜单(夜间模式 / 开发者工具 / 浏览器标识)
 /// 与「浏览器标识」子页两级。
 class _BrowserMenuSheet extends StatefulWidget {
-  const _BrowserMenuSheet({required this.l10n, required this.manager});
+  const _BrowserMenuSheet({required this.g11n, required this.manager});
 
-  final AppLocalizations l10n;
+  final AppGlobalizations g11n;
   final BrowserManager manager;
 
   @override
@@ -370,7 +370,7 @@ class _BrowserMenuSheetState extends State<_BrowserMenuSheet> {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
-    final l10n = widget.l10n;
+    final g11n = widget.g11n;
     return Consumer(
       builder: (consumerContext, ref, _) {
         final state = ref.watch(browserManagerProvider).state;
@@ -398,7 +398,7 @@ class _BrowserMenuSheetState extends State<_BrowserMenuSheet> {
                         const SizedBox(width: Spacing.xs),
                       ],
                       Text(
-                        _level == 1 ? l10n.browserUaSection : l10n.browserMenuTitle,
+                        _level == 1 ? g11n.browserUaSection : g11n.browserMenuTitle,
                         style: theme.textTheme.titleMedium
                             ?.copyWith(fontWeight: FontWeight.w600),
                       ),
@@ -410,7 +410,7 @@ class _BrowserMenuSheetState extends State<_BrowserMenuSheet> {
                     children: [
                       SettingsRow(
                         icon: state.nightMode ? Iconfont.night : Iconfont.day,
-                        title: l10n.browserNightModeTitle,
+                        title: g11n.browserNightModeTitle,
                         trailing: Switch(
                           value: state.nightMode,
                           onChanged: (value) => widget.manager.setNightMode(value),
@@ -419,7 +419,7 @@ class _BrowserMenuSheetState extends State<_BrowserMenuSheet> {
                       const SettingsDivider(),
                       SettingsRow(
                         icon: Iconfont.code,
-                        title: l10n.browserDevtoolsTitle,
+                        title: g11n.browserDevtoolsTitle,
                         trailing: Switch(
                           value: state.devToolsOpen,
                           onChanged: (value) => widget.manager.toggleDevTools(),
@@ -428,9 +428,9 @@ class _BrowserMenuSheetState extends State<_BrowserMenuSheet> {
                       const SettingsDivider(),
                       SettingsRow(
                         icon: Iconfont.globe,
-                        title: l10n.browserUaSection,
+                        title: g11n.browserUaSection,
                         trailing: Text(
-                          _uaTitle(l10n, state.userAgentPreset),
+                          _uaTitle(g11n, state.userAgentPreset),
                           style: theme.textTheme.bodyMedium
                               ?.copyWith(color: theme.colorScheme.onSurfaceVariant),
                         ),
@@ -441,7 +441,7 @@ class _BrowserMenuSheetState extends State<_BrowserMenuSheet> {
                   Padding(
                     padding: const EdgeInsets.only(top: Spacing.xs, left: Spacing.lg),
                     child: Text(
-                      l10n.browserNightModeDesc,
+                      g11n.browserNightModeDesc,
                       style: theme.textTheme.labelSmall
                           ?.copyWith(color: theme.colorScheme.onSurfaceVariant),
                     ),
@@ -451,7 +451,7 @@ class _BrowserMenuSheetState extends State<_BrowserMenuSheet> {
                     children: [
                       for (var index = 0; index < BrowserUserAgentPreset.values.length; index++) ...[
                         if (index > 0) const SettingsDivider(),
-                        _uaRow(context, l10n, state, BrowserUserAgentPreset.values[index]),
+                        _uaRow(context, g11n, state, BrowserUserAgentPreset.values[index]),
                       ],
                     ],
                   ),
@@ -465,7 +465,7 @@ class _BrowserMenuSheetState extends State<_BrowserMenuSheet> {
 
   Widget _uaRow(
     BuildContext context,
-    AppLocalizations l10n,
+    AppGlobalizations g11n,
     BrowserState state,
     BrowserUserAgentPreset preset,
   ) {
@@ -482,12 +482,12 @@ class _BrowserMenuSheetState extends State<_BrowserMenuSheet> {
     };
     final subtitle = preset == BrowserUserAgentPreset.custom && state.customUserAgent.isNotEmpty
         ? state.customUserAgent
-        : _uaDesc(l10n, preset);
+        : _uaDesc(g11n, preset);
     return InkWell(
       onTap: () async {
         setState(() => _level = 0);
         if (preset == BrowserUserAgentPreset.custom) {
-          final input = await _promptCustomUa(context, l10n, state.customUserAgent);
+          final input = await _promptCustomUa(context, g11n, state.customUserAgent);
           if (input == null) return;
           await widget.manager.setUserAgent(preset, custom: input);
         } else {
@@ -509,7 +509,7 @@ class _BrowserMenuSheetState extends State<_BrowserMenuSheet> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    _uaTitle(l10n, preset),
+                    _uaTitle(g11n, preset),
                     style: theme.textTheme.bodyMedium?.copyWith(
                       color: selected ? theme.colorScheme.primary : theme.colorScheme.onSurface,
                     ),
@@ -532,37 +532,37 @@ class _BrowserMenuSheetState extends State<_BrowserMenuSheet> {
     );
   }
 
-  String _uaTitle(AppLocalizations l10n, BrowserUserAgentPreset preset) => switch (preset) {
-        BrowserUserAgentPreset.defaultValue => l10n.browserUaDefault,
-        BrowserUserAgentPreset.androidPhone => l10n.browserUaAndroidPhone,
-        BrowserUserAgentPreset.androidTablet => l10n.browserUaAndroidTablet,
-        BrowserUserAgentPreset.desktopPc => l10n.browserUaDesktopPc,
-        BrowserUserAgentPreset.iphone => l10n.browserUaIphone,
-        BrowserUserAgentPreset.ipad => l10n.browserUaIpad,
-        BrowserUserAgentPreset.custom => l10n.browserUaCustom,
+  String _uaTitle(AppGlobalizations g11n, BrowserUserAgentPreset preset) => switch (preset) {
+        BrowserUserAgentPreset.defaultValue => g11n.browserUaDefault,
+        BrowserUserAgentPreset.androidPhone => g11n.browserUaAndroidPhone,
+        BrowserUserAgentPreset.androidTablet => g11n.browserUaAndroidTablet,
+        BrowserUserAgentPreset.desktopPc => g11n.browserUaDesktopPc,
+        BrowserUserAgentPreset.iphone => g11n.browserUaIphone,
+        BrowserUserAgentPreset.ipad => g11n.browserUaIpad,
+        BrowserUserAgentPreset.custom => g11n.browserUaCustom,
       };
 
-  String _uaDesc(AppLocalizations l10n, BrowserUserAgentPreset preset) => switch (preset) {
-        BrowserUserAgentPreset.defaultValue => l10n.browserUaDefaultDesc,
-        BrowserUserAgentPreset.androidPhone => l10n.browserUaAndroidPhoneDesc,
-        BrowserUserAgentPreset.androidTablet => l10n.browserUaAndroidTabletDesc,
-        BrowserUserAgentPreset.desktopPc => l10n.browserUaDesktopPcDesc,
-        BrowserUserAgentPreset.iphone => l10n.browserUaIphoneDesc,
-        BrowserUserAgentPreset.ipad => l10n.browserUaIpadDesc,
-        BrowserUserAgentPreset.custom => l10n.browserUaCustomDesc,
+  String _uaDesc(AppGlobalizations g11n, BrowserUserAgentPreset preset) => switch (preset) {
+        BrowserUserAgentPreset.defaultValue => g11n.browserUaDefaultDesc,
+        BrowserUserAgentPreset.androidPhone => g11n.browserUaAndroidPhoneDesc,
+        BrowserUserAgentPreset.androidTablet => g11n.browserUaAndroidTabletDesc,
+        BrowserUserAgentPreset.desktopPc => g11n.browserUaDesktopPcDesc,
+        BrowserUserAgentPreset.iphone => g11n.browserUaIphoneDesc,
+        BrowserUserAgentPreset.ipad => g11n.browserUaIpadDesc,
+        BrowserUserAgentPreset.custom => g11n.browserUaCustomDesc,
       };
 
   Future<String?> _promptCustomUa(
     BuildContext context,
-    AppLocalizations l10n,
+    AppGlobalizations g11n,
     String initial,
   ) {
     return showTextInputDialog(
       context,
-      title: l10n.browserUaCustomDialogTitle,
-      confirmLabel: l10n.confirm,
+      title: g11n.browserUaCustomDialogTitle,
+      confirmLabel: g11n.confirm,
       initial: initial,
-      hintText: l10n.browserUaCustomInputHint,
+      hintText: g11n.browserUaCustomInputHint,
     );
   }
 }
@@ -687,8 +687,8 @@ class _BrowserTopBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
-    final l10n = AppLocalizations.of(context);
-    final addressText = title.isNotEmpty ? title : (url.isNotEmpty ? url : l10n.browserTitle);
+    final g11n = AppGlobalizations.of(context);
+    final addressText = title.isNotEmpty ? title : (url.isNotEmpty ? url : g11n.browserTitle);
     return Material(
       color: theme.colorScheme.surface,
       child: SafeArea(
@@ -705,7 +705,7 @@ class _BrowserTopBar extends StatelessWidget {
                     IconButton(
                       onPressed: editing ? () => onEditingChange(false) : onBack,
                       tooltip: editing
-                          ? l10n.cancel
+                          ? g11n.cancel
                           : MaterialLocalizations.of(context).backButtonTooltip,
                       icon: Icon(editing || embedded ? Iconfont.close : Iconfont.arrowLeft),
                     ),
@@ -782,7 +782,7 @@ class _BrowserTopBar extends StatelessWidget {
                       height: 40,
                       child: IconButton(
                         onPressed: loading ? null : onReload,
-                        tooltip: l10n.browserReload,
+                        tooltip: g11n.browserReload,
                         icon: loading
                             ? SizedBox(
                                 width: 18,
@@ -838,7 +838,7 @@ class _BrowserBottomBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
-    final l10n = AppLocalizations.of(context);
+    final g11n = AppGlobalizations.of(context);
     return Material(
       color: theme.colorScheme.surface,
       elevation: 3,
@@ -857,17 +857,17 @@ class _BrowserBottomBar extends StatelessWidget {
                   children: [
                 IconButton(
                   onPressed: canGoBack ? onGoBack : null,
-                  tooltip: l10n.browserBack,
+                  tooltip: g11n.browserBack,
                   icon: const Icon(Iconfont.arrowLeft, size: 24),
                 ),
                 IconButton(
                   onPressed: canGoForward ? onGoForward : null,
-                  tooltip: l10n.browserForward,
+                  tooltip: g11n.browserForward,
                   icon: const Icon(Iconfont.chevronRight, size: 24),
                 ),
                 IconButton(
                   onPressed: onNewTab,
-                  tooltip: l10n.browserNewTab,
+                  tooltip: g11n.browserNewTab,
                   icon: Icon(Iconfont.plus, size: 24, color: theme.colorScheme.primary),
                 ),
                   InkWell(
@@ -895,7 +895,7 @@ class _BrowserBottomBar extends StatelessWidget {
                   ),
                 IconButton(
                   onPressed: onOpenMenu,
-                  tooltip: l10n.browserMenu,
+                  tooltip: g11n.browserMenu,
                   icon: Icon(
                     Iconfont.menu,
                     size: 23,
@@ -943,17 +943,17 @@ class _BrowserJsDialogState extends State<_BrowserJsDialog> {
 
   @override
   Widget build(BuildContext context) {
-    final l10n = AppLocalizations.of(context);
+    final g11n = AppGlobalizations.of(context);
     final isPrompt = widget.dialog.type == 'prompt';
     final isConfirm = widget.dialog.type == 'confirm';
     return AlertDialog(
       // 上游 onDismissRequest = {}(点外部不能关);本实现在页面 Stack 里内联渲染,同样无法点外部关闭。
       title: Text(
         isPrompt
-            ? l10n.browserDialogPromptTitle
+            ? g11n.browserDialogPromptTitle
             : isConfirm
-                ? l10n.browserDialogConfirmTitle
-                : l10n.browserDialogAlertTitle,
+                ? g11n.browserDialogConfirmTitle
+                : g11n.browserDialogAlertTitle,
       ),
       content: Column(
         mainAxisSize: MainAxisSize.min,
@@ -975,12 +975,12 @@ class _BrowserJsDialogState extends State<_BrowserJsDialog> {
         if (isConfirm || isPrompt)
           TextButton(
             onPressed: () => widget.manager.resolveDialog(accept: false),
-            child: Text(l10n.cancel),
+            child: Text(g11n.cancel),
           ),
         TextButton(
           onPressed: () =>
               widget.manager.resolveDialog(accept: true, text: _input.text),
-          child: Text(l10n.confirm),
+          child: Text(g11n.confirm),
         ),
       ],
     );

@@ -3,7 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
 import '../features/browser/browser_page.dart';
-import '../l10n/app_localizations.dart';
+import '../g11n/app_globalizations.dart';
 import 'editor_target.dart';
 import '../features/editor/editor_page.dart';
 import '../features/git/git_page.dart';
@@ -123,7 +123,7 @@ class _EditorPane extends ConsumerWidget {
     if (target == null) {
       return Center(
         child: Text(
-          AppLocalizations.of(context).editorNoFile,
+          AppGlobalizations.of(context).editorNoFile,
           style: Theme.of(context).textTheme.bodyMedium?.copyWith(
                 color: Theme.of(context).colorScheme.onSurfaceVariant,
               ),

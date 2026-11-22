@@ -5,26 +5,26 @@ import 'package:flutter/widgets.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:intl/intl.dart' as intl;
 
-import 'app_localizations_en.dart';
-import 'app_localizations_ja.dart';
-import 'app_localizations_ko.dart';
-import 'app_localizations_zh.dart';
+import 'app_globalizations_en.dart';
+import 'app_globalizations_ja.dart';
+import 'app_globalizations_ko.dart';
+import 'app_globalizations_zh.dart';
 
 // ignore_for_file: type=lint
 
-/// Callers can lookup localized strings with an instance of AppLocalizations
-/// returned by `AppLocalizations.of(context)`.
+/// Callers can lookup localized strings with an instance of AppGlobalizations
+/// returned by `AppGlobalizations.of(context)`.
 ///
-/// Applications need to include `AppLocalizations.delegate()` in their app's
+/// Applications need to include `AppGlobalizations.delegate()` in their app's
 /// `localizationDelegates` list, and the locales they support in the app's
 /// `supportedLocales` list. For example:
 ///
 /// ```dart
-/// import 'l10n/app_localizations.dart';
+/// import 'g11n/app_globalizations.dart';
 ///
 /// return MaterialApp(
-///   localizationsDelegates: AppLocalizations.localizationsDelegates,
-///   supportedLocales: AppLocalizations.supportedLocales,
+///   localizationsDelegates: AppGlobalizations.localizationsDelegates,
+///   supportedLocales: AppGlobalizations.supportedLocales,
 ///   home: MyApplicationHome(),
 /// );
 /// ```
@@ -61,20 +61,20 @@ import 'app_localizations_zh.dart';
 /// Select and expand the newly-created Localizations item then, for each
 /// locale your application supports, add a new item and select the locale
 /// you wish to add from the pop-up menu in the Value field. This list should
-/// be consistent with the languages listed in the AppLocalizations.supportedLocales
+/// be consistent with the languages listed in the AppGlobalizations.supportedLocales
 /// property.
-abstract class AppLocalizations {
-  AppLocalizations(String locale)
+abstract class AppGlobalizations {
+  AppGlobalizations(String locale)
       : localeName = intl.Intl.canonicalizedLocale(locale.toString());
 
   final String localeName;
 
-  static AppLocalizations of(BuildContext context) {
-    return Localizations.of<AppLocalizations>(context, AppLocalizations)!;
+  static AppGlobalizations of(BuildContext context) {
+    return Localizations.of<AppGlobalizations>(context, AppGlobalizations)!;
   }
 
-  static const LocalizationsDelegate<AppLocalizations> delegate =
-      _AppLocalizationsDelegate();
+  static const LocalizationsDelegate<AppGlobalizations> delegate =
+      _AppGlobalizationsDelegate();
 
   /// A list of this localizations delegate along with the default localizations
   /// delegates.
@@ -8726,13 +8726,14 @@ abstract class AppLocalizations {
   String importFailed(String error);
 }
 
-class _AppLocalizationsDelegate
-    extends LocalizationsDelegate<AppLocalizations> {
-  const _AppLocalizationsDelegate();
+class _AppGlobalizationsDelegate
+    extends LocalizationsDelegate<AppGlobalizations> {
+  const _AppGlobalizationsDelegate();
 
   @override
-  Future<AppLocalizations> load(Locale locale) {
-    return SynchronousFuture<AppLocalizations>(lookupAppLocalizations(locale));
+  Future<AppGlobalizations> load(Locale locale) {
+    return SynchronousFuture<AppGlobalizations>(
+        lookupAppGlobalizations(locale));
   }
 
   @override
@@ -8740,17 +8741,17 @@ class _AppLocalizationsDelegate
       <String>['en', 'ja', 'ko', 'zh'].contains(locale.languageCode);
 
   @override
-  bool shouldReload(_AppLocalizationsDelegate old) => false;
+  bool shouldReload(_AppGlobalizationsDelegate old) => false;
 }
 
-AppLocalizations lookupAppLocalizations(Locale locale) {
+AppGlobalizations lookupAppGlobalizations(Locale locale) {
   // Lookup logic when language+script codes are specified.
   switch (locale.languageCode) {
     case 'zh':
       {
         switch (locale.scriptCode) {
           case 'Hant':
-            return AppLocalizationsZhHant();
+            return AppGlobalizationsZhHant();
         }
         break;
       }
@@ -8759,17 +8760,17 @@ AppLocalizations lookupAppLocalizations(Locale locale) {
   // Lookup logic when only language code is specified.
   switch (locale.languageCode) {
     case 'en':
-      return AppLocalizationsEn();
+      return AppGlobalizationsEn();
     case 'ja':
-      return AppLocalizationsJa();
+      return AppGlobalizationsJa();
     case 'ko':
-      return AppLocalizationsKo();
+      return AppGlobalizationsKo();
     case 'zh':
-      return AppLocalizationsZh();
+      return AppGlobalizationsZh();
   }
 
   throw FlutterError(
-      'AppLocalizations.delegate failed to load unsupported locale "$locale". This is likely '
+      'AppGlobalizations.delegate failed to load unsupported locale "$locale". This is likely '
       'an issue with the localizations generation tool. Please file an issue '
       'on GitHub with a reproducible sample app and the gen-l10n configuration '
       'that was used.');

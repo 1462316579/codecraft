@@ -5,7 +5,7 @@ import '../../core/icons/iconfont.dart';
 
 import '../../../core/theme/semantic_colors.dart';
 import '../../../core/theme/tokens.dart';
-import '../../../l10n/app_localizations.dart';
+import '../../../g11n/app_globalizations.dart';
 
 /// 底部导航的页签。
 enum HomeTab { projects, settings }
@@ -27,7 +27,7 @@ class HomeBottomNav extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
-    final l10n = AppLocalizations.of(context);
+    final g11n = AppGlobalizations.of(context);
     final bright = theme.brightness == Brightness.light;
     return Align(
       alignment: Alignment.bottomCenter,
@@ -66,14 +66,14 @@ class HomeBottomNav extends StatelessWidget {
                   children: [
                     _NavItem(
                       icon: current == HomeTab.projects ? Iconfont.folderOpen : Iconfont.folder,
-                      label: l10n.tabProjects,
+                      label: g11n.tabProjects,
                       selected: current == HomeTab.projects,
                       onTap: () => onSelect(HomeTab.projects),
                     ),
                     const SizedBox(width: 30),
                     _NavItem(
                       icon: Iconfont.settings,
-                      label: l10n.settings,
+                      label: g11n.settings,
                       selected: current == HomeTab.settings,
                       onTap: () => onSelect(HomeTab.settings),
                     ),

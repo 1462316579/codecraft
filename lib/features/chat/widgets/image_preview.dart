@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 
 import '../../../core/icons/iconfont.dart';
 import '../../../core/theme/tokens.dart';
-import '../../../l10n/app_localizations.dart';
+import '../../../g11n/app_globalizations.dart';
 
 /// 全屏图片查看器(对齐上游 ImageViewerHost):近黑背板 + 可缩放图片;
 /// 点图片或右上角关闭按钮退出。
@@ -13,13 +13,13 @@ Future<void> showImagePreview(
   required String path,
   String title = '',
 }) {
-  final l10n = AppLocalizations.of(context);
+  final g11n = AppGlobalizations.of(context);
   return showDialog<void>(
     context: context,
     barrierColor: Colors.black.withValues(alpha: 0.92),
     builder: (dialogContext) => _ImagePreviewDialog(
       path: path,
-      title: title.isEmpty ? l10n.imagePreview : title,
+      title: title.isEmpty ? g11n.imagePreview : title,
     ),
   );
 }
@@ -32,7 +32,7 @@ class _ImagePreviewDialog extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final l10n = AppLocalizations.of(context);
+    final g11n = AppGlobalizations.of(context);
     return Stack(
       fit: StackFit.expand,
       children: [
@@ -53,7 +53,7 @@ class _ImagePreviewDialog extends StatelessWidget {
                       Icon(Iconfont.image, size: 40, color: Colors.white.withValues(alpha: 0.6)),
                       const SizedBox(height: Spacing.sm),
                       Text(
-                        l10n.imageLoadFailed,
+                        g11n.imageLoadFailed,
                         style: Theme.of(context)
                             .textTheme
                             .bodyMedium
@@ -73,7 +73,7 @@ class _ImagePreviewDialog extends StatelessWidget {
               padding: const EdgeInsets.all(Spacing.sm),
               child: IconButton(
                 onPressed: () => Navigator.pop(context),
-                tooltip: l10n.close,
+                tooltip: g11n.close,
                 icon: const Icon(Iconfont.x, color: Colors.white),
               ),
             ),
